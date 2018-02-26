@@ -3,10 +3,9 @@ import UnAuthenticatedRouteMixin from '../mixins/un-authenticated-route-mixin';
 
 export default Ember.Route.extend(UnAuthenticatedRouteMixin, {
 
+    projectService: Ember.inject.service('project-service'),
+    model: function () {
 
-    model: function() {
-
-        //alert("in model hook");
         return this.get('projectService').getAllProjects();
 
     }

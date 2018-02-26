@@ -6,7 +6,8 @@ import UserProfileValidationMixin from '../mixins/user-profile-validation-mixin'
 export default Ember.Controller.extend(UserProfileValidationMixin, {
 
   self: this,
-  showErrors : true,
+  userProfileService: Ember.inject.service('user-profile-service'),
+  showErrors: true,
   showFormErrors: false,
   newPersonalLink: {
     Name: "",
@@ -16,8 +17,8 @@ export default Ember.Controller.extend(UserProfileValidationMixin, {
     Name: "",
     Link: ""
   },
-  newProfilePic : "",
-  newLinkformValidate : false,
+  newProfilePic: "",
+  newLinkformValidate: false,
 
   isUserAdministrator: Ember.computed('userrole', function () {
 
@@ -28,63 +29,66 @@ export default Ember.Controller.extend(UserProfileValidationMixin, {
 
   actions: {
 
-    updateProfilePic:  function(event) {
+    updateProfilePic: function (event) {
       const reader = new FileReader();
       const file = event.target.files[0];
       let imageData;
-  
+
       reader.onload = () => {
         imageData = reader.result;
-        this.set('model.profilePic', imageData); 
-        
+        this.set('model.profilePic', imageData);
+
       };
-  
+
       if (file) {
         reader.readAsDataURL(file);
       }
     },
-   
+
 
     postChanges() {
       let userId = this.get('userId');
       let user = this.get('model');
 
       this.validate()
-        .then(() => {this.get('userProfileService').editUserProfileData(user, userId)})
+        .then(() => {
+
+          this.get('userProfileService').editUserProfileData(user, userId)
+        })
         .then(results => {
-         
+
           toastr.success("", 'Changes Saved');
-      }, error => {
+        }, error => {
           console.log(error);
-          toastr.warning(error.responseJSON.message,'Error!!' );});
-                
-        
+          toastr.warning(error.responseJSON.message, 'Error!!');
+        });
+
+
 
     },
 
     addPersonalLink() {
-      
-      this.set('newLinkformValidate' ,true);
 
-     this.validate()
-     .then(() => {
-       this.get('model.personalLinks').addObject(this.get('newPersonalLink'));
-       this.set('newPersonalLink', {});
-       this.set('newLinkformValidate' ,false);
-     })
-     .catch(() => {
-           this.set('showFormErrors' , true);
-     })
-     
-     ;
-   
+      this.set('newLinkformValidate', true);
+
+      this.validate()
+        .then(() => {
+          this.get('model.personalLinks').addObject(this.get('newPersonalLink'));
+          this.set('newPersonalLink', {});
+          this.set('newLinkformValidate', false);
+        })
+        .catch(() => {
+          this.set('showFormErrors', true);
+        })
+
+        ;
+
     },
 
-    CancelAddingPersonalLink()
-{
-  this.set('newLinkformValidate' ,false);
-  this.set('newPersonalLink', {});
-},
+    CancelAddingPersonalLink() {
+      this.set('newLinkformValidate', false);
+      this.set('newPersonalLink', {});
+    },
 
     removePersonalLink(personallink) {
       this.get('model.personalLinks').removeObject(personallink);

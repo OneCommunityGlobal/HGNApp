@@ -1,44 +1,44 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-    newactionitem : {},
-    addnewactionitem : false,
-   // DataService : Ember.inject.service('datastore-service'), 
+    newactionitem: {},
+    addnewactionitem: false,
+    dataService: Ember.inject.service('datastore-service'),
+    userProfileService: Ember.inject.service('user-profile-service'),
 
-    forUser : "",
-    newAIdescription : "",
-    newdescription : "",
+    forUser: "",
+    newAIdescription: "",
+    newdescription: "",
 
-    init(){
+    init() {
 
         this._super(...arguments);
 
         let user = this.get('loggedinUser');
- 
-        
-        this.get('userProfileService').getTeamMembers(user)
-        .then(results => { this.set('teamMembers', results);});
 
-        this.get('DataService').getActionItems(user)
-        .then(results => { this.set('actionItems', results);});
+
+        this.get('userProfileService').getTeamMembers(user)
+            .then(results => { this.set('teamMembers', results); });
+
+        this.get('dataService').getActionItems(user)
+            .then(results => { this.set('actionItems', results); });
     },
-    
-    
-  
+
+
+
 
     actions: {
 
-        getActionItemsForUser()
-        {
-            
-            let requestor = {"requestorId" : this.get('forUser')};
-            this.get('DataService').getActionItems(requestor)
-            .then(results => {
-                this.set('actionItems', results);
-            });
+        getActionItemsForUser() {
+
+            let requestor = { "requestorId": this.get('forUser') };
+            this.get('dataService').getActionItems(requestor)
+                .then(results => {
+                    this.set('actionItems', results);
+                });
         },
 
-        editActionItem(actionItem){
+        editActionItem(actionItem) {
             let editedactionitem = {};
 
             editedactionitem._id = actionItem._id;
@@ -46,47 +46,43 @@ export default Ember.Component.extend({
             editedactionitem.assignedTo = actionItem.assignedTo;
             editedactionitem.createdBy = actionItem.createdBy;
 
-           
-            this.get('DataService').editActionItem(editedactionitem);
-            
 
-        },        
-        deleteActionItem(actionItem){
+            this.get('dataService').editActionItem(editedactionitem);
 
-       
+
+        },
+        deleteActionItem(actionItem) {
+
+
 
             this.get('actionItems').removeObject(actionItem);
-            this.get('DataService').deleteActionItem(actionItem);
+            this.get('dataService').deleteActionItem(actionItem);
 
         },
 
-        createActionItem()
-        {
+        createActionItem() {
             let newActionItem = {};
 
             let assignedTo = this.get('forUser');
 
-            if(!assignedTo)
-            {
+            if (!assignedTo) {
                 assignedTo = this.get('loggedinUser.requestorId');
             }
 
             newActionItem.assignedTo = assignedTo;
             newActionItem.description = this.get('newAIdescription');
-            
-            this.get('DataService').createActionItem(newActionItem)
-            .then(result => {                
-                this.get('actionItems').addObject(result);
-                this.set('newAIdescription', "");
-            });
+
+            this.get('dataService').createActionItem(newActionItem)
+                .then(result => {
+                    this.get('actionItems').addObject(result);
+                    this.set('newAIdescription', "");
+                });
 
         },
-        showForm()
-        {
+        showForm() {
             this.set('addnewactionitem', true);
         },
-        selectAssignee(assignee)
-        {
+        selectAssignee(assignee) {
             this.set('newactionitem.assignedTo', assignee._id);
 
         }

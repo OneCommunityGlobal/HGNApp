@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
     selectedOption: null,
+    userProfileService: Ember.inject.service('user-profile-service'),
 
     newUser: {
         firstName: "",
@@ -20,7 +21,7 @@ export default Ember.Controller.extend({
 
         saveNewUser: function () {
             let user = this.get('newUser');
-            this.get('model').addObject(user);  
+            this.get('model').addObject(user);
             this.get('userProfileService').postUserProfileData(user)
                 .then(alert("saved"));
             this.set('newUser', {});

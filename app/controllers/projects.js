@@ -3,16 +3,17 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
 
   self: this,
+  projectService: Ember.inject.service('project-service'),
 
   newProject: {
-    projectName : "",
+    projectName: "",
     tasks: [],
     isActive: true
   },
   task: {
     Description: ""
   },
-  isUserNotAdministrator: Ember.computed('userrole', function() {
+  isUserNotAdministrator: Ember.computed('userrole', function () {
     let userrole = this.get('userrole');
     return userrole === "Administrator" ? false : true;
   }),
