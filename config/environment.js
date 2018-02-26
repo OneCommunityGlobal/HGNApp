@@ -1,16 +1,16 @@
 /* jshint node: true */
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   var ENV = {
     modulePrefix: 'hgnapp',
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
-    webServer: "http://localhost:4500/api",
-    REQUEST_AUTHKEY : "Authorization",
-    TOKEN_KEY : "token",
+    webServer: "https://hgn-rest.azurewebsites.net/api",
+    REQUEST_AUTHKEY: "Authorization",
+    TOKEN_KEY: "token",
     contentSecurityPolicy: {
-       'connect-src' : "'self' http://localhost:4500"
+      'connect-src': "'self' https://hgn-rest.azurewebsites.net/api"
     },
     EmberENV: {
       FEATURES: {
@@ -22,10 +22,10 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-      
+
     }
   };
- 
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
