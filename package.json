@@ -12,8 +12,8 @@
     "test": "ember test",
     "install_node_modules": "npm install",
     "install_bower_components": " node node_modules/bower/bin/bower install --allow-root",
-    "ember_build": "node node_modules/ember-cli/bin/ember build --prod",
-    "ember_serve": "node node_modules/ember-cli/bin/ember serve --port=8080 --environment=production",
+    "ember_build": "node node_modules/ember-cli/bin/ember build",
+    "ember_serve": "node node_modules/ember-cli/bin/ember serve --port=8080 --environment=developement",
     "copy_dist": "scp -r dist/* /wwwroot",
     "startlocal": "npm run install_node_modules && npm run install_bower_components && npm run ember_serve ",
     "start": "npm run install_node_modules && npm run install_bower_components  && npm run ember_build && npm run copy_dist && npm run ember_serve "
