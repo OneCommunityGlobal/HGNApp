@@ -21,19 +21,19 @@ export default Ember.Component.extend(UserProfileValidationMixin, {
 
         let userrole = this.get('userrole');
         return userrole === "Administrator" ? true : false;
-    
-      }),
-    
-      canUserEditPersonalFields: Ember.computed('model', 'userId', 'userrole', function () {
-    
+
+    }),
+
+    canUserEditPersonalFields: Ember.computed('model', 'userId', 'userrole', function () {
+
         let loggedinUser = this.get('userId');
         let viewingProfileOf = this.get('model._id');
         let userrole = this.get('userrole');
-    
+
         return (loggedinUser === viewingProfileOf || userrole === "Administrator") ? true : false;
-    
-    
-      }),
+
+
+    }),
 
     actions: {
 
@@ -58,15 +58,8 @@ export default Ember.Component.extend(UserProfileValidationMixin, {
             let userId = this.get('model._id');
             let user = this.get('model');
 
-
-
-            this.validate()
-                .then(() => {
-
-                    this.get('userProfileService').editUserProfileData(user, userId)
-                })
+            this.get('userProfileService').editUserProfileData(user, userId)
                 .then(results => {
-
                     toastr.success("", 'Changes Saved');
                 }, error => {
                     console.log(error);
