@@ -52,6 +52,7 @@ export default Ember.Component.extend({
 
             if (!element.validity.valid) {
                 isFormValid = false;
+                alert(element.value);
             }
         });
         return isFormValid;
@@ -76,12 +77,7 @@ export default Ember.Component.extend({
             }
         },
 
-
-
-
         postChanges() {
-
-
             if (this.validateform()) {
                 this.set('isFormSubmitted', "")
                 let userId = this.get('model._id');
@@ -94,6 +90,9 @@ export default Ember.Component.extend({
                         console.log(error);
                         toastr.warning(error.responseJSON.message, 'Error!!');
                     });
+            }
+            else {
+                alert("Please fix the form errors");
             }
 
 
