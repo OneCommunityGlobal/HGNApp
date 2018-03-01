@@ -1,8 +1,15 @@
 import Ember from 'ember';
-import UserProfileValidationMixin from '../mixins/user-profile-validation-mixin';
 
-export default Ember.Component.extend(UserProfileValidationMixin, {
+export default Ember.Component.extend({
     self: this,
+    isFormSubmitted: "",
+    submitModal: "",
+    minNamelength: "2",
+    maxnameLength: "100",
+    minLinksNameLength: "3",
+    maxLinksNameLength: "100",
+    minWeeklyCommittedHours: "0",
+    maxWeeklyCommittedHours: "100",
     userProfileService: Ember.inject.service('user-profile-service'),
     showErrors: true,
     showFormErrors: false,
@@ -34,6 +41,22 @@ export default Ember.Component.extend(UserProfileValidationMixin, {
 
 
     }),
+    validateform() {
+        this.set('isFormSubmitted', "submitted");
+
+        let inputs = Ember.$("input").not("div.modal input").get();
+
+        let isFormValid = true;
+
+        inputs.forEach(element => {
+
+            if (!element.validity.valid) {
+                isFormValid = false;
+            }
+        });
+        return isFormValid;
+    },
+
 
     actions: {
 
@@ -54,17 +77,24 @@ export default Ember.Component.extend(UserProfileValidationMixin, {
         },
 
 
-        postChanges() {
-            let userId = this.get('model._id');
-            let user = this.get('model');
 
-            this.get('userProfileService').editUserProfileData(user, userId)
-                .then(results => {
-                    toastr.success("", 'Changes Saved');
-                }, error => {
-                    console.log(error);
-                    toastr.warning(error.responseJSON.message, 'Error!!');
-                });
+
+        postChanges() {
+
+
+            if (this.validateform()) {
+                this.set('isFormSubmitted', "")
+                let userId = this.get('model._id');
+                let user = this.get('model');
+
+                this.get('userProfileService').editUserProfileData(user, userId)
+                    .then(results => {
+                        toastr.success("", 'Changes Saved');
+                    }, error => {
+                        console.log(error);
+                        toastr.warning(error.responseJSON.message, 'Error!!');
+                    });
+            }
 
 
 
@@ -78,32 +108,30 @@ export default Ember.Component.extend(UserProfileValidationMixin, {
 
         addPersonalLink() {
 
-            this.set('newLinkformValidate', true);
+            this.set('submitModal', 'submitModal');
 
-            this.validate()
-                .then(() => {
-                    this.get('model.personalLinks').addObject(this.get('newPersonalLink'));
-                    this.set('newPersonalLink', {});
-                    this.set('newLinkformValidate', false);
-                })
-                .catch(() => {
-                    this.set('showFormErrors', true);
-                })
+            let namefield = (Ember.$("#newPersonalLinkName").get())[0];
+            let linkfield = (Ember.$("#newPersonalLinkLink").get())[0];
 
-                ;
+            if (namefield.validity.valid && linkfield.validity.valid) {
+                this.set('submitModal', '');
+
+                this.get('model.personalLinks').addObject(this.get('newPersonalLink'));
+                this.set('newPersonalLink', {});
+                this.set('submitModalButton', 'btn btn-primary')
+
+            }
 
         },
 
         CancelAddingPersonalLink() {
-
-            this.set('newLinkformValidate', false);
+            this.set('submitModal', '')
             this.set('newPersonalLink', {});
 
         },
 
         CancelAddingAdminLink() {
-
-            this.set('newLinkformValidate', false);
+            this.set('submitModal', '')
             this.set('newAdminLink', {});
         },
 
@@ -114,14 +142,15 @@ export default Ember.Component.extend(UserProfileValidationMixin, {
             }
         },
         addAdminLink() {
+            this.set('submitModal', 'submitModal');
 
-            let newLink = this.get('newAdminLink');
+            let namefield = (Ember.$("#newAdminLinkName").get())[0];
+            let linkfield = (Ember.$("#neAdminLinkLink").get())[0];
 
-            if (newLink.Name.length < 1 || newLink.Link.length < 1 || !this.isLoggedinUserAdministrator) {
-
-            } else {
+            if (namefield.validity.valid && linkfield.validity.valid && this.isLoggedinUserAdministrator) {
                 this.get('model.adminLinks').addObject(this.get('newAdminLink'));
                 this.set('newAdminLink', {});
+                this.set('submitModal', '');
             }
 
 
@@ -133,7 +162,10 @@ export default Ember.Component.extend(UserProfileValidationMixin, {
                     this.get('model.adminLinks').removeObject(adminLink);
                 }
             }
-        }
+        },
+
+
 
     }
+
 });
