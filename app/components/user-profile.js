@@ -3,7 +3,6 @@ import Ember from 'ember';
 export default Ember.Component.extend({
     self: this,
     isFormSubmitted: "",
-    submitModal: "",
     minNamelength: "2",
     maxnameLength: "100",
     minLinksNameLength: "3",
@@ -23,6 +22,7 @@ export default Ember.Component.extend({
     },
     newProfilePic: "",
     newLinkformValidate: false,
+
 
     isLoggedinUserAdministrator: Ember.computed('userrole', function () {
 
@@ -52,7 +52,6 @@ export default Ember.Component.extend({
 
             if (!element.validity.valid) {
                 isFormValid = false;
-                alert(element.value);
             }
         });
         return isFormValid;
@@ -60,6 +59,11 @@ export default Ember.Component.extend({
 
 
     actions: {
+
+        updateProperty(key, value) {
+            let property = "model." + key;
+            this.set(property, value);
+        },
 
         updateProfilePic: function (event) {
             const reader = new FileReader();
@@ -103,67 +107,7 @@ export default Ember.Component.extend({
             if (result) {
                 this.get('model.teamId').removeObject(team);
             }
-        },
-
-        addPersonalLink() {
-
-            this.set('submitModal', 'submitModal');
-
-            let namefield = (Ember.$("#newPersonalLinkName").get())[0];
-            let linkfield = (Ember.$("#newPersonalLinkLink").get())[0];
-
-            if (namefield.validity.valid && linkfield.validity.valid) {
-                this.set('submitModal', '');
-
-                this.get('model.personalLinks').addObject(this.get('newPersonalLink'));
-                this.set('newPersonalLink', {});
-                this.set('submitModalButton', 'btn btn-primary')
-
-            }
-
-        },
-
-        CancelAddingPersonalLink() {
-            this.set('submitModal', '')
-            this.set('newPersonalLink', {});
-
-        },
-
-        CancelAddingAdminLink() {
-            this.set('submitModal', '')
-            this.set('newAdminLink', {});
-        },
-
-        removePersonalLink(personallink) {
-            var result = confirm("Are you sure you want to remove this link?")
-            if (result) {
-                this.get('model.personalLinks').removeObject(personallink);
-            }
-        },
-        addAdminLink() {
-            this.set('submitModal', 'submitModal');
-
-            let namefield = (Ember.$("#newAdminLinkName").get())[0];
-            let linkfield = (Ember.$("#neAdminLinkLink").get())[0];
-
-            if (namefield.validity.valid && linkfield.validity.valid && this.isLoggedinUserAdministrator) {
-                this.get('model.adminLinks').addObject(this.get('newAdminLink'));
-                this.set('newAdminLink', {});
-                this.set('submitModal', '');
-            }
-
-
-        },
-        removeAdminLink(adminLink) {
-            var result = confirm("Are you sure you want to delete this link?");
-            if (result) {
-                if (this.isLoggedinUserAdministrator) {
-                    this.get('model.adminLinks').removeObject(adminLink);
-                }
-            }
-        },
-
-
+        }
 
     }
 
