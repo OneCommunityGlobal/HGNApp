@@ -1,0 +1,225 @@
+<div class="container">
+    <form id="userProfileForm" class= {{isFormSubmitted}}>
+        <div class="form-row col-md-12">
+            <div class="form-group col-md-6">
+                <img input id="image" type="image  " alt="Profile Picture" src= {{model.profilePic}} name=profilePic class="img-responsive logo"
+                />
+                {{#if canUserEditPersonalFields}}
+                    <label for="newProfilePic" class="btn btn-sm btn-info">Update My Image</label>
+                    <input id="newProfilePic" style="visibility:hidden" multiple="true" onchange= {{action "updateProfilePic"}} accept="image/png,image/jpeg"
+                        name= {{newProfilePic}} type="file" />
+                {{/if}}
+            </div>
+            <div class="form-group col-md-6">
+                <div class="card border-info mb-3">
+                    <div class="card-header">My Badges</div>
+                    <div class="card-body">
+                        <p class="card-text">Some badges to show up here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label class="control-label" for="firstName">*First Name:</label>
+                <input id="firstName" class="form-control" required minlength= {{minNamelength}} maxlength= {{maxNamelength}} type="text" value= {{model.firstName}}
+                    placeholder="First Name" readonly= {{if canUserEditPersonalFields null "readonly" }} onchange= {{action (mut model.firstName) value = "target.value"}}
+                />
+            </div>
+            <div class="form-group col-md-5">
+                <label class="control-label" for="lastName">*Last Name:</label>
+                <input id="lastName" class="form-control" required minlength= {{minNamelength}} maxlength= {{maxNamelength}} type="text" value= {{model.lastName}}
+                    placeholder="Last Name" readonly= {{ if canUserEditPersonalFields null "readonly" }} onchange= {{action (mut model.lastName) value = "target.value"}}
+                />
+            </div>
+            <div class="form-group col-md-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" value=1 name="userActiveOptions" onchange= {{action (mut model.isActive) 1}}
+                        checked= {{if model.isActive "true" null}} readonly= {{if isLoggedinUserAdministrator null "readonly"}}>
+                    <label class="form-check-label" for="inlineRadio1">Active</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="userActiveOptions" value=0 onchange= {{action (mut model.isActive) 0}}
+                        checked= {{if model.isActive null true}} readonly= {{if isLoggedinUserAdministrator null "readonly"}}>
+                    <label class="form-check-label" for="inlineRadio2">Inactive</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label class="control-label" for="Email">*Email:</label>
+                <input class="form-control" type="email" required value= {{model.email}} readonly= {{if isLoggedinUserAdministrator null "readonly"}}
+                    placeholder="Email" onchange= {{action (mut model.email) value = "target.value"}} />
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label" for="role">*Role:</label>
+                <input class="form-control" required type="text" value= {{model.role}} readonly= {{if isLoggedinUserAdministrator null "readonly"}}
+                    placeholder="Role" onchange= {{action (mut model.role) value = "target.value"}} />
+            </div>
+            <div class="form-group col-md-4">
+                <label class="control-label" for="role">*Weekly Comitted Hours:</label>
+                <input class="form-control" type="number" min= {{minWeeklyCommittedHours}} max= {{maxWeeklyCommittedHours}} value= {{model.weeklyComittedHours}}
+                    readonly= {{if isLoggedinUserAdministrator null
+        "readonly"}} placeholder="Weekly Comitted Hours" onchange= {{action (mut model.weeklyComittedHours) value = "target.value"}}
+                />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-xs-12">
+                <label class="control-label" for="bio">*Bio:</label>
+                {{ textarea id = "bio" class = "form-control" value= model.bio options=options readonly = (if canUserEditPersonalFields null "readonly" )}}
+            </div>
+        </div>
+        <div class="form-row col-xs-12">
+            <div class="card-deck">
+                <div class="card card-outline-success mb-3">
+                    <div class="card-block">
+                        <h4 class="card-title">Personal Links</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">{{if (is-array-empty model.personalLinks) "No social or professional memberships defined" ""}}</h6>
+                        <p class="card-text">
+                            {{#each model.personalLinks as |personallink|}}
+                                <div class="form-row col-md-12">
+                                    <div class="form-group col-md-2">
+                                        <label required="true" minlength= {{minLinksNameLength}} maxlength= {{maxLinksNameLength}} class="control-label" for="link">{{personallink.Name}}:</label>
+                                    </div>
+                                    <div class="form-group col-md-8">
+                                        {{input required = "true" class="form-control" name ="link" type = "url" value = personallink.Link readonly = (if canUserEditPersonalFields null "readonly" )}}
+                                    </div>
+                                    {{#if canUserEditPersonalFields }}
+                                        <div class="form-group col-md-2">
+                                            <span class="glyphicon glyphicon-remove pull-right" data-toggle="tooltip" data-placement="right" title="Remove this link"
+                                                {{action "removePersonalLink" personallink}}></span>
+                                        </div>
+                                    {{/if}}
+                                </div>
+                            {{/each}}
+                        </p>
+                        {{#if canUserEditPersonalFields }}
+                            <a href="#" class="card-link" data-toggle="modal" data-target="#newpersonallink">Add New Personal Link</a>
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="card card-outline-info mb-3">
+                    <div class="card-block">
+                        <h4 class="card-title">Administrative Links</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">{{if (is-array-empty model.adminLinks) "No administrative links defined" ""}}</h6>
+                        <p class="card-text">
+                            {{#each model.adminLinks as |adminLink|}}
+                                <div class="form-row col-md-12">
+                                    <div class="form-group col-md-2">
+                                        <label required="true" minlength= {{minLinksNameLength}} maxlength= {{maxLinksNameLength}} class="control-label" for="link">{{adminLink.Name}}:</label>
+                                    </div>
+                                    <div class="form-group col-md-8">
+                                        {{input required = "true"class="form-control" name ="link" type = "url" value = adminLink.Link readonly = (if isLoggedinUserAdministrator null
+          "readonly") }}
+                                    </div>
+                                    {{#if isLoggedinUserAdministrator}}
+                                        <div class="form-group col-md-2">
+                                            <span class="glyphicon glyphicon-remove pull-right" data-toggle="tooltip" data-placement="right" title="Remove this link"
+                                                {{action "removeAdminLink" adminLink}}></span>
+                                        </div>
+                                    {{/if}}
+                                </div>
+                            {{/each}}
+                        </p>
+                        {{# if isLoggedinUserAdministrator}}
+                            <a href="#" class="card-link" data-toggle="modal" data-target="#newadminlink">Add New Administrative Link</a>
+                            {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="form-row col-xs-12">
+                <label class="control-label col-xs-3">Team Memberships:</label>
+                {{#if (is-array-empty model.teamId)}}
+                    <small>No team memberships</small>
+                {{/if}}
+                {{#if isLoggedinUserAdministrator}}
+                    <a class=" pull-right text-center col-xs-6" data-toggle="modal" data-target="#newteamlink" href="">
+                        Assign to another team
+                    </a>
+                {{/if}}
+            </div>
+            {{#each model.teamId as |team|}}
+                <div class="form-row col-md-12">
+                    <div class="form-group col-md-8">
+                        {{input class="form-control" name=team type = "text" value = team.teamName readonly = "readonly"}}
+                    </div>
+                    {{#if isLoggedinUserAdministrator}}
+                        <div class="form-group col-md-2">
+                            <span class="glyphicon glyphicon-remove pull-right" {{action "removeTeamMembership" team}}></span>
+                        </div>
+                    {{/if}}
+                </div>
+            {{/each}}
+        </div>
+        <div class="form-row">
+            <div class="col-xs-6">
+                <a href="/dashboard" class=" button btn btn-danger">Cancel</a>
+            </div>
+            <div class="col-xs-6">
+                <button class="btn btn-primary pull-right" {{action 'postChanges'}}> Save Changes</button>
+            </div>
+        </div>
+        <!-- Modal for admin Links-->
+        <div class="modal fade" id="newadminlink" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">New Administrative Link</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body {{submitModal}}">
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <input id="newAdminLinkName" required minlength= {{minLinksNameLength}} maxlength= {{maxLinksNameLength}} class="form-control"
+                                    value= {{newAdminLink.Name}} placeholder="Name" />
+                                <div class="form-group col-md-6">
+                                    <input id="newAdminLinkLink" required class="form-control" value= {{newAdminLink.Link}} type="url" placeholder="Link" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" {{action "CancelAddingAdminLink" }}>Cancel</button>
+                            <button type="button" class="btn btn-primary" {{action "addAdminLink" }}>Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal for Personal Links-->
+        <div class="modal fade" id="newpersonallink" tabindex="-2" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">New Personal Social Link</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body {{submitModal}}">
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <input id="newPersonalLinkName" required="true" minlength= {{minLinksNameLength}} maxlength= {{maxLinksNameLength}} class="form-control"
+                                    value= {{newPersonalLink.Name}} placeholder="Name" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input id="newPersonalLinkLink" required="true" class="form-control" value= {{newPersonalLink.Link}} type="url" placeholder="Link"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer  ">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" {{action "CancelAddingPersonalLink" }}>Cancel</button>
+                        {{#if canUserEditPersonalFields }}
+                            <button type="submit" class="btn btn-primary" {{action "addPersonalLink" }}>Save changes</button>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

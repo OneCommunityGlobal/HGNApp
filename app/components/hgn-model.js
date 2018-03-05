@@ -11,8 +11,10 @@ export default Ember.Component.extend({
       //
     },
     doClose(d) {
-    //  if(confirm('Please confirm...')) {
-    if(true){
+      //  if(confirm('Please confirm...')) {
+
+
+      if (true) {
         d.resolve();
       } else {
         d.reject();
