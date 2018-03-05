@@ -12,16 +12,8 @@ export default Ember.Component.extend({
     userProfileService: Ember.inject.service('user-profile-service'),
     showErrors: true,
     showFormErrors: false,
-    newPersonalLink: {
-        Name: "",
-        Link: ""
-    },
-    newAdminLink: {
-        Name: "",
-        Link: ""
-    },
     newProfilePic: "",
-    newLinkformValidate: false,
+
 
 
     isLoggedinUserAdministrator: Ember.computed('userrole', function () {
@@ -63,6 +55,7 @@ export default Ember.Component.extend({
         updateProperty(key, value) {
             let property = "model." + key;
             this.set(property, value);
+
         },
 
         updateProfilePic: function (event) {
@@ -101,12 +94,6 @@ export default Ember.Component.extend({
 
 
 
-        },
-        removeTeamMembership(team) {
-            var result = confirm("Are you sure you want to delete membership to this team?");
-            if (result) {
-                this.get('model.teamId').removeObject(team);
-            }
         }
 
     }

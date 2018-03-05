@@ -1,0 +1,48 @@
+{{yield}}
+<div class="card mb-3">
+    <div class="card-block">
+        <h4 class="card-title">Team Memberships</h4>
+        <p class="card-text">{{isArrayEmptyText}}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+        {{#each userteams as |team|}}
+            <li class="list-group-item">
+                <a href="/team/{{team._id}}">{{team._id}}</a>
+                {{#if isEditable}}
+                    <span class="glyphicon glyphicon-remove pull-right" {{action "removeTeamMembership" team}}></span>
+                {{/if}}
+            </li>
+        {{/each}}
+    </ul>
+    <div class="card-block">
+        {{#if isEditable}}
+            <a href="#" class="card-link" data-toggle="modal" data-target="#newteammembership" {{action "loadAllTeams"}}>Manage Membership</a>
+        {{/if}}
+    </div>
+</div>
+{{#if isEditable}}
+    <div class="modal fade" id="newteammembership" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Manage Memberships</h5>
+                </div>
+                <div class="modal-body {{submitModal}}">
+                    <div class="form-row">
+                        {{#each allTeams as |team|}}
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id= {{team._id}} value= {{team._id}} checked= {{if (record-in-array userteams team) "checked" null}}
+                                    onchange= {{action "edituserteams" team}}>
+                                <label class="form-check-label" for= {{team._id}}>{{team._id}}</label>
+                            </div>
+                        {{/each}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" {{action "cancelAction" }}>Cancel</button>
+                        <button type="button" class="btn btn-primary" {{action "manageTeamMemberships" }} class="close" data-dismiss="modal">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/if}}

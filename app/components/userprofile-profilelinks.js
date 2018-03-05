@@ -2,43 +2,47 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
     submitModal: "",
+    name: "",
     linksarray: "",
     newLink: {
         Name: "",
         Link: ""
     },
 
-    isArrayEmptyText: Ember.computed('linksarray', function () {
+    isArrayEmptyText: Ember.computed('linksarray.[]', function () {
 
         let text = "No link defined";
 
         let array = this.get('linksarray');
-        return (array.length === 0) ? text : "";
+        return (array.length > 0) ? "" : text;
 
     }),
+
+    notifyparent: function () {
+        let key = this.get('name');
+        let value = this.get('linksarray');
+        this.sendAction("onchangeaction", key, value);
+    },
 
     actions:
         {
             addLink() {
-
-                this.set('submitModal', 'submitModal');
-
                 let namefield = (Ember.$("#newLinkName").get())[0];
                 let linkfield = (Ember.$("#newLinkLink").get())[0];
+                this.set('submitModal', 'submitModal');
 
-                alert(this.get("newLink.Name"));
-                alert(this.get("newLink.Link"));
-                let _newlink = this.get('newLink')
+                let _newlink = {
+
+                    Name: this.get('newLink.Name'),
+                    Link: this.get('newLink.Link')
+                };
 
                 if (namefield.validity.valid && linkfield.validity.valid) {
                     this.set('submitModal', '');
                     this.get('linksarray').addObject(_newlink);
-                    this.notifyPropertyChange('linksarray');
-                    let key = this.get('name');
-                    let value = this.get('linksarray');
-                    this.sendAction("onchangeaction", key, value);
                     this.set('newLink.Name', "");
                     this.set('newLink.Link', "");
+                    this.notifyparent();
 
                 }
 
@@ -55,10 +59,7 @@ export default Ember.Component.extend({
                 var result = confirm("Are you sure you want to remove this link?")
                 if (result) {
                     this.get('linksarray').removeObject(link);
-                    this.notifyPropertyChange('linksarray');
-                    let key = this.get('name');
-                    let value = this.get('linksarray');
-                    this.sendAction("onchangeaction", key, value);
+                    this.notifyparent();
 
                 }
             },

@@ -4,51 +4,47 @@ import ENV from '../config/environment';
 
 export default Ember.Service.extend({
 
-  self: this,    
+  self: this,
 
 
 
-  createActionItem(actionItem)
-  {
-    let relativePath =  "/actionItem" ;
+  createActionItem(actionItem) {
+    let relativePath = "/actionItem";
 
-        let data = actionItem;
-        let method = "post";
-
-    let request = this.createEmberrequestObject(relativePath, data, method);
-    return request;
-
-  },
-  getActionItems(requestor)
-  {
-    let relativePath =  "/actionItem/user/" + requestor.requestorId;
-
-        let data = null;
-        let method = "get";
+    let data = actionItem;
+    let method = "post";
 
     let request = this.createEmberrequestObject(relativePath, data, method);
     return request;
 
   },
-  
-  editActionItem(actionItem)
-  {
-    let relativePath =  "/actionItem/" + actionItem._id;
+  getActionItems(requestor) {
+    let relativePath = "/actionItem/user/" + requestor.requestorId;
+
+    let data = null;
+    let method = "get";
+
+    let request = this.createEmberrequestObject(relativePath, data, method);
+    return request;
+
+  },
+
+  editActionItem(actionItem) {
+    let relativePath = "/actionItem/" + actionItem._id;
 
     let data = actionItem;
     let method = "put";
 
-let request = this.createEmberrequestObject(relativePath, data, method);
-return request;
+    let request = this.createEmberrequestObject(relativePath, data, method);
+    return request;
 
   },
 
-  deleteActionItem(actionItem)
-  {
-    let relativePath =  "/actionItem/"+ actionItem._id ;
+  deleteActionItem(actionItem) {
+    let relativePath = "/actionItem/" + actionItem._id;
 
-        let data = null;
-        let method = "delete";
+    let data = null;
+    let method = "delete";
 
     let request = this.createEmberrequestObject(relativePath, data, method);
     return request;
@@ -56,24 +52,33 @@ return request;
   },
 
 
-  getUnreadNotifications(requestor)
-  {
-    let relativePath =  "/notification/user/" + requestor.requestorId;
+  getUnreadNotifications(requestor) {
+    let relativePath = "/notification/user/" + requestor.requestorId;
 
-        let data = null;
-        let method = "get";
+    let data = null;
+    let method = "get";
 
     let request = this.createEmberrequestObject(relativePath, data, method);
     return request;
 
   },
 
-  deleteNotification(id)
-  {
-    let relativePath =  "/notification/" + id;
+  deleteNotification(id) {
+    let relativePath = "/notification/" + id;
 
-        let data = null;
-        let method = "delete";
+    let data = null;
+    let method = "delete";
+
+    let request = this.createEmberrequestObject(relativePath, data, method);
+    return request;
+
+  },
+
+  getAllTeams() {
+    let relativePath = "/team/";
+
+    let data = null;
+    let method = "get";
 
     let request = this.createEmberrequestObject(relativePath, data, method);
     return request;
@@ -86,7 +91,7 @@ return request;
       "data": data,
       "method": method,
       "dataType": "JSON",
-      beforeSend: function(xhr) {
+      beforeSend: function (xhr) {
         xhr.setRequestHeader("Authorization", localStorage.getItem(ENV.TOKEN_KEY));
       }
     });
