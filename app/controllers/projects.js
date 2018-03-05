@@ -13,6 +13,11 @@ export default Ember.Controller.extend({
   task: {
     Description: ""
   },
+  project: {
+    projectName: "",
+    tasks: [],
+    isActive: true
+  },
   isUserNotAdministrator: Ember.computed('userrole', function () {
     let userrole = this.get('userrole');
     return userrole === "Administrator" ? false : true;
@@ -35,7 +40,8 @@ export default Ember.Controller.extend({
     },
     destroyProject(project) {
       this.get('model').removeObject(project);
-      this.get('projectService').deleteProject(project);
+      this.get('projectService').deleteProject(project)
+      .then (alert('removed'));
     },
     postChanges() {
       let projectId = this.get('projectId');
