@@ -25,7 +25,7 @@
               </button>
               {{/each}}
               {{input class="form-control required" type="text" placeholder="Enter task" value=task.Description }}
-              <button class="btn" type="button" {{action 'addNewTask' task}}><span class="glyphicon glyphicon-plus"></span>
+              <button class="btn" type="button" {{action 'addNewTask'}}><span class="glyphicon glyphicon-plus"></span>
             </button>
             </div>
             <div>
@@ -54,7 +54,7 @@
           <ul class="list-unstyled">
             <li>
               {{ project-detail project=projectItem}}
-          <!--    <button class="btn" type="button" {{action 'destroyProject' project}}><span class="glyphicon glyphicon-remove"></span></button> -->
+             <button class="btn" type="button" {{action 'destroyProject' projectItem}}><span class="glyphicon glyphicon-remove"></span></button> 
           </li>
         </ul>
           {{/each}}
