@@ -7,7 +7,7 @@
     <ul class="list-group list-group-flush">
         {{#each userteams as |team|}}
             <li class="list-group-item">
-                <a href="/team/{{team._id}}">{{team._id}}</a>
+                <a href="/team/{{team._id}}">{{team.teamName}}</a>
                 {{#if isEditable}}
                     <span class="glyphicon glyphicon-remove pull-right" {{action "removeTeamMembership" team}}></span>
                 {{/if}}
@@ -33,7 +33,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id= {{team._id}} value= {{team._id}} checked= {{if (record-in-array userteams team) "checked" null}}
                                     onchange= {{action "edituserteams" team}}>
-                                <label class="form-check-label" for= {{team._id}}>{{team._id}}</label>
+                                <label class="form-check-label" for= {{team._id}}>{{team.teamName}}</label>
                             </div>
                         {{/each}}
                     </div>
