@@ -4,4 +4,4 @@
     {{/if}} {{label}}:</label>
 <input id= {{name}} name= {{name}} class="form-control" required= {{if isRequired "true" null}} minlength= {{minlength}} maxlength= {{maxlength}}
     type= {{type}} value= {{value}} placeholder= {{label}} readonly= {{if isEditable null "readonly" }} onchange= {{action "notifyChange"}}
-    min= {{min}} max= {{max}} pattern= {{pattern}} /> {{yield}}
+    min= {{min}} max= {{max}} pattern= {{pattern}} list= {{list}} /> {{yield}}

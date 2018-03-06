@@ -80,13 +80,25 @@ export default Ember.Component.extend({
                 let userId = this.get('model._id');
                 let user = this.get('model');
 
-                this.get('userProfileService').editUserProfileData(user, userId)
-                    .then(results => {
-                        toastr.success("", 'Changes Saved');
-                    }, error => {
-                        console.log(error);
-                        toastr.warning(error.responseJSON.message, 'Error!!');
-                    });
+                if (userId) {
+                    this.get('userProfileService').editUserProfileData(user, userId)
+                        .then(results => {
+                            toastr.success("", 'Changes Saved');
+                        }, error => {
+
+                            toastr.warning(error.responseJSON.message, 'Error!!');
+                        });
+                }
+                else {
+                    this.get('userProfileService').postUserProfileData(user)
+                        .then(results => {
+                            toastr.success("", 'New user created successfully');
+                        }, error => {
+
+                            toastr.warning(error.responseJSON.message, 'Error!!');
+                        });
+
+                }
             }
             else {
                 alert("Please fix the form errors");
