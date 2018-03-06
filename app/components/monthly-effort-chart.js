@@ -43,6 +43,14 @@ export default Ember.Component.extend({
 
     baroptions:
         {
+            layout: {
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            },
             scales: {
                 yAxes: [{
                     ticks: {
