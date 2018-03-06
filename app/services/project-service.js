@@ -16,9 +16,8 @@ export default Ember.Service.extend({
     return request;
   },
 
-  getProjectById(projectId)
-  {
-    let relativePath = "/project/"+ projectId;
+  getProjectById(projectId) {
+    let relativePath = "/project/" + projectId;
     let data = "";
     let method = "get";
 
@@ -27,8 +26,7 @@ export default Ember.Service.extend({
     return request;
   },
 
-  postProject(project)
-  {
+  postProject(project) {
     let relativePath = "/project/";
     let data = project;
     let method = "post";
@@ -38,8 +36,8 @@ export default Ember.Service.extend({
     return request;
   },
 
-  editProjectData(project, projectId) {
-    let relativePath = "/project/"+ projectId;
+  editProjectData(projectId) {
+    let relativePath = "/project/" + projectId;
     let data = project;
     let method = "put";
 
@@ -47,8 +45,7 @@ export default Ember.Service.extend({
     return request;
   },
 
-  deleteProject(id)
-  {
+  deleteProject(id) {
     let relativePath = "/project/" + id;
     let data = null;
     let method = "delete";
