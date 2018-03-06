@@ -79,9 +79,9 @@ export default Ember.Component.extend({
 
 
                     datasets: [
-                        { data: totaltangibletimedataset, backgroundColor: tangiblecolors },
-                        { data: totalintagibledataset, backgroundColor: intangiblecolors },
-                        { data: totaltimedataset, backgroundColor: totalcolors },
+                        { label: "Tangible Time", data: totaltangibletimedataset, backgroundColor: tangiblecolors },
+                        { label: "Intangible Time", data: totalintagibledataset, backgroundColor: intangiblecolors },
+                        { label: "Total Time", data: totaltimedataset, backgroundColor: totalcolors },
 
 
                     ]
@@ -105,6 +105,7 @@ export default Ember.Component.extend({
         },
         scales: {
             xAxes: [{
+
                 ticks: {
                     beginAtZero: true,
 
@@ -118,7 +119,7 @@ export default Ember.Component.extend({
                 stacked: true
             }],
             yAxes: [{
-
+                labelAngle: 50,
                 stacked: true,
                 maxBarThickness: 20
             }]
