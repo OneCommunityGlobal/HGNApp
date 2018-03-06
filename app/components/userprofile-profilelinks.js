@@ -14,7 +14,7 @@ export default Ember.Component.extend({
         let text = "No link defined";
 
         let array = this.get('linksarray');
-        return (array.length > 0) ? "" : text;
+        return (array && array.length > 0) ? "" : text;
 
     }),
 

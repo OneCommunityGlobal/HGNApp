@@ -4,7 +4,7 @@ export default Ember.Component.extend({
 
     isArrayEmptyText: Ember.computed('userteams.[]', function () {
         let _teams = this.get('userteams');
-        return (_teams.length > 0) ? "" : "No Team Memberships defined";
+        return (_teams && _teams.length > 0) ? "" : "No Team Memberships defined";
     }),
     allTeams: "",
     dataService: Ember.inject.service("datastore-service"),
