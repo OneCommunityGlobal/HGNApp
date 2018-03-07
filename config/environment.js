@@ -6,7 +6,7 @@ module.exports = function (environment) {
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
-    webServer: "http://localhost:4500/api",
+    webServer: " https://hgn-rest.azurewebsites.net/api",
     REQUEST_AUTHKEY: "Authorization",
     TOKEN_KEY: "token",
     contentSecurityPolicy: {
