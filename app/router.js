@@ -12,12 +12,14 @@ Router.map(function() {
 
   });
   this.route('dashboard');
-  this.route('timelog');
+  this.route('timelog', { path: '/timelog/:userId' });
   this.route('login');
-  this.route('myprofile');
   this.route('usermanagement');
   this.route('badges');
-
+  this.route('project', function () {
+    this.route('viewproject', { path: '/:projectId' });
+  });
+  this.route('profile', { path: '/profile/:userId' });
 });
 
 export default Router;

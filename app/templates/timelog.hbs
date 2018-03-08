@@ -2,14 +2,10 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8">
-     
-      {{hgn-notifications loggedinUser = loggedinUser}}     
-      
-        {{hgn-actionitems  loggedinUser = loggedinUser }}
-
+      {{hgn-notifications loggedinUser = loggedinUser forUserId = model.forUserId}} {{hgn-actionitems  loggedinUser = loggedinUser forUserId = model.forUserId  }}
+      {{#if isEditable}}
         {{hgn-task-update-form loggedinUser = loggedinUser }}
-     
-    
+      {{/if}}
       <div class="col-md-12">
         <div class="panel panel-default" style="min-height: 350px">
           <div class="panel-heading">Contributions So Far</div>
@@ -21,29 +17,23 @@
             </div>
             <div style="border: solid 1px lightgrey">
               <h6>Week 1</h6>
-            <div>
-              <span>Total Tangible Time: 5</span>
-              <span style="float:right">Total Intangible Time:1 </span>
-            </div>
+              <div>
+                <span>Total Tangible Time: 5</span>
+                <span style="float:right">Total Intangible Time:1 </span>
+              </div>
               <hr>
               <div class="name">UserName</div>
-             <p> Worked on the project page especially to display the updates of the project on one of the columns.
-              Also added the timestamp information of task
-             </p>
-
-              <div class="time ui-btn ui-icon-clock ui-btn-icon-left">Time Worked: 5h  </div>
-
+              <p> Worked on the project page especially to display the updates of the project on one of the columns. Also added
+                the timestamp information of task
+              </p>
+              <div class="time ui-btn ui-icon-clock ui-btn-icon-left">Time Worked: 5h </div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="col-md-4">
-     {{weekly-effort-chart loggedinUser = loggedinUser}}
-
-    
-      {{monthly-effort-chart loggedinUser = loggedinUser}}
+      {{weekly-effort-chart forUserId = model.forUserId }} {{monthly-effort-chart forUserId = model.forUserId}}
     </div>
   </div>
-
 </div>

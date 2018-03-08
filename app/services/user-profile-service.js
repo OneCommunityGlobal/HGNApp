@@ -32,8 +32,8 @@ export default Ember.Service.extend({
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
     return request;
   },
-  postUserProfileData(user){
-    
+  postUserProfileData(user) {
+
     let relativePath = "/userprofile";
     let data = user;
     let method = "post";
@@ -42,10 +42,9 @@ export default Ember.Service.extend({
     return request;
   },
 
-  getTeamMembers(user)
-  {
-    
-    let relativePath = "/userprofile/reportees/"+ user.requestorId;
+  getTeamMembers(user) {
+
+    let relativePath = "/userprofile/reportees/" + user.requestorId;
     let data = null;
     let method = "get";
 

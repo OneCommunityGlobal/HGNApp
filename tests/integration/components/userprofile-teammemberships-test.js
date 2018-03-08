@@ -1,23 +1,24 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('d3-code', 'Integration | Component | d3 code', {
+moduleForComponent('userprofile-teammemberships', 'Integration | Component | userprofile teammemberships', {
   integration: true
 });
 
 test('it renders', function(assert) {
+
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{d3-code}}`);
+  this.render(hbs`{{userprofile-teammemberships}}`);
 
   assert.equal(this.$().text().trim(), '');
 
   // Template block usage:
   this.render(hbs`
-    {{#d3-code}}
+    {{#userprofile-teammemberships}}
       template block text
-    {{/d3-code}}
+    {{/userprofile-teammemberships}}
   `);
 
   assert.equal(this.$().text().trim(), 'template block text');

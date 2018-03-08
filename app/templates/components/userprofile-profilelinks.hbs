@@ -1,0 +1,55 @@
+<div class="card card-outline-success">
+    <div class="card-block">
+        <h4 class="card-title">{{label}}s</h4>
+        <h6 class="card-subtitle mb-2 text-muted">{{isArrayEmptyText}}</h6>
+        <p class="card-text">
+            {{#each linksarray as |link|}}
+                <div class="form-row col-md-12">
+                    <div class="form-group col-md-2">
+                        <label required="true" minlength= {{minLinksNameLength}} maxlength= {{maxLinksNameLength}} class="control-label" for="link">{{link.Name}}:</label>
+                    </div>
+                    <div class="form-group col-md-8">
+                        {{input required = "true" class="form-control" name ="link" type = "url" value = link.Link readonly = (if isEditable null "readonly" )}}
+                    </div>
+                    {{#if isEditable }}
+                        <div class="form-group col-md-2">
+                            <span class="glyphicon glyphicon-remove pull-right" data-toggle="tooltip" data-placement="right" title="Remove this link"
+                                {{action "removeLink" link}}></span>
+                        </div>
+                    {{/if}}
+                </div>
+            {{/each}}
+        </p>
+        {{#if isEditable }}
+            <a href="#" class="card-link" data-toggle="modal" data-target="#new{{name}}">Add New {{label}}</a>
+        {{/if}}
+    </div>
+</div>
+{{#if isEditable}}
+    <div class="modal fade" id="new{{name}}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">New {{label}}</h5>
+                    {{!-- <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> --}}
+                </div>
+                <div class="modal-body {{submitModal}}">
+                    <div class="form-row">
+                        <input id="newLinkName" class="form-control col-md-6 mb-3" required minlength= {{minLinksNameLength}} maxlength= {{maxLinksNameLength}}
+                            placeholder="Name" value= {{newLink.Name}} type="text" onchange= {{action (mut newLink.Name) value = "target.value" }}
+                        />
+                        <input id="newLinkLink" class="form-control col-md-6 mb-3" required type="url" placeholder="Link" value= {{newLink.Link}}
+                            onchange= {{action (mut newLink.Link) value = "target.value" }} />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" {{action "CancelAddingLink" }}>Cancel</button>
+                        <button type="button" class="btn btn-primary" {{action "addLink" }}>Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/if}}
+{{yield}}
