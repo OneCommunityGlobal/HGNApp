@@ -36,12 +36,12 @@ export default Ember.Component.extend({
                             name: name,
                             weeklycommited: weeklycommited,
                             personId: element.personId,
-                            tangibletime: tangibletime,
+                            tangibletime: parseFloat(tangibletime).toFixed(2),
                             tangibletimewidth: tangibletimewidth,
                             intangibletimewidth: intangibletimewidth,
                             tangiblebarcolor: tangiblebarcolor,
-                            intangibletime: intangibletime,
-                            totaltime: totaltime
+                            intangibletime: parseFloat(intangibletime).toFixed(2),
+                            totaltime: parseFloat(totaltime).toFixed(2)
                         }
 
                     resultset.pushObject(result)
@@ -134,6 +134,18 @@ export default Ember.Component.extend({
             display: true
         },
 
+
+    },
+
+    didRender() {
+        this._super(...arguments);
+        Ember.run.scheduleOnce('afterRender', this, 'scrollToRow');
+    },
+
+    scrollToRow() {
+        let row = Ember.$("tr.table-active").get()[0];
+
+        row.scrollIntoView({ behavior: "smooth", inline: "center", block: "center" });
 
     }
 

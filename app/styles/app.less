@@ -29,18 +29,14 @@ div.submitModal  input:invalid {
   {
     display: block
   }
-
-  .leaderboardtable
-  {
+  
+  .leaderboardtable>thead>tr>th, .leaderboardtable>tbody>tr>th, .leaderboardtable>tfoot>tr>th, .leaderboardtable>thead>tr>td, .leaderboardtable>tbody>tr>td, .leaderboardtable>tfoot>tr>td {
+    padding: 2px;
     font-size: x-small;
-    border-collapse: collapse;
-    border:0;
-    padding: 0px;
-    
-  } 
+    }
+  
+    .progress
+    {
+      border-radius: 10px
+    }
 
-  .leaderboardtable td
-  {
-    padding:0; margin:0;
-    
-  }
