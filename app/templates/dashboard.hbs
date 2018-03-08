@@ -3,9 +3,10 @@
     <div class="col-md-3">
       <div class="col-md-12">
         {{ hgn-profilebox
-         firstName=model.firstName lastName = model.lastName role=model .role
+         firstName=model.firstName lastName = model.lastName role=model.role
          logo=model.profilePic
-         MyProfile = (action 'MyProfile')
+         id =model._id
+        
          }}
       </div>
       <div class="col-md-12">
@@ -32,10 +33,10 @@
         </div>
       </div>
       <div class="col-md-6">
-        {{weekly-effort-chart loggedinUser = loggedinUser}}
+        {{weekly-effort-chart forUserId= loggedinUser.requestorId}}
       </div>
       <div class="col-md-6">
-        {{monthly-effort-chart loggedinUser = loggedinUser}}
+        {{monthly-effort-chart forUserId =  loggedinUser.requestorId}}
       </div>
     </div>
   </div>

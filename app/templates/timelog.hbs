@@ -2,7 +2,10 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8">
-      {{hgn-notifications loggedinUser = loggedinUser }} {{hgn-actionitems  loggedinUser = loggedinUser }} {{hgn-task-update-form loggedinUser = loggedinUser }}
+      {{hgn-notifications loggedinUser = loggedinUser forUserId = model.forUserId}} {{hgn-actionitems  loggedinUser = loggedinUser forUserId = model.forUserId  }}
+      {{#if isEditable}}
+        {{hgn-task-update-form loggedinUser = loggedinUser }}
+      {{/if}}
       <div class="col-md-12">
         <div class="panel panel-default" style="min-height: 350px">
           <div class="panel-heading">Contributions So Far</div>
@@ -30,7 +33,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      {{weekly-effort-chart loggedinUser = loggedinUser}} {{monthly-effort-chart loggedinUser = loggedinUser}}
+      {{weekly-effort-chart forUserId = model.forUserId }} {{monthly-effort-chart forUserId = model.forUserId}}
     </div>
   </div>
 </div>
