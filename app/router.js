@@ -6,7 +6,10 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('projects');
+  this.route('projects', function() {
+    this.route('newProject');
+    this.route('projectDetail', {path:'/:projectId'});
+  });
   this.route('dashboard');
   this.route('timelog');
   this.route('login');

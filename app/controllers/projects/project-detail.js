@@ -1,16 +1,21 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  init(){
-      this._super(...arguments);
-    },
 
-  isProjectDetail: false,
+  self: this,
+  projectService: Ember.inject.service('project-service'),
+
+  project: {
+    projectName: "",
+    tasks: [],
+    isActive: true
+  },
+  task: {
+    Description: ""
+  },
 
   actions: {
-    toggleProjectDetail() {
-      this.toggleProperty('isProjectDetail');
-    },
+
     addNewTask() {
       this.get('project.tasks').addObject(this.get('task'));
       this.get('projectService').editProjectData();
