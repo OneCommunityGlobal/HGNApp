@@ -38,11 +38,7 @@ export default Ember.Controller.extend({
       this.get('projectService').postProject(project);
       this.set('newProject', {});
     },
-    destroyProject(project) {
-      this.get('model').removeObject(project);
-      this.get('projectService').deleteProject(project)
-      .then (alert('removed'));
-    },
+
     postChanges() {
       let projectId = this.get('projectId');
       let project = this.get('model');

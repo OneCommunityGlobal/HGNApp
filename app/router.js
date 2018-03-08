@@ -5,8 +5,12 @@ const Router = Ember.Router.extend({
   location: config.locationType
 });
 
-Router.map(function () {
-  this.route('projects');
+Router.map(function() {
+  this.route('projects', function() {
+    this.route('projectDetail',{path:'/:projectId'});
+    this.route('newProject');
+
+  });
   this.route('dashboard');
   this.route('timelog', { path: '/timelog/:userId' });
   this.route('login');
