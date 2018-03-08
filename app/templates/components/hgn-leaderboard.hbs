@@ -20,7 +20,14 @@
                     {{/if}}
                 </td>
                 <td>
-                    <a href="/profile/ {{result.personId}} ">{{result.name}}</a>
+                    <div>{{result.name}}
+                        <div class="actions">
+                            <small>
+                                <a href="/profile/{{result.personId}}">Profile</a>
+                                <a href="/timelog/{{result.personId}}">Timelog</a>
+                            </small>
+                        </div>
+                    </div>
                 </td>
                 <td>
                     {{result.tangibletime}}tan

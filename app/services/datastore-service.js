@@ -52,8 +52,8 @@ export default Ember.Service.extend({
   },
 
 
-  getUnreadNotifications(requestor) {
-    let relativePath = "/notification/user/" + requestor.requestorId;
+  getUnreadNotifications(requestorId) {
+    let relativePath = "/notification/user/" + requestorId;
 
     let data = null;
     let method = "get";

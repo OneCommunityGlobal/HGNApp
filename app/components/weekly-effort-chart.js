@@ -5,7 +5,8 @@ export default Ember.Component.extend({
     dashboardService: Ember.inject.service('dashboard-service'),
     init() {
         this._super(...arguments);
-        return this.get('dashboardService').getWeeklyEffort(this.loggedinUser)
+        let forUserId = { requestorId: this.get('forUserId') }
+        return this.get('dashboardService').getWeeklyEffort(forUserId)
             .then(result => { this.set('laborthisweek', result); })
             .then(() => {
                 let actual = this.get('laborthisweek');

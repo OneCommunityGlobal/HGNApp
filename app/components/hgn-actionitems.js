@@ -14,7 +14,8 @@ export default Ember.Component.extend({
 
         this._super(...arguments);
 
-        let user = this.get('loggedinUser');
+        let user =
+            { "requestorId": this.get('forUserId') }
 
 
         this.get('userProfileService').getTeamMembers(user)
@@ -23,8 +24,13 @@ export default Ember.Component.extend({
         this.get('dataService').getActionItems(user)
             .then(results => { this.set('actionItems', results); });
     },
+    isEditable: Ember.computed('loggedinUser', 'forUserId', function () {
 
+        let loggedinUser = this.get("loggedinUser.requestorId");
+        let forUserId = this.get('forUserId');
+        return (loggedinUser === forUserId);
 
+    }),
 
 
     actions: {

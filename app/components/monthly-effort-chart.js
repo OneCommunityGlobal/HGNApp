@@ -5,7 +5,8 @@ export default Ember.Component.extend({
     dashboardService: Ember.inject.service('dashboard-service'),
     init() {
         this._super(...arguments);
-        return this.get('dashboardService').getMonthlyEffort(this.loggedinUser)
+        let forUserId = { requestorId: this.get('forUserId') }
+        return this.get('dashboardService').getMonthlyEffort(forUserId)
             .then(result => { this.set('laborthismonth', result); })
             .then(() => {
 
