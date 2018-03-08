@@ -2,6 +2,6 @@
 {{outlet}}
 {{#each model as |project|}}
 
-  <li>{{#link-to "project.viewproject" project._id }}{{project.projectName}} {{/link-to}}</li>
-
+  <!-- <li>{{#link-to "project.viewproject" project._id }}{{project.projectName}} {{/link-to}}</li> -->
+{{#link-to "projects.projectDetail" project._id }}{{project.projectName}} {{/link-to}}
 {{/each}}
