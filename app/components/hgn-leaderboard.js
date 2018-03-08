@@ -14,6 +14,12 @@ export default Ember.Component.extend({
                 let dataset = this.get('leaderboarddata');
                 let maxtotal = 0;
 
+
+                dataset.forEach(element => {
+                    let totaltime = parseFloat(parseFloat(element.totaltime_hrs).toFixed(2));
+                    maxtotal = (totaltime > maxtotal) ? totaltime : maxtotal;
+                });
+
                 dataset.forEach(element => {
 
                     let name = element.name;
@@ -22,9 +28,8 @@ export default Ember.Component.extend({
                     let totaltime = parseFloat(parseFloat(element.totaltime_hrs).toFixed(2));
                     let weeklycommited = parseFloat(parseFloat(element.weeklyComittedHours).toFixed(2));
                     let tangiblebarcolor = this.get('getcolor')(tangibletime);
-                    let tangibletimewidth = parseInt(tangibletime * 100 / totaltime);
-                    let intangibletimewidth = 100 - tangibletimewidth;
-                    maxtotal = (totaltime > maxtotal) ? totaltime : maxtotal;
+                    let tangibletimewidth = parseInt(tangibletime * 100 / maxtotal);
+                    let intangibletimewidth = parseInt(intangibletime * 100 / maxtotal);
                     let result =
                         {
                             didMeetWeeklyCommitment: (tangibletime >= weeklycommited) ? true : false,

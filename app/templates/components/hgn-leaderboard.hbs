@@ -1,51 +1,53 @@
 {{!-- {{ember-chart type='horizontalBar' data=leaderboard options= ChartOptions animate=true}} {{yield}} --}}
-<table class="table table-dark">
-    <thead>
-        <tr>
-            <th class="col-xs-1"></th>
-            <th class="col-xs-1"></th>
-            <th class="col-xs-1"></th>
-            <th class="col-xs-8"></th>
-            <th class="col-xs-1"></th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each resultset as |result| }}
+<div class="table-responsive">
+    <table class="table table-sm leaderboardtable">
+        <thead>
             <tr>
-                <td>
-                    {{#if result.didMeetWeeklyCommitment}}
-                        <span class="glyphicon glyphicon-circle-arrow-up" style="color: green" data-toggle="tooltip" data-placement="left" title="Weekly Committed: {{result.weeklycommited}} hours &#010;TangibleEffort: {{result.tangibletime}} hours"></span>
-                    {{else}}
-                        <span class="glyphicon glyphicon-circle-arrow-down " style="color: red " data-toggle="tooltip" data-placement="left" title="Weekly Committed: {{result.weeklycommited}} hours &#010;TangibleEffort: {{result.tangibletime}} hours"></span>
-                    {{/if}}
-                </td>
-                <td>
-                    <div>{{result.name}}
-                        <div class="actions">
-                            <small>
-                                <a href="/profile/{{result.personId}}">Profile</a>
-                                <a href="/timelog/{{result.personId}}">Timelog</a>
-                            </small>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    {{result.tangibletime}}tan
-                </td>
-                <td>
-                    <div class="progress ">
-                        <div class="progress-bar progress-bar-striped " role="progressbar " style="width: {{result.tangibletimewidth}}% ; background-color : {{result.tangiblebarcolor}} "
-                            aria-valuenow=" {{result.tangibletime}} " aria-valuemin="0 " aria-valuemax=" {{maxtotal}} " data-toggle="tooltip"
-                            data-placement="bottom" title="Tangible Effort: {{result.tangibletime}} hours"></div>
-                        <div class="progress-bar progress-bar-striped bg-info " role="progressbar " style="width: {{result.intangibletimewidth}}% "
-                            aria-valuenow=" {{result.intangibletime}} " aria-valuemin="0 " aria-valuemax=" {{maxtotal}} " data-toggle="tooltip"
-                            data-placement="bottom" title="Intangible Effort: {{result.intangibletime}} hours"></div>
-                    </div>
-                </td>
-                <td>
-                    {{result.totaltime}}tot
-                </td>
+                <th class="col-xs-1"></th>
+                <th class="col-xs-1"></th>
+                <th class="col-xs-1"></th>
+                <th class="col-xs-8"></th>
+                <th class="col-xs-1"></th>
             </tr>
-        {{/each}}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {{#each resultset as |result| }}
+                <tr class= {{if (eq result.personId loggedinUser.requestorId) "table-active" ""}}>
+                    <td>
+                        {{#if result.didMeetWeeklyCommitment}}
+                            <span class="glyphicon glyphicon-circle-arrow-up" style="color: green" data-toggle="tooltip" data-placement="left" title="Weekly Committed: {{result.weeklycommited}} hours &#010;TangibleEffort: {{result.tangibletime}} hours"></span>
+                        {{else}}
+                            <span class="glyphicon glyphicon-circle-arrow-down " style="color: red " data-toggle="tooltip" data-placement="left" title="Weekly Committed: {{result.weeklycommited}} hours &#010;TangibleEffort: {{result.tangibletime}} hours"></span>
+                        {{/if}}
+                    </td>
+                    <td>
+                        <div>{{result.name}}
+                            <div class="actions">
+                                <small>
+                                    <a href="/profile/{{result.personId}}">Profile</a>
+                                    <a href="/timelog/{{result.personId}}">Timelog</a>
+                                </small>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        {{result.tangibletime}}tan
+                    </td>
+                    <td>
+                        <div class="progress ">
+                            <div class="progress-bar progress-bar-striped " role="progressbar " style="width: {{result.tangibletimewidth}}% ; background-color : {{result.tangiblebarcolor}} "
+                                aria-valuenow=" {{result.tangibletime}} " aria-valuemin="0 " aria-valuemax=" {{maxtotal}} " data-toggle="tooltip"
+                                data-placement="bottom" title="Tangible Effort: {{result.tangibletime}} hours"></div>
+                            <div class="progress-bar progress-bar-striped bg-info " role="progressbar " style="width: {{result.intangibletimewidth}}% "
+                                aria-valuenow=" {{result.intangibletime}} " aria-valuemin="0 " aria-valuemax=" {{maxtotal}} "
+                                data-toggle="tooltip" data-placement="bottom" title="Intangible Effort: {{result.intangibletime}} hours"></div>
+                        </div>
+                    </td>
+                    <td>
+                        {{result.totaltime}}tot
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
