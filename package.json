@@ -10,7 +10,7 @@
   "scripts": {
     "build": "ember build",
     "test": "ember test",
-    "install_node_modules": "npm install",
+    "install_node_modules": "npm install --production",
     "install_bower_components": " node node_modules/bower/bin/bower install --allow-root",
     "ember_build": "node node_modules/ember-cli/bin/ember build",
     "ember_serve": "node node_modules/ember-cli/bin/ember serve --port=8080 --environment=developement",
