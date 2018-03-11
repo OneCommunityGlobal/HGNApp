@@ -1,50 +1,46 @@
 import Ember from 'ember';
 import ENV from '../config/environment';
-import jwtDecode from 'ember-jwt-decode';
+import jwtDecode from 'ember-cli-jwt-decode';
 
-export default Ember.Service.extend({ 
+export default Ember.Service.extend({
 
- host: ENV.webServer,
-   
- login (data) {    
+  host: ENV.webServer,
 
-   let loginPromise =    Ember.$.ajax({
-      url: this.host +"/login",
+  login(data) {
+
+    let loginPromise = Ember.$.ajax({
+      url: this.host + "/login",
       type: "POST",
       data: data
     });
-    
 
-    return loginPromise;    
+
+    return loginPromise;
   },
 
 
-  isAuthenticated()
-  {
-  
-    if(!localStorage.getItem(ENV.TOKEN_KEY))
-    {
-     
+  isAuthenticated() {
+
+    if (!localStorage.getItem(ENV.TOKEN_KEY)) {
+
       return false;
-    }     
-    let token = localStorage.getItem(ENV.TOKEN_KEY);   
+    }
+    let token = localStorage.getItem(ENV.TOKEN_KEY);
     token = jwtDecode(token);
-    return (token.expiryTimestamp> new Date().toISOString() );
+    return (token.expiryTimestamp > new Date().toISOString());
   },
-  logout()
-  {
-   
+  logout() {
+
     localStorage.removeItem(ENV.TOKEN_KEY);
   },
 
-  getLoggedinUser()
-  {
-     return Ember.$.ajax({
-      url : this.host + "/login" ,
+  getLoggedinUser() {
+    return Ember.$.ajax({
+      url: this.host + "/login",
       type: "GET",
       cache: "true",
-      beforeSend: function(xhr){xhr.setRequestHeader(ENV.REQUEST_AUTHKEY, localStorage.getItem(ENV.TOKEN_KEY) );}
-    });    
+      beforeSend: function (xhr) { xhr.setRequestHeader(ENV.REQUEST_AUTHKEY, localStorage.getItem(ENV.TOKEN_KEY)); }
+    });
 
   },
 

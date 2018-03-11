@@ -1,14 +1,15 @@
-<div class="container">
- <nav class="navbar navbar-expand-lg navbar-toggleable-md  navbar-inverse " role="navigation"> 
-     
-     <div class = "navbar-header">
-   
+<div class="">
+  <nav class="navbar navbar-expand-md navbar-toggleable-md  navbar-inverse d-print " role="navigation">
+    <div class="navbar-header">
       <a class="navbar-brand" href="/dashboard">
         <span class="logo">Time Tracking Tool</span>
-      </a> 
-      </div>  
-
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      </a>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#headeritems" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="headeritems">
       <ul class=" navbar-nav mr-auto">
         <li class="nav-item navbar-text">
           <a class="nav-link" href="/dashboard">Dashboard</a>
@@ -20,11 +21,11 @@
           <a class="nav-link" href="/reports">Reports</a>
         </li>
         {{#if isUserAdministrator}}
-        <li class="nav-item navbar-text">
-          <a class="nav-link" href="/usermanagement">User Management</a>
-        </li>
+          <li class="nav-item navbar-text">
+            <a class="nav-link" href="/usermanagement">User Management</a>
+          </li>
         {{/if}}
-       <li  class="nav-item navbar-text">
+        <li class="nav-item navbar-text">
           <form class="form-inline my-2 my-lg-0">
             <div class="form-group">
               <input type="text" class="form-control" placeholder="Search Tasks">
@@ -32,26 +33,21 @@
             <button type="submit" class="btn btn-default">Submit</button>
           </form>
         </li>
-     
         <li class="nav-item navbar-text">
-           <a class = "nav-link" href = "/timelog">
-           <span class="glyphicon glyphicon-bell"></span>
+          <a class="nav-link" href="/timelog">
+            <span class="glyphicon glyphicon-bell"></span>
             <span class="badge badge-notify">{{notifications.length}}</span>
-            </a>     
+          </a>
         </li>
-
         <li class="nav-item navbar-text">
           <a class="nav-link" href="/myaccount">
             My Account
           </a>
         </li>
         <li class="nav-item navbar-text">
-          <a class="nav-link" {{action 'logout'}} href= "/login">Logout</a>
+          <a class="nav-link" {{action 'logout'}} href="/login">Logout</a>
         </li>
       </ul>
     </div>
-    <!-- /.navbar-collapse -->
-
-</nav>
- </div>
- 
+  </nav>
+</div>
