@@ -1,6 +1,7 @@
-import Ember from 'ember';
 
-export default Ember.Component.extend({
+import Component from '@ember/component';
+
+export default Component.extend({
     actions: {
         notifyChange() {
             let key = this.get("name");

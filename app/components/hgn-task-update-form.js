@@ -1,9 +1,11 @@
-import Ember from 'ember';
+
 import moment from 'moment';
+import { inject } from '@ember/service';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
 
-    timeEntryService: Ember.inject.service('time-entry-service'),
+    timeEntryService: inject('time-entry-service'),
     notes: "",
     dateofWork: "",
     taskhours: "",
@@ -27,9 +29,9 @@ export default Ember.Component.extend({
 
             let timeentry = {};
 
-            let hours = (!!this.get('taskhours')) ? this.get('taskhours') : "00";
-            let minutes = (!!this.get('taskminutes')) ? this.get('taskminutes') : "00";
-            let seconds = (!!this.get('taskseconds')) ? this.get('taskseconds') : "00";
+            let hours = (this.get('taskhours')) ? this.get('taskhours') : "00";
+            let minutes = (this.get('taskminutes')) ? this.get('taskminutes') : "00";
+            let seconds = (this.get('taskseconds')) ? this.get('taskseconds') : "00";
 
             let timespent = hours + ":" + minutes + ":" + seconds;
             let dateofWork = moment(this.get('dateofWork')).format('YYYY-MM-DD');
@@ -42,7 +44,7 @@ export default Ember.Component.extend({
             timeentry.notes = this.get('notes');
             this.get('timeEntryService').postTimeEntry(timeentry)
                 .then(results => {
-                    console.log(results)
+
                     toastr.success("", 'Time Entry Saved');
                 }, error => {
                     toastr.warning(error.responseJSON.message, 'Error!!');

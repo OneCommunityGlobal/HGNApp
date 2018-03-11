@@ -1,7 +1,8 @@
-import Ember from 'ember';
-import EmberObject, { computed } from '@ember/object';
 
-export default Ember.Controller.extend({
+import EmberObject, { computed } from '@ember/object';
+import Controller from '@ember/controller';
+
+export default Controller.extend({
 
     showMyModal: false,
     isEditable: computed('loggedinUser', 'forUserId', function () {

@@ -1,6 +1,9 @@
-import Ember from 'ember';
 
-export default Ember.Component.extend({
+import Component from '@ember/component';
+import { computed } from '@ember/object'
+import $ from 'jquery';
+
+export default Component.extend({
     submitModal: "",
     name: "",
     linksarray: "",
@@ -9,7 +12,7 @@ export default Ember.Component.extend({
         Link: ""
     },
 
-    isArrayEmptyText: Ember.computed('linksarray.[]', function () {
+    isArrayEmptyText: computed('linksarray.[]', function () {
 
         let text = "No link defined";
 
@@ -27,8 +30,8 @@ export default Ember.Component.extend({
     actions:
         {
             addLink() {
-                let namefield = (Ember.$("#newLinkName").get())[0];
-                let linkfield = (Ember.$("#newLinkLink").get())[0];
+                let namefield = ($("#newLinkName").get())[0];
+                let linkfield = ($("#newLinkLink").get())[0];
                 this.set('submitModal', 'submitModal');
 
                 let _newlink = {

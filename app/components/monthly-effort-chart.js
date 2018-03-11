@@ -1,8 +1,10 @@
-import Ember from 'ember';
 
-export default Ember.Component.extend({
+import { inject } from '@ember/service';
+import Component from '@ember/component';
 
-    dashboardService: Ember.inject.service('dashboard-service'),
+export default Component.extend({
+
+    dashboardService: inject('dashboard-service'),
     init() {
         this._super(...arguments);
         let forUserId = { requestorId: this.get('forUserId') }

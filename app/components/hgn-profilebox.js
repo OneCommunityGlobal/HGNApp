@@ -1,14 +1,14 @@
-import Ember from 'ember';
+
+import Component from '@ember/component';
 
 
-export default Ember.Component.extend({
-    
-   actions :
-   {
-       gotoMyProfile : function()
-       {
-         this.sendAction('MyProfile');
-       }
-   }
-  
+export default Component.extend({
+
+  actions:
+    {
+      gotoMyProfile: function () {
+        this.sendAction('MyProfile');
+      }
+    }
+
 });

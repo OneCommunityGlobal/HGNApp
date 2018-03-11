@@ -15,9 +15,9 @@
                 <tr class= {{if (eq result.personId loggedinUser.requestorId) "table-active" ""}}>
                     <td>
                         {{#if result.didMeetWeeklyCommitment}}
-                            <span class="glyphicon glyphicon-circle-arrow-up" style="color: green" data-toggle="tooltip" data-placement="left" title="Weekly Committed: {{result.weeklycommited}} hours &#010;TangibleEffort: {{result.tangibletime}} hours"></span>
+                            <span class="fa fa-circle-arrow-up" style="color: green" data-toggle="tooltip" data-placement="left" title="Weekly Committed: {{result.weeklycommited}} hours &#010;TangibleEffort: {{result.tangibletime}} hours"></span>
                         {{else}}
-                            <span class="glyphicon glyphicon-circle-arrow-down " style="color: red " data-toggle="tooltip" data-placement="left" title="Weekly Committed: {{result.weeklycommited}} hours &#010;TangibleEffort: {{result.tangibletime}} hours"></span>
+                            <span class="fa fa-circle-arrow-down " style="color: red " data-toggle="tooltip" data-placement="left" title="Weekly Committed: {{result.weeklycommited}} hours &#010;TangibleEffort: {{result.tangibletime}} hours"></span>
                         {{/if}}
                     </td>
                     <td class="text-left">

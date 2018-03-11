@@ -1,15 +1,16 @@
-import Ember from 'ember';
 
-export default Ember.Component.extend({
+import { inject } from '@ember/service';
+import Component from '@ember/component';
 
-    showNotifications : false,
-    loginService : Ember.inject.service("login-service"),
-         actions:{
+export default Component.extend({
 
-        
+    showNotifications: false,
+    loginService: inject("login-service"),
+    actions: {
 
-        logout()
-        {
+
+
+        logout() {
             this.get('loginService').logout();
 
         }

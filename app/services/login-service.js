@@ -1,14 +1,16 @@
-import Ember from 'ember';
+
 import ENV from '../config/environment';
 import jwtDecode from 'ember-cli-jwt-decode';
+import Service from '@ember/service';
+import $ from 'jquery';
 
-export default Ember.Service.extend({
+export default Service.extend({
 
   host: ENV.webServer,
 
   login(data) {
 
-    let loginPromise = Ember.$.ajax({
+    let loginPromise = $.ajax({
       url: this.host + "/login",
       type: "POST",
       data: data
@@ -35,7 +37,7 @@ export default Ember.Service.extend({
   },
 
   getLoggedinUser() {
-    return Ember.$.ajax({
+    return $.ajax({
       url: this.host + "/login",
       type: "GET",
       cache: "true",

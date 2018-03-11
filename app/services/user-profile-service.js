@@ -1,9 +1,10 @@
-import Ember from 'ember';
 
+import { inject } from '@ember/service';
+import Service from '@ember/service';
 
-export default Ember.Service.extend({
+export default Service.extend({
 
-  dataService: Ember.inject.service('datastore-service'),
+  dataService: inject('datastore-service'),
 
   getAllUserProfiles() {
     let relativePath = "/userprofile";

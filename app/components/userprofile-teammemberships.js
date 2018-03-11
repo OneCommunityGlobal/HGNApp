@@ -1,13 +1,16 @@
-import Ember from 'ember';
 
-export default Ember.Component.extend({
+import { inject } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object'
 
-    isArrayEmptyText: Ember.computed('userteams.[]', function () {
+export default Component.extend({
+
+    isArrayEmptyText: computed('userteams.[]', function () {
         let _teams = this.get('userteams');
         return (_teams && _teams.length > 0) ? "" : "No Team Memberships defined";
     }),
     allTeams: "",
-    dataService: Ember.inject.service("datastore-service"),
+    dataService: inject("datastore-service"),
     opsarray: [],
 
     notifyparent: function () {

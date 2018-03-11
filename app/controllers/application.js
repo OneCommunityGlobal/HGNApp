@@ -1,14 +1,17 @@
-import Ember from 'ember';
 
-export default Ember.Controller.extend({
+import { inject } from '@ember/service';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object'
 
-  dataService: Ember.inject.service("datastore-service"),
+export default Controller.extend({
+
+  dataService: inject("datastore-service"),
   hideHeaderRoutes: ['index', 'login'],
-  isHeaderVisible: Ember.computed('currentRouteName', function () {
+  isHeaderVisible: computed('currentRouteName', function () {
     return this.get('hideHeaderRoutes').indexOf(this.get('currentRouteName')) === -1;
   }),
 
-  isUserAdministrator: Ember.computed('userrole', function () {
+  isUserAdministrator: computed('userrole', function () {
     let userrole = this.get('userrole');
     return userrole === "Administrator" ? true : false;
   }),
@@ -22,7 +25,7 @@ export default Ember.Controller.extend({
   actions: {
 
 
-    
+
   }
 
 

@@ -1,7 +1,9 @@
-import Ember from 'ember';
 
-export default Ember.Service.extend({
-  dataService: Ember.inject.service('datastore-service'),
+import { inject } from '@ember/service';
+import Service from '@ember/service';
+
+export default Service.extend({
+  dataService: inject('datastore-service'),
 
   getDashboardData(requestor) {
 

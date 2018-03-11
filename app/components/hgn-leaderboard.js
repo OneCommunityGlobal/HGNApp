@@ -1,7 +1,11 @@
-import Ember from 'ember';
 
-export default Ember.Component.extend({
-    dashboardService: Ember.inject.service("dashboard-service"),
+import { inject } from '@ember/service';
+import Component from '@ember/component';
+import $ from 'jquery';
+import { scheduleOnce } from '@ember/runloop';
+
+export default Component.extend({
+    dashboardService: inject("dashboard-service"),
 
 
     init() {
@@ -139,11 +143,11 @@ export default Ember.Component.extend({
 
     didRender() {
         this._super(...arguments);
-        Ember.run.scheduleOnce('afterRender', this, 'scrollToRow');
+        scheduleOnce('afterRender', this, 'scrollToRow');
     },
 
     scrollToRow() {
-        let row = Ember.$("tr.table-active").get()[0];
+        let row = $("tr.table-active").get()[0];
 
         row.scrollIntoView({ behavior: "smooth", inline: "center", block: "center" });
 

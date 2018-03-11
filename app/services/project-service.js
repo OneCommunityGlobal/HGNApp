@@ -1,8 +1,10 @@
-import Ember from 'ember';
 
-export default Ember.Service.extend({
+import { inject } from '@ember/service';
+import Service from '@ember/service';
 
-  dataService: Ember.inject.service("datastore-service"),
+export default Service.extend({
+
+  dataService: inject("datastore-service"),
 
 
   getAllProjects() {
@@ -12,7 +14,7 @@ export default Ember.Service.extend({
     let method = "get";
 
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
-    console.log(request);
+
     return request;
   },
 
@@ -22,7 +24,7 @@ export default Ember.Service.extend({
     let method = "get";
 
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
-    console.log(request);
+
     return request;
   },
 
@@ -32,11 +34,11 @@ export default Ember.Service.extend({
     let method = "post";
 
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
-    console.log(request);
+
     return request;
   },
 
-  editProjectData(projectId) {
+  editProjectData(project, projectId) {
     let relativePath = "/project/" + projectId;
     let data = project;
     let method = "put";

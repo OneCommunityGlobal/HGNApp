@@ -1,9 +1,13 @@
-import Ember from 'ember';
 
-export default Ember.Controller.extend({
+import { inject } from '@ember/service';
+
+
+import Controller from '@ember/controller';
+
+export default Controller.extend({
 
   self: this,
-  projectService: Ember.inject.service('project-service'),
+  projectService: inject('project-service'),
 
   newProject: {
     projectName: "",

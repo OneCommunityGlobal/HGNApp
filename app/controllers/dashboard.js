@@ -1,18 +1,18 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
-    
-    userProfile :{},
+export default Controller.extend({
 
-     
-    
-    actions :{
+    userProfile: {},
 
-        MyProfile(){
-               
-          this.transitionToRoute('myprofile');
-      }
-      
-      }
+
+
+    actions: {
+
+        MyProfile() {
+
+            this.transitionToRoute('myprofile');
+        }
+
+    }
 
 });

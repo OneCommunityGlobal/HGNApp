@@ -1,9 +1,11 @@
-import Ember from 'ember';
+
 import UnAuthenticatedRouteMixin from '../mixins/un-authenticated-route-mixin';
+import { inject } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend(UnAuthenticatedRouteMixin, {
+export default Route.extend(UnAuthenticatedRouteMixin, {
 
-  dashboardService: Ember.inject.service('dashboard-service'),
+  dashboardService: inject('dashboard-service'),
 
   model() {
     return this.get('dashboardService').getDashboardData(this.loggedinUser);

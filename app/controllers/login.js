@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import ENV from '../config/environment';
 
 
-export default Ember.Controller.extend({
+export default Controller.extend({
 
   actions: {
     login() {
@@ -15,18 +15,18 @@ export default Ember.Controller.extend({
         "password": password
       };
 
-      
+
       let loginPromise = this.get('AuthService').login(logindata);
 
       loginPromise
-         .done(function (result) {
+        .done(function (result) {
           localStorage.setItem(ENV.TOKEN_KEY, result);
-            self.transitionToRoute('dashboard');
+          self.transitionToRoute('dashboard');
         })
-        .error(function(error){
+        .error(function (error) {
           alert("Invalid credentials");
         })
-       
+
     }
   }
 

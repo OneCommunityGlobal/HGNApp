@@ -1,14 +1,17 @@
-import Ember from 'ember';
 
-export default Ember.Component.extend({
-    newactionitem: {},
+import { inject } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object'
+
+export default Component.extend({
+    newactionitem: null,
     addnewactionitem: false,
-    dataService: Ember.inject.service('datastore-service'),
-    userProfileService: Ember.inject.service('user-profile-service'),
+    dataService: inject('datastore-service'),
+    userProfileService: inject('user-profile-service'),
 
-    forUser: "",
-    newAIdescription: "",
-    newdescription: "",
+    forUser: null,
+    newAIdescription: null,
+    newdescription: null,
 
     init() {
 
@@ -24,7 +27,7 @@ export default Ember.Component.extend({
         this.get('dataService').getActionItems(user)
             .then(results => { this.set('actionItems', results); });
     },
-    isEditable: Ember.computed('loggedinUser', 'forUserId', function () {
+    isEditable: computed('loggedinUser', 'forUserId', function () {
 
         let loggedinUser = this.get("loggedinUser.requestorId");
         let forUserId = this.get('forUserId');

@@ -1,34 +1,35 @@
-import Ember from 'ember';
+
+import { inject } from '@ember/service';
 
 export default Ember.Controller.extend({
 
-    self: this,
-    projectService: Ember.inject.service('project-service'),
+  self: this,
+  projectService: inject('project-service'),
 
-    newProject: {
-      projectName: "",
-      tasks: [],
-      isActive: true
+  newProject: {
+    projectName: "",
+    tasks: [],
+    isActive: true
+  },
+  task: {
+    Description: ""
+  },
+  actions: {
+    addNewTask() {
+      this.get('newProject.tasks').addObject(this.get('task'));
+      this.set('task', {});
     },
-    task: {
-      Description: ""
+    cancelTask(task) {
+      this.get('newProject.tasks').removeObject(task);
     },
-    actions: {
-      addNewTask() {
-        this.get('newProject.tasks').addObject(this.get('task'));
-        this.set('task', {});
-      },
-      cancelTask(task) {
-        this.get('newProject.tasks').removeObject(task);
-      },
 
-      addNewProject() {
-        this.get('model').addObject(this.get('newProject'));
-        let project = this.get('newProject');
-        this.get('projectService').postProject(project);
-        this.set('newProject', {});
-      },
+    addNewProject() {
+      this.get('model').addObject(this.get('newProject'));
+      let project = this.get('newProject');
+      this.get('projectService').postProject(project);
+      this.set('newProject', {});
+    },
 
 
-    }
+  }
 });

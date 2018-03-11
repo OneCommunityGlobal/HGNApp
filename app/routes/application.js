@@ -1,18 +1,18 @@
-import Ember from 'ember';
 
-export default Ember.Route.extend( {
+import Route from '@ember/routing/route';
 
-    model()
-    {
-      
-    },
+export default Route.extend({
 
-    setupController: function(controller, model){
-     
-    
-         
-      },
+  model() {
 
-    
-    
+  },
+
+  setupController: function (controller, model) {
+
+
+
+  },
+
+
+
 });

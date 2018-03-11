@@ -1,4 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
+import { run } from '@ember/runloop';
+import Application from '@ember/application';
 
 moduleFor('service:project-service', 'Unit | Service | project service', {
   // Specify the other units that are required for this test.
@@ -6,7 +8,7 @@ moduleFor('service:project-service', 'Unit | Service | project service', {
 });
 
 // Replace this with your real tests.
-test('it exists', function(assert) {
+test('it exists', function (assert) {
   let service = this.subject();
   assert.ok(service);
 });
