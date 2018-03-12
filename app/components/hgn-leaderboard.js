@@ -93,54 +93,6 @@ export default Component.extend({
 
     },
 
-    ChartOptions: {
-        tooltips: {
-            enabled: true
-        },
-        hover: {
-            animationDuration: 0
-        },
-        layout: {
-            padding: {
-                left: 0,
-                right: 0,
-                top: 0,
-                bottom: 0
-            }
-        },
-        scales: {
-            xAxes: [{
-
-                ticks: {
-                    beginAtZero: true,
-
-                },
-
-                scaleLabel: {
-                    display: true
-                },
-                gridLines: {
-                },
-                stacked: true
-            }],
-            yAxes: [{
-                labelAngle: 50,
-                stacked: true,
-                maxBarThickness: 20,
-                gridLines: {
-                },
-                stacked: true
-            },
-
-            ]
-        },
-        legend: {
-            display: true
-        },
-
-
-    },
-
     didRender() {
         this._super(...arguments);
         scheduleOnce('afterRender', this, 'scrollToRow');
@@ -149,7 +101,8 @@ export default Component.extend({
     scrollToRow() {
         let row = $("tr.table-active").get()[0];
 
-        row.scrollIntoView({ behavior: "smooth", inline: "center", block: "center" });
+        if(row)
+        {row.scrollIntoView({ behavior: "smooth", inline: "center", block: "center" });}
 
     }
 
