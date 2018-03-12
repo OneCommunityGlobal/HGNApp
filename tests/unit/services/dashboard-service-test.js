@@ -1,5 +1,3 @@
-import { run } from '@ember/runloop';
-import Application from '@ember/application';
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('service:dashboard-service', 'Unit | Service | dashboard service', {

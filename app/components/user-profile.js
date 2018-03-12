@@ -83,7 +83,7 @@ export default Component.extend({
                 this.set('isFormSubmitted', "")
                 let userId = this.get('model._id');
                 let user = this.get('model');
-                toastr: this.get('ToastrService');
+                toastr = this.get('ToastrService');
 
                 if (userId) {
                     this.get('userProfileService').editUserProfileData(user, userId)

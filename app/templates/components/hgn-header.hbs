@@ -7,7 +7,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="headeritems">
-    <ul class=" navbar-nav ml-auto">
+    <ul class=" navbar-nav mr-auto">
       <li class="nav-item navbar-text">
         <a class="nav-link" href="/dashboard">Dashboard</a>
       </li>
@@ -17,11 +17,6 @@
       <li class="nav-item navbar-text">
         <a class="nav-link" href="/reports">Reports</a>
       </li>
-      {{#if isUserAdministrator}}
-        <li class="nav-item navbar-text">
-          <a class="nav-link" href="/usermanagement">User Management</a>
-        </li>
-      {{/if}}
       <li class="nav-item navbar-text">
         <form class="form-inline my-2 my-lg-0">
           <div class="form-group">
@@ -36,11 +31,18 @@
           <span class="badge badge-notify">{{notifications.length}}</span>
         </a>
       </li>
+    </ul>
+    <ul class=" navbar-nav ml-auto">
       <li class="nav-item navbar-text ml-auto">
         <a class="nav-link" href="/myaccount">
           My Account
         </a>
       </li>
+      {{#if isUserAdministrator}}
+        <li class="nav-item navbar-text">
+          <a class="nav-link" href="/usermanagement">User Management</a>
+        </li>
+      {{/if}}
       <li class="nav-item navbar-text ml-auto">
         <a class="nav-link" {{action 'logout'}} href="/login">Logout</a>
       </li>

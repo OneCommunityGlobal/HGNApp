@@ -1,6 +1,5 @@
 import { moduleFor, test } from 'ember-qunit';
-import { run } from '@ember/runloop';
-import Application from '@ember/application';
+
 
 moduleFor('service:project-service', 'Unit | Service | project service', {
   // Specify the other units that are required for this test.

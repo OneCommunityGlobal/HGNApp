@@ -1,7 +1,7 @@
 
 import { inject } from '@ember/service';
-
-export default Ember.Controller.extend({
+import Controller from '@ember/controller';
+export default Controller.extend({
     selectedOption: null,
     userProfileService: inject('user-profile-service'),
 

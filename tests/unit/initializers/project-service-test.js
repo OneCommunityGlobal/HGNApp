@@ -2,11 +2,13 @@
 import { initialize } from 'hgnapp/initializers/project-service';
 import { module, test } from 'qunit';
 import destroyApp from '../../helpers/destroy-app';
+import { run } from '@ember/runloop';
+import Application from '@ember/application';
 
 module('Unit | Initializer | project service', {
   beforeEach() {
-    Ember.run(() => {
-      this.application = Ember.Application.create();
+    run(() => {
+      this.application = Application.create();
       this.application.deferReadiness();
     });
   },

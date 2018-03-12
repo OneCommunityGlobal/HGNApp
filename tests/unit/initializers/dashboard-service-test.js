@@ -2,11 +2,13 @@
 import { initialize } from 'hgnapp/initializers/dashboard-service';
 import { module, test } from 'qunit';
 import destroyApp from '../../helpers/destroy-app';
+import Application from '@ember/application';
+import { run } from '@ember/runloop';
 
 module('Unit | Initializer | dashboard service', {
   beforeEach() {
-    Ember.run(() => {
-      this.application = Ember.Application.create();
+    run(() => {
+      this.application = Application.create();
       this.application.deferReadiness();
     });
   },

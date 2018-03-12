@@ -1,13 +1,14 @@
 
 import DatastoreInitializer from 'hgnapp/initializers/datastore';
 import { module, test } from 'qunit';
-
+import { run } from '@ember/runloop';
+import Application from '@ember/application';
 let application;
 
 module('Unit | Initializer | datastore', {
   beforeEach() {
-    Ember.run(function () {
-      application = Ember.Application.create();
+    run(function () {
+      application = Application.create();
       application.deferReadiness();
     });
   }

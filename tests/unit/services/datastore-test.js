@@ -1,6 +1,5 @@
 import { moduleFor, test } from 'ember-qunit';
-import { run } from '@ember/runloop';
-import Application from '@ember/application';
+
 
 moduleFor('service:datastore', 'Unit | Service | datastore', {
   // Specify the other units that are required for this test.
