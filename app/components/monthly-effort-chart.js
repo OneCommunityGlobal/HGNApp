@@ -19,14 +19,19 @@ export default Component.extend({
                 monthlydata.forEach(element => {
                     let effort = element.timeSpent_hrs;
                     maxeffort = (maxeffort > effort) ? maxeffort : effort;
+                });
+
+                monthlydata.forEach(element => {
+
 
                     data.push(
                         {
                             projectName: element.projectName,
-                            effort: parseFloat(element.timeSpent_hrs).toFixed(2)
+                            effort: parseFloat(element.timeSpent_hrs).toFixed(2),
+                            percentageeffort: (element.timeSpent_hrs * 100) / maxeffort
                         }
-                    );
 
+                    );
                 });
                 this.set("maxeffort", maxeffort);
                 this.set("resultset", data)
