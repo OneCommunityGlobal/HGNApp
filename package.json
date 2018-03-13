@@ -22,7 +22,7 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "OneCommunity Global",
   "license": "MIT",
   "devDependencies": {
     "@types/jquery": "^3.2.17",
