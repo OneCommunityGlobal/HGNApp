@@ -1,44 +1,37 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-3">
-      <div class="col-md-12">
-        {{ hgn-profilebox
-         firstName=model.firstName lastName = model.lastName role=model.role
-         logo=model.profilePic
-         id =model._id
-        
-         }}
-      </div>
-      <div class="col-md-12">
-        <a href="/badges" style="text-decoration:none; color: black;">
-          {{hgn-badges title="UserName" role=model.userSnapshot.role }}
-        </a>
-      </div>
+<div class="card-deck">
+  <div class="col-md-4">
+    {{ hgn-profilebox firstName=model.firstName lastName = model.lastName role=model.role logo=model.profilePic id =model._id}}
+  </div>
+  <div class="col-md-4">
+    {{hgn-timer loggedinUser = loggedinUser}}
+  </div>
+  <div class="col-md-4">
+    {{hgn-leaderboard loggedinUser = loggedinUser}}
+  </div>
+</div>
+<div class="card-deck">
+  <div class="card text-center col-md-4 mb-3">
+    <div class="card-block">
+      <h4 class="card-title">Badges</h4>
+      <p class="card-text">
+        {{hgn-badges title="UserName" role=model.userSnapshot.role }}
+      </p>
     </div>
-    <div class="col-md-9">
-      <div class="col-md-6">
-        <div class="panel panel-default" style="height:350px;background-color:#C57CD2;text-align:center">
-          <div class="panel-heading" style="background-color:#9957A5">Add Time</div>
-          <div class="panel-body">
-            {{hgn-timer loggedinUser = loggedinUser}}
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="panel panel-default" style="height:350px;background-color:#FFCCBC;text-align:center  ;overflow:scroll">
-          <div class="panel-heading" style="font: bold; color: #FDFEFE;background-color: #DC7633">Leaderboard</div>
-          <div class="panel-body" style="padding:0px;">
-            {{hgn-leaderboard loggedinUser = loggedinUser}}
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
+  </div>
+  <div class="card text-center col-md-4 mb-3">
+    <div class="card-block">
+      <h4 class="card-title">Weekly Effort</h4>
+      <p class="card-text">
         {{weekly-effort-chart forUserId= loggedinUser.requestorId}}
-      </div>
-      <div class="col-md-6">
+      </p>
+    </div>
+  </div>
+  <div class="card text-center col-md-4 mb-3">
+    <div class="card-block">
+      <h4 class="card-title">Monthly Effort</h4>
+      <p class="card-text">
         {{monthly-effort-chart forUserId =  loggedinUser.requestorId}}
-      </div>
+      </p>
     </div>
   </div>
 </div>
-{{outlet}}

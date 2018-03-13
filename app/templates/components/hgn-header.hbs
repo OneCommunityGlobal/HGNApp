@@ -1,51 +1,53 @@
-<nav class="navbar navbar-expand-lg  navbar-dark bg-dark sticky-top flex-column flex-md-row">
-  <a class="navbar-brand" href="/dashboard">
-    <span class="logo">Time Tracking Tool</span>
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#headeritems" aria-controls="headeritems"
-    aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="headeritems">
-    <ul class=" navbar-nav mr-auto">
-      <li class="nav-item navbar-text">
-        <a class="nav-link" href="/dashboard">Dashboard</a>
-      </li>
-      <li class="nav-item navbar-text">
-        <a class="nav-link" href="/timelog">Projects</a>
-      </li>
-      <li class="nav-item navbar-text">
-        <a class="nav-link" href="/reports">Reports</a>
-      </li>
-      <li class="nav-item navbar-text">
-        <form class="form-inline my-2 my-lg-0">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search Tasks">
-          </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-      </li>
-      <li class="nav-item navbar-text">
-        <a class="nav-link" href="/timelog">
-          <span class="glyphicon glyphicon-bell"></span>
-          <span class="badge badge-notify">{{notifications.length}}</span>
-        </a>
-      </li>
-    </ul>
-    <ul class=" navbar-nav ml-auto">
-      <li class="nav-item navbar-text ml-auto">
-        <a class="nav-link" href="/myaccount">
-          My Account
-        </a>
-      </li>
-      {{#if isUserAdministrator}}
+<div style="padding-bottom: 50px">
+  <nav class="navbar navbar-expand-lg  navbar-dark bg-dark sticky-top flex-column flex-md-row">
+    <a class="navbar-brand" href="/dashboard">
+      <span class="logo">Time Tracking Tool</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#headeritems" aria-controls="headeritems"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="headeritems">
+      <ul class=" navbar-nav mr-auto">
         <li class="nav-item navbar-text">
-          <a class="nav-link" href="/usermanagement">User Management</a>
+          <a class="nav-link" href="/dashboard">Dashboard</a>
         </li>
-      {{/if}}
-      <li class="nav-item navbar-text ml-auto">
-        <a class="nav-link" {{action 'logout'}} href="/login">Logout</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+        <li class="nav-item navbar-text">
+          <a class="nav-link" href="/timelog">Projects</a>
+        </li>
+        <li class="nav-item navbar-text">
+          <a class="nav-link" href="/reports">Reports</a>
+        </li>
+        <li class="nav-item navbar-text">
+          <form class="form-inline my-2 my-lg-0">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search Tasks">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+        </li>
+        <li class="nav-item navbar-text">
+          <a class="nav-link" href="/timelog">
+            <span class="glyphicon glyphicon-bell"></span>
+            <span class="badge badge-notify">{{notifications.length}}</span>
+          </a>
+        </li>
+      </ul>
+      <ul class=" navbar-nav ml-auto">
+        <li class="nav-item navbar-text ml-auto">
+          <a class="nav-link" href="/myaccount">
+            My Account
+          </a>
+        </li>
+        {{#if isUserAdministrator}}
+          <li class="nav-item navbar-text">
+            <a class="nav-link" href="/usermanagement">User Management</a>
+          </li>
+        {{/if}}
+        <li class="nav-item navbar-text ml-auto">
+          <a class="nav-link" {{action 'logout'}} href="/login">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>

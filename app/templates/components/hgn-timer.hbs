@@ -1,25 +1,31 @@
-<div class="task-timer">
-  <div class="timer-text">
-    <span class="hours"> {{hours}} </span> :
-    <span class="minutes"> {{minutes}} </span> :
-    <span class="seconds">{{seconds}} </span>
-  </div>
-  <div style="margin:10px">
-    (HH : MM : SS)
-  </div>
-  <div>
-    <button id="timerButton" {{action "timerAction"}}>
-      <span class="glyphicon glyphicon-{{actionIcon}}" aria-hidden="true"></span> {{actionText}} </button>
-    <button id="timerButtonReset" disabled="{{stopDisabled}}" {{action "resetTimer"}}>
-      <span class="glyphicon glyphicon-eject" aria-hidden="true"></span> Reset </button>
-  </div>
-  <div>
-    <div class="row">
-      <div class="col-md-12">
-        <button type="submit" id="addTimeToTask" type="button" class="btn btn-large btn-primary" {{action "toggleShow"}}>Add time to task</button>
-        {{hgn-model isVisible=showMyModal loggedinUser = loggedinUser}}
+<div class="card text-center mb-3 h-100 w-30" style="background-color:#C57CD2;">
+  <div class="card-body">
+    <h5 class="card-title">Add Time To Task</h5>
+    <div class="card-text">
+      <div class="task-timer">
+        <div class="timer-text">
+          <span class="hours"> {{hours}} </span> :
+          <span class="minutes"> {{minutes}} </span> :
+          <span class="seconds">{{seconds}} </span>
+        </div>
+        <div style="margin:10px">
+          (HH : MM : SS)
+        </div>
+        <div>
+          <button id="timerButton" {{action "timerAction"}}>
+            <span class="glyphicon glyphicon-{{actionIcon}}" aria-hidden="true"></span> {{actionText}} </button>
+          <button id="timerButtonReset" disabled="{{stopDisabled}}" {{action "resetTimer"}}>
+            <span class="glyphicon glyphicon-eject" aria-hidden="true"></span> Reset </button>
+        </div>
+        <div>
+          <div class="row">
+            <div class="col-md-12">
+              <button type="submit" id="addTimeToTask" type="button" class="btn btn-large btn-primary" {{action "toggleShow"}}>Add time to task</button>
+              {{hgn-model isVisible=showMyModal loggedinUser = loggedinUser}}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-{{yield}}
