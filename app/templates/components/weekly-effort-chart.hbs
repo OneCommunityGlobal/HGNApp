@@ -1,7 +1,8 @@
-<div class="panel panel-default" style="height:350px;background-color:#CC7272;text-align:center">
-  <div class="panel-heading" style="background-color:#B14E4E">Hours Worked this week</div>
-  <div class="panel-body">
-    {{ember-chart type='doughnut' data=hoursthisweek options= pieChartOptions animate=true}}
+<div class="card text-center mb-3 pre-scrollable" style="background-color:#CC7272; height:100%">
+  <div class="card-body">
+    <h5 class="card-title">Hours Worked this week</h5>
+    <div class="card-text h-100">
+      {{ember-chart type='doughnut' data=hoursthisweek options= pieChartOptions animate=true}}
+    </div>
   </div>
 </div>
-{{yield}}

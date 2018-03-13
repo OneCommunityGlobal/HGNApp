@@ -1,7 +1,21 @@
-<div class="panel panel-default" style="height:350px;background-color:#A9D96C;text-align:center">
-  <div class="panel-heading" style="background-color:#7AA243">Hours Worked this month (Projects)</div>
-  <div class="panel-body">
-    {{ember-chart type='bar'  data=hoursthismonth options = baroptions }}
+<div class="card text-center mb-3 pre-scrollable" style="background-color:#A9D96C;">
+  <div class="card-body">
+    <h5 class="card-title">Hours Worked this month</h5>
+    <div class="mh-100 mw-100">
+      <table class="table"></table>
+      <tbody>
+        {{#each resultset as |result|}}
+          <tr class="row">
+            <td class="col-6 text-left"> {{result.projectName}}</td>
+            <td class="col-6">
+              <div class="progress progress-bar-vertical" data-toggle=" tooltip " data-placement="left " title=" Effort Spent: {{result.effort}} hours">
+                <div class="progress-bar bg-success progress-bar-striped " role="progressbar " style="width: {{result.effort}}%; " aria-valuenow= {{result.effort}}
+                  aria-valuemin="0 " aria-valuemax= {{maxeffort}}></div>
+              </div>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </div>
   </div>
 </div>
-{{yield}}

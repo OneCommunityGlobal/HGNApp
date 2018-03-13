@@ -1,13 +1,12 @@
-<div class="card text-center mb-3 w-30 h-100 " style="background-color:#1782B5">
+<div class="card text-center mb-3 pre-scrollable " style="background-color:#1782B5">
   <div class="card-body">
-    <a href="/profile/{{id}}">
-      <h5 class="card-title">Profile</h5>
+    <h5 class="card-title">Profile
+    </h5>
+    <a href="/profile/{{id}}" data-toggle="tooltip" data-placement="bottom" title="Click to view detailed profile">
+      <img class="rounded mx-auto d-block img-fluid" src= {{logo}} alt="Profile Image">
     </a>
     <div class="card-text">
-      <table class="table">
-        <tr>
-          <img class="img-responsive" src= {{logo}}>
-        </tr>
+      <table class="table dashboardtable">
         <tr>
           {{firstName}} {{lastName}}
         </tr>
@@ -18,4 +17,3 @@
     </div>
   </div>
 </div>
-{{yield}}

@@ -10,28 +10,13 @@
   </div>
 </div>
 <div class="card-deck">
-  <div class="card text-center col-md-4 mb-3">
-    <div class="card-block">
-      <h4 class="card-title">Badges</h4>
-      <p class="card-text">
-        {{hgn-badges title="UserName" role=model.userSnapshot.role }}
-      </p>
-    </div>
+  <div class="col-md-4">
+    {{hgn-badges}}
   </div>
-  <div class="card text-center col-md-4 mb-3">
-    <div class="card-block">
-      <h4 class="card-title">Weekly Effort</h4>
-      <p class="card-text">
-        {{weekly-effort-chart forUserId= loggedinUser.requestorId}}
-      </p>
-    </div>
+  <div class="col-md-4" style="height:100%">
+    {{weekly-effort-chart forUserId= loggedinUser.requestorId}}
   </div>
-  <div class="card text-center col-md-4 mb-3">
-    <div class="card-block">
-      <h4 class="card-title">Monthly Effort</h4>
-      <p class="card-text">
-        {{monthly-effort-chart forUserId =  loggedinUser.requestorId}}
-      </p>
-    </div>
+  <div class="col-md-4" style="height:100%">
+    {{monthly-effort-chart forUserId =  loggedinUser.requestorId}}
   </div>
 </div>
