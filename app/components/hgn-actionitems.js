@@ -27,23 +27,52 @@ export default Component.extend({
         this.get('dataService').getActionItems(user)
             .then(results => { this.set('actionItems', results); });
     },
-    isEditable: computed('loggedinUser', 'forUserId', function () {
+    isEditable: computed('loggedinUser', 'forUserId', 'forUser', function () {
+
+        let loggedinUser = this.get("loggedinUser.requestorId");
+        let forUserId = this.get('forUserId');
+        let forUser = this.get('forUser');
+        if (forUser) {
+            return (loggedinUser === forUserId && loggedinUser === forUser);
+        }
+        else {
+            return (loggedinUser === forUserId);
+        }
+
+    }),
+    isUseronSelfPage: computed('loggedinUser', 'forUserId', function () {
 
         let loggedinUser = this.get("loggedinUser.requestorId");
         let forUserId = this.get('forUserId');
         return (loggedinUser === forUserId);
-
     }),
-
 
     actions: {
 
+        updateforUser() {
+            let value = event.target.value
+            let json = JSON.parse(value)
+            this.set('forUser', json._id);
+            this.set('forUserName', json.name);
+
+        },
+
         getActionItemsForUser() {
 
-            let requestor = { "requestorId": this.get('forUser') };
-            this.get('dataService').getActionItems(requestor)
+            let requestedfor = { "requestorId": this.get('forUser') };
+            let loggedinUser = this.get("loggedinUser.requestorId");
+
+            if (requestedfor != loggedinUser) {
+                this.set("displaytext", `Viewing action items for ${this.get('forUserName')}`)
+            }
+            else {
+                this.set("displaytext", "")
+            }
+
+            this.get('dataService').getActionItems(requestedfor)
                 .then(results => {
                     this.set('actionItems', results);
+
                 });
         },
 

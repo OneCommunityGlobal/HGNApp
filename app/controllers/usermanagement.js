@@ -5,15 +5,15 @@ export default Controller.extend({
     selectedOption: null,
     userProfileService: inject('user-profile-service'),
 
-    newUser: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        role: "",
-        phoneNumber: "",
-        weeklyCommittedHours: ""
-    },
+    // newUser: {
+    //     firstName: "",
+    //     lastName: "",
+    //     email: "",
+    //     password: "",
+    //     role: "",
+    //     phoneNumber: "",
+    //     weeklyCommittedHours: ""
+    // },
 
     actions: {
         setSelection: function (selected) {

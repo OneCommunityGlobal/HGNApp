@@ -25,6 +25,7 @@ export default Controller.extend({
         })
         .error(function (error) {
           alert("Invalid credentials");
+          alert(error)
         })
 
     }

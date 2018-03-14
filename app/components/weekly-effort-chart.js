@@ -6,6 +6,19 @@ export default Component.extend({
     dashboardService: inject('dashboard-service'),
     init() {
         this._super(...arguments);
+        let pieChartOptions =
+            {
+                legend: {
+                    display: true,
+                    usePointStyle: true,
+                    position: "bottom",
+                    labels: {
+
+                    }
+                }
+
+            }
+        this.set('pieChartOptions', pieChartOptions);
         let forUserId = { requestorId: this.get('forUserId') }
         return this.get('dashboardService').getWeeklyEffort(forUserId)
             .then(result => { this.set('laborthisweek', result); })
@@ -31,16 +44,4 @@ export default Component.extend({
     },
 
 
-    pieChartOptions:
-        {
-            legend: {
-                display: true,
-                usePointStyle: true,
-                position: "bottom",
-                labels: {
-
-                }
-            }
-
-        },
 });

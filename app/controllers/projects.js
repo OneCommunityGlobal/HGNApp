@@ -1,28 +1,29 @@
 
 import { inject } from '@ember/service';
+import { computed } from '@ember/object';
 
 
 import Controller from '@ember/controller';
 
 export default Controller.extend({
 
-  self: this,
+  //self: this,
   projectService: inject('project-service'),
 
-  newProject: {
-    projectName: "",
-    tasks: [],
-    isActive: true
-  },
-  task: {
-    Description: ""
-  },
-  project: {
-    projectName: "",
-    tasks: [],
-    isActive: true
-  },
-  isUserNotAdministrator: Ember.computed('userrole', function () {
+  // newProject: {
+  //   projectName: "",
+  //   tasks: [],
+  //   isActive: true
+  // },
+  // task: {
+  //   Description: ""
+  // },
+  // project: {
+  //   projectName: "",
+  //   tasks: [],
+  //   isActive: true
+  // },
+  isUserNotAdministrator: computed('userrole', function () {
     let userrole = this.get('userrole');
     return userrole === "Administrator" ? false : true;
   }),

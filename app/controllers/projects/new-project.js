@@ -1,19 +1,20 @@
 
 import { inject } from '@ember/service';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
 
-  self: this,
+  // self: this,
   projectService: inject('project-service'),
 
-  newProject: {
-    projectName: "",
-    tasks: [],
-    isActive: true
-  },
-  task: {
-    Description: ""
-  },
+  // newProject: {
+  //   projectName: "",
+  //   tasks: [],
+  //   isActive: true
+  // },
+  // task: {
+  //   Description: ""
+  // },
   actions: {
     addNewTask() {
       this.get('newProject.tasks').addObject(this.get('task'));

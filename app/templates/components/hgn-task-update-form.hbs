@@ -1,42 +1,40 @@
-<div class="col-xs-12">
-  <div class="card card-outline-danger mb-3 ">
-    <div class="card-header">
-      <h4 class="card-title">
-        <a class="accordion-toggle" data-toggle="collapse" data-target="#showTimeEntryForm">
-          Add Time To Task
-        </a>
-      </h4>
-    </div>
-    <div class="card-block collapse" id="showTimeEntryForm">
-      <label>
-        Date Of Work: {{pikaday-input format="MM/DD/YYYY" onSelection=(action (mut dateofWork ) value= target.value)}}
-      </label>
-      <label>Total Time worked</label>
-      <table>
-        <tr>
-          <td>
-            <input type="number" min=0 max=23 placeholder="hours" onchange= {{action (mut taskhours) value = "target.value"}}>
-          </td>
-          <td>
-            <input type="number" min=0 max=23 placeholder="minutes" onchange= {{action (mut taskminutes) value = "target.value"}}> </td>
-          <td>
-            <input type="number" min=0 max=23 placeholder="seconds" onchange= {{action (mut taskseconds) value = "target.value"}}> </td>
-        </tr>
-        <tr style="text-align:center">
-          <td>
-            Hours
-          </td>
-          <td>
-            Minutes
-          </td>
-          <td>
-            Seconds
-          </td>
-        </tr>
-      </table>
-      <div class="form-group">
-        <label> Select Project </label>
-        <select class="form-control form-control-lg" onchange= {{action (mut forprojectId) value="target.value"}}>
+<div class="card border-danger mb-3 ">
+  <div class="card-header">
+    <h4 class="card-title">
+      <a class="accordion-toggle" data-toggle="collapse" data-target="#showTimeEntryForm">
+        Add Time To Task
+      </a>
+    </h4>
+  </div>
+  <div class="card-body collapse" id="showTimeEntryForm">
+    <form>
+      <div class="form-group row">
+        <label class="col-3 label">Date Of Work:</label>
+        <div class="">
+          {{!-- {{pikaday-input format="MM/DD/YYYY" onSelection=(action (mut dateofWork ) value= target.value) required= "true"}} --}}
+          <input type="date" class="form-control" onchange= {{action (mut dateofWork) value = "target.value"}} required placeholder="Select date of work">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-3 label">Effort Spent:</label>
+        <table>
+          <tr>
+            <td>
+              <input class="form-control" type="number" min=0 max=23 placeholder="hours" onchange= {{action (mut taskhours) value = "target.value"}}
+                placeholder="Hours">
+            </td>
+            <td>
+              <input class="form-control" type="number" min=0 max=59 placeholder="minutes" onchange= {{action (mut taskminutes) value = "target.value"}}
+                placeholder="Minutes"> </td>
+            <td>
+              <input class="form-control" type="number" min=0 max=50 placeholder="seconds" onchange= {{action (mut taskseconds) value = "target.value"}}
+                placeholder="Seconds"> </td>
+          </tr>
+        </table>
+      </div>
+      <div class="form-group row">
+        <label class="col-3 label"> Select Project: </label>
+        <select class="form-control form-control-lg col-9" onchange= {{action (mut forprojectId) value="target.value"}} required>
           <option value="" disabled selected>Select Project</option>
           {{#each projects as |project|}}
             {{#if project.projectId}}
@@ -45,40 +43,38 @@
           {{/each}}
         </select>
       </div>
-      <form>
-        <div class="form-group">
-          <label> Select Task </label>
+      <div class="form-group row">
+        <label class="col-3 label"> Select Task: </label>
+        <select class="form-control form-control-lg col-9" onchange= {{action (mut fortaskId) value="target.value"}} required>
+          <option disabled selected>Select Task</option>
           {{#each projects as |project|}}
             {{#if (eq project.projectId forprojectId )}}
-              <select class="form-control form-control-lg" onchange= {{action (mut fortaskId) value="target.value"}}>
-                <option disabled selected>Select Task</option>
-                {{#each project.tasks as |task|}}
-                  <option value= {{task._id}}>{{task.Description}}</option>
-                {{/each}}
-              </select>
+              {{#each project.tasks as |task|}}
+                <option value= {{task._id}}>{{task.Description}}</option>
+              {{/each}}
             {{/if}}
           {{/each}}
+        </select>
+      </div>
+      <div class="form-group">
+        <label> Notes: </label>
+        <input type="text" onchange= {{action (mut notes) value="target.value" }} />
+      </div>
+      <div class="form-group">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" name="timeentrytypeoptions" type="radio" onselect= {{action (mut isTangible) "true"}} checked>
+          <label class="form-check-label">
+            Tangible Work
+          </label>
         </div>
-        <div class="form-group">
-          <label> Notes </label>
-          <input onchange= {{action (mut notes) value="target.value" }} />
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" name="timeentrytypeoptions" type="radio" onselect= {{action (mut isTangible) "false"}}>
+          <label class="form-check-label">
+            Intangible Work
+          </label>
         </div>
-        <div class="form-group">
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" name="timeentrytypeoptions" type="radio" onchange= {{action (mut isTangible) "true"}} checked>
-            <label class="form-check-label">
-              Tangible Work
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" name="timeentrytypeoptions" type="radio" onchange= {{action (mut isTangible) "false"}}>
-            <label class="form-check-label">
-              Intangible Work
-            </label>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary btn-sm" {{action "submitTimeEntry"}}>Submit</button>
-      </form>
-    </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm" {{action "submitTimeEntry"}}>Submit</button>
+    </form>
   </div>
 </div>

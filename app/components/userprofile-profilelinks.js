@@ -7,10 +7,10 @@ export default Component.extend({
     submitModal: "",
     name: "",
     linksarray: "",
-    newLink: {
-        Name: "",
-        Link: ""
-    },
+    // newLink: {
+    //     Name: "",
+    //     Link: ""
+    // },
 
     isArrayEmptyText: computed('linksarray.[]', function () {
 
@@ -24,7 +24,7 @@ export default Component.extend({
     notifyparent: function () {
         let key = this.get('name');
         let value = this.get('linksarray');
-        this.sendAction("onchangeaction", key, value);
+        this.get("onchangeaction")(key, value);
     },
 
     actions:

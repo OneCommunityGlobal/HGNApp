@@ -11,12 +11,12 @@ export default Component.extend({
     }),
     allTeams: "",
     dataService: inject("datastore-service"),
-    opsarray: [],
+    // opsarray: [],
 
     notifyparent: function () {
         let key = this.get('name');
         let value = this.get('userteams');
-        this.sendAction("onchangeaction", key, value);
+        this.get("onchangeaction")(key, value);
     },
 
     actions:

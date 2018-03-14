@@ -56,9 +56,6 @@ export default Component.extend({
       this.get('clock').reset();
       this.setProperties({ status: 0, actionText: "Start", actionIcon: "play", stopDisabled: "disabled" });
 
-    },
-    toggleShow() {
-      this.set('showMyModal', !this.get('showMyModal'));
     }
 
   }

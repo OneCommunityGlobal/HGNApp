@@ -5,7 +5,7 @@ import { computed } from '@ember/object';
 import $ from 'jquery';
 
 export default Component.extend({
-    self: this,
+
     isFormSubmitted: "",
     minNamelength: "2",
     maxnameLength: "100",
@@ -83,11 +83,12 @@ export default Component.extend({
                 this.set('isFormSubmitted', "")
                 let userId = this.get('model._id');
                 let user = this.get('model');
-                toastr = this.get('ToastrService');
+                let toastr = this.get('ToastrService');
 
                 if (userId) {
                     this.get('userProfileService').editUserProfileData(user, userId)
                         .then(results => {
+                            console.log(results);
                             toastr.success("", 'Changes Saved');
                         }, error => {
 
@@ -97,6 +98,7 @@ export default Component.extend({
                 else {
                     this.get('userProfileService').postUserProfileData(user)
                         .then(results => {
+                            console.log(results);
                             toastr.success("", 'New user created successfully');
                         }, error => {
 

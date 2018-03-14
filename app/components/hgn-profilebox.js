@@ -7,7 +7,7 @@ export default Component.extend({
   actions:
     {
       gotoMyProfile: function () {
-        this.sendAction('MyProfile');
+        this.get('MyProfile');
       }
     }
 

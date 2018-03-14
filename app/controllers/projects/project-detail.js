@@ -1,18 +1,19 @@
 
+import Component from '@ember/component';
+import { inject } from '@ember/service';
+export default Component.extend({
 
-export default Ember.Component.extend({
+  //self: this,
+  projectService: inject.service('project-service'),
 
-  self: this,
-  projectService: Ember.inject.service('project-service'),
-
-  project: {
-    projectName: "",
-    tasks: [],
-    isActive: true
-  },
-  task: {
-    Description: ""
-  },
+  // project: {
+  //   projectName: "",
+  //   tasks: [],
+  //   isActive: true
+  // },
+  // task: {
+  //   Description: ""
+  // },
 
   actions: {
 

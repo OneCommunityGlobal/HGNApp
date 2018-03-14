@@ -44,6 +44,7 @@ export default Component.extend({
             timeentry.notes = this.get('notes');
             this.get('timeEntryService').postTimeEntry(timeentry)
                 .then(results => {
+                    console.log(results);
                     toastr.success("", 'Time Entry Saved');
                 }, error => {
                     toastr.warning(error.responseJSON.message, 'Error!!');

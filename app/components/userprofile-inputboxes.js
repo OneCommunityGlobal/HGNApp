@@ -6,7 +6,7 @@ export default Component.extend({
         notifyChange() {
             let key = this.get("name");
             let value = event.target.value;
-            this.sendAction("onchangeaction", key, value);
+            this.get("onchangeaction")(key, value);
         }
     }
 });

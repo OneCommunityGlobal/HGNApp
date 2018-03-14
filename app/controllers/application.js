@@ -6,8 +6,10 @@ import { computed } from '@ember/object'
 export default Controller.extend({
 
   dataService: inject("datastore-service"),
-  hideHeaderRoutes: ['index', 'login'],
+  //hideHeaderRoutes: ['index', 'login'],
   isHeaderVisible: computed('currentRouteName', function () {
+
+    this.set('hideHeaderRoutes', ['index', 'login']);
     return this.get('hideHeaderRoutes').indexOf(this.get('currentRouteName')) === -1;
   }),
 

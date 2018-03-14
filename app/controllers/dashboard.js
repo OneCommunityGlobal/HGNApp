@@ -2,9 +2,7 @@ import Controller from '@ember/controller';
 
 export default Controller.extend({
 
-    userProfile: {},
-
-
+    // userProfile: {},
 
     actions: {
 
