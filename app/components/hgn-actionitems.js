@@ -8,7 +8,6 @@ export default Component.extend({
     addnewactionitem: false,
     dataService: inject('datastore-service'),
     userProfileService: inject('user-profile-service'),
-
     forUser: null,
     newAIdescription: null,
     newdescription: null,
@@ -19,13 +18,11 @@ export default Component.extend({
 
         let user =
             { "requestorId": this.get('forUserId') }
-
-
         this.get('userProfileService').getTeamMembers(user)
             .then(results => { this.set('teamMembers', results); });
 
         this.get('dataService').getActionItems(user)
-            .then(results => { this.set('actionItems', results); });
+            .then(results => { this.set('actionItems', results); })
     },
     isEditable: computed('loggedinUser', 'forUserId', 'forUser', function () {
 
@@ -76,55 +73,68 @@ export default Component.extend({
                 });
         },
 
-        editActionItem(actionItem) {
-            let editedactionitem = {};
+        editActionItem(actionItem, index) {
 
-            editedactionitem._id = actionItem._id;
-            editedactionitem.description = this.get('newdescription');
-            editedactionitem.assignedTo = actionItem.assignedTo;
-            editedactionitem.createdBy = actionItem.createdBy;
+            let inputfield = $(`#input_actionitem_${index}`).get(0);
+            this.set("isSubmitted", "submitted")
 
-
-            this.get('dataService').editActionItem(editedactionitem);
+            if (inputfield.checkValidity()) {
+                let editedactionitem = {};
+                editedactionitem._id = actionItem._id;
+                editedactionitem.description = this.get('newdescription');
+                editedactionitem.assignedTo = actionItem.assignedTo;
+                editedactionitem.createdBy = actionItem.createdBy;
+                this.set('isSubmitted', "");
+                this.get('dataService').editActionItem(editedactionitem);
+            }
 
 
         },
         deleteActionItem(actionItem) {
+            if (confirm("Are you sure you want to delete this action item?")) {
 
-
-
-            this.get('actionItems').removeObject(actionItem);
-            this.get('dataService').deleteActionItem(actionItem);
+                this.get('actionItems').removeObject(actionItem);
+                this.get('dataService').deleteActionItem(actionItem)
+                    .then(results => {
+                        let toastr = this.get("ToastrService");
+                        toastr.success("Deleted successfully");
+                    })
+            }
 
         },
 
         createActionItem() {
-            let newActionItem = {};
 
-            let assignedTo = this.get('forUser');
+            let form = $("#frmnewactionitem").get(0);
+            this.set('isFormSumbitted', "submitted");
 
-            if (!assignedTo) {
-                assignedTo = this.get('loggedinUser.requestorId');
+            if (form.checkValidity()) {
+                let newActionItem = {};
+
+                let assignedTo = this.get('forUser');
+
+                if (!assignedTo) {
+                    assignedTo = this.get('loggedinUser.requestorId');
+                }
+
+                newActionItem.assignedTo = assignedTo;
+                newActionItem.description = this.get('newAIdescription');
+
+                this.get('dataService').createActionItem(newActionItem)
+                    .then(result => {
+                        this.get('actionItems').addObject(result);
+                        this.set('isFormSumbitted', "");
+                        let toastr = this.get("ToastrService");
+                        toastr.success("Action item sucessfully created");
+
+
+                    });
             }
-
-            newActionItem.assignedTo = assignedTo;
-            newActionItem.description = this.get('newAIdescription');
-
-            this.get('dataService').createActionItem(newActionItem)
-                .then(result => {
-                    this.get('actionItems').addObject(result);
-                    this.set('newAIdescription', "");
-                });
-
-        },
-        showForm() {
-            this.set('addnewactionitem', true);
-        },
-        selectAssignee(assignee) {
-            this.set('newactionitem.assignedTo', assignee._id);
 
         }
 
     }
+
+
 
 });

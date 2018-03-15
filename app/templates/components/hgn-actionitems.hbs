@@ -33,16 +33,16 @@
               </tr>
             </thead>
             <tbody>
-              {{#each actionItems as |actionItem|}}
-                <tr class="row">
+              {{#each actionItems as |actionItem index|}}
+                <tr class="row {{isSubmitted}}">
                   <td class="col-sm-3">{{actionItem.createdBy}}</td>
                   <td class="col-sm-7 text-left">
-                    <input required class="col-sm-7" value= {{actionItem.description}} onchange= {{action (mut newdescription) value = "target.value"}}
+                    <input id="input_actionitem_{{index}}" required class="col-sm-7" value= {{actionItem.description}} onchange= {{action (mut newdescription) value = "target.value"}}
                       readonly= {{if isUseronSelfPage null "readonly"}}>
                   </td>
                   {{#if isUseronSelfPage}}
                     <td class="col-sm-1">
-                      <span class="fa fa-save" {{action "editActionItem" actionItem}}></span>
+                      <span class="fa fa-save" {{action "editActionItem" actionItem index}}></span>
                     </td>
                     <td class="col-sm-1">
                       <span class="fa fa-trash" {{action "deleteActionItem" actionItem}}></span>
@@ -58,10 +58,12 @@
           </div>
         {{/if}}
         {{#if isUseronSelfPage}}
-          <form class="form-inline">
-            <div class="form-group col-12">
-              {{input type="text" class="form-control col-8" placeholder="Assign new action item" value = newAIdescription }}
-              <button type="submit" class="pull-right btn btn-primary" {{action "createActionItem"}}>Assign</button>
+          <form class="form-inline {{isFormSumbitted}}" id="frmnewactionitem">
+            <div class="mb-2 mx-sm-3">
+              <input required type="text" class="form-control" placeholder="Assign new action item" onchange= {{action (mut newAIdescription) value = "target.value"}}>
+            </div>
+            <div>
+              <button type="submit" class="pull-right btn btn-primary mb-2" {{action "createActionItem"}}>Assign</button>
             </div>
           </form>
         {{/if}}
