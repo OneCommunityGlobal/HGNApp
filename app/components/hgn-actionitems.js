@@ -49,7 +49,7 @@ export default Component.extend({
 
     actions: {
 
-        updateforUser() {
+        updatetargetUser() {
             let value = event.target.value
             let json = JSON.parse(value)
             this.set('forUser', json._id);

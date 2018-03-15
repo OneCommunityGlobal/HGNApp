@@ -9,7 +9,7 @@
     </div>
     <div class="card-body collapse" id="showData">
       <div>
-        <select class="" onchange= {{action "updateforUser"  }}>
+        <select class="" onchange= {{action "updatetargetUser"  }}>
           {{#each teamMembers as |teamMember|}}
             <option value='{"_id" : "{{teamMember._id}}", "name"  : "{{teamMember.name}}" }' selected= {{eq forUserId teamMember._id}}>{{teamMember.name}} {{if (check-userisloggedin-user teamMember loggedinUser ) " (You)" ""}}</option>
           {{/each}}
@@ -37,7 +37,7 @@
                 <tr class="row">
                   <td class="col-sm-3">{{actionItem.createdBy}}</td>
                   <td class="col-sm-7 text-left">
-                    <input class="col-sm-7" value= {{actionItem.description}} onchange= {{action (mut newdescription) value = "target.value"}}
+                    <input required class="col-sm-7" value= {{actionItem.description}} onchange= {{action (mut newdescription) value = "target.value"}}
                       readonly= {{if isUseronSelfPage null "readonly"}}>
                   </td>
                   {{#if isUseronSelfPage}}

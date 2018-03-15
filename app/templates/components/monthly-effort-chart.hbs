@@ -2,20 +2,15 @@
   <div class="card-body">
     <h5 class="card-title">Hours Worked this month</h5>
     <div class="mh-100 mw-100">
-      <table class="table dashboardtable table-sm table-bordered"></table>
-      <tbody>
-        {{#each resultset as |result|}}
-          <tr class="row">
-            <td class="col-6 text-left"> {{result.projectName}}</td>
-            <td class="col-6">
-              <div class="progress progress-bar-vertical" data-toggle=" tooltip " data-placement="left " title=" Effort Spent: {{result.effort}} hours">
-                <div class="progress-bar bg-success progress-bar-striped " role="progressbar " style="width: {{result.percentageeffort}}%; "
-                  aria-valuenow= {{result.effort}} aria-valuemin="0 " aria-valuemax= {{maxeffort}}></div>
-              </div>
-            </td>
-          </tr>
-        {{/each}}
-      </tbody>
+      {{#each resultset as |result|}}
+        <p>
+          <small class="progress-label"> {{result.projectName}}</small>
+          <div class="progress" data-toggle=" tooltip " data-placement="left " title=" Effort Spent: {{result.effort}} hours">
+            <div class="progress-bar bg-success progress-bar-striped " role="progressbar " style="width: {{result.percentageeffort}}%; "
+              aria-valuenow= {{result.effort}} aria-valuemin="0 " aria-valuemax= {{maxeffort}}></div>
+          </div>
+        </p>
+      {{/each}}
     </div>
   </div>
 </div>
