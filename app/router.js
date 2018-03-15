@@ -11,7 +11,6 @@ Router.map(function () {
   this.route('projects', function () {
     this.route('projectdetail', { path: '/:project_id' });
     this.route('newproject');
-
   });
   this.route('dashboard');
   this.route('timelog', { path: '/timelog/:user_id' });

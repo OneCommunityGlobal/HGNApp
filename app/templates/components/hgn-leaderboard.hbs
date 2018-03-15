@@ -1,47 +1,45 @@
-<div class="card text-center mb-3 border-secondary pre-scrollable" style="background-color:#FFCCBC">
-    <div class="card-body">
-        <h5 class="card-title">LeaderBoard</h5>
-        <div class="card-text">
-            <div>
-                <table class="table table-sm dashboardtable">
-                    <tbody>
-                        {{#each resultset as |result| }}
-                            <tr class= {{if (eq result.personId loggedinUser.requestorId) 'table-active row' "row" }}>
-                                <td class="col-1">
-                                    {{#if result.didMeetWeeklyCommitment}}
-                                        <i class="fa fa-circle" style="color: green" data-toggle="tooltip" data-placement="left" title="Weekly Committed: {{result.weeklycommited}} hours &#010;TangibleEffort: {{result.tangibletime}} hours">
-                                        </i>
-                                    {{else}}
-                                        <i class="fa fa-circle" style="color: red " data-toggle="tooltip" data-placement="left" title="Weekly Committed: {{result.weeklycommited}} hours &#010;TangibleEffort: {{result.tangibletime}} hours">
-                                        </i>
-                                    {{/if}}
-                                </td>
-                                <td class="text-left col-3">
-                                    <a href="/profile/{{result.personId}}" data-toggle="tooltip" data-placement="left" title="View Profile">{{result.name}}</a>
-                                </td>
-                                <td class="text-right text-justify text-nowrap col-2">
-                                    {{result.tangibletime}} tan
-                                </td>
-                                <td class="col-4 text-center">
-                                    <a href="/timelog/{{result.personId}}">
-                                        <div class="progress progress-leaderboard">
-                                            <div class="progress-bar progress-bar-striped" role="progressbar " style="width: {{result.tangibletimewidth}}% ; background-color : {{result.tangiblebarcolor}} "
-                                                aria-valuenow=" {{result.tangibletime}} " aria-valuemin="0 " aria-valuemax=" {{maxtotal}} "
-                                                data-toggle="tooltip" data-placement="bottom" title="Tangible Effort: {{result.tangibletime}} hours"></div>
-                                            <div class="progress-bar progress-bar-striped bg-info" role="progressbar " style="width: {{result.intangibletimewidth}}% "
-                                                aria-valuenow=" {{result.intangibletime}} " aria-valuemin="0 " aria-valuemax=" {{maxtotal}} "
-                                                data-toggle="tooltip" data-placement="bottom" title="Intangible Effort: {{result.intangibletime}} hours"></div>
-                                        </div>
-                                    </a>
-                                </td>
-                                <td class="text-right text-justify text-nowrap col-2">
-                                    {{result.totaltime}} tot
-                                </td>
-                            </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-            </div>
+<div class="card-body">
+    <h5 class="card-title">LeaderBoard</h5>
+    <div class="card-text">
+        <div>
+            <table class="table table-sm dashboardtable">
+                <tbody>
+                    {{#each resultset as |result| }}
+                        <tr class= {{if (eq result.personId loggedinUser.requestorId) 'table-active row' "row" }}>
+                            <td class="col-1">
+                                {{#if result.didMeetWeeklyCommitment}}
+                                    <i class="fa fa-circle" style="color: green" data-toggle="tooltip" data-placement="left" title="Weekly Committed: {{result.weeklycommited}} hours &#010;TangibleEffort: {{result.tangibletime}} hours">
+                                    </i>
+                                {{else}}
+                                    <i class="fa fa-circle" style="color: red " data-toggle="tooltip" data-placement="left" title="Weekly Committed: {{result.weeklycommited}} hours &#010;TangibleEffort: {{result.tangibletime}} hours">
+                                    </i>
+                                {{/if}}
+                            </td>
+                            <td class="text-left col-3">
+                                <a href="/profile/{{result.personId}}" data-toggle="tooltip" data-placement="left" title="View Profile">{{result.name}}</a>
+                            </td>
+                            <td class="text-right text-justify text-nowrap col-2">
+                                {{result.tangibletime}} tan
+                            </td>
+                            <td class="col-4 text-center">
+                                <a href="/timelog/{{result.personId}}">
+                                    <div class="progress progress-leaderboard">
+                                        <div class="progress-bar progress-bar-striped" role="progressbar " style="width: {{result.tangibletimewidth}}% ; background-color : {{result.tangiblebarcolor}} "
+                                            aria-valuenow=" {{result.tangibletime}} " aria-valuemin="0 " aria-valuemax=" {{maxtotal}} "
+                                            data-toggle="tooltip" data-placement="bottom" title="Tangible Effort: {{result.tangibletime}} hours"></div>
+                                        <div class="progress-bar progress-bar-striped bg-info" role="progressbar " style="width: {{result.intangibletimewidth}}% "
+                                            aria-valuenow=" {{result.intangibletime}} " aria-valuemin="0 " aria-valuemax=" {{maxtotal}} "
+                                            data-toggle="tooltip" data-placement="bottom" title="Intangible Effort: {{result.intangibletime}} hours"></div>
+                                    </div>
+                                </a>
+                            </td>
+                            <td class="text-right text-justify text-nowrap col-2">
+                                {{result.totaltime}} tot
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

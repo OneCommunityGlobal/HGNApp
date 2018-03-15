@@ -6,7 +6,8 @@ import { scheduleOnce } from '@ember/runloop';
 
 export default Component.extend({
     dashboardService: inject("dashboard-service"),
-
+    tagName: "card",
+    classNames: ["card", "text-center", "mb-3", "w-33", "h-100", "pre-scrollable", "hgn-leaderboard"],
 
     init() {
         this._super(...arguments);
@@ -101,8 +102,7 @@ export default Component.extend({
     scrollToRow() {
         let row = $("tr.table-active").get()[0];
 
-        if(row)
-        {row.scrollIntoView({ behavior: "smooth", inline: "center", block: "center" });}
+        if (row) { row.scrollIntoView({ behavior: "smooth", inline: "center", block: "center" }); }
 
     }
 

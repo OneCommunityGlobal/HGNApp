@@ -3,7 +3,7 @@
     {{ hgn-profilebox firstName=model.firstName lastName = model.lastName role=model.role logo=model.profilePic id =model._id}}
   </div>
   <div class="col-md-4">
-    {{hgn-timer loggedinUser = loggedinUser}}
+    {{hgn-timer loggedinUser = loggedinUser }}
   </div>
   <div class="col-md-4">
     {{hgn-leaderboard loggedinUser = loggedinUser}}
@@ -13,10 +13,10 @@
   <div class="col-md-4">
     {{hgn-badges}}
   </div>
-  <div class="col-md-4" style="height:100%">
+  <div class="col-md-4">
     {{weekly-effort-chart forUserId= loggedinUser.requestorId}}
   </div>
-  <div class="col-md-4" style="height:100%">
+  <div class="col-md-4">
     {{monthly-effort-chart forUserId =  loggedinUser.requestorId}}
   </div>
 </div>

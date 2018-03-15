@@ -4,13 +4,19 @@ import { computed } from '@ember/object'
 import $ from 'jquery';
 
 export default Component.extend({
+    tagName: "card",
+    classNames: ["card", "card-outline-success", "w-50"],
     submitModal: "",
     name: "",
     linksarray: "",
-    // newLink: {
-    //     Name: "",
-    //     Link: ""
-    // },
+    init() {
+        this._super(...arguments);
+        let newLink = {
+            Name: "",
+            Link: ""
+        }
+        this.set('newLink', newLink);
+    },
 
     isArrayEmptyText: computed('linksarray.[]', function () {
 
@@ -50,11 +56,18 @@ export default Component.extend({
                 }
 
             },
+            editlinksarray(index) {
+                let value = event.target.value;
+                let record = this.get('linksarray').objectAt(index);
+                Ember.set(record, 'Link', value);
+                this.notifyparent();
+
+            },
 
             CancelAddingLink() {
                 this.set('submitModal', '')
-                this.set('newLink.Name', "");
-                this.set('newLink.Link', "");
+                let formid = `formnew${this.get('name')}`;
+                $(`#${formid}`)[0].reset();
             },
 
 

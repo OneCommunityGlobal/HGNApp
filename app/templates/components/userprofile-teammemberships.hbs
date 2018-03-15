@@ -1,6 +1,6 @@
 {{yield}}
 <div class="card mb-3">
-    <div class="card-block">
+    <div class="card-body">
         <h4 class="card-title">Team Memberships</h4>
         <p class="card-text">{{isArrayEmptyText}}</p>
     </div>
@@ -9,12 +9,12 @@
             <li class="list-group-item">
                 <a href="/team/{{team._id}}">{{team.teamName}}</a>
                 {{#if isEditable}}
-                    <span class="glyphicon glyphicon-remove pull-right" {{action "removeTeamMembership" team}}></span>
+                    <span class="fa fa-trash pull-right" {{action "removeTeamMembership" team}}></span>
                 {{/if}}
             </li>
         {{/each}}
     </ul>
-    <div class="card-block">
+    <div class="card-body">
         {{#if isEditable}}
             <a href="#" class="card-link" data-toggle="modal" data-target="#newteammembership" {{action "loadAllTeams"}}>Manage Membership</a>
         {{/if}}

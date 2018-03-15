@@ -3,6 +3,8 @@ import { inject } from '@ember/service';
 import Component from '@ember/component';
 
 export default Component.extend({
+    classNames: ["card", "text-center", "mb-3", "w-33", "h-100", "hgn-monthlyeffortchart", "pre-scrollable"],
+    tagName: "card",
 
     dashboardService: inject('dashboard-service'),
     init() {

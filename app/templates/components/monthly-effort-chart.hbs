@@ -1,16 +1,14 @@
-<div class="card text-center mb-3 pre-scrollable" style="background-color:#A9D96C;">
-  <div class="card-body">
-    <h5 class="card-title">Hours Worked this month</h5>
-    <div class="mh-100 mw-100">
-      {{#each resultset as |result|}}
-        <p>
-          <small class="progress-label"> {{result.projectName}}</small>
-          <div class="progress" data-toggle=" tooltip " data-placement="left " title=" Effort Spent: {{result.effort}} hours">
-            <div class="progress-bar bg-success progress-bar-striped " role="progressbar " style="width: {{result.percentageeffort}}%; "
-              aria-valuenow= {{result.effort}} aria-valuemin="0 " aria-valuemax= {{maxeffort}}></div>
-          </div>
-        </p>
-      {{/each}}
-    </div>
+<div class="card-body">
+  <h5 class="card-title">Hours Worked this month</h5>
+  <div class="mh-100 mw-100">
+    {{#each resultset as |result|}}
+      <p>
+        <small class="progress-label"> {{result.projectName}}</small>
+        <div class="progress" data-toggle=" tooltip " data-placement="left " title=" Effort Spent: {{result.effort}} hours">
+          <div class="progress-bar bg-success progress-bar-striped " role="progressbar " style="width: {{result.percentageeffort}}%; "
+            aria-valuenow= {{result.effort}} aria-valuemin="0 " aria-valuemax= {{maxeffort}}></div>
+        </div>
+      </p>
+    {{/each}}
   </div>
 </div>
