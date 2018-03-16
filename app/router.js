@@ -18,6 +18,7 @@ Router.map(function () {
   this.route('usermanagement');
   this.route('badges');
   this.route('profile', { path: '/profile/:user_id' });
+  this.route('AllTimeEntries', { path: "/AllTimeEntries/:user_id" });
 });
 
 export default Router;

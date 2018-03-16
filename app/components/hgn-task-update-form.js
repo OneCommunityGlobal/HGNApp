@@ -2,6 +2,7 @@
 import moment from 'moment';
 import { inject } from '@ember/service';
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 
 export default Component.extend({
 
@@ -14,15 +15,34 @@ export default Component.extend({
     isTangible: true,
     isFormSubmitted: "",
 
-
     init() {
         this._super(...arguments);
-        let user = this.get('loggedinUser');
+
+        let user = this.get('forUserId');
 
         this.get('timeEntryService').getUserProjects(user)
             .then(results => { this.set('projects', results); });
 
     },
+
+    minDateForLogging: computed("loggedinUser.role", function () {
+
+        let userrole = this.get("loggedinUser.role");
+
+        if (userrole != "Administrator") {
+            return moment().startOf('week').subtract(2, 'week').format("YYYY-MM-DD");
+        }
+
+    }),
+    maxDateForLogging: computed("loggedinUser.role", function () {
+
+        let userrole = this.get("loggedinUser.role");
+
+        if (userrole != "Administrator") {
+            return moment().format("YYYY-MM-DD");
+        }
+    }),
+
 
     clearform() {
         this.set('isFormSubmitted', "");
@@ -79,7 +99,7 @@ export default Component.extend({
 
                 let timespent = hours + ":" + minutes + ":" + seconds;
                 let dateofWork = moment(this.get('dateofWork')).format('YYYY-MM-DD');
-                timeentry.personId = this.get('loggedinUser.requestorId');
+                timeentry.personId = this.get('forUserId');
                 timeentry.projectId = this.get('forprojectId');
                 timeentry.taskId = this.get('fortaskId');
                 timeentry.dateofWork = dateofWork;

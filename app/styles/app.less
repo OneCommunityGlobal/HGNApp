@@ -1,9 +1,13 @@
 .accordion-toggle:after {
-    /* symbol for "right chevron */
+   
     font-family: 'FontAwesome'; 
     content: "\f054";    
-    float: right;      
-  
+    float: right;        
+}
+
+.accordion-toggle.collapsed:after {
+  /* symbol for down chevron*/
+  content: "\f078";    
 }
 
 .hgn-timer
@@ -34,10 +38,7 @@
   background-color:#A9D96C;
 }
 
- .accordion-toggle.collapsed:after {
-    /* symbol for down chevron*/
-    content: "\f078";    
-}
+
 
 
 form.submitted input:invalid {
@@ -79,4 +80,16 @@ div.submitModal  input:invalid {
     .progress-label {
       float: left;
       margin-right: 1em;
+  }
+
+  thead tr td
+  {
+    white-space: nowrap;
+   
+  }
+
+  .tbltimelog
+  {
+    font-size: small;
+    text-align: center
   }

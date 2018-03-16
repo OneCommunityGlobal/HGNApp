@@ -49,7 +49,6 @@
         "ember-cli-jwt-decode": "^0.1.0",
         "ember-cli-less": "^1.5.5",
         "ember-cli-moment-shim": "^3.6.0",
-        "ember-pikaday": "^2.2.4",
         "ember-radio-buttons": "^4.1.0",
         "ember-toastr": "^1.7.1",
         "ember-truth-helpers": "^2.0.0",

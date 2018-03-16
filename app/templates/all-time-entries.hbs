@@ -1,0 +1,8 @@
+<form class="form-inline row {{isFormSubmitted}}" id="frmallTimeEntries">
+    <label class="label" for="fromdate">From Date:</label>
+    <input type="date" class="form-control mb-2 mr-sm-2" id="fromdate" required value= {{fromDate}} onchange= {{action (mut fromDate) value = "target.value"}}>
+    <label class="label" for="todate">To Date:</label>
+    <input type="date" class="form-control mb-2 mr-sm-2" id="todate" required value= {{toDate}} onchange= {{action (mut toDate) value = "target.value"}}>
+    <button type="submit" class="btn btn-primary mb-2" {{action "getDataForPeriod"}}>Submit</button>
+</form>
+{{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId period = "custom" fromDate = datesarray.fromDate toDate = datesarray.todate isEditable=isEditable}}
