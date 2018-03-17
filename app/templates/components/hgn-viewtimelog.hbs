@@ -2,30 +2,32 @@
     <small>Viewing time Entries for {{period}}</small>
 </div>
 {{#if timelogs}}
-    <table class="table table-sm tbltimelog">
-        <thead>
-            <tr class="row col-12" scope="row">
-                <td scope="col" class="col-2">Date Of Work</td>
-                <td scope="col" class="col-2">Effort(HH:MM:SS)</td>
-                <td scope="col" class="col-1">Tangible</td>
-                <td scope="col" class="col-3">Notes</td>
-                <td scope="col" class="col-2">Project</td>
-                <td scope="col" class="col-2">Task</td>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each timelogs as |timelog|}}
-                <tr class="col-12 row {{if timelog.isTangible 'bg-success' 'bg-info'}}" scope="row">
-                    <td class="col-2"> {{timelog.dateOfWork}}</td>
-                    <td class="col-2"> {{timelog.totalSeconds}}</td>
-                    <td class="col-1"> {{if timelog.isTangible "Yes" "No"}} </td>
-                    <td class="col-3"> {{timelog.notes}}</td>
-                    <td class="col-2"> {{timelog.projectName}}</td>
-                    <td class="col-2"> {{timelog.taskName}}</td>
+    <div class="table-responsive pre-scrollable">
+        <table class="table table-sm tbltimelog">
+            <thead>
+                <tr class="row col-12" scope="row">
+                    <td scope="col" class="col-2">Date Of Work</td>
+                    <td scope="col" class="col-2">Effort(HH:MM:SS)</td>
+                    <td scope="col" class="col-1">Tangible</td>
+                    <td scope="col" class="col-3">Notes</td>
+                    <td scope="col" class="col-2">Project</td>
+                    <td scope="col" class="col-2">Task</td>
                 </tr>
-            {{/each}}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {{#each timelogs as |timelog|}}
+                    <tr class="col-12 row {{if timelog.isTangible 'bg-success' 'bg-info'}}" scope="row">
+                        <td class="col-2"> {{timelog.dateOfWork}}</td>
+                        <td class="col-2"> {{timelog.totalSeconds}}</td>
+                        <td class="col-1"> {{if timelog.isTangible "Yes" "No"}} </td>
+                        <td class="col-3"> {{timelog.notes}}</td>
+                        <td class="col-2"> {{timelog.projectName}}</td>
+                        <td class="col-2"> {{timelog.taskName}}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
 {{else}}
     <small> No time enteries for this period</small>
 {{/if}}

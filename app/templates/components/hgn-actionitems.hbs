@@ -9,7 +9,7 @@
     </div>
     <div class="card-body collapse" id="showData">
       <div>
-        <select class="" onchange= {{action "updatetargetUser"  }}>
+        <select class="col-sm-12" onchange= {{action "updatetargetUser"  }}>
           {{#each teamMembers as |teamMember|}}
             <option value='{"_id" : "{{teamMember._id}}", "name"  : "{{teamMember.name}}" }' selected= {{eq forUserId teamMember._id}}>{{teamMember.name}} {{if (check-userisloggedin-user teamMember loggedinUser ) " (You)" ""}}</option>
           {{/each}}
