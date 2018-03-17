@@ -15,6 +15,7 @@ export default Service.extend({
   },
 
   getTimeEntriesForPeriod(userid, fromdate, todate) {
+
     let relativePath = "/TimeEntry/user/" + `${userid}/${fromdate}/${todate}`;
     let data = null;
     let method = "get";

@@ -28,6 +28,8 @@ export default Component.extend({
 
     getDataforTime() {
 
+
+
         let period = this.get("period");
         let userid = this.get('forUserId');
         let fromdate;
@@ -51,10 +53,11 @@ export default Component.extend({
             let end = moment(this.get('toDate'))
 
             fromdate = start.clone().format('X');
-            todate = end.clone().add(7, 'days').format('X');
+            todate = end.clone().format('X');
 
             let startdate = start.clone().format("MM/DD/YYYY");
-            let enddate = end.clone().add(7, 'days').format("MM/DD/YYYY");;
+
+            let enddate = end.clone().format("MM/DD/YYYY");
 
             this.set("period", `custom range [ ${startdate} to ${enddate}]`);
 

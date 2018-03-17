@@ -16,16 +16,16 @@ export default Controller.extend({
         return (loggedinUser === forUserId || userrrole === "Administrator");
 
     }),
-    datesarray: computed('fromdate', 'todate', function () {
-        alert("computing");
+    datesarray: computed('fromDate', 'toDate', function () {
 
-        let fromdate = this.get('fromdate');
-        let todate = this.get('todate');
-        alert(fromdate);
-        alert(todate);
+        let fromdate = this.get('fromDate');
+        let todate = this.get('toDate');
+
+
+
         let obj = {
-            "fromdate": fromdate,
-            "todate": todate
+            "fromDate": fromdate,
+            "toDate": todate
         };
         return obj
     }),
@@ -54,12 +54,19 @@ export default Controller.extend({
     },
 
     actions: {
+
+
+
         getDataForPeriod() {
 
             this.set("isFormSubmitted", "submitted");
 
             if (this.get('validateForm')()) {
+                let todatevalue = $("#todate").get(0).value;
+                let fromdatevalue = $("#fromdate").get(0).value;
 
+                this.set("toDate", todatevalue);
+                this.set("fromDate", fromdatevalue);
                 this.set("showData", true)
             }
             else {
