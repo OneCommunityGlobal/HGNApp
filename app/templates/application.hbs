@@ -1,19 +1,9 @@
 {{#if isHeaderVisible}}
-
-{{hgn-header isUserAdministrator=isUserAdministrator notifications = notifications}}
-
+  {{hgn-header isUserAdministrator=isUserAdministrator notifications = notifications}}
 {{/if}}
-
-
-
 <div class="container">
-
-    {{outlet}}
-
-    <div id="destination">
-
-      <!-- ember-wormhole -->
-
-    </div>
-
+  {{outlet}}
+  <div id="destination">
+    <!-- ember-wormhole -->
+  </div>
 </div>

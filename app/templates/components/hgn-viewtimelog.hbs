@@ -2,11 +2,11 @@
     <small>Viewing time Entries for {{period}}</small>
 </div>
 {{#if timelogs}}
-    <div class="table-responsive pre-scrollable">
-        <table class="table table-sm tbltimelog">
+    <div class="table-responsive pre-scrollable display dataTable">
+        <table class="table table-sm tbltimelog" id="tbltimelog">
             <thead>
                 <tr class="row col-12" scope="row">
-                    <td scope="col" class="col-2">Date Of Work</td>
+                    <td class="sorting_asc" scope="col" class="col-2">Date Of Work</td>
                     <td scope="col" class="col-2">Effort(HH:MM:SS)</td>
                     <td scope="col" class="col-1">Tangible</td>
                     <td scope="col" class="col-3">Notes</td>

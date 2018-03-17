@@ -9,6 +9,11 @@ export default Component.extend({
     init() {
 
         this._super(...arguments);
+        $(document).ready(function () {
+
+            $.noConflict();
+            $('#tbltimelog').DataTable();
+        });
 
     },
 

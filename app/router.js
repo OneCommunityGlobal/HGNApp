@@ -12,7 +12,6 @@ Router.map(function () {
     this.route('projectdetail', { path: '/:project_id' });
     this.route('newproject');
   });
-  this.route('dashboard');
   this.route('timelog', { path: '/timelog/:user_id' });
   this.route('login');
   this.route('usermanagement');

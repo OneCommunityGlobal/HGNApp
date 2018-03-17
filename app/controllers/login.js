@@ -21,7 +21,7 @@ export default Controller.extend({
       loginPromise
         .done(function (result) {
           localStorage.setItem(ENV.TOKEN_KEY, result);
-          self.transitionToRoute('dashboard');
+          self.transitionToRoute('application');
         })
         .error(function (error) {
           alert("Invalid credentials");

@@ -7,7 +7,7 @@ import $ from 'jquery';
 export default Service.extend({
 
   host: ENV.webServer,
-
+  router: Ember.inject.service(),
   login(data) {
 
     let loginPromise = $.ajax({
@@ -34,6 +34,7 @@ export default Service.extend({
   logout() {
 
     localStorage.removeItem(ENV.TOKEN_KEY);
+    this.get('router').transitionTo('login');
   },
 
   getLoggedinUser() {

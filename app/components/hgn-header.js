@@ -6,9 +6,8 @@ export default Component.extend({
 
     showNotifications: false,
     loginService: inject("login-service"),
+
     actions: {
-
-
 
         logout() {
             this.get('loginService').logout();
