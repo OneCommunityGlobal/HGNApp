@@ -9,7 +9,7 @@ export default Controller.extend({
   //hideHeaderRoutes: ['index', 'login'],
   isHeaderVisible: computed('currentRouteName', function () {
 
-    this.set('hideHeaderRoutes', ['index', 'login']);
+    this.set('hideHeaderRoutes', ['login']);
     return this.get('hideHeaderRoutes').indexOf(this.get('currentRouteName')) === -1;
   }),
 

@@ -4,31 +4,44 @@ import ENV from '../config/environment';
 
 export default Controller.extend({
 
+  isSubmitted: "",
+
   actions: {
     login() {
 
-      let email = this.get('email');
-      let password = this.get('password');
-      let self = this;
-      let logindata = {
-        "email": email,
-        "password": password
-      };
+      let form = $("#frmlogin").get(0);
+
+      this.set("isSubmitted", "submitted");
+
+      if (form.checkValidity()) {
+        this.set("isSubmitted", "");
+
+        let email = this.get('email');
+        let password = this.get('password');
+        let self = this;
+        let logindata = {
+          "email": email,
+          "password": password
+        };
 
 
-      let loginPromise = this.get('AuthService').login(logindata);
+        let loginPromise = this.get('AuthService').login(logindata);
 
-      loginPromise
-        .done(function (result) {
-          localStorage.setItem(ENV.TOKEN_KEY, result);
-          self.transitionToRoute('application');
-        })
-        .error(function (error) {
-          alert("Invalid credentials");
-          alert(error)
-        })
+        loginPromise
+          .then(function (result) {
+            localStorage.setItem(ENV.TOKEN_KEY, result);
+            self.transitionToRoute('application');
+          }, function (error) {
+            alert("Invalid credentials");
+            console.log(error.responseText)
+          })
+      }
+      else {
+
+        alert("Please enter valid credentials");
+      }
+
 
     }
   }
-
 });
