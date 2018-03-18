@@ -1,16 +1,19 @@
 {{outlet}}
-<div class="container">
-  <form class="form-signin {{isSubmitted}}" id="frmlogin">
-    <h2 class="form-signin-heading">Please sign in</h2>
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" required class="form-control" placeholder="Username" onchange= {{action (mut email) value= "target.value"}}
-    />
-    <br>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" required class="form-control" placeholder="Password" value=password onchange= {{action (mut password) value= "target.value"}}
-    />
-    <div class="checkbox">
+<div class="mx-auto mt-5">
+  <h2 class="display-4 mb-5">Please sign in</h2>
+  <form class="{{isSubmitted}} mx-auto" id="frmlogin">
+    <div class="form-group row">
+      <label for="inputEmail" class="label col-md-2">*Email address:</label>
+      <input type="email" id="inputEmail" required class="form-control col-md-5" placeholder="Email" onchange= {{action (mut email) value= "target.value"}}
+      />
     </div>
-    <button {{action "login" }} class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <div class="form-group row">
+      <label for="inputPassword" class="label col-md-2">*Password:</label>
+      <input type="password" id="inputPassword" required class="form-control col-md-5" placeholder="Password" onchange= {{action (mut password) value= "target.value"}}
+      />
+    </div>
+    <div class="form-group row">
+      <button {{action "login" }} class="btn btn-primary" type="submit">Sign in</button>
+    </div>
   </form>
 </div>
