@@ -8,8 +8,8 @@
       </h4>
     </div>
     <div class="card-body collapse" id="showData">
-      <div>
-        <select class="col-sm-12" onchange= {{action "updatetargetUser"  }}>
+      <div class="mb-3">
+        <select class="col-md-6" onchange= {{action "updatetargetUser"  }}>
           {{#each teamMembers as |teamMember|}}
             <option value='{"_id" : "{{teamMember._id}}", "name"  : "{{teamMember.name}}" }' selected= {{eq forUserId teamMember._id}}>{{teamMember.name}} {{if (check-userisloggedin-user teamMember loggedinUser ) " (You)" ""}}</option>
           {{/each}}
@@ -21,7 +21,7 @@
           {{displaytext}}
         </small>
         {{#if actionItems }}
-          <table class="table table-striped table-hover">
+          <table class="table table-striped table-hover table-sm">
             <thead>
               <tr class="row">
                 <th scope="col" class="col-sm-3">Created By</th>

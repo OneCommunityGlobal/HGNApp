@@ -4,6 +4,8 @@ import Component from '@ember/component';
 import { computed } from '@ember/object'
 
 export default Component.extend({
+    tagName: "card",
+    classNames: ["card", "border-primary", "w-100", "mb-3"],
 
     isArrayEmptyText: computed('userteams.[]', function () {
         let _teams = this.get('userteams');

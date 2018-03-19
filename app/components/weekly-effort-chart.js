@@ -2,7 +2,7 @@
 import { inject } from '@ember/service';
 import Component from '@ember/component';
 export default Component.extend({
-    classNames: ["card", "text-center", "mb-3", "w-33", "h-100", "hgn-weeklyeffortchart", "pre-scrollable"],
+    classNames: ["card", "text-center", "mb-3", "w-33", "h-100", "hgn-weeklyeffortchart", "prescrollable"],
     tagName: "card",
 
     dashboardService: inject('dashboard-service'),
@@ -28,6 +28,9 @@ export default Component.extend({
                 let actual = this.get('laborthisweek');
                 let actualhours = parseFloat(actual[0].timeSpent_hrs).toFixed(2);
                 let committedhours = parseFloat(actual[0].weeklyComittedHours).toFixed(2);
+
+                this.set('actualhours', parseInt(actualhours));
+                this.set("committedhours", parseInt(committedhours))
 
 
                 let result = {

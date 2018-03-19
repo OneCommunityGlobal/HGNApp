@@ -2,8 +2,13 @@
     <form id="userProfileForm" class= {{isFormSubmitted}}>
         <div class="form-row col-md-12">
             <div class="form-group col-md-6">
-                <img input id="image" type="image  " alt="Profile Picture" src= {{model.profilePic}} name=profilePic class="img-responsive logo"
-                />
+                {{#if model.profilePic}}
+                    <img input id="image" type="image  " alt="Profile Picture" src= {{model.profilePic}} name=profilePic class="img-responsive logo"
+                    />
+                {{else}}
+                    <img input id="image" type="image  " alt="Profile Picture" src="/assets/images/defaultprofilepic.jpg" name=profilePic class="img-responsive logo"
+                    />
+                {{/if}}
                 {{#if canUserEditPersonalFields}}
                     <label for="newProfilePic" class="btn btn-sm btn-info">Update Profile Image</label>
                     <input id="newProfilePic" style="visibility:hidden" multiple="true" onchange= {{action "updateProfilePic"}} accept="image/png,image/jpeg"
@@ -69,7 +74,7 @@
             {{userprofile-profilelinks label = "Social/ Professional Link" linksarray =  model.personalLinks isEditable =canUserEditPersonalFields name = "personalLinks" onchangeaction =(action "updateProperty")}}
             {{userprofile-profilelinks label = "Administrative Link" linksarray =  model.adminLinks isEditable =isLoggedinUserAdministrator name = "adminLinks" onchangeaction =(action "updateProperty")}}
         </div>
-        <div class="form-row col-md-6">
+        <div class="form-row">
             {{userprofile-teammemberships name = "teamId" userteams = model.teamId isEditable = isLoggedinUserAdministrator  onchangeaction =(action "updateProperty")}}
         </div>
         <div class="form-row col-12">

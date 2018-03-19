@@ -1,4 +1,4 @@
-<div class="card border-danger mb-3 ">
+<div class="card border-danger mb-3" style="color: black">
   <div class="card-header">
     <h4 class="card-title">
       <a class="accordion-toggle" data-toggle="collapse" data-target="#showTimeEntryForm">
@@ -48,9 +48,9 @@
           {{/each}}
         </select>
       </div>
-      <div class="form-group">
-        <label> Notes: </label>
-        <input class="form-control" type="text" onchange= {{action (mut notes) value="target.value" }} />
+      <div class="form-group row">
+        <label class="col-3 label"> Notes: </label>
+        <input class="form-control col-9" type="text" onchange= {{action (mut notes) value="target.value" }} />
       </div>
       <div class="form-group">
         <div class="form-check form-check-inline">

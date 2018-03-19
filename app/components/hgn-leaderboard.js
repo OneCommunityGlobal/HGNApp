@@ -7,7 +7,7 @@ import { scheduleOnce } from '@ember/runloop';
 export default Component.extend({
     dashboardService: inject("dashboard-service"),
     tagName: "card",
-    classNames: ["card", "text-center", "mb-3", "w-33", "h-100", "pre-scrollable", "hgn-leaderboard"],
+    classNames: ["card", "text-center", "mb-3", "w-33", "h-100", "prescrollable", "hgn-leaderboard"],
 
     init() {
         this._super(...arguments);

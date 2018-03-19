@@ -6,7 +6,7 @@ import { computed } from '@ember/object'
 export default Controller.extend({
 
   dataService: inject("datastore-service"),
-  //hideHeaderRoutes: ['index', 'login'],
+
   isHeaderVisible: computed('currentRouteName', function () {
 
     this.set('hideHeaderRoutes', ['login']);
@@ -18,18 +18,13 @@ export default Controller.extend({
     return userrole === "Administrator" ? true : false;
   }),
 
-  // notifications: Ember.computed('loggedinUser', function(){
-  //   this.get('dataService').getUnreadNotifications(this.get('loggedinUser'))
-  //       .then(results => { this.set('notifications', results);
+  notificationslength: Ember.computed('userId', function () {
+    this.get('dataService').getUnreadNotifications(this.get('userId'))
+      .then(results => {
+        this.set('notificationslength', results.length);
 
-  // })}),
-
-  actions: {
-
-
-
-  }
-
+      })
+  }),
 
 }
 );

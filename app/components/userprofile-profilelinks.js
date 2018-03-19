@@ -5,7 +5,7 @@ import $ from 'jquery';
 
 export default Component.extend({
     tagName: "card",
-    classNames: ["card", "card-outline-success", "w-50"],
+    classNames: ["card", "border-secondary", "w-50", "mb-3"],
     submitModal: "",
     name: "",
     linksarray: "",

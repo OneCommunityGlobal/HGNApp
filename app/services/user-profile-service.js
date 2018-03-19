@@ -43,6 +43,17 @@ export default Service.extend({
     return request;
   },
 
+  updatepassword(forUserId, newpassworddata) {
+
+    let relativePath = "/userprofile/" + forUserId + "/updatePassword";
+    let data = newpassworddata;
+    let method = "patch";
+
+    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    return request;
+
+  },
+
   getTeamMembers(user) {
 
     let relativePath = "/userprofile/reportees/" + user.requestorId;
