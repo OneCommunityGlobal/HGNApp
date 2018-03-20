@@ -4,6 +4,7 @@ import { inject } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 
+
 export default Component.extend({
 
     timeEntryService: inject('time-entry-service'),

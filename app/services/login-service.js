@@ -4,6 +4,8 @@ import jwtDecode from 'ember-cli-jwt-decode';
 import Service from '@ember/service';
 import $ from 'jquery';
 
+
+
 export default Service.extend({
 
   host: ENV.webServer,
