@@ -10,10 +10,12 @@ export default Mixin.create({
       this.transitionTo('login');
     }
 
-    return this.get('AuthService').getLoggedinUser()
-      .then(results => {
-        this.loggedinUser = results;
-      });
+    else {
+      return this.get('AuthService').getLoggedinUser()
+        .then(results => {
+          this.loggedinUser = results;
+        });
+    }
 
   },
 

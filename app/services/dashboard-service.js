@@ -5,9 +5,9 @@ import Service from '@ember/service';
 export default Service.extend({
   dataService: inject('datastore-service'),
 
-  getDashboardData(requestor) {
+  getDashboardData(requestorId) {
 
-    let relativePath = "/dashboard/" + requestor.requestorId;
+    let relativePath = "/dashboard/" + requestorId;
     let data = null;
     let method = "get";
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);

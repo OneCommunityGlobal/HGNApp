@@ -25,20 +25,20 @@ export default Controller.extend({
         };
 
 
-        let loginPromise = this.get('AuthService').login(logindata);
+        this.get('AuthService').login(logindata);
 
-        loginPromise
-          .then(function (result) {
-            localStorage.setItem(ENV.TOKEN_KEY, result);
-            self.transitionToRoute('application');
-          }, function (error) {
-            alert("Invalid credentials");
-            console.log(error.responseText)
-          })
+        // loginPromise
+        //   .then(function (result) {
+        //     localStorage.setItem(ENV.TOKEN_KEY, result);
+        //     self.transitionToRoute('application');
+        //   }, function (error) {
+        //     alert("Invalid credentials");
+        //     console.log(error.responseText)
+        //   })
       }
       else {
 
-        alert("Please enter valid credentials");
+        alert("Please enter mandatory fields");
       }
 
 
