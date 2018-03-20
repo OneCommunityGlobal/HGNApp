@@ -33,6 +33,11 @@
             <span class="badge badge-notify">{{notificationslength}}</span>
           </a>
         </li>
+        {{#if isUserAdministrator}}
+          <li class="nav-item navbar-text">
+            <a class="nav-link" href="/usermanagement">User Management</a>
+          </li>
+        {{/if}}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
             {{#if userDashboardData.profilePic}}
@@ -60,11 +65,6 @@
             <a href="#" {{action 'logout'}} class="dropdown-item">Logout</a>
           </div>
         </li>
-        {{#if isUserAdministrator}}
-          <li class="nav-item navbar-text">
-            <a class="nav-link" href="/usermanagement">User Management</a>
-          </li>
-        {{/if}}
       </ul>
     </div>
   </nav>
