@@ -2,7 +2,7 @@
 
 <div class="container">
   <h2>Projects</h2>
-{{# if isUserAdministrator }}
+{{#if isUserAdministrator }}
 {{#link-to "projects.newProject" class="button"}}
     Add New Project
   {{/link-to}}
@@ -13,7 +13,9 @@
                 {{#each model as |project|}}
                     <ul class="list-unstyled">
                         <li class="card-header">
-                          {{#link-to "projects.projectDetail" project._id }}{{project.projectName}} {{/link-to}}
+                           {{#link-to "projects.projectDetail" project._id }}
+                              {{project.projectName}}
+                          {{/link-to}}
                       </li>
                     </ul>
                 {{/each}}

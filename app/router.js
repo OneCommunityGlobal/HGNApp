@@ -16,9 +16,6 @@ Router.map(function() {
   this.route('login');
   this.route('usermanagement');
   this.route('badges');
-  this.route('project', function () {
-    this.route('viewproject', { path: '/:projectId' });
-  });
   this.route('profile', { path: '/profile/:userId' });
 });
 

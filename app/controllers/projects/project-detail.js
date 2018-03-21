@@ -1,39 +1,86 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+export default Ember.Controller.extend({
+  isUserAdministrator: Ember.computed('userrole', function () {
+      let userrole = this.get('userrole');
+      return userrole === "Administrator" ? true : false;
 
+      //return true;
+  }),
   self: this,
-  projectService: Ember.inject.service('project-service'),
+  isFormSubmitted: "",
+  minProjectName: "2",
+  maxProjectName: "100",
+  minTaskName: "2",
+  maxTaskName: "100",
 
-  project: {
-    projectName: "",
-    tasks: [],
-    isActive: true
-  },
+  projectService: Ember.inject.service('project-service'),
   task: {
     Description: ""
   },
 
+  validateform() {
+      this.set('isFormSubmitted', "submitted");
+
+      let inputs = Ember.$("input").get();
+
+      let isFormValid = true;
+
+      inputs.forEach(element => {
+
+          if (!element.validity.valid) {
+              isFormValid = false;
+          }
+      });
+      return isFormValid;
+  },
+
+
   actions: {
+    notifyChange(key) {
+        let value = event.target.value;
+        let property = "model." + key;
+        this.set(property, value);
+        console.log(property);
+      },
 
     addNewTask() {
-      this.get('project.tasks').addObject(this.get('task'));
-      this.get('projectService').editProjectData();
+      let projectId = this.get('model._id');
+      let project = this.get('model');
+      this.get('model.tasks').addObject(this.get('task'));
+      this.get('projectService').editProjectData(project, projectId);
       this.set('task', {});
     },
     cancelTask(task) {
-      this.get('project.tasks').removeObject(task);
-    },
-
-    destroyProject() {
-      let _project = this.get('project');
-      this.get('model').removeObject(_project);
-      this.get('projectService').deleteProject(_project._id);
-    },
-    postChanges() {
-      let projectId = this.get('projectId');
+      let projectId = this.get('model._id');
       let project = this.get('model');
+      this.get('model.tasks').removeObject(task);
       this.get('projectService').editProjectData(project, projectId);
+      this.set('task', {});
+    },
+    destroyProject() {
+      let project = this.get('model');
+      this.get('projectService').deleteProject(project._id)
+      .then(
+          toastr.success('Project Removed!')
+      );
+},
+    postChanges() {
+      if (this.validateform()) {
+          this.set('isFormSubmitted', "")
+      let projectId = this.get('model._id');
+      let project = this.get('model');
+      this.get('projectService').editProjectData(project, projectId)
+      .then(results => {
+          toastr.success("", 'Changes Saved');
+      });
+      this.transitionToRoute('projects');
+
+    }else {
+        alert("Please fix the form errors");
     }
   }
+
+  }
+
 });

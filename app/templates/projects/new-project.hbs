@@ -4,8 +4,8 @@
     <div class="form-group">
         <label for="projectName">
             <span>*</span> ProjectName: </label>
-        <input type="text" class="form-control" id="projectName" placeholder="Project Name" required minlength= {{minProjectLength}}
-            maxlength= {{maxProjectLength}} onchange= {{ action (mut newProject.projectName) value = "target.value"}}>
+        <input type="text" class="form-control" id="projectName" placeholder="Project Name" required=true minlength= {{minProjectName}}
+            maxlength= {{maxProjectName}} onchange= {{ action (mut newProject.projectName) value = "target.value"}}>
     </div>
     <div class="form-group">
       <label for="tasks">
@@ -32,14 +32,14 @@
     <fieldset class="form-group">
         <div class="form-check form-check-inline">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="optionsRadios" id="projectActive" value="false" checked= {{if isprojectActive "true" null }}
-                    onchange= {{ action (mut newProject.isprojectActive) "true"}}> Active
+                <input type="radio" class="form-check-input" name="optionsRadios" id="projectActive" value="true" checked= {{if isActive "true" null }}
+                    onchange= {{ action (mut newProject.isActive) "true"}}> Active
             </label>
         </div>
         <div class="form-check form-check-inline">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="optionsRadios" id="projectInactive" value="true" checked= {{if isprojectActive null "true" }}
-                    onchange= {{ action (mut newProject.isprojectActive) "true"}}> Inactive</label>
+                <input type="radio" class="form-check-input" name="optionsRadios" id="projectInactive" value="false" checked= {{if isActive null "true" }}
+                    onchange= {{ action (mut newProject.isActive) "false"}}> Inactive</label>
         </div>
     </fieldset>
 

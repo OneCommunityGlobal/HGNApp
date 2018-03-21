@@ -4,7 +4,8 @@ export default Ember.Controller.extend({
 
     self: this,
     projectService: Ember.inject.service('project-service'),
-
+    minProjectName: "2",
+    maxProjectName: "100",
     newProject: {
       projectName: "",
       tasks: [],
@@ -27,8 +28,7 @@ export default Ember.Controller.extend({
         let project = this.get('newProject');
         this.get('projectService').postProject(project);
         this.set('newProject', {});
+        this.transitionToRoute('projects');
       },
-
-
     }
 });

@@ -1,45 +1,61 @@
+
 {{outlet}}
-<div class="card-header">
-  <div class="card-link">
-      {{project.projectName}}
-  </div>
-</div>
 <form class="form-horizontal">
+  <input id="projectName" name="projectName" class="form-control" required=true type="text"
+  value= {{model.projectName}} placeholder="Project Name" minlength= {{minProjectName}} maxlength= {{maxProjectName}} readonly = {{if isUserAdministrator null "readonly"}} onchange= {{action "notifyChange" "projectName"}} />
     <br>
     <div>Tasks: </div>
     <div class="form-group">
       <ul class="list-group">
-        {{#each project.tasks as |task|}}
+        {{#each model.tasks as |task|}}
           <li class="list-group-item">
-            <small>{{task.Description}}</small>
-            <button class="btn" type="button" {{ action 'cancelTask' task}}><span class="glyphicon glyphicon-minus"></span></button>
+            <div class= "input-group">
+          <!--  <input id="taskDescription" name="taskDescription" class="form-control" required=true type="text"
+            value= {{task.Description}}  placeholder="Task" readonly = {{if isUserAdministrator null "readonly"}} onchange= {{action "notifyChange" "tasks"}} /> -->
+            {{input required = "true" class="form-control" name ="task" type = "text" value = task.Description readonly = (if isUserAdministrator null "readonly" )}}
+
+            {{#if isUserAdministrator }}
+            <span class="input-group-btn">
+            <button class="btn" type="button" {{ action 'cancelTask' task}} ><span class= "glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="right" title="Remove this task"></span></button>
+          </span>
+          {{/if}}
+        </div>
+
           </li>
         {{/each}}
       </ul>
-
+      {{#if isUserAdministrator}}
         <div class="col-lg-6">
           <div class="input-group>">
       {{input class="form-control required" type="text" placeholder= "Add Task..." value=task.Description }}
       <span class="input-group-btn">
-        <button class="btn btn-secondary" type="button" {{ action 'addNewTask' }}>Add Task</button>
+        <button class="btn" type="button" {{ action 'addNewTask' task }}><span class = "glyphicon glyphicon-plus"></span></button>
       </span>
       </div>
     </div>
-
-
+    {{/if}}
     </div>
-
-    <div class="form-check">
-      <label >active
-              <input class="form-check-input" type='radio' name='isActive' checked={{project.isActive}} onchange={{action (mut project.isActive) true}} />
-      </label>
-      <label >inactive
-              <input class="form-check-input" type='radio' name='isActive' checked={{project.isActive}} onchange={{action (mut project.isActive) false}} />
-      </label>
-
-    </div>
+    {{#if isUserAdministrator}}
+    <fieldset class="form-group">
+        <div class="form-check form-check-inline">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optionsRadios" id="projectActive" value="true" checked= {{if model.isActive "true" null }}
+                    onchange= {{ action (mut model.isActive) "true"}}> Active
+            </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optionsRadios" id="projectInactive" value="false" checked= {{if model.isActive null "true" }}
+                    onchange= {{ action (mut model.isActive) "false"}}> Inactive</label>
+        </div>
+    </fieldset>
+    {{else}}
+    Project Status -
+    {{if model.isActive "Active" "Inactive"}}
+    {{/if}}
+    {{#if isUserAdministrator}}
     <button type="submit" class="btn btn-primary" {{ action 'postChanges' }}>Save</button>
-    <button type="submit" class="btn btn-danger" {{ action 'destroyProject' project}}>Delete Project</button>
-
+    <button type="submit" class="btn btn-danger" {{ action 'destroyProject' }}>Delete Project</button>
+    {{/if}}
 
   </form>
