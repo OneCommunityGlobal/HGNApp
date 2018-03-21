@@ -47,12 +47,22 @@ export default Service.extend({
     return request;
   },
 
-  deleteProject(id) {
-    let relativePath = "/project/" + id;
+  deleteProject(projectid) {
+    let relativePath = "/project/" + projectid;
     let data = null;
     let method = "delete";
 
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
     return request;
+  },
+
+  deletetask(projectId, taskId) {
+    let relativePath = "/project/" + projectid + "/task/" + taskId;
+    let data = null;
+    let method = "delete";
+
+    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    return request;
+
   }
 });
