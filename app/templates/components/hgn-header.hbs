@@ -34,8 +34,14 @@
           </a>
         </li>
         {{#if isUserAdministrator}}
-          <li class="nav-item navbar-text">
-            <a class="nav-link" href="/usermanagement">User Management</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              Administrative Links
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/usermanagement">User Management</a>
+              <a class="dropdown-item" href="/projects">Manage Projects</a>
+            </div>
           </li>
         {{/if}}
         <li class="nav-item dropdown">

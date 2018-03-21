@@ -20,45 +20,43 @@ export default Controller.extend({
         let fnewPassword = $("#id_new_password").get(0);
         let fconfirmnewPassword = $("#id_confirm_newpassword").get(0);
         let form = $("#frmupdatepassword").get(0);
-        let errormessages = [];
+        let errormessagesarray = [];
+        let errormessages = "";
+
+
+        if (fCurrentPassword.validity.valid && fnewPassword.validity.valid) {
+            fnewPassword.setCustomValidity("");
+            fconfirmnewPassword.setCustomValidity("");
+        }
 
 
         if (fCurrentPassword.validity.valid && fnewPassword.validity.valid && (fCurrentPassword.value === fnewPassword.value)) {
             let errormessage = "Old and new passwords should not be same";
-            errormessages.push(errormessage);
-            fnewPassword.setCustomValidity(errormessage);
-            fconfirmnewPassword.setCustomValidity(errormessage);
+            errormessages += errormessage;
+            errormessagesarray.push(errormessage);
+
         }
-        else {
-            fnewPassword.setCustomValidity("");
-            fconfirmnewPassword.setCustomValidity("");
-        }
+
 
         if (!passwordregex.test(fnewPassword.value) || !passwordregex.test(fconfirmnewPassword.value)) {
 
             let errormessage = "New password should be at least 8 charcaters long with uppercase, lowercase and number/special char"
-            errormessages.push(errormessage);
-            fnewPassword.setCustomValidity(errormessage);
-            fconfirmnewPassword.setCustomValidity(errormessage);
+            errormessages += errormessage;
+            errormessagesarray.push(errormessage);
         }
-        else {
-            fnewPassword.setCustomValidity("");
-            fconfirmnewPassword.setCustomValidity("");
-        }
+
 
 
         if (fnewPassword.value != fconfirmnewPassword.value) {
             let errormessage = "New password and confirm password fields don't match"
-            errormessages.push(errormessage);
-            fnewPassword.setCustomValidity(errormessage);
-            fconfirmnewPassword.setCustomValidity(errormessage);
-        }
-        else {
-            fnewPassword.setCustomValidity("");
-            fconfirmnewPassword.setCustomValidity("");
-        }
+            errormessages += errormessage;
+            errormessagesarray.push(errormessage);
 
-        this.set('showErrors', errormessages);
+        }
+        fnewPassword.setCustomValidity(errormessages);
+        fconfirmnewPassword.setCustomValidity(errormessages);
+
+        this.set('showErrors', errormessagesarray);
         return form.checkValidity();
 
     },

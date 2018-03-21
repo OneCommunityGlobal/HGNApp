@@ -12,7 +12,7 @@ export default Component.extend({
     dateofWork: "",
     taskhours: "",
     taskminutes: "",
-    taskseconds: "",
+
     isTangible: true,
     isFormSubmitted: "",
 
@@ -58,23 +58,23 @@ export default Component.extend({
 
         let fieldhours = $("#hours").get(0);
         let fieldminutes = $("#minutes").get(0);
-        let fieldseconds = $("#seconds").get(0);
+
 
 
         let hours = parseFloat(fieldhours.value);
         let minutes = parseFloat(fieldminutes.value);
-        let seconds = parseFloat(fieldseconds.value);
 
-        if (isNaN(hours) && isNaN(minutes) && isNaN(seconds)) {
+
+        if (isNaN(hours) && isNaN(minutes)) {
             isFormValid = false;
             fieldhours.setCustomValidity("Effort value cannot be zero");
             fieldminutes.setCustomValidity("Effort value cannot be zero");
-            fieldseconds.setCustomValidity("Effort value cannot be zero");
+
         }
         else {
             fieldhours.setCustomValidity("");
             fieldminutes.setCustomValidity("");
-            fieldseconds.setCustomValidity("");
+
             isFormValid = form.checkValidity();
         }
 
@@ -96,9 +96,8 @@ export default Component.extend({
 
                 let hours = (this.get('taskhours')) ? this.get('taskhours') : "00";
                 let minutes = (this.get('taskminutes')) ? this.get('taskminutes') : "00";
-                let seconds = (this.get('taskseconds')) ? this.get('taskseconds') : "00";
 
-                let timespent = hours + ":" + minutes + ":" + seconds;
+                let timespent = hours + ":" + minutes;
                 let dateofWork = moment(this.get('dateofWork')).format('YYYY-MM-DD');
                 timeentry.personId = this.get('forUserId');
                 timeentry.projectId = this.get('forprojectId');

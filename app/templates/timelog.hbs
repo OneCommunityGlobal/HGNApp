@@ -1,20 +1,14 @@
 {{outlet}}
 <div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card border-warning mb-3">
-        <div class="card-header">
-          <h4 class="card-title ">
-            <a class="accordion-toggle" data-toggle="collapse" data-target="#tblleaderboard"> Leaderboard </a>
-          </h4>
-        </div>
-        <div class="card-block collapse" id="tblleaderboard">
-          {{hgn-leaderboard loggedinUser = loggedinUser}}
-        </div>
-      </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      {{weekly-effort-chart forUserId = model.forUserId }}
+    </div>
+    <div class="col-md-6">
+      {{monthly-effort-chart forUserId = model.forUserId}}
     </div>
   </div>
-  <div class="row">
+  <div class="row mb-3">
     <div class="col-md-8">
       {{hgn-notifications loggedinUser = loggedinUser forUserId = model.forUserId}} {{hgn-actionitems  loggedinUser = loggedinUser forUserId = model.forUserId  }}
       {{#if isEditable}}
@@ -35,8 +29,8 @@
         </div>
       </div>
     </div>
-    <div class=" col-md-4">
-      {{weekly-effort-chart forUserId = model.forUserId }} {{monthly-effort-chart forUserId = model.forUserId}}
+    <div class="col-md-4">
+      {{hgn-leaderboard loggedinUser = loggedinUser}}
     </div>
   </div>
 </div>

@@ -2,16 +2,16 @@
     <small>Viewing time Entries for {{period}}</small>
 </div>
 {{#if timelogs}}
-    <div class="table-responsive pre-scrollable display dataTable">
+    <div class="table-responsive pre-scrollable h-100 display dataTable">
         <table class="table table-sm tbltimelog" id="tbltimelog">
             <thead>
                 <tr class="row col-12" scope="row">
                     <td class="sorting_asc" scope="col" class="col-2">Date Of Work</td>
                     <td scope="col" class="col-2">Effort(HH:MM:SS)</td>
                     <td scope="col" class="col-1">Tangible</td>
-                    <td scope="col" class="col-3">Notes</td>
                     <td scope="col" class="col-2">Project</td>
                     <td scope="col" class="col-2">Task</td>
+                    <td scope="col" class="col-12">Notes</td>
                 </tr>
             </thead>
             <tbody>
@@ -20,9 +20,9 @@
                         <td class="col-2"> {{timelog.dateOfWork}}</td>
                         <td class="col-2"> {{timelog.totalSeconds}}</td>
                         <td class="col-1"> {{if timelog.isTangible "Yes" "No"}} </td>
-                        <td class="col-3"> {{timelog.notes}}</td>
                         <td class="col-2"> {{timelog.projectName}}</td>
                         <td class="col-2"> {{timelog.taskName}}</td>
+                        <td class="col-12"> {{timelog.notes}}</td>
                     </tr>
                 {{/each}}
             </tbody>
