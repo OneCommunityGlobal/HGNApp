@@ -1,9 +1,11 @@
-import Ember from 'ember';
+
 import UnAuthenticatedRouteMixin from '../mixins/un-authenticated-route-mixin';
+import Route from '@ember/routing/route';
+import { inject } from '@ember/service';
 
-export default Ember.Route.extend(UnAuthenticatedRouteMixin, {
+export default Route.extend(UnAuthenticatedRouteMixin, {
 
-    projectService: Ember.inject.service('project-service'),
+    projectService: inject('project-service'),
     model: function () {
 
         return this.get('projectService').getAllProjects();

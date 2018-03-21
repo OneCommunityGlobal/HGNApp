@@ -1,12 +1,10 @@
-import Ember from 'ember';
 import ENV from '../config/environment';
 
-
-export default Ember.Service.extend({
-
-  self: this,
+import Service from '@ember/service';
+import $ from 'jquery';
 
 
+export default Service.extend({
 
   createActionItem(actionItem) {
     let relativePath = "/actionItem";
@@ -86,7 +84,7 @@ export default Ember.Service.extend({
   },
 
   createEmberrequestObject(relativePath, data, method) {
-    return Ember.$.ajax({
+    return $.ajax({
       "url": ENV.webServer + relativePath,
       "data": data,
       "method": method,

@@ -1,12 +1,14 @@
-import Ember from 'ember';
+
 import { initialize } from 'hgnapp/initializers/time-entry-service';
 import { module, test } from 'qunit';
 import destroyApp from '../../helpers/destroy-app';
+import Application from '@ember/application';
+import { run } from '@ember/runloop';
 
 module('Unit | Initializer | time entry service', {
   beforeEach() {
-    Ember.run(() => {
-      this.application = Ember.Application.create();
+    run(() => {
+      this.application = Application.create();
       this.application.deferReadiness();
     });
   },
@@ -16,7 +18,7 @@ module('Unit | Initializer | time entry service', {
 });
 
 // Replace this with your real tests.
-test('it works', function(assert) {
+test('it works', function (assert) {
   initialize(this.application);
 
   // you would normally confirm the results of the initializer here

@@ -1,15 +1,47 @@
-import Ember from 'ember';
 
-export default Ember.Component.extend({
+import { inject } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 
-    showNotifications : false,
-    loginService : Ember.inject.service("login-service"),
-         actions:{
+export default Component.extend({
 
-        
+    showNotifications: false,
+    dashboardService: inject("dashboard-service"),
+    dataService: inject("datastore-service"),
+    loginService: inject("login-service"),
 
-        logout()
-        {
+    init() {
+        this._super(...arguments);
+        this.get('loginService').getLoggedinUser()
+            .then(results => {
+                this.set("userrole", results.role);
+                this.set("userId", results.requestorId);
+
+                this.get('dataService').getUnreadNotifications(results.requestorId)
+                    .then(notifications => {
+                        this.set('notificationslength', notifications.length);
+                    });
+
+                this.get('dashboardService').getDashboardData(results.requestorId)
+                    .then(databoarddata => {
+                        this.set("userDashboardData", databoarddata)
+                    });
+
+            });
+
+
+
+    },
+
+    isUserAdministrator: computed('userrole', function () {
+        let userrole = this.get('userrole');
+        return userrole === "Administrator" ? true : false;
+    }),
+
+
+    actions: {
+
+        logout() {
             this.get('loginService').logout();
 
         }

@@ -1,8 +1,10 @@
-import Ember from 'ember';
 
-export default Ember.Service.extend({
+import { inject } from '@ember/service';
+import Service from '@ember/service';
 
-  dataService: Ember.inject.service("datastore-service"),
+export default Service.extend({
+
+  dataService: inject("datastore-service"),
 
 
   getAllProjects() {
@@ -12,7 +14,7 @@ export default Ember.Service.extend({
     let method = "get";
 
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
-    console.log(request);
+
     return request;
   },
 
@@ -22,7 +24,7 @@ export default Ember.Service.extend({
     let method = "get";
 
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
-    console.log(request);
+
     return request;
   },
 
@@ -32,12 +34,12 @@ export default Ember.Service.extend({
     let method = "post";
 
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
-    console.log(request);
+
     return request;
   },
 
-  editProjectData(project, id) {
-    let relativePath = "/project/" + id;
+  editProjectData(project, projectId) {
+    let relativePath = "/project/" + projectId;
     let data = project;
     let method = "put";
 
@@ -45,12 +47,22 @@ export default Ember.Service.extend({
     return request;
   },
 
-  deleteProject(id) {
-    let relativePath = "/project/" + id;
+  deleteProject(projectid) {
+    let relativePath = "/project/" + projectid;
     let data = null;
     let method = "delete";
 
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
     return request;
+  },
+
+  deletetask(projectId, taskId) {
+    let relativePath = "/project/" + projectid + "/task/" + taskId;
+    let data = null;
+    let method = "delete";
+
+    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    return request;
+
   }
 });

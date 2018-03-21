@@ -2,10 +2,15 @@
     <form id="userProfileForm" class= {{isFormSubmitted}}>
         <div class="form-row col-md-12">
             <div class="form-group col-md-6">
-                <img input id="image" type="image  " alt="Profile Picture" src= {{model.profilePic}} name=profilePic class="img-responsive logo"
-                />
+                {{#if model.profilePic}}
+                    <img input id="image" type="image  " alt="Profile Picture" src= {{model.profilePic}} name=profilePic class="img-responsive logo"
+                    />
+                {{else}}
+                    <img input id="image" type="image  " alt="Profile Picture" src="/assets/images/defaultprofilepic.jpg" name=profilePic class="img-responsive logo"
+                    />
+                {{/if}}
                 {{#if canUserEditPersonalFields}}
-                    <label for="newProfilePic" class="btn btn-sm btn-info">Update My Image</label>
+                    <label for="newProfilePic" class="btn btn-sm btn-info">Update Profile Image</label>
                     <input id="newProfilePic" style="visibility:hidden" multiple="true" onchange= {{action "updateProfilePic"}} accept="image/png,image/jpeg"
                         name= {{newProfilePic}} type="file" />
                 {{/if}}
@@ -22,11 +27,11 @@
         <div class="form-row">
             <div class="form-group col-md-5">
                 {{userprofile-inputboxes  type = "text" name = "firstName" label = "First Name" isRequired = true value = model.firstName minlength= minNamelength 
-                maxlength= maxNamelength isEditable = canUserEditPersonalFields onchangeaction = "updateProperty" }}
+                maxlength= maxNamelength isEditable = canUserEditPersonalFields onchangeaction =(action "updateProperty") }}
             </div>
             <div class="form-group col-md-5">
                 {{userprofile-inputboxes  type = "text" name = "lastName" label = "Last Name" isRequired = true value = model.lastName minlength= minNamelength 
-                maxlength= maxNamelength isEditable = canUserEditPersonalFields onchangeaction = "updateProperty" }}
+                maxlength= maxNamelength isEditable = canUserEditPersonalFields onchangeaction =(action "updateProperty")}}
             </div>
             <div class="form-group col-md-2">
                 <div class="form-check form-check-inline">
@@ -44,10 +49,10 @@
         <div class="form-row">
             <div class="form-group col-md-4">
                 {{userprofile-inputboxes  type = "email" name = "email" label = "Email" isRequired = true value = model.email  
-                 isEditable = isLoggedinUserAdministrator onchangeaction = "updateProperty" }}
+                 isEditable = isLoggedinUserAdministrator onchangeaction =(action "updateProperty")}}
             </div>
             <div class="form-group col-md-4">
-                {{userprofile-inputboxes  type = "text" name = "role" list="roleslist" label = "Role" isRequired = true value = model.role  isEditable = isLoggedinUserAdministrator onchangeaction = "updateProperty" }}
+                {{userprofile-inputboxes  type = "text" name = "role" list="roleslist" label = "Role" isRequired = true value = model.role  isEditable = isLoggedinUserAdministrator onchangeaction =(action "updateProperty") }}
                 <datalist id="roleslist">
                     <option value="Administrator"></option>
                     <option value="Volunteer"></option>
@@ -56,7 +61,7 @@
                 </datalist>
             </div>
             <div class="form-group col-md-4">
-                {{userprofile-inputboxes  type = "number" min =minWeeklyCommittedHours  max = maxWeeklyCommittedHours name = "weeklyComittedHours" label = "Weekly Comitted Hours" isRequired = true value = model.weeklyComittedHours  isEditable = isLoggedinUserAdministrator onchangeaction = "updateProperty" }}
+                {{userprofile-inputboxes  type = "number" min =minWeeklyCommittedHours  max = maxWeeklyCommittedHours name = "weeklyComittedHours" label = "Weekly Comitted Hours" isRequired = true value = model.weeklyComittedHours  isEditable = isLoggedinUserAdministrator onchangeaction =(action "updateProperty")}}
             </div>
         </div>
         <div class="form-row">
@@ -65,20 +70,14 @@
                 {{ textarea id = "bio" class = "form-control" value= model.bio options=options readonly = (if canUserEditPersonalFields null "readonly" )}}
             </div>
         </div>
-        <div class="form-row col-xs-12">
-            <div class="card-group">
-                <div class="form-group col-md-6 ">
-                    {{userprofile-profilelinks label = "Social/ Professional Link" linksarray =  model.personalLinks isEditable =canUserEditPersonalFields name = "personalLinks" onchangeaction = "updateProperty" }}
-                </div>
-                <div class="form-group col-md-6">
-                    {{userprofile-profilelinks label = "Administrative Link" linksarray =  model.adminLinks isEditable =isLoggedinUserAdministrator name = "adminLinks" onchangeaction = "updateProperty" }}
-                </div>
-            </div>
+        <div class="form-row">
+            {{userprofile-profilelinks label = "Social/ Professional Link" linksarray =  model.personalLinks isEditable =canUserEditPersonalFields name = "personalLinks" onchangeaction =(action "updateProperty")}}
+            {{userprofile-profilelinks label = "Administrative Link" linksarray =  model.adminLinks isEditable =isLoggedinUserAdministrator name = "adminLinks" onchangeaction =(action "updateProperty")}}
         </div>
-        <div class="form-row col-md-6">
-            {{userprofile-teammemberships name = "teamId" userteams = model.teamId isEditable = isLoggedinUserAdministrator  onchangeaction = "updateProperty"}}
+        <div class="form-row">
+            {{userprofile-teammemberships name = "teamId" userteams = model.teamId isEditable = isLoggedinUserAdministrator  onchangeaction =(action "updateProperty")}}
         </div>
-        <div class="form-row col-xs-12">
+        <div class="form-row col-12">
             <div class="col-xs-6">
                 <a href="/dashboard" class=" button btn btn-danger">Cancel</a>
             </div>

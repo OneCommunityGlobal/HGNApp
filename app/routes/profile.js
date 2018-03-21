@@ -1,10 +1,12 @@
-import Ember from 'ember';
+
+import { inject } from '@ember/service';
+import Route from '@ember/routing/route';
 import UnAuthenticatedRouteMixin from '../mixins/un-authenticated-route-mixin';
 
-export default Ember.Route.extend(UnAuthenticatedRouteMixin, {
-    userProfileService: Ember.inject.service('user-profile-service'),
+export default Route.extend(UnAuthenticatedRouteMixin, {
+    userProfileService: inject('user-profile-service'),
     model(params) {
-        let requestor = { requestorId: params.userId }
+        let requestor = { requestorId: params.user_id }
         return this.get('userProfileService').getUserProfileData(requestor);
     }
 });

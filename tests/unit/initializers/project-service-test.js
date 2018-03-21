@@ -1,12 +1,14 @@
-import Ember from 'ember';
+
 import { initialize } from 'hgnapp/initializers/project-service';
 import { module, test } from 'qunit';
 import destroyApp from '../../helpers/destroy-app';
+import { run } from '@ember/runloop';
+import Application from '@ember/application';
 
 module('Unit | Initializer | project service', {
   beforeEach() {
-    Ember.run(() => {
-      this.application = Ember.Application.create();
+    run(() => {
+      this.application = Application.create();
       this.application.deferReadiness();
     });
   },
@@ -16,7 +18,7 @@ module('Unit | Initializer | project service', {
 });
 
 // Replace this with your real tests.
-test('it works', function(assert) {
+test('it works', function (assert) {
   initialize(this.application);
 
   // you would normally confirm the results of the initializer here

@@ -1,9 +1,10 @@
-import Ember from 'ember';
 
-export default Ember.Component.extend({
-  init(){
-      this._super(...arguments);
-    },
+import Component from '@ember/component';
+
+export default Component.extend({
+  init() {
+    this._super(...arguments);
+  },
 
   isProjectDetail: false,
 

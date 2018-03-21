@@ -1,20 +1,21 @@
-import Ember from 'ember';
+
 import DatastoreInitializer from 'hgnapp/initializers/datastore';
 import { module, test } from 'qunit';
-
+import { run } from '@ember/runloop';
+import Application from '@ember/application';
 let application;
 
 module('Unit | Initializer | datastore', {
   beforeEach() {
-    Ember.run(function() {
-      application = Ember.Application.create();
+    run(function () {
+      application = Application.create();
       application.deferReadiness();
     });
   }
 });
 
 // Replace this with your real tests.
-test('it works', function(assert) {
+test('it works', function (assert) {
   DatastoreInitializer.initialize(application);
 
   // you would normally confirm the results of the initializer here

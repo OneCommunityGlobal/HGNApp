@@ -1,15 +1,24 @@
-import Ember from 'ember';
 
-export default Ember.Component.extend({
+import Component from '@ember/component';
+import { computed } from '@ember/object'
+import $ from 'jquery';
+
+export default Component.extend({
+    tagName: "card",
+    classNames: ["card", "border-secondary", "w-50", "mb-3"],
     submitModal: "",
     name: "",
     linksarray: "",
-    newLink: {
-        Name: "",
-        Link: ""
+    init() {
+        this._super(...arguments);
+        let newLink = {
+            Name: "",
+            Link: ""
+        }
+        this.set('newLink', newLink);
     },
 
-    isArrayEmptyText: Ember.computed('linksarray.[]', function () {
+    isArrayEmptyText: computed('linksarray.[]', function () {
 
         let text = "No link defined";
 
@@ -21,14 +30,14 @@ export default Ember.Component.extend({
     notifyparent: function () {
         let key = this.get('name');
         let value = this.get('linksarray');
-        this.sendAction("onchangeaction", key, value);
+        this.get("onchangeaction")(key, value);
     },
 
     actions:
         {
             addLink() {
-                let namefield = (Ember.$("#newLinkName").get())[0];
-                let linkfield = (Ember.$("#newLinkLink").get())[0];
+                let namefield = ($("#newLinkName").get())[0];
+                let linkfield = ($("#newLinkLink").get())[0];
                 this.set('submitModal', 'submitModal');
 
                 let _newlink = {
@@ -47,11 +56,18 @@ export default Ember.Component.extend({
                 }
 
             },
+            editlinksarray(index) {
+                let value = event.target.value;
+                let record = this.get('linksarray').objectAt(index);
+                Ember.set(record, 'Link', value);
+                this.notifyparent();
+
+            },
 
             CancelAddingLink() {
                 this.set('submitModal', '')
-                this.set('newLink.Name', "");
-                this.set('newLink.Link', "");
+                let formid = `formnew${this.get('name')}`;
+                $(`#${formid}`)[0].reset();
             },
 
 

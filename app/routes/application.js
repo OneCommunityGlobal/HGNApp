@@ -1,18 +1,12 @@
-import Ember from 'ember';
 
-export default Ember.Route.extend( {
+import Route from '@ember/routing/route';
+import UnAuthenticatedRouteMixin from '../mixins/un-authenticated-route-mixin';
+import { inject } from '@ember/service';
 
-    model()
-    {
-      
-    },
+export default Route.extend({
 
-    setupController: function(controller, model){
-     
-    
-         
-      },
 
-    
-    
+
+
+
 });

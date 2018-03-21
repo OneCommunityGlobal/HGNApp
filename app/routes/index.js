@@ -1,10 +1,11 @@
-import Ember from 'ember';
+
 import UnAuthenticatedRouteMixin from '../mixins/un-authenticated-route-mixin';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend(UnAuthenticatedRouteMixin,{
 
-  // redirect: function() {
-  //   this.transitionTo('login');
-  // }
- 
+export default Route.extend(UnAuthenticatedRouteMixin, {
+
+
+
+
 });

@@ -1,4 +1,5 @@
 import Clock from 'ember-cli-clock/services/clock';
+import { observer } from '@ember/object';
 
 export default Clock.extend({
   interval: 1000,
@@ -10,12 +11,12 @@ export default Clock.extend({
   hour: 0,
   started: false,
 
-  startClock(){
+  startClock() {
     this.started = true;
     this.start();
   },
 
-  stopClock(){
+  stopClock() {
     this.started = false;
     this.stop();
   },
@@ -23,12 +24,12 @@ export default Clock.extend({
   reset() {
     this.stop();
     this.started = false;
-    this.setProperties({second: 0, minute: 0, five: 0, quarter: 0, hour: 0});
+    this.setProperties({ second: 0, minute: 0, five: 0, quarter: 0, hour: 0 });
   },
 
 
-  timeChange: Ember.observer('time', function() {
-    if(this.started){
+  timeChange: observer('time', function () {
+    if (this.started) {
       this.tick();
     }
   }),
@@ -38,7 +39,7 @@ export default Clock.extend({
 
     if (second && (second % 60) === 0) {
       var minute = this.incrementProperty('minute');
-      this.setProperties({second: 0});
+      this.setProperties({ second: 0 });
 
       if (minute !== 0) {
         if ((minute % 5) === 0) {
@@ -51,7 +52,7 @@ export default Clock.extend({
 
         if ((minute % 60) === 0) {
           this.incrementProperty('hour');
-          this.setProperties({minute: 0});
+          this.setProperties({ minute: 0 });
         }
       }
     }

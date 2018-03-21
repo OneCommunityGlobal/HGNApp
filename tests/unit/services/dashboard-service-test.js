@@ -6,7 +6,7 @@ moduleFor('service:dashboard-service', 'Unit | Service | dashboard service', {
 });
 
 // Replace this with your real tests.
-test('it exists', function(assert) {
+test('it exists', function (assert) {
   let service = this.subject();
   assert.ok(service);
 });

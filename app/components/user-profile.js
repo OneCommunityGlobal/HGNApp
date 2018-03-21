@@ -1,7 +1,11 @@
-import Ember from 'ember';
 
-export default Ember.Component.extend({
-    self: this,
+import { inject } from '@ember/service';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import $ from 'jquery';
+
+export default Component.extend({
+
     isFormSubmitted: "",
     minNamelength: "2",
     maxnameLength: "100",
@@ -9,21 +13,23 @@ export default Ember.Component.extend({
     maxLinksNameLength: "100",
     minWeeklyCommittedHours: "0",
     maxWeeklyCommittedHours: "100",
-    userProfileService: Ember.inject.service('user-profile-service'),
+    userProfileService: inject('user-profile-service'),
     showErrors: true,
     showFormErrors: false,
     newProfilePic: "",
 
 
 
-    isLoggedinUserAdministrator: Ember.computed('userrole', function () {
+    isLoggedinUserAdministrator: computed('userrole', function () {
 
         let userrole = this.get('userrole');
         return userrole === "Administrator" ? true : false;
 
+
+
     }),
 
-    canUserEditPersonalFields: Ember.computed('model', 'userId', 'userrole', function () {
+    canUserEditPersonalFields: computed('model', 'userId', 'userrole', function () {
 
         let loggedinUser = this.get('userId');
         let viewingProfileOf = this.get('model._id');
@@ -36,7 +42,7 @@ export default Ember.Component.extend({
     validateform() {
         this.set('isFormSubmitted', "submitted");
 
-        let inputs = Ember.$("input").not("div.modal input").get();
+        let inputs = $("input").not("div.modal input").get();
 
         let isFormValid = true;
 
@@ -79,10 +85,12 @@ export default Ember.Component.extend({
                 this.set('isFormSubmitted', "")
                 let userId = this.get('model._id');
                 let user = this.get('model');
+                let toastr = this.get('ToastrService');
 
                 if (userId) {
                     this.get('userProfileService').editUserProfileData(user, userId)
                         .then(results => {
+                            console.log(results);
                             toastr.success("", 'Changes Saved');
                         }, error => {
 
@@ -92,6 +100,7 @@ export default Ember.Component.extend({
                 else {
                     this.get('userProfileService').postUserProfileData(user)
                         .then(results => {
+                            console.log(results);
                             toastr.success("", 'New user created successfully');
                         }, error => {
 

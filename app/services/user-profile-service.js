@@ -1,9 +1,10 @@
-import Ember from 'ember';
 
+import { inject } from '@ember/service';
+import Service from '@ember/service';
 
-export default Ember.Service.extend({
+export default Service.extend({
 
-  dataService: Ember.inject.service('datastore-service'),
+  dataService: inject('datastore-service'),
 
   getAllUserProfiles() {
     let relativePath = "/userprofile";
@@ -40,6 +41,17 @@ export default Ember.Service.extend({
 
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
     return request;
+  },
+
+  updatepassword(forUserId, newpassworddata) {
+
+    let relativePath = "/userprofile/" + forUserId + "/updatePassword";
+    let data = newpassworddata;
+    let method = "patch";
+
+    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    return request;
+
   },
 
   getTeamMembers(user) {

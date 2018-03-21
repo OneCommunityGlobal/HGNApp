@@ -1,6 +1,8 @@
-import Ember from 'ember';
 
-export default Ember.Component.extend({
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+
+export default Component.extend({
 
 
     init() {
@@ -12,7 +14,7 @@ export default Ember.Component.extend({
             .then(results => { this.set('notifications', results); });
     },
 
-    isEditable: Ember.computed('loggedinUser', 'forUserId', function () {
+    isEditable: computed('loggedinUser', 'forUserId', function () {
 
         let loggedinUser = this.get("loggedinUser.requestorId");
         let forUserId = this.get('forUserId');

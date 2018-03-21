@@ -1,25 +1,71 @@
 .accordion-toggle:after {
-    /* symbol for "opening" panels */
-    font-family: 'Glyphicons Halflings'; 
-    content: "\e114";    
-    float: right;      
-   // color: grey;         /* adjust as needed */
+   
+    font-family: 'FontAwesome'; 
+    content: "\f054";    
+    float: right;        
 }
- .accordion-toggle.collapsed:after {
-    /* symbol for "collapsed" panels */
-    content: "\e080";    
+
+.accordion-toggle.collapsed:after {
+  /* symbol for down chevron*/
+  content: "\f078";    
 }
+
+.dashboardbutton
+{
+  background-color: black;
+    border: black;
+}
+
+.hgn-timer
+{
+  //background-color: #C57CD2;
+  background-color: grey
+ 
+}
+.hgn-profilebox
+{
+  background-color:#1782B5
+}
+
+.hgn-leaderboard
+{
+  //background-color:#FFCCBC
+  background-color: black
+}
+
+.hgn-badges
+{
+  background-color:#DA9962
+}
+
+.hgn-weeklyeffortchart
+{
+  background-color:#CC7272;
+}
+.hgn-monthlyeffortchart
+{
+  background-color:#A9D96C;
+}
+
+
 
 
 form.submitted input:invalid {
     border: 2px solid red;
   }
 
+  form.submitted select:invalid {
+    border: 2px solid red;
+  }
 
 div.submitModal  input:invalid {
     border: 2px solid red;
   }
 
+  tr.submitted  input:invalid {
+    border: 2px solid red;
+  }
+  
   .actions
   {
     display :none
@@ -29,3 +75,41 @@ div.submitModal  input:invalid {
   {
     display: block
   }
+  
+  .dashboardtable>thead>tr>th, .dashboardtable>tbody>tr>th, .dashboardtable>tfoot>tr>th, .dashboardtable>thead>tr>td, .dashboardtable>tbody>tr>td, .dashboardtable>tfoot>tr>td {
+    padding: 2px;
+    font-size: x-small;
+    }
+  
+    .progress-leaderboard
+    {
+      border-radius: 10px
+    }
+ 
+    .progress-label {
+      float: left;
+      margin-right: 1em;
+  }
+
+  thead tr td
+  {
+    white-space: nowrap;
+   
+  }
+
+  .tbltimelog
+  {
+    font-size: small;
+    text-align: left
+  }
+
+  .dashboardimg
+  {
+    border-radius: 20px;
+  }
+
+.errorlist
+{
+  border : solid red 1px;
+  color: red
+}

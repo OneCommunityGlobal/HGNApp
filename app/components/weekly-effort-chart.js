@@ -1,10 +1,26 @@
-import Ember from 'ember';
 
-export default Ember.Component.extend({
+import { inject } from '@ember/service';
+import Component from '@ember/component';
+export default Component.extend({
+    classNames: ["card", "text-center", "mb-3", "w-33", "h-100", "hgn-weeklyeffortchart", "prescrollable"],
+    tagName: "card",
 
-    dashboardService: Ember.inject.service('dashboard-service'),
+    dashboardService: inject('dashboard-service'),
     init() {
         this._super(...arguments);
+        let pieChartOptions =
+            {
+                legend: {
+                    display: true,
+                    usePointStyle: true,
+                    position: "bottom",
+                    labels: {
+
+                    }
+                }
+
+            }
+        this.set('pieChartOptions', pieChartOptions);
         let forUserId = { requestorId: this.get('forUserId') }
         return this.get('dashboardService').getWeeklyEffort(forUserId)
             .then(result => { this.set('laborthisweek', result); })
@@ -12,6 +28,9 @@ export default Ember.Component.extend({
                 let actual = this.get('laborthisweek');
                 let actualhours = parseFloat(actual[0].timeSpent_hrs).toFixed(2);
                 let committedhours = parseFloat(actual[0].weeklyComittedHours).toFixed(2);
+
+                this.set('actualhours', parseInt(actualhours));
+                this.set("committedhours", parseInt(committedhours))
 
 
                 let result = {
@@ -30,16 +49,4 @@ export default Ember.Component.extend({
     },
 
 
-    pieChartOptions:
-        {
-            legend: {
-                display: true,
-                usePointStyle: true,
-                position: "bottom",
-                labels: {
-
-                }
-            }
-
-        },
 });

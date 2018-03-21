@@ -1,8 +1,13 @@
-import Ember from 'ember';
 
-export default Ember.Component.extend({
-    dashboardService: Ember.inject.service("dashboard-service"),
+import { inject } from '@ember/service';
+import Component from '@ember/component';
+import $ from 'jquery';
+import { scheduleOnce } from '@ember/runloop';
 
+export default Component.extend({
+    dashboardService: inject("dashboard-service"),
+    tagName: "card",
+    classNames: ["card", "text-center", "mb-3", "w-33", "h-100", "prescrollable", "hgn-leaderboard"],
 
     init() {
         this._super(...arguments);
@@ -14,6 +19,12 @@ export default Ember.Component.extend({
                 let dataset = this.get('leaderboarddata');
                 let maxtotal = 0;
 
+
+                dataset.forEach(element => {
+                    let totaltime = parseFloat(parseFloat(element.totaltime_hrs).toFixed(2));
+                    maxtotal = (totaltime > maxtotal) ? totaltime : maxtotal;
+                });
+
                 dataset.forEach(element => {
 
                     let name = element.name;
@@ -22,21 +33,20 @@ export default Ember.Component.extend({
                     let totaltime = parseFloat(parseFloat(element.totaltime_hrs).toFixed(2));
                     let weeklycommited = parseFloat(parseFloat(element.weeklyComittedHours).toFixed(2));
                     let tangiblebarcolor = this.get('getcolor')(tangibletime);
-                    let tangibletimewidth = parseInt(tangibletime * 100 / totaltime);
-                    let intangibletimewidth = 100 - tangibletimewidth;
-                    maxtotal = (totaltime > maxtotal) ? totaltime : maxtotal;
+                    let tangibletimewidth = parseInt(tangibletime * 100 / maxtotal);
+                    let intangibletimewidth = parseInt(intangibletime * 100 / maxtotal);
                     let result =
                         {
                             didMeetWeeklyCommitment: (tangibletime >= weeklycommited) ? true : false,
                             name: name,
                             weeklycommited: weeklycommited,
                             personId: element.personId,
-                            tangibletime: tangibletime,
+                            tangibletime: parseFloat(tangibletime).toFixed(2),
                             tangibletimewidth: tangibletimewidth,
                             intangibletimewidth: intangibletimewidth,
                             tangiblebarcolor: tangiblebarcolor,
-                            intangibletime: intangibletime,
-                            totaltime: totaltime
+                            intangibletime: parseFloat(intangibletime).toFixed(2),
+                            totaltime: parseFloat(totaltime).toFixed(2)
                         }
 
                     resultset.pushObject(result)
@@ -84,51 +94,15 @@ export default Ember.Component.extend({
 
     },
 
-    ChartOptions: {
-        tooltips: {
-            enabled: true
-        },
-        hover: {
-            animationDuration: 0
-        },
-        layout: {
-            padding: {
-                left: 0,
-                right: 0,
-                top: 0,
-                bottom: 0
-            }
-        },
-        scales: {
-            xAxes: [{
+    didRender() {
+        this._super(...arguments);
+        scheduleOnce('afterRender', this, 'scrollToRow');
+    },
 
-                ticks: {
-                    beginAtZero: true,
+    scrollToRow() {
+        let row = $("tr.table-active").get()[0];
 
-                },
-
-                scaleLabel: {
-                    display: true
-                },
-                gridLines: {
-                },
-                stacked: true
-            }],
-            yAxes: [{
-                labelAngle: 50,
-                stacked: true,
-                maxBarThickness: 20,
-                gridLines: {
-                },
-                stacked: true
-            },
-
-            ]
-        },
-        legend: {
-            display: true
-        },
-
+        if (row) { row.scrollIntoView({ behavior: "smooth", inline: "center", block: "center" }); }
 
     }
 

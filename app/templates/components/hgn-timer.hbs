@@ -1,35 +1,38 @@
-<div class="task-timer">
-  <div class="timer-text">
-
-    <span class="hours"> {{hours}} </span> :
-    <span class="minutes"> {{minutes}} </span> :
-    <span class="seconds">{{seconds}} </span>
-
-  </div>
-  <div style="margin:10px">
-    (HH : MM : SS)
-  </div>
-  <div>
-
-    <button id="timerButton" {{action "timerAction"}}>
-      <span class="glyphicon glyphicon-{{actionIcon}}" aria-hidden="true"></span> {{actionText}} </button>
-    <button id="timerButtonReset" disabled="{{stopDisabled}}" {{action "resetTimer"}}>
-      <span class="glyphicon glyphicon-eject" aria-hidden="true"></span> Reset </button>
-
-  </div>
-  <div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <button type="submit" id="addTimeToTask" type="button" class="btn btn-large btn-primary" {{action "toggleShow"}}>Add time to task</button>
-
-        {{#ember-wormhole to="destination"}} {{hgn-model isVisible=showMyModal loggedinUser = loggedinUser}} {{/ember-wormhole}}
-
+<div class="card-body">
+  <h5 class="card-title">Add Time To Task</h5>
+  <div class="card-text">
+    <div class="task-timer">
+      <div class="timer-text">
+        <span class="hours"> {{hours}} </span> :
+        <span class="minutes"> {{minutes}} </span> :
+        <span class="seconds">{{seconds}} </span>
+      </div>
+      <div style="margin:10px">
+        (HH : MM : SS)
+      </div>
+      <div style="margin:10px">
+        <button id="timerButton" {{action "timerAction"}}>
+          <span class="fa fa-{{actionIcon}}" aria-hidden="true"></span> {{actionText}} </button>
+        <button id="timerButtonReset" disabled="{{stopDisabled}}" {{action "resetTimer"}}>
+          <span class="fa fa-eject" aria-hidden="true"></span> Reset </button>
+      </div>
+      <div>
+        <div class="col-md-12">
+          <button type="button" class="btn btn-large btn-primary dashboardbutton" data-toggle="modal" data-target="#timentrymodal">Add time to task</button>
+          <div class="modal fade" id="timentrymodal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  {{hgn-task-update-form forUserId = loggedinUser.requestorId }}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-
-
-{{yield}}

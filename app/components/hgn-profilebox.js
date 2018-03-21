@@ -1,14 +1,17 @@
-import Ember from 'ember';
+
+import Component from '@ember/component';
 
 
-export default Ember.Component.extend({
-    
-   actions :
-   {
-       gotoMyProfile : function()
-       {
-         this.sendAction('MyProfile');
-       }
-   }
-  
+export default Component.extend({
+
+  tagName: "card",
+  classNames: ["card", "text-center", "mb-3", "w-33", "h-100", "hgn-profilebox", "prescrollable"],
+
+  actions:
+    {
+      gotoMyProfile: function () {
+        this.get('MyProfile');
+      }
+    }
+
 });

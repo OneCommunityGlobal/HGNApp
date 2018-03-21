@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 export function recordInArray(params) {
   let masterarray = params[0];
@@ -17,4 +17,4 @@ export function recordInArray(params) {
   return result;
 }
 
-export default Ember.Helper.helper(recordInArray);
+export default helper(recordInArray);

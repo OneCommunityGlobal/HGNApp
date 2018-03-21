@@ -1,11 +1,12 @@
-import Ember from 'ember';
 
-export default Ember.Controller.extend({
-    isUserAdministrator: Ember.computed('userrole', function () {
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+
+export default Controller.extend({
+    isUserAdministrator: computed('userrole', function () {
         let userrole = this.get('userrole');
-        //return userrole === "Administrator" ? true : false;
-
-        return true;
+        return userrole === "Administrator" ? true : false;
+        //return true;
     }),
 
 });

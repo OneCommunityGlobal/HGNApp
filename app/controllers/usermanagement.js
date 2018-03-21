@@ -1,18 +1,19 @@
-import Ember from 'ember';
 
-export default Ember.Controller.extend({
+import { inject } from '@ember/service';
+import Controller from '@ember/controller';
+export default Controller.extend({
     selectedOption: null,
-    userProfileService: Ember.inject.service('user-profile-service'),
+    userProfileService: inject('user-profile-service'),
 
-    newUser: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        role: "",
-        phoneNumber: "",
-        weeklyCommittedHours: ""
-    },
+    // newUser: {
+    //     firstName: "",
+    //     lastName: "",
+    //     email: "",
+    //     password: "",
+    //     role: "",
+    //     phoneNumber: "",
+    //     weeklyCommittedHours: ""
+    // },
 
     actions: {
         setSelection: function (selected) {

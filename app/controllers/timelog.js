@@ -1,19 +1,18 @@
-import Ember from 'ember';
 
-export default Ember.Controller.extend({
+import { computed } from '@ember/object';
+import Controller from '@ember/controller';
+
+export default Controller.extend({
 
     showMyModal: false,
-    isEditable: Ember.computed('loggedinUser', 'forUserId', function () {
+    isEditable: computed('loggedinUser', 'forUserId', function () {
 
-        let loggedinUser = this.get("loggedinUser.requestorId");
+        let loggedinUser = this.get("userId");
         let forUserId = this.get('model.forUserId');
-        return (loggedinUser === forUserId);
+        let userrrole = this.get("userrole");
+        return (loggedinUser === forUserId || userrrole === "Administrator");
 
     }),
 
-    actions:
-        {
 
-
-        }
 });

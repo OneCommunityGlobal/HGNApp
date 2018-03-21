@@ -1,22 +1,24 @@
-import Ember from 'ember';
-import config from './config/environment';
 
-const Router = Ember.Router.extend({
-  location: config.locationType
+import config from './config/environment';
+import EmberRouter from '@ember/routing/router';
+
+const Router = EmberRouter.extend({
+  location: config.locationType,
+  rootURL: config.rootURL
 });
 
-Router.map(function() {
-  this.route('projects', function() {
-    this.route('projectDetail',{path:'/:projectId'});
-    this.route('newProject');
-
+Router.map(function () {
+  this.route('projects', function () {
+    this.route('projectdetail', { path: '/:project_id' });
+    this.route('newproject');
   });
-  this.route('dashboard');
-  this.route('timelog', { path: '/timelog/:userId' });
+  this.route('timelog', { path: '/timelog/:user_id' });
   this.route('login');
   this.route('usermanagement');
   this.route('badges');
-  this.route('profile', { path: '/profile/:userId' });
+  this.route('profile', { path: '/profile/:user_id' });
+  this.route('AllTimeEntries', { path: "/AllTimeEntries/:user_id" });
+  this.route('updatepassword');
 });
 
 export default Router;

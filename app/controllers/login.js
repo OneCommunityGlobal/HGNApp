@@ -1,33 +1,47 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import ENV from '../config/environment';
 
 
-export default Ember.Controller.extend({
+export default Controller.extend({
+
+  isSubmitted: "",
 
   actions: {
     login() {
 
-      let email = this.get('email');
-      let password = this.get('password');
-      let self = this;
-      let logindata = {
-        "email": email,
-        "password": password
-      };
+      let form = $("#frmlogin").get(0);
 
-      
-      let loginPromise = this.get('AuthService').login(logindata);
+      this.set("isSubmitted", "submitted");
 
-      loginPromise
-         .done(function (result) {
-          localStorage.setItem(ENV.TOKEN_KEY, result);
-            self.transitionToRoute('dashboard');
-        })
-        .error(function(error){
-          alert("Invalid credentials");
-        })
-       
+      if (form.checkValidity()) {
+        this.set("isSubmitted", "");
+
+        let email = this.get('email');
+        let password = this.get('password');
+        let self = this;
+        let logindata = {
+          "email": email,
+          "password": password
+        };
+
+
+        this.get('AuthService').login(logindata);
+
+        // loginPromise
+        //   .then(function (result) {
+        //     localStorage.setItem(ENV.TOKEN_KEY, result);
+        //     self.transitionToRoute('application');
+        //   }, function (error) {
+        //     alert("Invalid credentials");
+        //     console.log(error.responseText)
+        //   })
+      }
+      else {
+
+        alert("Please enter mandatory fields");
+      }
+
+
     }
   }
-
 });
