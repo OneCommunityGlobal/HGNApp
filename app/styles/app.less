@@ -100,7 +100,9 @@ div.submitModal  input:invalid {
   .tbltimelog
   {
     font-size: small;
-    text-align: left
+    text-align: left;
+    table-layout: fixed;
+    width: 100%;
   }
 
   .dashboardimg
@@ -112,4 +114,12 @@ div.submitModal  input:invalid {
 {
   border : solid red 1px;
   color: red
+}
+
+
+
+.tbltimelog td {
+  
+  overflow: hidden;
+  white-space: nowrap;
 }

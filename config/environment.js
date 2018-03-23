@@ -5,7 +5,7 @@ module.exports = function (environment) {
     modulePrefix: 'hgnapp',
     environment: environment,
     rootURL: '/',
-    locationType: 'auto',
+    locationType: 'hash',
     webServer: " https://hgn-rest.azurewebsites.net/api",
     //"http://localhost:4500/api",
     REQUEST_AUTHKEY: "Authorization",

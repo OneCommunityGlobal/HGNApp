@@ -31,7 +31,7 @@ export default Component.extend({
         let userrole = this.get("loggedinUser.role");
 
         if (userrole != "Administrator") {
-            return moment().startOf('week').subtract(2, 'week').format("YYYY-MM-DD");
+            return moment().startOf('week').format("YYYY-MM-DD");
         }
 
     }),

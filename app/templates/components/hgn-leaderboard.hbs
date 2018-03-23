@@ -16,13 +16,13 @@
                                 {{/if}}
                             </td>
                             <td class="text-left col-3">
-                                <a href="/profile/{{result.personId}}" data-toggle="tooltip" data-placement="left" title="View Profile">{{result.name}}</a>
+                                <a href="/#/profile/{{result.personId}}" data-toggle="tooltip" data-placement="left" title="View Profile">{{result.name}}</a>
                             </td>
                             <td class="text-right text-justify text-nowrap col-2">
                                 {{result.tangibletime}} tan
                             </td>
                             <td class="col-4 text-center">
-                                <a href="/timelog/{{result.personId}}">
+                                <a href="/#/timelog/{{result.personId}}">
                                     <div class="progress progress-leaderboard">
                                         <div class="progress-bar progress-bar-striped" role="progressbar " style="width: {{result.tangibletimewidth}}% ; background-color : {{result.tangiblebarcolor}} "
                                             aria-valuenow=" {{result.tangibletime}} " aria-valuemin="0 " aria-valuemax=" {{maxtotal}} "
