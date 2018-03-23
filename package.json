@@ -50,7 +50,6 @@
         "ember-cli-less": "^1.5.5",
         "ember-cli-moment-shim": "^3.6.0",
         "ember-radio-buttons": "^4.1.0",
-        "ember-toastr": "^1.7.1",
         "ember-truth-helpers": "^2.0.0",
         "toastr": "^2.1.4"
     }
