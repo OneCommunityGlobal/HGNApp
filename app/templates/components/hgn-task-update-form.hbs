@@ -16,14 +16,14 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-3 label">Effort Spent:</label>
+        <label class="col-3 label">Effort:</label>
         <input id="hours" class="form-control col-4 mb-1 ml-1" type="number" min=1 max=23 onchange= {{action (mut taskhours) value = "target.value"}}
           placeholder="Hours">
         <input id="minutes" class="form-control col-4 mb-1 ml-1" type="number" min=1 max=59 onchange= {{action (mut taskminutes) value = "target.value"}}
           placeholder="Minutes">
       </div>
       <div class="form-group row">
-        <label class="col-3 label"> Select Project: </label>
+        <label class="col-3 label">Project: </label>
         <select class="form-control col-9" onchange= {{action (mut forprojectId) value="target.value"}} required>
           <option value="" disabled selected>Select Project</option>
           {{#each projects as |project|}}
@@ -34,7 +34,7 @@
         </select>
       </div>
       <div class="form-group row">
-        <label class="col-3 label"> Select Task: </label>
+        <label class="col-3 label">Task: </label>
         <select class="form-control col-9" onchange= {{action (mut fortaskId) value="target.value"}} required>
           <option value="" disabled selected>Select Task</option>
           {{#each projects as |project|}}
@@ -47,7 +47,7 @@
         </select>
       </div>
       <div class="form-group row">
-        <label class="col-3 label"> Notes: </label>
+        <label class="col-3 label">Notes: </label>
         <input class="form-control col-9" type="text" onchange= {{action (mut notes) value="target.value" }} />
       </div>
       <div class="form-group">
