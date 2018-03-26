@@ -24,7 +24,7 @@
         <div class="card-body collapse" id="timelogs">
           {{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId period = "currentWeek" isEditable="false"}}
           {{#if isEditable }}
-            <a href="/AllTimeEntries/{{model.forUserId}}" class="card-link">View Enteries For Other Period</a>
+            <a href="/#/AllTimeEntries/{{model.forUserId}}" class="card-link">View Enteries For Other Period</a>
           {{/if }}
         </div>
       </div>

@@ -2,9 +2,9 @@
     <small>Viewing time Entries for {{period}}</small>
 </div>
 {{#if timelogs}}
-    <div class="table-responsive pre-scrollable h-100 display dataTable">
+    <div class="table-responsive  h-100">
         <table class="table table-sm tbltimelog" id="tbltimelog">
-            <thead>
+            {{!-- <thead>
                 <tr class="row col-12" scope="row">
                     <td scope="col" class="col-2 text-right">Date Of Work</td>
                     <td scope="col" class="col-2 text-right">Effort (HH:MM)
@@ -16,16 +16,42 @@
                     </td>
                     <td scope="col" class="col-5 text-left">Notes</td>
                 </tr>
-            </thead>
+            </thead> --}}
             <tbody>
                 {{#each timelogs as |timelog|}}
                     <tr class="col-12 row {{if timelog.isTangible 'bg-success' 'bg-info'}}" scope="row">
-                        <td class="col-2 text-right"> {{timelog.dateOfWork}}</td>
+                        {{!-- <td class="col-2 text-right"> {{timelog.dateOfWork}}</td>
                         <td class="col-2 text-right"> {{timelog.totalSeconds}}</td>
                         <td class="col-1 text-left"> {{if timelog.isTangible "Y" "N"}} </td>
                         <td class="col-2 text-left"> {{timelog.projectName}} {{timelog.taskName}}
                         </td>
-                        <td class="col-5 text-left"> {{timelog.notes}}</td>
+                        <td class="col-5 text-left"> {{tinymce-editor options=options value=timelog.notes }}</td> --}}
+                        <div class="col-2 mt-3 mb-3">
+                            <div class="row">
+                                Date: {{timelog.dateOfWork}}
+                            </div>
+                            <div class="row">
+                                Effort (HH:MM): {{timelog.totalSeconds}}
+                            </div>
+                            <div class="row">
+                                Project: {{timelog.projectName}}
+                            </div>
+                            <div class="row">
+                                Task: {{timelog.taskName}}
+                            </div>
+                            <div class="row">
+                                Tangible : {{if timelog.isTangible "Y" "N"}}
+                            </div>
+                            {{#if (is-timeentry-within-week timelog.dateOfWork) }}
+                                <div class="row">
+                                    <a href="#" class="actions"> Edit</a>
+                                    <a href="#" class="actions"> Delete</a>
+                                </div>
+                            {{/if}}
+                        </div>
+                        <div class="col-10 mt-3 mb-3">
+                            {{tinymce-editor options=options value=timelog.notes }}
+                        </div>
                     </tr>
                 {{/each}}
             </tbody>

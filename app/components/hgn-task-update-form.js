@@ -16,6 +16,12 @@ export default Component.extend({
     isTangible: true,
     isFormSubmitted: "",
 
+    options: {
+        plugins: "link",
+        menubar: "insert",
+        toolbar: ""
+    },
+
     init() {
         this._super(...arguments);
 

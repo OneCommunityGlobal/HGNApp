@@ -5,16 +5,25 @@ import { inject } from '@ember/service';
 export default Component.extend({
 
     timeEntryService: inject('time-entry-service'),
+    fromDate: Date.now(),
+    todate: Date.now(),
 
     init() {
 
         this._super(...arguments);
-        $(document).ready(function () {
+        // $(document).ready(function () {
 
-            $.noConflict();
-            $('#tbltimelog').DataTable();
-        });
+        //     $.noConflict();
+        //     $('#tbltimelog').DataTable();
+        // });
 
+    },
+    options: {
+        plugins: ["link"],
+        menubar: "false",
+        toolbar: "false",
+        readonly: 1,
+        branding: false
     },
 
     didReceiveAttrs() {

@@ -81,16 +81,16 @@ export default Component.extend({
         },
 
         postChanges() {
+            let toastr = this.get('ToastorService');
             if (this.validateform()) {
                 this.set('isFormSubmitted', "")
                 let userId = this.get('model._id');
                 let user = this.get('model');
-                let toastr = this.get('ToastrService');
+
 
                 if (userId) {
                     this.get('userProfileService').editUserProfileData(user, userId)
-                        .then(results => {
-                            console.log(results);
+                        .then(() => {
                             toastr.success("", 'Changes Saved');
                         }, error => {
 
@@ -99,8 +99,7 @@ export default Component.extend({
                 }
                 else {
                     this.get('userProfileService').postUserProfileData(user)
-                        .then(results => {
-                            console.log(results);
+                        .then(() => {
                             toastr.success("", 'New user created successfully');
                         }, error => {
 
