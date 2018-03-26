@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
+import { inject } from '@ember/service';
 
 export default Ember.Controller.extend({
 
@@ -15,6 +16,16 @@ export default Ember.Controller.extend({
     task: {
       Description: ""
     },
+    validateform() {
+        let inputs = Ember.$("input").get();
+        let isFormValid = true;
+        inputs.forEach(element => {
+            if (!element.validity.valid) {
+                isFormValid = false;
+            }
+        });
+        return isFormValid;
+    },
     actions: {
       addNewTask() {
         this.get('newProject.tasks').addObject(this.get('task'));
@@ -25,11 +36,19 @@ export default Ember.Controller.extend({
       },
 
       addNewProject() {
+        if (this.validateform()) {
         this.get('model').addObject(this.get('newProject'));
         let project = this.get('newProject');
-        this.get('projectService').postProject(project);
+        this.get('projectService').postProject(project)
+        .then(results => {
+            toastr.success("", 'Changes Saved');
+        });
         this.set('newProject', {});
         this.transitionToRoute('projects');
+
+      }else {
+          alert("Please fix the form errors");
+      }
       },
     }
 });

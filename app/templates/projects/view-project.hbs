@@ -16,7 +16,7 @@
 
             {{#if isUserAdministrator }}
             <span class="input-group-btn">
-            <button class="btn" type="button" {{ action 'cancelTask' task}} ><span class= "glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="right" title="Remove this task"></span></button>
+            <button class="btn" type="button" {{ action 'cancelTask' task}} >Remove</button>
           </span>
           {{/if}}
         </div>
@@ -25,14 +25,16 @@
         {{/each}}
       </ul>
       {{#if isUserAdministrator}}
-        <div class="col-lg-6">
-          <div class="input-group>">
+      <br>
+
+
+    <div class="input-group">
       {{input class="form-control required" type="text" placeholder= "Add Task..." value=task.Description }}
       <span class="input-group-btn">
-        <button class="btn" type="button" {{ action 'addNewTask' task }}><span class = "glyphicon glyphicon-plus"></span></button>
+        <button class="btn btn-secondary" {{ action 'addNewTask' task }}type="button">Add Task</button>
       </span>
-      </div>
     </div>
+
     {{/if}}
     </div>
     {{#if isUserAdministrator}}
@@ -53,9 +55,21 @@
     Project Status -
     {{if model.isActive "Active" "Inactive"}}
     {{/if}}
+    <button type="submit" class= "btn" id="#projectTeams" {{action 'teamToggle'}}>Teams</button>
+    {{#if showTeams}}
+    <ul class="list-group list-group-flush">
+    {{#each projectTeams as |team|}}
+    <li class="list-group-item">
+      <a href="/team/{{team._id}}">{{team.teamName}}</a>
+    </li>
+    {{/each}}
+    </ul>
+    {{/if}}
+
     {{#if isUserAdministrator}}
     <button type="submit" class="btn btn-primary" {{ action 'postChanges' }}>Save</button>
     <button type="submit" class="btn btn-danger" {{ action 'destroyProject' }}>Delete Project</button>
     {{/if}}
+
 
   </form>

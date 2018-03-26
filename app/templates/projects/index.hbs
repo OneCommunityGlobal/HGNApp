@@ -13,9 +13,9 @@
                 {{#each model as |project|}}
                     <ul class="list-unstyled">
                         <li class="card-header">
-                           <!-- {{#link-to "projects.projectDetail" project._id }} -->
+                         {{#link-to "projects.viewProject" project._id }}
                               {{project.projectName}}
-                        <!--  {{/link-to}} -->
+                         {{/link-to}}
                       </li>
                     </ul>
                 {{/each}}
