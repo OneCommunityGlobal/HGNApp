@@ -17,7 +17,7 @@ export default Component.extend({
     isFormSubmitted: "",
 
     options: {
-        plugins: "link",
+        plugins: ["link", "autolink"],
         menubar: "insert",
         toolbar: ""
     },
@@ -42,6 +42,12 @@ export default Component.extend({
 
     }),
     maxDateForLogging: computed("loggedinUser.role", function () {
+
+        return moment().format("YYYY-MM-DD");
+
+    }),
+
+    today: computed("", function () {
 
         let userrole = this.get("loggedinUser.role");
 

@@ -19,7 +19,7 @@ export default Component.extend({
 
     },
     options: {
-        plugins: ["link"],
+        plugins: ["link", "autolink"],
         menubar: "false",
         toolbar: "false",
         readonly: 1,
@@ -57,7 +57,7 @@ export default Component.extend({
             todate = start.clone().add(7, 'days').format('X');
 
             let startdate = start.clone().format("MM/DD/YYYY");
-            let enddate = start.clone().add(7, 'days').format("MM/DD/YYYY");;
+            let enddate = start.clone().add(1, 'week').format("MM/DD/YYYY");;
 
             this.set("period", `current week [ ${startdate} to ${enddate}]`);
         }
