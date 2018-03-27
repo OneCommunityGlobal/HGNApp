@@ -11,8 +11,8 @@
       <div class="form-group row">
         <label class="col-3 label">Date Of Work:</label>
         <div class="">
-          <input type="date" value= {{today}} min= {{minDateForLogging}} max= {{maxDateForLogging}} class="form-control" onchange= {{action (mut dateofWork) value = "target.value"}}
-            required placeholder="Select date of work">
+          <input type="date" id="dateofwork" value= {{today}} min= {{minDateForLogging}} max= {{maxDateForLogging}} class="form-control"
+            onchange= {{action (mut dateofWork) value = "target.value"}} required placeholder="Select date of work">
         </div>
       </div>
       <div class="form-group row">

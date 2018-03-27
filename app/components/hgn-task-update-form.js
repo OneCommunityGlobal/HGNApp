@@ -42,13 +42,15 @@ export default Component.extend({
 
     }),
     maxDateForLogging: computed("loggedinUser.role", function () {
+        alert("min calculate")
 
         return moment().format("YYYY-MM-DD");
+
 
     }),
 
     today: computed("", function () {
-
+        alert("today calculate")
         let userrole = this.get("loggedinUser.role");
 
         if (userrole != "Administrator") {
@@ -60,6 +62,7 @@ export default Component.extend({
     clearform() {
         this.set('isFormSubmitted', "");
         $("#frmSubmitTimeEntry")[0].reset();
+        $("#dateofwork")[0].value = this.get("today");
 
     },
 
@@ -110,7 +113,7 @@ export default Component.extend({
                 let minutes = (this.get('taskminutes')) ? this.get('taskminutes') : "00";
 
                 let timespent = hours + ":" + minutes;
-                let dateofWork = moment(this.get('dateofWork')).format('YYYY-MM-DD');
+                let dateofWork = (this.get('dateofWork')) ? (moment(this.get('dateofWork')).format('YYYY-MM-DD')) : (moment().format('YYYY-MM-DD'));
                 timeentry.personId = this.get('forUserId');
                 timeentry.projectId = this.get('forprojectId');
                 timeentry.taskId = this.get('fortaskId');
