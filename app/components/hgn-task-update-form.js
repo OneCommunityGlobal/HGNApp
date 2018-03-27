@@ -42,15 +42,13 @@ export default Component.extend({
 
     }),
     maxDateForLogging: computed("loggedinUser.role", function () {
-        alert("min calculate")
-
         return moment().format("YYYY-MM-DD");
 
 
     }),
 
     today: computed("", function () {
-        alert("today calculate")
+
         let userrole = this.get("loggedinUser.role");
 
         if (userrole != "Administrator") {
