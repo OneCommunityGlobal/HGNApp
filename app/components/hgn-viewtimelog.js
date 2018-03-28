@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import moment from 'moment';
 import { inject } from '@ember/service';
+import { computed } from '@ember/object';
 
 export default Component.extend({
 
@@ -11,19 +12,33 @@ export default Component.extend({
     init() {
 
         this._super(...arguments);
-        // $(document).ready(function () {
+        let foruser = this.get('forUserId');
+        this.get('timeEntryService').getUserProjects(foruser)
+            .then(results => {
+                console.log(results);
+                this.set('projects', results);
+            });
 
-        //     $.noConflict();
-        //     $('#tbltimelog').DataTable();
-        // });
 
     },
-    options: {
+    isEditable: computed("forUserId", "loggedinUser", function () {
+        let foruser = this.get('forUserId');
+        let loggedinUserId = this.get('loggedinUser.requestorId');
+        let loggedinUserRole = this.get('loggedinUser.role');
+        return (loggedinUserRole === "Administrator" || foruser === loggedinUserId);
+
+    }),
+    editableoptions: {
         plugins: ["link", "autolink"],
-        menubar: "false",
-        toolbar: "false",
-        readonly: 1,
-        branding: false
+        menubar: "insert",
+        toolbar: ""
+    },
+
+    noneditableoptions: {
+        plugins: ["link", "autolink"],
+        menubar: "insert",
+        toolbar: "",
+        readonly: 1
     },
 
     didReceiveAttrs() {
@@ -79,6 +94,18 @@ export default Component.extend({
 
         this.get('timeEntryService').getTimeEntriesForPeriod(userid, fromdate, todate)
             .then(results => { this.set('timelogs', results) });
+    },
+
+    actions: {
+
+        saveEditsToTimelog(timelog) {
+
+        },
+
+        deleteTimelog(timelog) {
+
+        }
     }
+
 
 });

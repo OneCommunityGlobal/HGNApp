@@ -29,8 +29,9 @@ export default Component.extend({
 
         this.get('timeEntryService').getUserProjects(user)
             .then(results => { this.set('projects', results); });
-
     },
+
+
 
     minDateForLogging: computed("loggedinUser.role", function () {
 
@@ -48,12 +49,7 @@ export default Component.extend({
     }),
 
     today: computed("", function () {
-
-        let userrole = this.get("loggedinUser.role");
-
-        if (userrole != "Administrator") {
-            return moment().format("YYYY-MM-DD");
-        }
+        return moment().format("YYYY-MM-DD");
     }),
 
 
@@ -77,19 +73,6 @@ export default Component.extend({
         let hours = parseFloat(fieldhours.value);
         let minutes = parseFloat(fieldminutes.value);
 
-
-        if (isNaN(hours) && isNaN(minutes)) {
-            isFormValid = false;
-            fieldhours.setCustomValidity("Effort value cannot be zero");
-            fieldminutes.setCustomValidity("Effort value cannot be zero");
-
-        }
-        else {
-            fieldhours.setCustomValidity("");
-            fieldminutes.setCustomValidity("");
-
-            isFormValid = form.checkValidity();
-        }
 
         return isFormValid;
     },

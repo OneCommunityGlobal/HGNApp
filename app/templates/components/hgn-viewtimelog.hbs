@@ -3,7 +3,7 @@
 </div>
 {{#if timelogs}}
     <div class="table-responsive  h-100">
-        <table class="table table-sm tbltimelog" id="tbltimelog">
+        <table class="table table-sm tbltimelog pre-scrollable" id="tbltimelog">
             {{!-- <thead>
                 <tr class="row col-12" scope="row">
                     <td scope="col" class="col-2 text-right">Date Of Work</td>
@@ -20,38 +20,55 @@
             <tbody>
                 {{#each timelogs as |timelog|}}
                     <tr class="col-12 row {{if timelog.isTangible 'bg-success' 'bg-info'}}" scope="row">
-                        {{!-- <td class="col-2 text-right"> {{timelog.dateOfWork}}</td>
-                        <td class="col-2 text-right"> {{timelog.totalSeconds}}</td>
-                        <td class="col-1 text-left"> {{if timelog.isTangible "Y" "N"}} </td>
-                        <td class="col-2 text-left"> {{timelog.projectName}} {{timelog.taskName}}
-                        </td>
-                        <td class="col-5 text-left"> {{tinymce-editor options=options value=timelog.notes }}</td> --}}
-                        <div class="col-2 mt-3 mb-3">
-                            <div class="row">
-                                Date: {{timelog.dateOfWork}}
-                            </div>
-                            <div class="row">
-                                Effort (HH:MM): {{timelog.totalSeconds}}
-                            </div>
-                            <div class="row">
-                                Project: {{timelog.projectName}}
-                            </div>
-                            <div class="row">
-                                Task: {{timelog.taskName}}
-                            </div>
-                            <div class="row">
-                                Tangible : {{if timelog.isTangible "Y" "N"}}
-                            </div>
-                            {{#if (is-timeentry-within-week timelog.dateOfWork) }}
-                                <div class="row">
-                                    <a href="#" class="actions"> Edit</a>
-                                    <a href="#" class="actions"> Delete</a>
+                        <form class="w-100" readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}>
+                            <div class="row col-12">
+                                <div class="col-5 mt-3 mb-3">
+                                    <div class="row mb-3">
+                                        Date: {{timelog.dateOfWork}}
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="label mr-1">Effort:</label>
+                                        <input class="col-4 mr-3" value= {{timelog.hours}} readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}> :
+                                        <input class="col-4 ml-3" value= {{timelog.minutes}} readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="label mr-1">Project/Task:</label>
+                                        <select name="projects" readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}>
+                                            {{#each projects as |project|}}
+                                                <optgroup label= {{project.projectName}}></optgroup>
+                                                {{#each project.tasks as |task|}}
+                                                    <option value='"projectId" : {{project.projectId}}, "taskid": {{task._id}}' selected= {{if (eq task._id timelog.taskId) true }}>{{task.Description}}</option>
+                                                {{/each}}
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="label mr-1">Tangible:</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" value=true name="timeentrytypeoptions" type="radio" checked= {{if (eq timelog.isTangible true) "true"}}
+                                                readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}>
+                                            <label class="form-check-label">
+                                                Tangible Work
+                                            </label>
+                                            <input class="form-check-input" value=false name="timeentrytypeoptions" type="radio" checked= {{if (eq timelog.isTangible false ) "true"}}
+                                                readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}>
+                                            <label class="form-check-label">
+                                                Intangible Work
+                                            </label>
+                                        </div>
+                                    </div>
+                                    {{#if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) }}
+                                        <div class="row">
+                                            <a href="#" class="actions" {{action "saveEditsToTimelog" timelog}}> Edit</a>
+                                            <a href="#" class="actions" {{action "deleteTimelog" timelog}}> Delete</a>
+                                        </div>
+                                    {{/if}}
                                 </div>
-                            {{/if}}
-                        </div>
-                        <div class="col-10 mt-3 mb-3">
-                            {{tinymce-editor options=options value=timelog.notes }}
-                        </div>
+                                <div class="col-7 mt-3 mb-3">
+                                    {{tinymce-editor options=options value=timelog.notes }}
+                                </div>
+                            </div>
+                        </form>
                     </tr>
                 {{/each}}
             </tbody>
