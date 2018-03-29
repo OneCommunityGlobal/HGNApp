@@ -30,6 +30,21 @@ export default Service.extend({
     let method = "post";
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
     return request;
+  },
 
+  updateTimeEntry(timeEntryId, timeEntry) {
+    let relativePath = "/TimeEntry/" + timeEntryId;
+    let data = timeEntry;
+    let method = "put";
+    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    return request;
+  },
+
+  deleteTimeEntry(timeEntryId) {
+    let relativePath = "/TimeEntry/" + timeEntryId;
+    let data = null;
+    let method = "delete";
+    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    return request;
   }
 });

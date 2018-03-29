@@ -18,22 +18,24 @@
                 </tr>
             </thead> --}}
             <tbody>
-                {{#each timelogs as |timelog|}}
-                    <tr class="col-12 row {{if timelog.isTangible 'bg-success' 'bg-info'}}" scope="row">
+                {{#each timelogsview as |timelog index|}}
+                    <tr class="col-12 row tr-tangible-{{timelog.isTangible}}" scope="row">
                         <form class="w-100" readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}>
                             <div class="row col-12">
                                 <div class="col-5 mt-3 mb-3">
                                     <div class="row mb-3">
-                                        Date: {{timelog.dateOfWork}}
+                                        Date: {{timelog.dateOfWork}} {{timelog.isTangible}}
                                     </div>
                                     <div class="row mb-3">
-                                        <label class="label mr-1">Effort:</label>
-                                        <input class="col-4 mr-3" value= {{timelog.hours}} readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}> :
-                                        <input class="col-4 ml-3" value= {{timelog.minutes}} readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}>
+                                        <label class="label mr-1">Time:</label>
+                                        <input class="col-4 mr-3" value= {{timelog.hours}} readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}
+                                            onchange= {{action (mut timelog.hours) value = "target.value"}}> :
+                                        <input class="col-4 ml-3" value= {{timelog.minutes}} readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}
+                                            onchange= {{action (mut timelog.minutes) value = "target.value"}}>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="label mr-1">Project/Task:</label>
-                                        <select name="projects" readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}>
+                                        <select name="projects" readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}} onchange= {{action (mut timelog.taskId) value = "target.value" }}>
                                             {{#each projects as |project|}}
                                                 <optgroup label= {{project.projectName}}></optgroup>
                                                 {{#each project.tasks as |task|}}
@@ -46,12 +48,14 @@
                                         <label class="label mr-1">Tangible:</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" value=true name="timeentrytypeoptions" type="radio" checked= {{if (eq timelog.isTangible true) "true"}}
-                                                readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}>
+                                                readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}
+                                                onclick= {{action (mut timelog.isTangible) value = "target.value"}}>
                                             <label class="form-check-label">
                                                 Tangible Work
                                             </label>
                                             <input class="form-check-input" value=false name="timeentrytypeoptions" type="radio" checked= {{if (eq timelog.isTangible false ) "true"}}
-                                                readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}>
+                                                readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}
+                                                onclick= {{action (mut timelog.isTangible) value = "target.value"}}>
                                             <label class="form-check-label">
                                                 Intangible Work
                                             </label>
@@ -59,7 +63,7 @@
                                     </div>
                                     {{#if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) }}
                                         <div class="row">
-                                            <a href="#" class="actions" {{action "saveEditsToTimelog" timelog}}> Edit</a>
+                                            <a href="#" class="actions" {{action "saveEditsToTimelog" timelog index}}>Save Changes</a>
                                             <a href="#" class="actions" {{action "deleteTimelog" timelog}}> Delete</a>
                                         </div>
                                     {{/if}}
