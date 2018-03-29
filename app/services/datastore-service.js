@@ -82,6 +82,25 @@ export default Service.extend({
     return request;
 
   },
+  postTeam(team){
+    let relativePath = "/team/";
+    let data = team;
+    let method = "post";
+    let request = this.createEmberrequestObject(relativePath, data, method);
+
+    return request;
+
+  },
+  getTeamById(teamId){
+    let relativePath = "/team/" + teamId;
+    let data = "";
+    let method = "get";
+    let request = this.createEmberrequestObject(relativePath, data, method);
+
+    return request;
+
+
+  },
 
   createEmberrequestObject(relativePath, data, method) {
     return $.ajax({

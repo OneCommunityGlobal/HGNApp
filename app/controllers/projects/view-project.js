@@ -23,7 +23,9 @@ export default Ember.Controller.extend({
   task: {
     Description: ""
   },
-
+  newTeam: {
+    teamName:""
+  },
   projectTeams: "",
   dataService: inject("datastore-service"),
 
@@ -81,8 +83,9 @@ export default Ember.Controller.extend({
     cancelTask(task) {
       let projectId = this.get('model._id');
       let project = this.get('model');
+      let taskId = this.get('task._id');
       this.get('model.tasks').removeObject(task);
-      this.get('projectService').editProjectData(project, projectId);
+      this.get('projectService').deletetask(projectId, taskId);
       this.set('task', {});
     },
     destroyProject() {
@@ -95,7 +98,6 @@ export default Ember.Controller.extend({
 
 },
     postChanges() {
-      let projectTeams = {};
       if (this.validateform()) {
           this.set('isFormSubmitted', "")
       let projectId = this.get('model._id');
@@ -110,6 +112,16 @@ export default Ember.Controller.extend({
     }else {
         alert("Please fix the form errors");
     }
+  },
+  addNewTeam(){
+    let projectId = this.get('model._id');
+    let team = this.get('newTeam');
+    team.projectId = projectId;
+    this.get('projectTeams').addObject(this.get('team'));
+    this.get('dataService').postTeam(this.get('newTeam'));
+    this.set('newTeam', "");
+  },
+  removeTeam(team){
   }
 
   }
