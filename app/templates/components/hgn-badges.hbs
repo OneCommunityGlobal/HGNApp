@@ -1,14 +1,59 @@
-<div class="card-body">
+{{!-- <div class="card-body">
   <h5 class="card-title">Badges</h5>
   <div class="card-text">
     <div>
       <span class="image-body">
         {{!-- {{#link-to "badges"}} --}}
-        <img src="/assets/images/badges/2x_burned.png" class="img-fluid" alt="" title="FIRST BADGE" style="max-height: 20%;max-width:20%">{{!-- {{/link-to}} --}}
-      </span>
+{{!--         <img src="/assets/images/badges/2x_burned.png" class="img-fluid" alt="" title="FIRST BADGE" style="max-height: 20%;max-width:20%">{{!-- {{/link-to}} --}}
+     {{!--  </span>
       <span class="image-body">
         <img src="/assets/images/badges/2x_burned.png" class="img-fluid" alt="" title="SECOND BADGE" style="max-height: 20%; max-height: 20%;max-width:20%">
       </span>
     </div>
   </div>
-</div>
+</div> --}}
+
+<style>
+
+  .image-badge{
+    display: inline-block;
+    height: 80px;
+    width: 120px;
+  }
+
+ /* .image-badge:hover {
+  opacity: 0;
+  transition:opacity 2s;
+}*/
+
+</style>
+
+<div class="panel" style="width:270px;height:350px;padding:0px;background-color:#DA9962; overflow-y: scroll">
+  <div class="panel-heading" style="background-color:#C1702A">Badges</div>
+  <div class="panel-body" style="padding:0px;">
+    <span class="image-body">
+      {{#link-to "myprofile"}}
+      <img src="/assets/images/badges/2x_burned.png" class="image-badge" alt="" title="FIRST BADGE">
+      {{/link-to}}
+    </span>
+    <span class="image-body">
+      <img src="/assets/images/badges/2x_burned.png" class="image-badge" alt="" title="SECOND BADGE">
+    </span>
+  </div>
+   <div class="panel-body" style="padding:0px;">
+      <img src="/assets/images/badges/2x_burned.png" class="image-badge">
+      <img src="/assets/images/badges/2x_burned.png" class="image-badge">
+  </div>
+   <div class="panel-body" style="padding:0px;">
+      <img src="/assets/images/badges/2x_burned.png" class="image-badge">
+      <img src="/assets/images/badges/2x_burned.png" class="image-badge">
+  </div>
+  <div class="panel-body" style="padding:0px;">
+      <img src="/assets/images/badges/2x_burned.png" class="image-badge">
+      <img src="/assets/images/badges/2x_burned.png" class="image-badge">
+  </div>
+   <div class="panel-body" style="padding:0px;">
+      <img src="/assets/images/badges/2x_burned.png" class="image-badge">
+      <img src="/assets/images/badges/2x_burned.png" class="image-badge">
+  </div>
+</div>{{yield}}
