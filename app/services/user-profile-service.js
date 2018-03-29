@@ -62,6 +62,16 @@ export default Service.extend({
 
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
     return request;
+  },
+
+  getUserName(userId) {
+
+    let relativePath = "/userprofile/name/" + userId;
+    let data = null;
+    let method = "get";
+
+    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    return request;
   }
 
 });
