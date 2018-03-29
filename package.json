@@ -38,7 +38,8 @@
         "ember-resolver": "^4.0.0",
         "ember-source": "~3.0.0",
         "eslint-plugin-ember": "^5.0.0",
-        "loader.js": "^4.2.3"
+        "loader.js": "^4.2.3",
+        "toastr": "^2.1.4"
     },
     "engines": {
         "node": " >= 8.*"
@@ -49,7 +50,9 @@
         "ember-cli-jwt-decode": "^0.1.0",
         "ember-cli-less": "^1.5.5",
         "ember-cli-moment-shim": "^3.6.0",
+        "ember-cli-tinymce": "^0.3.2",
         "ember-radio-buttons": "^4.1.0",
+        "ember-toastr": "^1.7.1",
         "ember-truth-helpers": "^2.0.0",
         "toastr": "^2.1.4"
     }

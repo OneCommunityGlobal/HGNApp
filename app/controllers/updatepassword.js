@@ -6,6 +6,7 @@ export default Controller.extend({
     isSubmitted: "",
     userProfileService: inject('user-profile-service'),
     loginService: inject('login-service'),
+    toastr: inject("ToastrService"),
     errorlist: computed("showErrors.[]", function () {
 
         return (this.get("showErrors"));
@@ -73,6 +74,8 @@ export default Controller.extend({
         {
             updatePassword() {
                 let forUserId = ""
+
+                let toastr = this.get("toastr");
 
                 if (!this.get('forUserId')) {
                     forUserId = this.get('userId');

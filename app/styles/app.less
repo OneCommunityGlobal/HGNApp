@@ -66,15 +66,7 @@ div.submitModal  input:invalid {
     border: 2px solid red;
   }
   
-  .actions
-  {
-    display :none
-  }
-
-  td:hover .actions
-  {
-    display: block
-  }
+ 
   
   .dashboardtable>thead>tr>th, .dashboardtable>tbody>tr>th, .dashboardtable>tfoot>tr>th, .dashboardtable>thead>tr>td, .dashboardtable>tbody>tr>td, .dashboardtable>tfoot>tr>td {
     padding: 2px;
@@ -101,7 +93,7 @@ div.submitModal  input:invalid {
   {
     font-size: small;
     text-align: left;
-    table-layout: fixed;
+    
     width: 100%;
   }
 
@@ -116,10 +108,21 @@ div.submitModal  input:invalid {
   color: red
 }
 
+.actions
+{
+  display :none
+}
 
+td:hover .actions
+{
+  display: block
+}
 
-.tbltimelog td {
-  
-  overflow: hidden;
-  white-space: nowrap;
+div:hover .actions
+{
+  display: block;
+  padding: 5px;
+  color: white;
+ 
+
 }

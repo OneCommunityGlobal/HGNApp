@@ -5,4 +5,4 @@
     <input type="date" class="form-control mb-2 mr-sm-2" id="todate" required>
     <button type="submit" class="btn btn-primary mb-2" {{action "getDataForPeriod"}}>Submit</button>
 </form>
-{{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId period = "custom" fromDate = datesarray.fromDate toDate = datesarray.toDate isEditable=isEditable}}
+{{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId period = "custom" fromDate = datesarray.fromDate toDate = datesarray.toDate }}

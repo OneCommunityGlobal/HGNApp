@@ -16,6 +16,12 @@ export default Component.extend({
     isTangible: true,
     isFormSubmitted: "",
 
+    options: {
+        plugins: ["link", "autolink"],
+        menubar: "insert",
+        toolbar: ""
+    },
+
     init() {
         this._super(...arguments);
 
@@ -23,8 +29,9 @@ export default Component.extend({
 
         this.get('timeEntryService').getUserProjects(user)
             .then(results => { this.set('projects', results); });
-
     },
+
+
 
     minDateForLogging: computed("loggedinUser.role", function () {
 
@@ -36,18 +43,20 @@ export default Component.extend({
 
     }),
     maxDateForLogging: computed("loggedinUser.role", function () {
+        return moment().format("YYYY-MM-DD");
 
-        let userrole = this.get("loggedinUser.role");
 
-        if (userrole != "Administrator") {
-            return moment().format("YYYY-MM-DD");
-        }
+    }),
+
+    today: computed("", function () {
+        return moment().format("YYYY-MM-DD");
     }),
 
 
     clearform() {
         this.set('isFormSubmitted', "");
         $("#frmSubmitTimeEntry")[0].reset();
+        $("#dateofwork")[0].value = this.get("today");
 
     },
 
@@ -64,19 +73,6 @@ export default Component.extend({
         let hours = parseFloat(fieldhours.value);
         let minutes = parseFloat(fieldminutes.value);
 
-
-        if (isNaN(hours) && isNaN(minutes)) {
-            isFormValid = false;
-            fieldhours.setCustomValidity("Effort value cannot be zero");
-            fieldminutes.setCustomValidity("Effort value cannot be zero");
-
-        }
-        else {
-            fieldhours.setCustomValidity("");
-            fieldminutes.setCustomValidity("");
-
-            isFormValid = form.checkValidity();
-        }
 
         return isFormValid;
     },
@@ -98,7 +94,7 @@ export default Component.extend({
                 let minutes = (this.get('taskminutes')) ? this.get('taskminutes') : "00";
 
                 let timespent = hours + ":" + minutes;
-                let dateofWork = moment(this.get('dateofWork')).format('YYYY-MM-DD');
+                let dateofWork = (this.get('dateofWork')) ? (moment(this.get('dateofWork')).format('YYYY-MM-DD')) : (moment().format('YYYY-MM-DD'));
                 timeentry.personId = this.get('forUserId');
                 timeentry.projectId = this.get('forprojectId');
                 timeentry.taskId = this.get('fortaskId');
