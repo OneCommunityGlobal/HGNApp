@@ -48,13 +48,13 @@
                                         <label class="label mr-1">Tangible:</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" value=true name="timeentrytypeoptions" type="radio" checked= {{if (eq timelog.isTangible true) "true"}}
-                                                readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}
+                                                disabled= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}
                                                 onclick= {{action (mut timelog.isTangible) value = "target.value"}}>
                                             <label class="form-check-label">
                                                 Tangible Work
                                             </label>
                                             <input class="form-check-input" value=false name="timeentrytypeoptions" type="radio" checked= {{if (eq timelog.isTangible false ) "true"}}
-                                                readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}
+                                                disabled= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null true}}
                                                 onclick= {{action (mut timelog.isTangible) value = "target.value"}}>
                                             <label class="form-check-label">
                                                 Intangible Work
