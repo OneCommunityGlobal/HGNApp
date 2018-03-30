@@ -5,12 +5,10 @@ import { computed } from '@ember/object';
 
 export default Component.extend({
     newactionitem: null,
-    addnewactionitem: false,
     dataService: inject('datastore-service'),
     userProfileService: inject('user-profile-service'),
     forUser: null,
     newAIdescription: null,
-    newdescription: null,
     teamMembers: [],
 
     didReceiveAttrs() {
@@ -54,7 +52,6 @@ export default Component.extend({
     }),
 
 
-
     isUseronSelfPage: computed('loggedinUser', 'forUserId', function () {
 
         let loggedinUser = this.get("loggedinUser.requestorId");
@@ -82,13 +79,8 @@ export default Component.extend({
             this.set("isSubmitted", "submitted")
 
             if (inputfield.checkValidity()) {
-                let editedactionitem = {};
-                editedactionitem._id = actionItem._id;
-                editedactionitem.description = this.get('newdescription');
-                editedactionitem.assignedTo = actionItem.assignedTo;
-                editedactionitem.createdBy = actionItem.createdBy;
                 this.set('isSubmitted', "");
-                this.get('dataService').editActionItem(editedactionitem);
+                this.get('dataService').editActionItem(actionItem);
             }
 
 
@@ -113,7 +105,7 @@ export default Component.extend({
 
             if (form.checkValidity()) {
                 let newActionItem = {};
-
+                let toastr = this.get("ToastrService");
                 let assignedTo = this.get('forUser');
 
                 newActionItem.assignedTo = assignedTo;
@@ -124,7 +116,7 @@ export default Component.extend({
                         this.get('actionItems').addObject(result);
                         this.set('isFormSumbitted', "");
                         $("#frmnewactionitem")[0].reset();
-                        let toastr = this.get("ToastrService");
+
                         toastr.success("Action item sucessfully created");
 
 
