@@ -6,7 +6,7 @@ export default Component.extend({
     tagName: "card",
 
     dashboardService: inject('dashboard-service'),
-    init() {
+    didReceiveAttrs() {
         this._super(...arguments);
         let pieChartOptions =
             {

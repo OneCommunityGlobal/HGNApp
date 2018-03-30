@@ -17,7 +17,7 @@ export default Route.extend(UnAuthenticatedRouteMixin, {
           "name": results.name,
           "forUserId": forUserId
         }
-        alert("loading");
+
         return result;
 
       })

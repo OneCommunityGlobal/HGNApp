@@ -12,7 +12,7 @@ export default Component.extend({
     newAIdescription: null,
     newdescription: null,
 
-    init() {
+    didReceiveAttrs() {
 
         this._super(...arguments);
 
