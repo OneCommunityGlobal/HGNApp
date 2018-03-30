@@ -9,6 +9,7 @@ export default Route.extend(UnAuthenticatedRouteMixin, {
 
 
     let forUserId = params.user_id;
+
     return this.get('userProfileService').getUserName(forUserId)
       .then((results) => {
 
@@ -16,7 +17,7 @@ export default Route.extend(UnAuthenticatedRouteMixin, {
           "name": results.name,
           "forUserId": forUserId
         }
-
+        alert("loading");
         return result;
 
       })
