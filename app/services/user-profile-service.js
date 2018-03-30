@@ -56,7 +56,7 @@ export default Service.extend({
 
   getTeamMembers(user) {
 
-    let relativePath = "/userprofile/reportees/" + user.requestorId;
+    let relativePath = "/userprofile/teammembers/" + user.requestorId;
     let data = null;
     let method = "get";
 

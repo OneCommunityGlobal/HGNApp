@@ -11,15 +11,18 @@ export default Component.extend({
     forUser: null,
     newAIdescription: null,
     newdescription: null,
+    teamMembers: [],
 
     didReceiveAttrs() {
 
         this._super(...arguments);
 
+        this.set('forUser', this.get('forUserId'));
+
         let user =
             { "requestorId": this.get('forUserId') }
         this.get('userProfileService').getTeamMembers(user)
-            .then(results => { this.set('teamMembers', results); });
+            .then(results => { this.set('teamMembers', results.myteam); });
 
         this.get('dataService').getActionItems(user)
             .then(results => { this.set('actionItems', results); })
@@ -37,6 +40,21 @@ export default Component.extend({
         }
 
     }),
+    nameofUserForWhomActionItemsAreBeingViewed: computed("forUser", "teamMembers", function () {
+
+        let teamMembers = this.get("teamMembers");
+        let forUser = this.get("forUser");
+        let name = "";
+        teamMembers.forEach(element => {
+            if (forUser === element._id) {
+                name = element.name;
+            }
+        });
+        return name;
+    }),
+
+
+
     isUseronSelfPage: computed('loggedinUser', 'forUserId', function () {
 
         let loggedinUser = this.get("loggedinUser.requestorId");
@@ -46,25 +64,10 @@ export default Component.extend({
 
     actions: {
 
-        updatetargetUser() {
-            let value = event.target.value
-            let json = JSON.parse(value)
-            this.set('forUser', json._id);
-            this.set('forUserName', json.name);
-
-        },
-
         getActionItemsForUser() {
 
             let requestedfor = { "requestorId": this.get('forUser') };
             let loggedinUser = this.get("loggedinUser.requestorId");
-
-            if (requestedfor != loggedinUser) {
-                this.set("displaytext", `Viewing action items for ${this.get('forUserName')}`)
-            }
-            else {
-                this.set("displaytext", "")
-            }
 
             this.get('dataService').getActionItems(requestedfor)
                 .then(results => {
@@ -113,10 +116,6 @@ export default Component.extend({
 
                 let assignedTo = this.get('forUser');
 
-                if (!assignedTo) {
-                    assignedTo = this.get('loggedinUser.requestorId');
-                }
-
                 newActionItem.assignedTo = assignedTo;
                 newActionItem.description = this.get('newAIdescription');
 
@@ -124,6 +123,7 @@ export default Component.extend({
                     .then(result => {
                         this.get('actionItems').addObject(result);
                         this.set('isFormSumbitted', "");
+                        $("#frmnewactionitem")[0].reset();
                         let toastr = this.get("ToastrService");
                         toastr.success("Action item sucessfully created");
 
