@@ -96,7 +96,7 @@ export default Component.extend({
 
         saveEditsToTimelog(timelog, index) {
 
-            let toastr = this.get("ToastorService");
+            let toastr = this.get("toast");
 
             let updatedvalues = {};
 
@@ -138,7 +138,7 @@ export default Component.extend({
 
         deleteTimelog(timelog) {
             if (confirm("Are you sure you want to delete this entry")) {
-                let toastr = this.get('ToastorService');
+                let toastr = this.get('toast');
                 this.get('timeEntryService').deleteTimeEntry(timelog._id)
                     .then(results => {
                         console.log(results);

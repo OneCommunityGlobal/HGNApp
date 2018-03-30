@@ -37,6 +37,7 @@
         "ember-maybe-import-regenerator": "^0.1.6",
         "ember-resolver": "^4.0.0",
         "ember-source": "~3.0.0",
+        "ember-toastr": "^1.7.1",
         "eslint-plugin-ember": "^5.0.0",
         "loader.js": "^4.2.3",
         "toastr": "^2.1.4"
@@ -52,8 +53,6 @@
         "ember-cli-moment-shim": "^3.6.0",
         "ember-cli-tinymce": "^0.3.2",
         "ember-radio-buttons": "^4.1.0",
-        "ember-toastr": "^1.7.1",
-        "ember-truth-helpers": "^2.0.0",
-        "toastr": "^2.1.4"
+        "ember-truth-helpers": "^2.0.0"
     }
 }

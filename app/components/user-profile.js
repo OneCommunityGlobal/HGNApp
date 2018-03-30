@@ -81,7 +81,7 @@ export default Component.extend({
         },
 
         postChanges() {
-            let toastr = this.get('ToastorService');
+            let toastr = this.get('toast');
             if (this.validateform()) {
                 this.set('isFormSubmitted', "")
                 let userId = this.get('model._id');

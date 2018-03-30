@@ -10,6 +10,7 @@ export default Component.extend({
     forUser: null,
     newAIdescription: null,
     teamMembers: [],
+    toast: inject('toast'),
 
     didReceiveAttrs() {
 
@@ -91,7 +92,7 @@ export default Component.extend({
                 this.get('actionItems').removeObject(actionItem);
                 this.get('dataService').deleteActionItem(actionItem)
                     .then(results => {
-                        let toastr = this.get("ToastrService");
+                        let toastr = this.get("toast");
                         toastr.success("Deleted successfully");
                     })
             }
@@ -105,7 +106,7 @@ export default Component.extend({
 
             if (form.checkValidity()) {
                 let newActionItem = {};
-                let toastr = this.get("ToastrService");
+                let toastr = this.get("toast");
                 let assignedTo = this.get('forUser');
 
                 newActionItem.assignedTo = assignedTo;

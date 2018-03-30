@@ -6,7 +6,7 @@ export default Controller.extend({
     isSubmitted: "",
     userProfileService: inject('user-profile-service'),
     loginService: inject('login-service'),
-    toastr: inject("ToastrService"),
+    toastr: inject("toast"),
     errorlist: computed("showErrors.[]", function () {
 
         return (this.get("showErrors"));
@@ -98,11 +98,11 @@ export default Controller.extend({
                             if (forUserId == this.get("userId")) {
                                 let loginservice = this.get('loginService');
 
-                                toastr.success("", 'Password has been updated.Please login into the system using your new password');
-                                toastr.subscribe(function () {
-                                    loginservice.logout();
-                                });
-
+                                toastr.success("", 'Please login into the system using your new password')
+                                // toastr.subscribe(function () {
+                                //     loginservice.logout();
+                                // });
+                                loginservice.logout();
                             }
                             else {
                                 toastr.success("", 'Password successfully updated');
