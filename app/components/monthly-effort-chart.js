@@ -7,7 +7,7 @@ export default Component.extend({
     tagName: "card",
 
     dashboardService: inject('dashboard-service'),
-    init() {
+    didReceiveAttrs() {
         this._super(...arguments);
         let forUserId = { requestorId: this.get('forUserId') }
         return this.get('dashboardService').getMonthlyEffort(forUserId)

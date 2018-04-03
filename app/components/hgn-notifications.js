@@ -5,7 +5,7 @@ import { computed } from '@ember/object';
 export default Component.extend({
 
 
-    init() {
+    didReceiveAttrs() {
         this._super(...arguments);
 
         let forUserId = this.get('forUserId');

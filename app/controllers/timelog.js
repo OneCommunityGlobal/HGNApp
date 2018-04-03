@@ -5,6 +5,7 @@ import Controller from '@ember/controller';
 export default Controller.extend({
 
     showMyModal: false,
+
     isEditable: computed('loggedinUser', 'forUserId', function () {
 
         let loggedinUser = this.get("userId");

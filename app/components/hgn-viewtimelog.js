@@ -15,7 +15,6 @@ export default Component.extend({
         let foruser = this.get('forUserId');
         this.get('timeEntryService').getUserProjects(foruser)
             .then(results => {
-                console.log(results);
                 this.set('projects', results);
             });
 
@@ -42,18 +41,15 @@ export default Component.extend({
     },
 
     didReceiveAttrs() {
-
-
-
-        this.getDataforTime();
-
-
-    },
-
-    didUpdateAttrs() {
         this.getDataforTime();
     },
 
+
+
+    timelogsview: computed("timelogs.@each", function () {
+
+        return this.get("timelogs");
+    }),
 
     getDataforTime() {
 
@@ -98,12 +94,60 @@ export default Component.extend({
 
     actions: {
 
-        saveEditsToTimelog(timelog) {
+        saveEditsToTimelog(timelog, index) {
 
+            let toastr = this.get("toast");
+
+            let updatedvalues = {};
+
+            updatedvalues.notes = timelog.notes;
+            updatedvalues.timeSpent = timelog.hours.trim() + ":" + timelog.minutes.trim();
+            updatedvalues.isTangible = timelog.isTangible;
+
+            let taskvalue = timelog.taskId;
+            if (taskvalue.includes("projectId")) //implying task and or project was updated
+            {
+                let valuesarray = taskvalue.split(",");
+
+                let projectId = ((valuesarray[0].split(":"))[1]).trim();
+                let taskId = ((valuesarray[1].split(":"))[1]).trim();
+
+
+                updatedvalues.projectId = projectId;
+                updatedvalues.taskId = taskId;
+            }
+            else {
+                updatedvalues.projectId = timelog.projectId;
+                updatedvalues.taskId = timelog.taskId;
+
+            }
+            this.get('timeEntryService').updateTimeEntry(timelog._id, updatedvalues).then(
+                results => {
+                    var updatedtimelog = this.get("timelogs").objectAt(index);
+
+                    Ember.set(updatedtimelog, "notes", timelog.notes);
+                    Ember.set(updatedtimelog, "projectId", updatedvalues.projectId);
+                    Ember.set(updatedtimelog, "taskId", updatedvalues.taskId);
+                    Ember.set(updatedtimelog, "isTangible", timelog.isTangible);
+                    Ember.set(updatedtimelog, "hours", timelog.hours.trim());
+                    Ember.set(updatedtimelog, "minutes", timelog.minutes.trim());
+                    toastr.success("Edits Successfully saved");
+                },
+                error => { toastr.error("", error); })
         },
 
         deleteTimelog(timelog) {
-
+            if (confirm("Are you sure you want to delete this entry")) {
+                let toastr = this.get('toast');
+                this.get('timeEntryService').deleteTimeEntry(timelog._id)
+                    .then(results => {
+                        console.log(results);
+                        this.get('timelogs').removeObject(timelog);
+                        toastr.success("Time Entry Succesfully Removed")
+                    },
+                        error => { toastr.error("", error); }
+                    )
+            }
         }
     }
 

@@ -83,7 +83,7 @@ export default Component.extend({
 
         },
         submitTimeEntry() {
-            let toastr = this.get('ToastorService');
+            let toastr = this.get('toast');
 
 
             if (this.validateform()) {

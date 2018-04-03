@@ -9,27 +9,29 @@
     </div>
     <div class="card-body collapse" id="showData">
       <div class="mb-3">
-        <select class="col-md-6" onchange= {{action "updatetargetUser"  }}>
+        <select class="col-md-6" onchange= {{action (mut forUser) value = "target.value"  }}>
           {{#each teamMembers as |teamMember|}}
-            <option value='{"_id" : "{{teamMember._id}}", "name"  : "{{teamMember.name}}" }' selected= {{eq forUserId teamMember._id}}>{{teamMember.name}} {{if (check-userisloggedin-user teamMember loggedinUser ) " (You)" ""}}</option>
+            <option disabled= {{if (and (not-eq teamMember._id forUserId) (not isUseronSelfPage )) true null}} value= {{teamMember._id}}
+              hidden= {{if (and (not-eq teamMember._id forUserId) (not isUseronSelfPage )) true null}} value= {{teamMember._id}}
+              selected= {{eq forUserId teamMember._id}}>{{teamMember.name}} {{if (check-userisloggedin-user teamMember loggedinUser ) " (You)" ""}}</option>
           {{/each}}
         </select>
-        <button {{action "getActionItemsForUser"}} class="pull-right btn-primary">Show For Another User</button>
+        {{#if isUseronSelfPage}}
+          <button {{action "getActionItemsForUser"}} class="pull-right btn-primary">Choose User</button>
+        {{/if}}
       </div>
       <div id="actionItems">
         <small class="text-center">
-          {{displaytext}}
+          Viewing Action Items for {{nameofUserForWhomActionItemsAreBeingViewed}}
         </small>
         {{#if actionItems }}
           <table class="table table-striped table-hover table-sm">
             <thead>
               <tr class="row">
-                <th scope="col" class="col-sm-3">Created By</th>
-                <th scope="col" class="col-sm-7">Description</th>
-                {{#if isUseronSelfPage}}
-                  <th scope="col" class="col-sm-1">Edit</th>
-                  <th scope="col" class="col-sm-1">Delete</th>
-                {{/if}}
+                <th scope="col" class="col-3">Created By</th>
+                <th scope="col" class="col-7">Description</th>
+                <th scope="col" class="col-1">Edit</th>
+                <th scope="col" class="col-1">Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -37,17 +39,14 @@
                 <tr class="row {{isSubmitted}}">
                   <td class="col-sm-3">{{actionItem.createdBy}}</td>
                   <td class="col-sm-7 text-left">
-                    <input id="input_actionitem_{{index}}" required class="col-sm-7" value= {{actionItem.description}} onchange= {{action (mut newdescription) value = "target.value"}}
-                      readonly= {{if isUseronSelfPage null "readonly"}}>
+                    <input id="input_actionitem_{{index}}" required class="col-12" value= {{actionItem.description}} onchange= {{action (mut actionItem.description) value = "target.value"}}>
                   </td>
-                  {{#if isUseronSelfPage}}
-                    <td class="col-sm-1">
-                      <span class="fa fa-save" {{action "editActionItem" actionItem index}}></span>
-                    </td>
-                    <td class="col-sm-1">
-                      <span class="fa fa-trash" {{action "deleteActionItem" actionItem}}></span>
-                    </td>
-                  {{/if}}
+                  <td class="col-sm-1">
+                    <span class="fa fa-save" {{action "editActionItem" actionItem index}}></span>
+                  </td>
+                  <td class="col-sm-1">
+                    <span class="fa fa-trash" {{action "deleteActionItem" actionItem}}></span>
+                  </td>
                 </tr>
               {{/each}}
             </tbody>
@@ -57,16 +56,13 @@
             <small>No action items</small>
           </div>
         {{/if}}
-        {{#if isUseronSelfPage}}
-          <form class="form-inline {{isFormSumbitted}}" id="frmnewactionitem">
-            <div class="mb-2 mx-sm-3">
-              <input required type="text" class="form-control" placeholder="Assign new action item" onchange= {{action (mut newAIdescription) value = "target.value"}}>
-            </div>
-            <div>
-              <button type="submit" class="pull-right btn btn-primary mb-2" {{action "createActionItem"}}>Assign</button>
-            </div>
-          </form>
-        {{/if}}
+        <form class="form-inline {{isFormSumbitted}}" id="frmnewactionitem">
+          <div class="row col-12">
+            <input required type="text" class="form-control col-9 mr-1" placeholder="Assign new action item to {{nameofUserForWhomActionItemsAreBeingViewed}}"
+              onchange= {{action (mut newAIdescription) value = "target.value"}}>
+            <button type="submit" class=" ml-1 btn btn-primary col-2" {{action "createActionItem"}}>Assign</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
