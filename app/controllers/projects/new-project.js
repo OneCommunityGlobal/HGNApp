@@ -39,7 +39,7 @@ export default Ember.Controller.extend({
       };
     this.transitionToRoute('projects');
   },
-  
+
     actions: {
       addNewTask() {
         this.get('newProject.tasks').addObject(this.get('task'));
@@ -62,7 +62,7 @@ export default Ember.Controller.extend({
         let project = this.get('newProject');
         let projectTeams= this.get('projectTeams');
         this.get('projectService').postProject(project)
-        .then(results =>
+        .then(results => 
           this.addTeams(results,projectTeams)
         );
         toastr.success("", 'New Project Created!');
