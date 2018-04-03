@@ -58,17 +58,14 @@ export default Ember.Controller.extend({
       },
       addNewProject() {
         if (this.validateform()) {
-        this.get('model').addObject(this.get('newProject'));
         let project = this.get('newProject');
         let projectTeams= this.get('projectTeams');
         this.get('projectService').postProject(project)
-        .then(results => 
-          this.addTeams(results,projectTeams)
-        );
+        .then(results =>
+          addTeams(results,projectTeams)
+     );
         toastr.success("", 'New Project Created!');
-
         this.set('newProject', {});
-
       }else {
           alert("Please fix the form errors");
       }
