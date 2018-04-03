@@ -18,7 +18,11 @@ export default Component.extend({
     showFormErrors: false,
     newProfilePic: "",
 
-
+    options: {
+        plugins: ["link", "autolink"],
+        menubar: "insert",
+        toolbar: ""
+    },
 
     isLoggedinUserAdministrator: computed('userrole', function () {
 

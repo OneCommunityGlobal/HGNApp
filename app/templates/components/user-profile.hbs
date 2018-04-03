@@ -74,9 +74,9 @@
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-xs-12">
+            <div class="form-group col-12">
                 <label class="control-label" for="bio">*Bio:</label>
-                {{ textarea id = "bio" class = "form-control" value= model.bio options=options readonly = (if canUserEditPersonalFields null "readonly" )}}
+                {{tinymce-editor value= model.bio options=options  onValueChanged=(action (mut model.bio))}}
             </div>
         </div>
         <div class="form-row">
