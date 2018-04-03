@@ -1,9 +1,17 @@
 {{outlet}}
 <div class="container">
-  <h3 class="display-4 timelog-title">Viewing Time Log For: {{model.name}}</h3>
+  <h3 class="display-4 timelog-title text-left">Viewing Time Log For: {{model.name}}
+    <span>
+      <small>
+        <a href="/#/profile/{{model.forUserId}}" class="pull-right">View Profile</a>
+      </small>
+    </span>
+  </h3>
   <div class="row mb-3">
     <div class="col-md-6">
-      {{weekly-effort-chart forUserId = model.forUserId }}
+      {{#if refresh}}
+        {{weekly-effort-chart forUserId = model.forUserId }}
+      {{/if}}
     </div>
     <div class="col-md-6">
       {{monthly-effort-chart forUserId = model.forUserId}}

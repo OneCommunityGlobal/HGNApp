@@ -3,6 +3,9 @@
     <div class="card-text">
         <div>
             <table class="table table-sm dashboardtable">
+                <caption>
+                    <small>Last Updated {{whenUpdated}}</small>
+                </caption>
                 <tbody>
                     {{#each resultset as |result| }}
                         <tr class= {{if (eq result.personId loggedinUser.requestorId) 'table-active row' "row" }}>
