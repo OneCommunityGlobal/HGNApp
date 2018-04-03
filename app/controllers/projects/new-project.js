@@ -62,7 +62,7 @@ export default Ember.Controller.extend({
         let projectTeams= this.get('projectTeams');
         this.get('projectService').postProject(project)
         .then(results =>
-          addTeams(results,projectTeams)
+          this.addTeams(results,projectTeams)
      );
         toastr.success("", 'New Project Created!');
         this.set('newProject', {});
