@@ -101,6 +101,9 @@ export default Service.extend({
 
 
   },
+  deleteTeam(team){
+    
+  },
 
   createEmberrequestObject(relativePath, data, method) {
     return $.ajax({

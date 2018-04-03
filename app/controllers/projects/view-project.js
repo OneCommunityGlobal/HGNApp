@@ -122,6 +122,7 @@ export default Ember.Controller.extend({
     this.set('newTeam', "");
   },
   removeTeam(team){
+    this.get('dataService').deleteTeam(this.get('team'));
   }
 
   }
