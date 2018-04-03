@@ -1,0 +1,10 @@
+{{outlet}}
+<div class="container">
+  <h3>{{model.teamName}}</h3>
+  <button type="submit" {{action 'getProjectName'}}>Project</button>
+  <h4>{{projectName}}</h4>
+  <button type="submit" {{action 'getUsers'}}>Team Members</button>
+  {{#each users as |user|}}
+  {{user.userName}}
+  {{/each}}
+</div>
