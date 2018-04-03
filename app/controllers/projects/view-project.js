@@ -117,7 +117,7 @@ export default Ember.Controller.extend({
     let projectId = this.get('model._id');
     let team = this.get('newTeam');
     team.projectId = projectId;
-    this.get('projectTeams').addObject(this.get('team'));
+    this.get('projectTeams').addObject(this.get('newTeam'));
     this.get('dataService').postTeam(this.get('newTeam'));
     this.set('newTeam', "");
   },
