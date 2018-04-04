@@ -65,14 +65,15 @@
         {{#link-to "team" team._id}}
           {{team.teamName}}
         {{/link-to}}
-      {{#if isUserAdministrator }}
-
-    {{/if}}
   </div>
     </li>
     {{/each}}
     </ul>
-    <br>
+    {{/if}}
+
+    <br><br>
+    {{#if isUserAdministrator }}
+
     <div class="input-group">
     {{input class="form-control" name ="team" type = "text" placeholder="Add New Team..." value = newTeam.teamName readonly = (if isUserAdministrator null "readonly" )}}
     <span class="input-group-btn">

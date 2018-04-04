@@ -8,17 +8,9 @@ export default Controller.extend({
   userProfileService: Ember.inject.service('user-profile-service'),
   dataService: inject("datastore-service"),
   projectName: "",
-  user: [],
+  users: [],
   teamMembers: [],
-  getTeamMembers(users){
-    console.log(users);
-    //for(var i = 0; i < users.length; i++){
-      //console.log(users[i]);
 
-      //console.log(us)
-
-    //}
-  },
   actions: {
 
   getProjectName(){
