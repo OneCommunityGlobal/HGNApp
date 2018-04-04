@@ -1,6 +1,10 @@
 
 import { inject } from '@ember/service';
 import Component from '@ember/component';
+import { run } from '@ember/runloop';
+import moment from 'moment';
+import { computed } from '@ember/object';
+
 export default Component.extend({
     classNames: ["card", "text-center", "mb-3", "w-33", "h-100", "hgn-weeklyeffortchart", "prescrollable"],
     tagName: "card",
@@ -8,6 +12,30 @@ export default Component.extend({
     dashboardService: inject('dashboard-service'),
     didReceiveAttrs() {
         this._super(...arguments);
+        this.updateWeeklyData();
+        this.set("lastUpdatedDateime", Date.now())
+        this.run();
+    },
+
+    whenUpdated: computed('lastUpdatedDateime', 'Datetime.now()', function () {
+        var now = moment().format("MM/DD/YYYY hh:mm:ss A");
+        // var lastUpdatedDateime = moment(this.get('lastUpdatedDateime'));
+        // var duration = moment.duration(now.diff(lastUpdatedDateime)).humanize();
+        return now;
+
+    }),
+
+    run: function () {
+        var interval = 1000 * 60;
+        Ember.run.later(this, function () {
+            this.set("lastUpdatedDateime", Date.now())
+            this.updateWeeklyData();
+            this.run();
+        }, interval);
+
+    },
+
+    updateWeeklyData: function () {
         let pieChartOptions =
             {
                 legend: {
@@ -45,8 +73,7 @@ export default Component.extend({
                 this.set('hoursthisweek', result)
 
             })
-
-    },
+    }
 
 
 });

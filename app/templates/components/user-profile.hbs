@@ -1,14 +1,23 @@
 <div class="container">
+    <h3 class="display-4 timelog-title text-left mb-3">Viewing Profile For: {{model.firsName}} {{model.lastName}}
+        <span>
+            <small>
+                <a href="/#/timelog/{{model._id}}" class="pull-right">View TimeLog</a>
+            </small>
+        </span>
+    </h3>
     <form id="userProfileForm" class= {{isFormSubmitted}}>
         <div class="form-row col-md-12">
             <div class="form-group col-md-6">
-                {{#if model.profilePic}}
-                    <img input id="image" type="image  " alt="Profile Picture" src= {{model.profilePic}} name=profilePic class="img-responsive logo"
-                    />
-                {{else}}
-                    <img input id="image" type="image  " alt="Profile Picture" src="/assets/images/defaultprofilepic.jpg" name=profilePic class="img-responsive logo"
-                    />
-                {{/if}}
+                <div class="row mb-1">
+                    {{#if model.profilePic}}
+                        <img input id="image" type="image" alt="Profile Picture" src= {{model.profilePic}} name=profilePic class="img-responsive logo profilepic"
+                        />
+                    {{else}}
+                        <img input id="image" type="image" alt="Profile Picture" src="/assets/images/defaultprofilepic.jpg" name=profilePic class="img-responsive logo profilepic"
+                        />
+                    {{/if}}
+                </div>
                 {{#if canUserEditPersonalFields}}
                     <label for="newProfilePic" class="btn btn-sm btn-info">Update Profile Image</label>
                     <input id="newProfilePic" style="visibility:hidden" multiple="true" onchange= {{action "updateProfilePic"}} accept="image/png,image/jpeg"
@@ -65,25 +74,27 @@
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-xs-12">
+            <div class="form-group col-12">
                 <label class="control-label" for="bio">*Bio:</label>
-                {{ textarea id = "bio" class = "form-control" value= model.bio options=options readonly = (if canUserEditPersonalFields null "readonly" )}}
+                {{tinymce-editor value= model.bio options=options  onValueChanged=(action (mut model.bio))}}
             </div>
         </div>
         <div class="form-row">
             {{userprofile-profilelinks label = "Social/ Professional Link" linksarray =  model.personalLinks isEditable =canUserEditPersonalFields name = "personalLinks" onchangeaction =(action "updateProperty")}}
+        </div>
+        <div class="form-row">
             {{userprofile-profilelinks label = "Administrative Link" linksarray =  model.adminLinks isEditable =isLoggedinUserAdministrator name = "adminLinks" onchangeaction =(action "updateProperty")}}
         </div>
         <div class="form-row">
             {{userprofile-teammemberships name = "teamId" userteams = model.teamId isEditable = isLoggedinUserAdministrator  onchangeaction =(action "updateProperty")}}
         </div>
         <div class="form-row col-12">
-            <div class="col-xs-6">
+            <div class="col-auto">
                 <a href="#" class=" button btn btn-danger">Cancel</a>
             </div>
             {{#if canUserEditPersonalFields }}
-                <div class="col-xs-6">
-                    <button type="submit" class="btn btn-primary pull-right" {{action 'postChanges'}}> Save Changes</button>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary ml-auto" {{action 'postChanges'}}>Save Changes</button>
                 </div>
             {{/if}}
         </div>

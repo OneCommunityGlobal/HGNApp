@@ -9,17 +9,6 @@ export default Component.extend({
     fromDate: Date.now(),
     todate: Date.now(),
 
-    init() {
-
-        this._super(...arguments);
-        let foruser = this.get('forUserId');
-        this.get('timeEntryService').getUserProjects(foruser)
-            .then(results => {
-                this.set('projects', results);
-            });
-
-
-    },
     isEditable: computed("forUserId", "loggedinUser", function () {
         let foruser = this.get('forUserId');
         let loggedinUserId = this.get('loggedinUser.requestorId');
@@ -27,23 +16,40 @@ export default Component.extend({
         return (loggedinUserRole === "Administrator" || foruser === loggedinUserId);
 
     }),
-    editableoptions: {
+    options: {
         plugins: ["link", "autolink"],
         menubar: "insert",
         toolbar: ""
     },
 
-    noneditableoptions: {
-        plugins: ["link", "autolink"],
-        menubar: "insert",
-        toolbar: "",
-        readonly: 1
-    },
 
     didReceiveAttrs() {
+        this._super(...arguments);
+        let foruser = this.get('forUserId');
+        this.get('timeEntryService').getUserProjects(foruser)
+            .then(results => {
+                this.set('projects', results);
+            });
         this.getDataforTime();
+        this.set("lastUpdatedDateime", Date.now())
+        this.run();
     },
+    run: function () {
+        var interval = 1000 * 60;
+        Ember.run.later(this, function () {
+            this.set("lastUpdatedDateime", Date.now())
+            this.getDataforTime();
+            this.run();
+        }, interval);
 
+    },
+    whenUpdated: computed('lastUpdatedDateime', 'Datetime.now()', function () {
+        var now = moment().format("MM/DD/YYYY hh:mm:ss A");
+        // var lastUpdatedDateime = moment(this.get('lastUpdatedDateime'));
+        // var duration = moment.duration(now.diff(lastUpdatedDateime)).humanize();
+        return now;
+
+    }),
 
 
     timelogsview: computed("timelogs.@each", function () {
@@ -53,27 +59,12 @@ export default Component.extend({
 
     getDataforTime() {
 
-
-
         let period = this.get("period");
         let userid = this.get('forUserId');
         let fromdate;
         let todate;
 
-        if (period === "currentWeek") {
-
-            let start = moment().startOf("week");
-
-            fromdate = start.clone().format('X');
-            todate = start.clone().add(7, 'days').format('X');
-
-            let startdate = start.clone().format("MM/DD/YYYY");
-            let enddate = start.clone().add(1, 'week').format("MM/DD/YYYY");;
-
-            this.set("period", `current week [ ${startdate} to ${enddate}]`);
-        }
-
-        else if (period === "custom") {
+        if (period === "custom") {
             let start = moment(this.get('fromDate'));
             let end = moment(this.get('toDate'))
 
@@ -84,7 +75,19 @@ export default Component.extend({
 
             let enddate = end.clone().format("MM/DD/YYYY");
 
-            this.set("period", `custom range [ ${startdate} to ${enddate}]`);
+            this.set("perioddates", `custom range [ ${startdate} to ${enddate}]`);
+
+        }
+        else {
+            let start = moment().startOf("week");
+
+            fromdate = start.clone().format('X');
+            todate = start.clone().add(7, 'days').format('X');
+
+            let startdate = start.clone().format("MM/DD/YYYY");
+            let enddate = start.clone().add(1, 'week').format("MM/DD/YYYY");;
+
+            this.set("perioddates", `current week [ ${startdate} to ${enddate}]`);
 
         }
 

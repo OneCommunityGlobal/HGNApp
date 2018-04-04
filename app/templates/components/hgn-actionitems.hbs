@@ -38,11 +38,9 @@
               {{#each actionItems as |actionItem index|}}
                 <tr class="row {{isSubmitted}}">
                   <td class="col-sm-3">{{actionItem.createdBy}}</td>
-                  <td class="col-sm-7 text-left">
-                    <input id="input_actionitem_{{index}}" required class="col-12" value= {{actionItem.description}} onchange= {{action (mut actionItem.description) value = "target.value"}}>
-                  </td>
-                  <td class="col-sm-1">
-                    <span class="fa fa-save" {{action "editActionItem" actionItem index}}></span>
+                  <td class="col-sm-8 text-left">
+                    <input id="input_actionitem_{{index}}" required class="col-12" value= {{actionItem.description}} oninput= {{action (mut actionItem.description) value = "target.value"}}
+                      onchange= {{action "editActionItem"  actionItem index}}>
                   </td>
                   <td class="col-sm-1">
                     <span class="fa fa-trash" {{action "deleteActionItem" actionItem}}></span>
