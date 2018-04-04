@@ -120,9 +120,6 @@ export default Ember.Controller.extend({
     this.get('projectTeams').addObject(this.get('newTeam'));
     this.get('dataService').postTeam(this.get('newTeam'));
     this.set('newTeam', "");
-  },
-  removeTeam(team){
-    this.get('dataService').deleteTeam(this.get('team'));
   }
 
   }

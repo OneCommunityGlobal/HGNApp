@@ -5,6 +5,13 @@
   <h4>{{projectName}}</h4>
   <button type="submit" {{action 'getUsers'}}>Team Members</button>
   {{#each users as |user|}}
-  {{user.userName}}
+  <li>
+  {{#link-to "profile" user_id}}
+    {{user.firstName}} {{user.lastName}}
+  {{/link-to}}
+</li>
   {{/each}}
+  <button class="btn btn-primary" type="submit" {{action 'saveChanges'}}>Save</button>
+
+  <button class="btn btn-danger" type="submit" {{action 'deleteTeam'}}>Delete</button>
 </div>

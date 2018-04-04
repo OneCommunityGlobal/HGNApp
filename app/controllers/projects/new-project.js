@@ -60,7 +60,8 @@ export default Ember.Controller.extend({
 
       },
       cancelTeam(team){
-
+        let projectTeams= this.get('projectTeams');
+        projectTeams.removeObject(team);
       },
       addNewProject() {
         if (this.validateform()) {
@@ -76,5 +77,8 @@ export default Ember.Controller.extend({
           alert("Please fix the form errors");
       }
       },
+      goBack(){
+        this.transitionToRoute('projects');
+      }
     }
 });
