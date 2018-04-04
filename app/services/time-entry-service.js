@@ -24,6 +24,15 @@ export default Service.extend({
 
   },
 
+  getTimeEntriesForProject(projectid, FromDate, ToDate) {
+    //console.log('called');
+    let relativePath = "/TimeEntry/projects/" + `${projectid}/${FromDate}/${ToDate}`;
+    let data = null;
+    let method = "get";
+    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    return request;
+  },
+
   postTimeEntry(timeEntry) {
     let relativePath = "/TimeEntry";
     let data = timeEntry;
