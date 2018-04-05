@@ -17,9 +17,8 @@ export default Component.extend({
 
     }),
     options: {
-        plugins: ["link", "autolink"],
-        menubar: "insert",
-        toolbar: ""
+        plugins: ["link", "autolink", "autoresize"],
+        toolbar: "",
     },
 
 
@@ -35,7 +34,7 @@ export default Component.extend({
         this.run();
     },
     run: function () {
-        var interval = 1000 * 60;
+        var interval = 1000 * 600;
         Ember.run.later(this, function () {
             this.set("lastUpdatedDateime", Date.now())
             this.getDataforTime();

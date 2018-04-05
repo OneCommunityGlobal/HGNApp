@@ -1,45 +1,65 @@
 {{outlet}}
 <div class="container">
-  <h3 class="display-4 timelog-title text-left">Viewing Time Log For: {{model.name}}
-    <span>
-      <small>
+  <h3 class="display-4 timelog-title text-left mb-3">Viewing Time Log For: {{model.name}}
+    <div>
+      <h6>Last Updated: {{lastUpdatedDatetime}}
         <a href="/#/profile/{{model.forUserId}}" class="pull-right">View Profile</a>
-      </small>
-    </span>
+      </h6>
+    </div>
   </h3>
   <div class="row mb-3">
-    <div class="col-md-6">
-      {{#if refresh}}
-        {{weekly-effort-chart forUserId = model.forUserId }}
-      {{/if}}
+    <div class="col-md-4">
+      {{weekly-effort-chart forUserId = model.forUserId }}
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
       {{monthly-effort-chart forUserId = model.forUserId}}
-    </div>
-  </div>
-  <div class="row mb-3">
-    <div class="col-md-8">
-      {{hgn-notifications loggedinUser = loggedinUser forUserId = model.forUserId}} {{hgn-actionitems  loggedinUser = loggedinUser forUserId = model.forUserId  }}
-      {{#if isEditable}}
-        {{hgn-task-update-form loggedinUser = loggedinUser forUserId = model.forUserId }}
-      {{/if}}
-      <div class="card border-primary mb-3">
-        <div class="card-header">
-          <h4 class="card-title ">
-            <a class="accordion-toggle" data-toggle="collapse" data-target="#timelogs"> Time Enteries </a>
-          </h4>
-          <h6 class="card-subtitle mb-2 text-muted">Viewing time enteries for current week</h6>
-        </div>
-        <div class="card-body collapse" id="timelogs">
-          {{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId period = "currentWeek" }}
-          {{#if isEditable }}
-            <a href="/#/AllTimeEntries/{{model.forUserId}}" class="card-link">View Enteries For Other Period</a>
-          {{/if }}
-        </div>
-      </div>
     </div>
     <div class="col-md-4">
       {{hgn-leaderboard loggedinUser = loggedinUser}}
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="w-100">
+        {{hgn-notifications loggedinUser = loggedinUser forUserId = model.forUserId}}
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="w-100">
+        {{hgn-actionitems  loggedinUser = loggedinUser forUserId = model.forUserId  }}
+      </div>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-12">
+      <div class="card border-primary">
+        <div class="card-header">
+          <h4 class="card-title ">
+            <a class="accordion-toggle" data-toggle="collapse" data-target="#timelogs"> Time Entries </a>
+          </h4>
+          <h6 class="card-subtitle mb-2 text-muted">Viewing time entries logged in last 3 weeks
+            {{#if isEditable}}
+              <button class="btn btn-success pull-right" data-toggle="modal" data-target="#timentrymodal">Add Time Entry
+              </button>
+              <div class="modal fade" id="timentrymodal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                      {{hgn-task-update-form forUserId = loggedinUser.requestorId }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {{/if}}
+          </h6>
+        </div>
+        <div class="card-body collapse" id="timelogs">
+          {{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId period = "custom" fromDate = forweek.fromDate toDate = forweek.toDate }}
+          {{#if isEditable }}
+            <a href="/#/AllTimeEntries/{{model.forUserId}}" class="card-link">View Entries For Other Period</a>
+          {{/if }}
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -1,6 +1,7 @@
 
 import { computed } from '@ember/object';
 import Controller from '@ember/controller';
+import moment from 'moment';
 
 
 export default Controller.extend({
@@ -10,17 +11,27 @@ export default Controller.extend({
 
     init() {
         this._super(...arguments);
-        this.set("refresh", true);
+        this.set("lastUpdatedDatetime", moment().format("MM/DD/YYYY hh:mm:ss A"));
         this.run();
-
-
     },
+
+    forweek: computed("", function () {
+        let thisweek = moment().startOf("week");
+        let fromDate = moment().startOf("week").subtract(2, 'weeks');
+        let toDate = moment().startOf("week").add(6, "days");
+
+        return (
+            {
+                "fromDate": fromDate,
+                "toDate": toDate
+            }
+        );
+    }),
 
     run: function () {
         var interval = 1000 * 10;
         Ember.run.later(this, function () {
-            this.set("lastUpdatedDateime", Date.now())
-            this.set("refresh", true);
+            this.set("lastUpdatedDatetime", moment().format("MM/DD/YYYY hh:mm:ss A"));
             this.run();
         }, interval);
 

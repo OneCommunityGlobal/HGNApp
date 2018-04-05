@@ -20,20 +20,12 @@ export default Component.extend({
     run: function () {
         var interval = 1000 * 60;
         Ember.run.later(this, function () {
-            this.set("lastUpdatedDateime", Date.now())
             this.getLeaderboardData();
             this.run();
         }, interval);
 
     },
 
-    whenUpdated: computed('lastUpdatedDateime', 'Datetime.now()', function () {
-        var now = moment().format("MM/DD/YYYY hh:mm:ss A");
-        // var lastUpdatedDateime = moment(this.get('lastUpdatedDateime'));
-        // var duration = moment.duration(now.diff(lastUpdatedDateime)).humanize();
-        return now;
-
-    }),
 
     getLeaderboardData: function () {
         return this.get('dashboardService').getLeaderBoard(this.loggedinUser)
