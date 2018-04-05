@@ -101,8 +101,14 @@ export default Service.extend({
 
 
   },
-  deleteTeam(team){
-    
+  deleteTeam(teamId){
+    let relativePath = "/team/" + teamId;
+    let data = null;
+    let method = "delete";
+
+    let request = this.createEmberrequestObject(relativePath, data, method);
+    return request;
+
   },
 
   createEmberrequestObject(relativePath, data, method) {

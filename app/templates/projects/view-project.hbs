@@ -61,20 +61,19 @@
     <ul class="list-group">
     {{#each projectTeams as |team|}}
     <li class="list-group-item">
-      <div class="input-group">
+      <div class="input">
         {{#link-to "team" team._id}}
           {{team.teamName}}
         {{/link-to}}
-      {{#if isUserAdministrator }}
-      <span class="input-group-btn">
-      <button class="btn" type="button" {{ action 'removeTeam' team}} >Remove</button>
-    </span>
-    {{/if}}
   </div>
     </li>
     {{/each}}
     </ul>
-    <br>
+    {{/if}}
+
+    <br><br>
+    {{#if isUserAdministrator }}
+
     <div class="input-group">
     {{input class="form-control" name ="team" type = "text" placeholder="Add New Team..." value = newTeam.teamName readonly = (if isUserAdministrator null "readonly" )}}
     <span class="input-group-btn">

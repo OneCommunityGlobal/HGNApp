@@ -6,18 +6,11 @@ export default Controller.extend({
   self: this,
   projectService: Ember.inject.service('project-service'),
   userProfileService: Ember.inject.service('user-profile-service'),
+  dataService: inject("datastore-service"),
   projectName: "",
-
+  users: [],
   teamMembers: [],
-  getTeamMembers(users){
-    console.log(users);
-    //for(var i = 0; i < users.length; i++){
-      //console.log(users[i]);
 
-      //console.log(us)
-
-    //}
-  },
   actions: {
 
   getProjectName(){
@@ -29,10 +22,15 @@ export default Controller.extend({
   getUsers(){
     this.get('userProfileService').getAllUserProfiles()
     .then(results => {
-      this.getTeamMembers(results);
+      this.set('users', results);
     }
   );
   },
+  deleteTeam(){
+    let teamId = this.get('model._id');
+    this.get('dataService').deleteTeam(teamId)
+    .then(alert('deleted!'));
+  }
 
 }
 

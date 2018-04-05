@@ -26,7 +26,8 @@
             {{/each}}
           </ul>
         <div class="input-group">
-      <input type="text" class="form-control required" id="taskDescription" placeholder="Add Task..." minlength= {{minTaskLength}} maxlength= {{maxTaskLength}} onchange= {{ action (mut task.Description) value = "target.value"}}>
+          {{input class="form-control required" type="text" placeholder= "Add Task..." value=task.Description }}
+
       <span class="input-group-btn">
         <button class="btn btn-secondary" type="button" {{ action 'addNewTask' }} >Add Task</button>
       </span>
@@ -65,7 +66,7 @@
             {{/each}}
           </ul>
         <div class="input-group">
-      <input type="text" class="form-control required" id="teamName" placeholder="Add Team..." minlength= {{minTeamLength}} maxlength= {{maxTeamLength}} onchange= {{ action (mut newTeam.teamName) value = "target.value"}}>
+          {{input class="form-control" name ="team" type = "text" placeholder="Add New Team..." value = newTeam.teamName readonly = (if isUserAdministrator null "readonly" )}}
       <span class="input-group-btn">
         <button class="btn btn-secondary" type="button" {{ action 'addNewTeam' }} >Add Team</button>
       </span>
@@ -74,5 +75,6 @@
 
     <div>
     <button type="submit" class="btn btn-primary" {{action 'addNewProject'}}>Add Project</button>
+    <button type="submit" class="btn btn-danger" {{action 'goBack'}}>Cancel</button>
   </div>
 </form>
