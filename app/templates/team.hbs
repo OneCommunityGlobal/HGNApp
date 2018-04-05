@@ -1,16 +1,33 @@
 {{outlet}}
 <div class="container">
-  <h3>{{model.teamName}}</h3>
-  <button type="submit" {{action 'getProjectName'}}>Project</button>
-  <h4>{{projectName}}</h4>
+  <div>
+    <span>*</span>
+    Team name
+  </div>
+  <form class="form-horizontal">
+    <input id="teamName" name="teamName" class="form-control" required=true type="text"
+    value= {{model.teamName}} placeholder="Team Name" minlength= {{minTeamName}} maxlength= {{maxTeamName}} readonly = {{if isUserAdministrator null "readonly"}} onchange= {{action "notifyChange" "teamName"}} />
+  </form>
+  <br>
+  <div>
+    <span>*</span>
+    Current project
+  </div>
+  <h6>  {{name}}
+    {{projectName}}</h6>
+    <button type="submit" {{action 'changeProject' project}}> Change Project</button>
+    <div>
+      <br>
   <button type="submit" {{action 'getUsers'}}>Team Members</button>
+</div>
   {{#each users as |user|}}
   <li>
-  {{#link-to "profile" user_id}}
+  {{#link-to "profile" user._id}}
     {{user.firstName}} {{user.lastName}}
   {{/link-to}}
 </li>
   {{/each}}
+
   <br><br>
   <div>
   <button class="btn btn-primary" type="submit" {{action 'saveChanges'}}>Save</button>

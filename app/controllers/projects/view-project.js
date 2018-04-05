@@ -79,6 +79,7 @@ export default Ember.Controller.extend({
       this.get('model.tasks').addObject(this.get('task'));
       this.get('projectService').editProjectData(project, projectId);
       this.set('task', {});
+
     },
     cancelTask(task) {
       let projectId = this.get('model._id');
@@ -120,6 +121,14 @@ export default Ember.Controller.extend({
     this.get('projectTeams').addObject(this.get('newTeam'));
     this.get('dataService').postTeam(this.get('newTeam'));
     this.set('newTeam', {});
+  },
+  removeTeam(team){
+    let teamId = team._id;
+    team.projectId = null;
+
+    this.get('dataService').editTeamData(team,teamId)
+    .then(alert('saved!'));
+
   }
 
   }
