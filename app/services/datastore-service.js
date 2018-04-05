@@ -110,6 +110,14 @@ export default Service.extend({
     return request;
 
   },
+  editTeamData(team, teamId) {
+    let relativePath = "/team/" + teamId;
+    let data = team;
+    let method = "put";
+
+    let request = this.createEmberrequestObject(relativePath, data, method);
+    return request;
+  },
 
   createEmberrequestObject(relativePath, data, method) {
     return $.ajax({

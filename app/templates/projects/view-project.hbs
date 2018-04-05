@@ -55,23 +55,24 @@
     Project Status -
     {{if model.isActive "Active" "Inactive"}}
     {{/if}}
-    <button type="submit" class= "btn btn-secondary" id="#projectTeams" {{action 'teamToggle'}}>Teams</button>
-    {{#if showTeams}}
-    <br><br>
+    <div>Associated Teams:</div>
+
     <ul class="list-group">
     {{#each projectTeams as |team|}}
     <li class="list-group-item">
-      <div class="input">
+      <div class="input-group">
         {{#link-to "team" team._id}}
           {{team.teamName}}
         {{/link-to}}
   </div>
+  <span class="input-group-btn">
+    <button class="btn" type="submit" {{action "removeTeam" team}}>Remove</button>
+  </span>
     </li>
     {{/each}}
     </ul>
-    {{/if}}
 
-    <br><br>
+    <br>
     {{#if isUserAdministrator }}
 
     <div class="input-group">
