@@ -61,20 +61,9 @@ export default Component.extend({
     },
 
     validateform() {
-        let isFormValid = true;
         this.set('isFormSubmitted', "submitted");
         let form = $("#frmSubmitTimeEntry").get(0);
-
-        let fieldhours = $("#hours").get(0);
-        let fieldminutes = $("#minutes").get(0);
-
-
-
-        let hours = parseFloat(fieldhours.value);
-        let minutes = parseFloat(fieldminutes.value);
-
-
-        return isFormValid;
+        return form.checkValidity();
     },
 
     actions: {
