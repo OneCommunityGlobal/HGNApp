@@ -13,12 +13,14 @@
     <span>*</span>
     Current project
   </div>
-  <h6>  {{name}}
+  <h6>  
     {{projectName}}</h6>
     <button type="submit" {{action 'changeProject' project}}> Change Project</button>
     <div>
       <br>
-  <button type="submit" {{action 'getUsers'}}>Team Members</button>
+      <div>
+        <span>*</span>
+        Team members</div>
 </div>
   {{#each users as |user|}}
   <li>
@@ -27,6 +29,7 @@
   {{/link-to}}
 </li>
   {{/each}}
+  <button type="submit" {{action 'changeMembers'}}> Change Team Members</button>
 
   <br><br>
   <div>

@@ -17,12 +17,12 @@ export default Controller.extend({
   projectName: "",
   users: [],
   teamMembers: [],
-  name: computed(function(){this.get('projectService').getProjectById(this.get('model.projectId'))
+  projectName: computed(function(){this.get('projectService').getProjectById(this.get('model.projectId'))
             .then(results =>
               this.set('projectName', results.projectName));
             }),
 
-  members: computed(function(){this.get('userProfileService').getAllUserProfiles()
+  users: computed(function(){this.get('userProfileService').getAllUserProfiles()
   .then(results =>
     this.set('users', results)
   );
