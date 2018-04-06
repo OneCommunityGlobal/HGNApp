@@ -86,7 +86,10 @@
             {{userprofile-profilelinks label = "Administrative Link" linksarray =  model.adminLinks isEditable =isLoggedinUserAdministrator name = "adminLinks" onchangeaction =(action "updateProperty")}}
         </div>
         <div class="form-row">
-            {{userprofile-teammemberships name = "teamId" userteams = model.teamId isEditable = isLoggedinUserAdministrator  onchangeaction =(action "updateProperty")}}
+            {{userprofile-teammemberships title = "Team" name = "teams" memberships = model.teams isEditable = isLoggedinUserAdministrator  onchangeaction =(action "updateProperty")}}
+        </div>
+        <div class="form-row">
+            {{userprofile-teammemberships title = "Project" name = "projects" memberships = model.projects isEditable = isLoggedinUserAdministrator  onchangeaction =(action "updateProperty")}}
         </div>
         <div class="form-row col-12">
             <div class="col-auto">
