@@ -9,16 +9,16 @@
   </h3>
   <div class="row mb-3">
     <div class="col-md-4">
-      {{weekly-effort-chart forUserId = model.forUserId }}
+      {{hgn-actionitems  loggedinUser = loggedinUser forUserId = model.forUserId  }}
     </div>
     <div class="col-md-4">
-      {{monthly-effort-chart forUserId = model.forUserId}}
+      {{hgn-notifications loggedinUser = loggedinUser forUserId = model.forUserId}}
     </div>
     <div class="col-md-4">
       {{hgn-leaderboard loggedinUser = loggedinUser}}
     </div>
   </div>
-  <div class="row mb-3">
+  {{!-- <div class="row mb-3">
     <div class="col-md-6">
       <div class="w-100">
         {{hgn-notifications loggedinUser = loggedinUser forUserId = model.forUserId}}
@@ -29,9 +29,9 @@
         {{hgn-actionitems  loggedinUser = loggedinUser forUserId = model.forUserId  }}
       </div>
     </div>
-  </div>
+  </div> --}}
   <div class="row mb-3">
-    <div class="col-12">
+    <div class="col-8">
       <div class="card border-primary">
         <div class="card-header">
           <h4 class="card-title ">

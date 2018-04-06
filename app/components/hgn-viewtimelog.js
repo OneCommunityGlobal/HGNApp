@@ -13,9 +13,9 @@ export default Component.extend({
         this.set('fromDate', Date.now());
         this.set('todate', Date.now());
         this.set("options", {
-            plugins: ["link", "autolink"],
+            plugins: ["autolink"],
             menubar: false,
-            statusbar: false,
+            //statusbar: false,
             max_height: 200
         });
     },
