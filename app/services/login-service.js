@@ -10,7 +10,7 @@ import { inject } from '@ember/service';
 export default Service.extend({
 
   host: ENV.webServer,
-  router: inject.service(),
+  router: inject(),
   login(data) {
 
     let router = this.get('router');
