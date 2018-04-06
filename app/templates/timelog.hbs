@@ -53,7 +53,7 @@
             {{/if}}
           </h6>
         </div>
-        <div class="card-body collapse" id="timelogs">
+        <div class="card-body _collapse" id="timelogs">
           {{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId period = "custom" fromDate = forweek.fromDate toDate = forweek.toDate }}
           {{#if isEditable }}
             <a href="/#/AllTimeEntries/{{model.forUserId}}" class="card-link">View Entries For Other Period</a>

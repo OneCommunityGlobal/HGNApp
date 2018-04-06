@@ -17,8 +17,9 @@ export default Component.extend({
 
     }),
     options: {
-        plugins: ["link", "autolink", "autoresize"],
-        toolbar: "",
+        plugins: ["link", "autolink"],
+        menubar: false,
+        statusbar: false
     },
 
 
