@@ -2,12 +2,23 @@ import Component from '@ember/component';
 import moment from 'moment';
 import { inject } from '@ember/service';
 import { computed } from '@ember/object';
+import { set } from '@ember/object';
+import { later } from '@ember/runloop';
 
 export default Component.extend({
 
     timeEntryService: inject('time-entry-service'),
-    fromDate: Date.now(),
-    todate: Date.now(),
+    init() {
+        this._super(...arguments);
+        this.set('fromDate', Date.now());
+        this.set('todate', Date.now());
+        this.set("options", {
+            plugins: ["link", "autolink"],
+            menubar: false,
+            statusbar: false,
+            max_height: 200
+        });
+    },
 
     isEditable: computed("forUserId", "loggedinUser", function () {
         let foruser = this.get('forUserId');
@@ -16,14 +27,6 @@ export default Component.extend({
         return (loggedinUserRole === "Administrator" || foruser === loggedinUserId);
 
     }),
-    options: {
-        plugins: ["link", "autolink"],
-        menubar: false,
-        statusbar: false,
-        max_height: 200
-    },
-
-
     didReceiveAttrs() {
         this._super(...arguments);
         let foruser = this.get('forUserId');
@@ -37,7 +40,7 @@ export default Component.extend({
     },
     run: function () {
         var interval = 1000 * 600;
-        Ember.run.later(this, function () {
+        later(this, function () {
             this.set("lastUpdatedDateime", Date.now())
             this.getDataforTime();
             this.run();
@@ -86,7 +89,7 @@ export default Component.extend({
             todate = start.clone().add(7, 'days').format('X');
 
             let startdate = start.clone().format("MM/DD/YYYY");
-            let enddate = start.clone().add(1, 'week').format("MM/DD/YYYY");;
+            let enddate = start.clone().add(1, 'week').format("MM/DD/YYYY");
 
             this.set("perioddates", `current week [ ${startdate} to ${enddate}]`);
 
@@ -126,15 +129,15 @@ export default Component.extend({
 
             }
             this.get('timeEntryService').updateTimeEntry(timelog._id, updatedvalues).then(
-                results => {
+                () => {
                     var updatedtimelog = this.get("timelogs").objectAt(index);
 
-                    Ember.set(updatedtimelog, "notes", timelog.notes);
-                    Ember.set(updatedtimelog, "projectId", updatedvalues.projectId);
-                    Ember.set(updatedtimelog, "taskId", updatedvalues.taskId);
-                    Ember.set(updatedtimelog, "isTangible", timelog.isTangible);
-                    Ember.set(updatedtimelog, "hours", timelog.hours.trim());
-                    Ember.set(updatedtimelog, "minutes", timelog.minutes.trim());
+                    set(updatedtimelog, "notes", timelog.notes);
+                    set(updatedtimelog, "projectId", updatedvalues.projectId);
+                    set(updatedtimelog, "taskId", updatedvalues.taskId);
+                    set(updatedtimelog, "isTangible", timelog.isTangible);
+                    set(updatedtimelog, "hours", timelog.hours.trim());
+                    set(updatedtimelog, "minutes", timelog.minutes.trim());
                     toastr.success("Edits Successfully saved");
                 },
                 error => { toastr.error("", error); })
@@ -144,8 +147,8 @@ export default Component.extend({
             if (confirm("Are you sure you want to delete this entry")) {
                 let toastr = this.get('toast');
                 this.get('timeEntryService').deleteTimeEntry(timelog._id)
-                    .then(results => {
-                        console.log(results);
+                    .then(() => {
+
                         this.get('timelogs').removeObject(timelog);
                         toastr.success("Time Entry Succesfully Removed")
                     },
