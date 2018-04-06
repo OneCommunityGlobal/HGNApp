@@ -19,7 +19,8 @@ export default Component.extend({
     options: {
         plugins: ["link", "autolink"],
         menubar: false,
-        statusbar: false
+        statusbar: false,
+        max_height: 200
     },
 
 
