@@ -7,7 +7,7 @@
             <tbody>
                 {{#each timelogsview as |timelog index|}}
                     <tr class="col-12 w-100 mb-3 row tr-tangible-{{timelog.isTangible}}" scope="row">
-                        <form class="w-100 form-inline" readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}>
+                        <form id="frmEditTimeEntry" class="w-100 form-inline" readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}>
                             <div class="col-5 w-100">
                                 <div class="row w-100 mb-1">
                                     <label class="col-2 label">Date:</label>
@@ -29,13 +29,13 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="row w-100 mb-1">
+                                <div class="row w-100 mb-1 input-group">
                                     <label class="col-2 label">Time:</label>
                                     <input class="col-3 from-control" value= {{timelog.hours}} readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}
-                                        onchange= {{action (mut timelog.hours) value = "target.value"}}>
-                                    <span>&#58;</span>
+                                        onchange= {{action (mut timelog.hours) value = "target.value"}} min=0 max=23>
+                                    <div class="input-group-text">:</div>
                                     <input class="col-3 from-control" value= {{timelog.minutes}} readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}
-                                        onchange= {{action (mut timelog.minutes) value = "target.value"}}>
+                                        onchange= {{action (mut timelog.minutes) value = "target.value"}} min=0 max=59>
                                 </div>
                                 <div class="row w-100 mb-1">
                                     <label class=" col-4 label">Project/Task:</label>

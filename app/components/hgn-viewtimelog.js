@@ -99,9 +99,12 @@ export default Component.extend({
             .then(results => { this.set('timelogs', results) });
     },
 
+
+
     actions: {
 
         saveEditsToTimelog(timelog, index) {
+
 
             let toastr = this.get("toast");
 
@@ -139,8 +142,10 @@ export default Component.extend({
                     set(updatedtimelog, "hours", timelog.hours.trim());
                     set(updatedtimelog, "minutes", timelog.minutes.trim());
                     toastr.success("Edits Successfully saved");
+                    this.set('isFormSubmitted', "");
                 },
                 error => { toastr.error("", error); })
+
         },
 
         deleteTimelog(timelog) {

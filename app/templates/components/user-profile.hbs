@@ -14,7 +14,7 @@
                     </div>
                     <div class="form-row mt-1">
                         {{#if canUserEditPersonalFields}}
-                            <label for="newProfilePic" class="fa fa-edit"></label>
+                            <label for="newProfilePic" class="fa fa-edit" data-toggle="tooltip" data-placement="bottom" title="Click to update profile picture"></label>
                             <input id="newProfilePic" class="newProfilePic" multiple="true" onchange= {{action "updateProfilePic"}} accept="image/png,image/jpeg"
                                 name= {{newProfilePic}} type="file" />
                         {{/if}}
@@ -66,7 +66,7 @@
         </div>
         <div class="form-row">
             <div class="card border-info mb-3 w-100">
-                <div class="card-header">My Badges</div>
+                <div class="card-header">Badges</div>
                 <div class="card-body">
                     <p class="card-text">Some badges to show up here</p>
                 </div>
@@ -91,15 +91,15 @@
         <div class="form-row">
             {{userprofile-profilelinks label = "Social/ Professional Link" linksarray =  model.personalLinks isEditable =canUserEditPersonalFields name = "personalLinks" onchangeaction =(action "updateProperty")}}
         </div>
-        <div class="form-row col-12">
-            <div class="col-auto">
-                <a href="#" class=" button btn btn-danger">Cancel</a>
+        <div class="form-row">
+            <div class="col-6 justify-content-start">
+                <a href="#" class="btn btn-danger float-left">Cancel</a>
             </div>
-            {{#if canUserEditPersonalFields }}
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-primary ml-auto" {{action 'postChanges'}}>Save Changes</button>
-                </div>
-            {{/if}}
+            <div class="col-6 justify-content-end">
+                {{#if canUserEditPersonalFields }}
+                    <button type="submit" class="btn btn-primary float-right" {{action 'postChanges'}}>Save Changes</button>
+                {{/if}}
+            </div>
         </div>
     </form>
 </div>
