@@ -1,14 +1,4 @@
 <div class="container">
-    <div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 justify-content-between">
-            <li class="navbar-brand">Viewing Profile For: {{model.firstName}} {{model.lastName}}</li>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/#/timelog/{{model._id}}">View Timelog</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
     <form id="userProfileForm" class= {{isFormSubmitted}}>
         <div class="form-row col-md-12">
             <div class="form-group col-md-6">
@@ -20,12 +10,17 @@
                         <img input id="image" type="image" alt="Profile Picture" src="/assets/images/defaultprofilepic.jpg" name=profilePic class="img-responsive logo profilepic"
                         />
                     {{/if}}
+                    <div class="row">
+                        {{#if canUserEditPersonalFields}}
+                            <label for="newProfilePic" class="fa fa-edit"></label>
+                            <input id="newProfilePic" style="visibility:hidden" multiple="true" onchange= {{action "updateProfilePic"}} accept="image/png,image/jpeg"
+                                name= {{newProfilePic}} type="file" />
+                        {{/if}}
+                    </div>
                 </div>
-                {{#if canUserEditPersonalFields}}
-                    <label for="newProfilePic" class="btn btn-sm btn-info">Update Profile Image</label>
-                    <input id="newProfilePic" style="visibility:hidden" multiple="true" onchange= {{action "updateProfilePic"}} accept="image/png,image/jpeg"
-                        name= {{newProfilePic}} type="file" />
-                {{/if}}
+                <div class="row mb-1">
+                    <a class="btn btn-info btn-sm text-center" href="/#/timelog/{{model._id}}">View Timelog</a>
+                </div>
             </div>
             <div class="form-group col-md-6">
                 <div class="card border-info mb-3">
