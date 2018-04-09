@@ -2,8 +2,8 @@
     <form id="userProfileForm" class= {{isFormSubmitted}}>
         <div class="form-row col-12">
             <div class="form-group col-md-4">
-                <div class="row mb-1">
-                    <div class="row">
+                <div class="form-row mb-1">
+                    <div class="form-row">
                         {{#if model.profilePic}}
                             <img input id="image" type="image" alt="Profile Picture" src= {{model.profilePic}} name=profilePic class="img-responsive logo profilepic"
                             />
@@ -12,7 +12,7 @@
                             />
                         {{/if}}
                     </div>
-                    <div class="row mt-1">
+                    <div class="form-row mt-1">
                         {{#if canUserEditPersonalFields}}
                             <label for="newProfilePic" class="fa fa-edit"></label>
                             <input id="newProfilePic" class="newProfilePic" multiple="true" onchange= {{action "updateProfilePic"}} accept="image/png,image/jpeg"
@@ -34,12 +34,12 @@
                 <div class="form-group col-md-2">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" value=1 name="userActiveOptions" onchange= {{action (mut model.isActive) 1}}
-                            checked= {{if model.isActive "true" null}} readonly= {{if isLoggedinUserAdministrator null "readonly"}}>
+                            checked= {{if model.isActive "true" null}} disabled= {{if isLoggedinUserAdministrator null "readonly"}}>
                         <label class="form-check-label" for="inlineRadio1">Active</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="userActiveOptions" value=0 onchange= {{action (mut model.isActive) 0}}
-                            checked= {{if model.isActive null true}} readonly= {{if isLoggedinUserAdministrator null "readonly"}}>
+                            checked= {{if model.isActive null true}} disabled= {{if isLoggedinUserAdministrator null "readonly"}}>
                         <label class="form-check-label" for="inlineRadio2">Inactive</label>
                     </div>
                 </div>
