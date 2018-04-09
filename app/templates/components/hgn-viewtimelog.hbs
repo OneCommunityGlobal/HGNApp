@@ -11,15 +11,17 @@
                             <div class="col-5 w-100">
                                 <div class="row w-100 mb-1">
                                     <label class="col-2 label">Date:</label>
-                                    <input class="col-4 from-control mr-1" value= {{timelog.dateOfWork}} readonly>
+                                    <input class=" from-control mr-1" value= {{timelog.dateOfWork}} readonly>
+                                </div>
+                                <div class="row w-100 mb-1">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" value=true name="timeentrytypeoptions" type="radio" checked= {{if (eq timelog.isTangible true) "true"}}
+                                        <input class="form-check-input mr-1" value=true name="timeentrytypeoptions" type="radio" checked= {{if (eq timelog.isTangible true) "true"}}
                                             disabled= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}
                                             onclick= {{action (mut timelog.isTangible) value = "target.value"}}>
                                         <label class="form-check-label">
                                             Tangible
                                         </label>
-                                        <input class="form-check-input" value=false name="timeentrytypeoptions" type="radio" checked= {{if (eq timelog.isTangible false ) "true"}}
+                                        <input class="form-check-input ml-1" value=false name="timeentrytypeoptions" type="radio" checked= {{if (eq timelog.isTangible false ) "true"}}
                                             disabled= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null true}}
                                             onclick= {{action (mut timelog.isTangible) value = "target.value"}}>
                                         <label class="form-check-label">
@@ -36,7 +38,7 @@
                                         onchange= {{action (mut timelog.minutes) value = "target.value"}}>
                                 </div>
                                 <div class="row w-100 mb-1">
-                                    <label class=" col-3 label">Project/Task:</label>
+                                    <label class=" col-4 label">Project/Task:</label>
                                     <select class="col-8" name="projects" readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}
                                         onchange= {{action (mut timelog.taskId) value = "target.value" }}>
                                         {{#each projects as |project|}}
