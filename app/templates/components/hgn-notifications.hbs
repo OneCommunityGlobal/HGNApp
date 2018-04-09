@@ -5,8 +5,8 @@
         <a class="accordion-toggle" data-toggle="collapse" data-target="#notifications"> Notifications </a>
       </h4>
     </div>
-    <div class="card-block collapse" id="notifications">
-      <div class="list-group">
+    <div class="card-block" id="notifications">
+      <div class="list-group" onload= {{action notifyController}}>
         {{#if notifications}}
           {{#each notifications as |notification|}}
             <li class="list-group-item">{{notification.message}}

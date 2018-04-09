@@ -7,13 +7,13 @@
         </a>
       </h4>
     </div>
-    <div class="card-body collapse" id="showData">
+    <div class="card-body" id="showData">
       <div class="mb-3">
         <select class="col-md-6" onchange= {{action (mut forUser) value = "target.value"  }}>
           {{#each teamMembers as |teamMember|}}
             <option disabled= {{if (and (not-eq teamMember._id forUserId) (not isUseronSelfPage )) true null}} value= {{teamMember._id}}
               hidden= {{if (and (not-eq teamMember._id forUserId) (not isUseronSelfPage )) true null}} value= {{teamMember._id}}
-              selected= {{eq forUserId teamMember._id}}>{{teamMember.name}} {{if (check-userisloggedin-user teamMember loggedinUser ) " (You)" ""}}</option>
+              selected= {{eq forUserId teamMember._id}}>{{teamMember.fullName}} {{if (check-userisloggedin-user teamMember loggedinUser ) " (You)" ""}}</option>
           {{/each}}
         </select>
         {{#if isUseronSelfPage}}

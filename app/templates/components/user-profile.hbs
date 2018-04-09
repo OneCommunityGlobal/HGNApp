@@ -1,11 +1,14 @@
 <div class="container">
-    <h3 class="display-4 timelog-title text-left mb-3">Viewing Profile For: {{model.firstName}} {{model.lastName}}
-        <span>
-            <small>
-                <a href="/#/timelog/{{model._id}}" class="pull-right">View TimeLog</a>
-            </small>
-        </span>
-    </h3>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 justify-content-between">
+            <li class="navbar-brand">Viewing Profile For: {{model.firstName}} {{model.lastName}}</li>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/#/timelog/{{model._id}}">View Timelog</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
     <form id="userProfileForm" class= {{isFormSubmitted}}>
         <div class="form-row col-md-12">
             <div class="form-group col-md-6">

@@ -1,35 +1,21 @@
 {{outlet}}
 <div class="container">
-  <h3 class="display-4 timelog-title text-left mb-3">Viewing Time Log For: {{model.name}}
-    <div>
-      <h6>Last Updated: {{lastUpdatedDatetime}}
-        <a href="/#/profile/{{model.forUserId}}" class="pull-right">View Profile</a>
-      </h6>
-    </div>
-  </h3>
-  <div class="row mb-3">
-    <div class="col-md-4">
-      {{hgn-actionitems  loggedinUser = loggedinUser forUserId = model.forUserId  }}
-    </div>
-    <div class="col-md-4">
-      {{hgn-notifications loggedinUser = loggedinUser forUserId = model.forUserId}}
-    </div>
-    <div class="col-md-4">
-      {{hgn-leaderboard loggedinUser = loggedinUser}}
-    </div>
+  <div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 justify-content-between">
+      <li class="navbar-brand">Viewing Timelog For: {{model.name}}</li>
+      <ul class="navbar-nav">
+        <li class="nav-item mr-3 mt-2">
+          <i class="fa fa-tasks pull-right" data-toggle="modal" data-target="#actionItems"></i>
+        </li>
+        <li class="nav-item mr-3 mt-2">
+          <i class="fa fa-envelope pull-right" data-toggle="modal" data-target="#notifications"></i>
+        </li>
+        <li class="nav-item mr-3">
+          <a class="nav-link" href="/#/profile/{{model.forUserId}}">View Profile</a>
+        </li>
+      </ul>
+    </nav>
   </div>
-  {{!-- <div class="row mb-3">
-    <div class="col-md-6">
-      <div class="w-100">
-        {{hgn-notifications loggedinUser = loggedinUser forUserId = model.forUserId}}
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="w-100">
-        {{hgn-actionitems  loggedinUser = loggedinUser forUserId = model.forUserId  }}
-      </div>
-    </div>
-  </div> --}}
   <div class="row mb-3">
     <div class="col-8">
       <div class="card border-primary">
@@ -53,11 +39,39 @@
             {{/if}}
           </h6>
         </div>
-        <div class="card-body _collapse" id="timelogs">
+        <div class="card-body" id="timelogs">
           {{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId period = "custom" fromDate = forweek.fromDate toDate = forweek.toDate }}
           {{#if isEditable }}
             <a href="/#/AllTimeEntries/{{model.forUserId}}" class="card-link">View Entries For Other Period</a>
           {{/if }}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      {{hgn-leaderboard loggedinUser = loggedinUser}}
+    </div>
+  </div>
+  <div class="modal fade" id="actionItems" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          {{hgn-actionitems  loggedinUser = loggedinUser forUserId = model.forUserId  }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="notifications" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          {{hgn-notifications loggedinUser = loggedinUser forUserId = model.forUserId notifyController = (action (mut numnotifications) 20)}}
+          #notifications{{numnotifications}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
