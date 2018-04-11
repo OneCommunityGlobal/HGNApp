@@ -6,14 +6,38 @@ import moment from 'moment';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-    classNames: ["card", "text-center", "mb-3", "w-33", "h-100", "hgn-weeklyeffortchart", "prescrollable"],
+    classNames: ["w-100", "h-100", "prescrollable", "text-ceter"],
     tagName: "card",
 
     dashboardService: inject('dashboard-service'),
     didReceiveAttrs() {
         this._super(...arguments);
-        this.updateWeeklyData();
-        this.run();
+        let self = this;
+        let userId = this.get('forUserId')
+        let forUserId = { requestorId: userId }
+        this.get('dashboardService').getWeeklyEffort(forUserId)
+            .then(result => { this.set('laborthisweek', result); })
+            .then(() => {
+                let actual = this.get('laborthisweek');
+                let actualhours = parseFloat(actual[0].timeSpent_hrs).toFixed(2);
+                let committedhours = parseFloat(actual[0].weeklyComittedHours).toFixed(2);
+                let percentdelivered = parseFloat(actualhours * 100 / committedhours).toFixed(2);
+
+
+                this.set('actualhours', parseInt(actualhours));
+                this.set("committedhours", parseInt(committedhours));
+                this.set("percentdelivered", parseInt(percentdelivered));
+            })
+            .then(() => {
+
+                google.charts.load('current', { 'packages': ['gauge'] });
+                google.charts.setOnLoadCallback(function () {
+                    let percentdelivered = self.get("percentdelivered")
+                    self.updateWeeklyData(percentdelivered);
+                });
+            })
+
+
     },
 
 
@@ -26,45 +50,27 @@ export default Component.extend({
         }, interval);
     },
 
-    updateWeeklyData: function () {
-        let pieChartOptions =
-            {
-                legend: {
-                    display: true,
-                    usePointStyle: true,
-                    position: "bottom",
-                    labels: {
+    updateWeeklyData: function (percentdelivered) {
 
-                    }
-                }
+        var data = google.visualization.arrayToDataTable([
+            ['Label', 'Value'],
+            ['', percentdelivered]
 
-            }
-        this.set('pieChartOptions', pieChartOptions);
-        let forUserId = { requestorId: this.get('forUserId') }
-        return this.get('dashboardService').getWeeklyEffort(forUserId)
-            .then(result => { this.set('laborthisweek', result); })
-            .then(() => {
-                let actual = this.get('laborthisweek');
-                let actualhours = parseFloat(actual[0].timeSpent_hrs).toFixed(2);
-                let committedhours = parseFloat(actual[0].weeklyComittedHours).toFixed(2);
+        ]);
+        var options = {
+            width: 180, height: 75,
+            redFrom: 0, redTo: 30,
+            yellowFrom: 31, yellowTo: 90,
+            greenFrom: 91, greenTo: 100,
+            minorTicks: 10,
+            min: 0, max: 100
+        };
+        var chart = new google.visualization.Gauge(document.getElementById('weeklyEfortGauge'));
 
-                this.set('actualhours', parseInt(actualhours));
-                this.set("committedhours", parseInt(committedhours))
+        chart.draw(data, options);
 
-
-                let result = {
-                    labels: ["Actual Effort", "Committed Effort"],
-
-                    datasets: [{
-                        data: [actualhours, committedhours],
-                        backgroundColor: ["green", "white"]
-                    }]
-
-                }
-                this.set('hoursthisweek', result)
-
-            })
     }
+
 
 
 });

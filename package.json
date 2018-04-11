@@ -47,7 +47,6 @@
         "node": " >= 8.*"
     },
     "dependencies": {
-        "ember-cli-chart": "^3.4.0",
         "ember-cli-clock": "^2.1.1",
         "ember-cli-jwt-decode": "^0.1.0",
         "ember-cli-less": "^1.5.5",

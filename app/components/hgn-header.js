@@ -12,7 +12,7 @@ export default Component.extend({
 
     init() {
         this._super(...arguments);
-        this.get('loginService').getLoggedinUser()
+        return this.get('loginService').getLoggedinUser()
             .then(results => {
                 this.set("userrole", results.role);
                 this.set("userId", results.requestorId);
