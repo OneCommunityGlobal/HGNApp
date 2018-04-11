@@ -5,19 +5,24 @@ export default Controller.extend({
     selectedOption: null,
     userProfileService: inject('user-profile-service'),
 
-    // newUser: {
-    //     firstName: "",
-    //     lastName: "",
-    //     email: "",
-    //     password: "",
-    //     role: "",
-    //     phoneNumber: "",
-    //     weeklyCommittedHours: ""
-    // },
+
+
+    newUser: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        role: "",
+        phoneNumber: "",
+        weeklyCommittedHours: ""
+    },
 
     actions: {
-        setSelection: function (selected) {
-            this.set('selectedOption', selected);
+       
+
+        activeFilter: function () {
+           //alert("hi");
+         // return this.get('userProfileService').getActiveUserProfiles();
         },
 
         saveNewUser: function () {
@@ -28,5 +33,22 @@ export default Controller.extend({
             this.set('newUser', {});
         }
 
-    }
+    },
+    columns:[
+        {
+          "propertyName": "firstName"
+        },
+        {
+          "propertyName": "lastName"
+        },
+        {
+            "propertyName": "role"
+          },
+          {
+            "propertyName": "email"
+          },
+          {
+            "propertyName": "weeklyCommittedHours"
+          }
+        ]
 });

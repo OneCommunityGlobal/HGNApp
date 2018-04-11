@@ -35,6 +35,7 @@
         "ember-export-application-global": "^2.0.0",
         "ember-load-initializers": "^1.0.0",
         "ember-maybe-import-regenerator": "^0.1.6",
+        "ember-models-table": "^2.5.0",
         "ember-resolver": "^4.0.0",
         "ember-source": "~3.0.0",
         "ember-toastr": "^1.7.1",
