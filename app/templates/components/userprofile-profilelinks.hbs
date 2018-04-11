@@ -5,8 +5,10 @@
         {{#each linksarray as |link index|}}
             <div class=" form-group row">
                 <label class="label col-2" required minlength= {{minLinksNameLength}} maxlength= {{maxLinksNameLength}} for="link">{{link.Name}}:</label>
-                <input required="true" class="form-control col-8" name="link" type="url" value= {{link.Link}} readonly= {{if isEditable null "readonly"}}
-                    onchange= {{action "editlinksarray" index}} />
+                <a href= {{link.Link}} target="_blank" class="col-8">
+                    <input required="true" class="form-control col-12" name="link" type="url" value= {{link.Link}} readonly= {{if isEditable null "readonly"}}
+                        onchange= {{action "editlinksarray" index}} />
+                </a>
                 {{#if isEditable }}
                     <span class="fa fa-trash pull-right col-1 label" data-toggle="tooltip" data-placement="right" title="Remove this link" {{action "removeLink" link}}></span>
                 {{/if}}
