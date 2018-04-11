@@ -22,8 +22,6 @@ export default Component.extend({
                 let actualhours = parseFloat(actual[0].timeSpent_hrs).toFixed(2);
                 let committedhours = parseFloat(actual[0].weeklyComittedHours).toFixed(2);
                 let percentdelivered = parseFloat(actualhours * 100 / committedhours).toFixed(2);
-
-
                 this.set('actualhours', parseInt(actualhours));
                 this.set("committedhours", parseInt(committedhours));
                 this.set("percentdelivered", parseInt(percentdelivered));
@@ -32,8 +30,9 @@ export default Component.extend({
 
                 google.charts.load('current', { 'packages': ['gauge'] });
                 google.charts.setOnLoadCallback(function () {
-                    let percentdelivered = self.get("percentdelivered")
-                    self.updateWeeklyData(percentdelivered);
+                    let percentdelivered = self.get("percentdelivered");
+                    let elementid = self.get('elementid');
+                    self.updateWeeklyData(percentdelivered, elementid);
                 });
             })
 
@@ -50,7 +49,7 @@ export default Component.extend({
         }, interval);
     },
 
-    updateWeeklyData: function (percentdelivered) {
+    updateWeeklyData: function (percentdelivered, elementid) {
 
         var data = google.visualization.arrayToDataTable([
             ['Label', 'Value'],
@@ -65,7 +64,7 @@ export default Component.extend({
             minorTicks: 10,
             min: 0, max: 100
         };
-        var chart = new google.visualization.Gauge(document.getElementById('weeklyEfortGauge'));
+        var chart = new google.visualization.Gauge(document.getElementById(elementid));
 
         chart.draw(data, options);
 

@@ -34,8 +34,8 @@
             </span>
           </a>
         </li>
-        <li class="nav-item navbar-text">
-          {{weekly-effort-chart forUserId= userId}}
+        <li class="nav-item navbar-text" id="headertimelog">
+          {{weekly-effort-chart forUserId= userId elementid = "headertimelog"}}
         </li>
         {{#if isUserAdministrator}}
           <li class="nav-item dropdown">
