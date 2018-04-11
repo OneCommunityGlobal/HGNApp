@@ -5,7 +5,7 @@
         {{#each linksarray as |link index|}}
             <div class=" form-group row">
                 <label class="label col-2" required minlength= {{minLinksNameLength}} maxlength= {{maxLinksNameLength}} for="link">{{link.Name}}:</label>
-                <a href= {{link.Link}} target="_blank" class="col-8">
+                <a href= {{link.Link}} target="_blank" class="col-8" data-toggle="tooltip" data-placement="bottom" title= {{link.Link}}>
                     <input required="true" class="form-control col-12" name="link" type="url" value= {{link.Link}} readonly= {{if isEditable null "readonly"}}
                         onchange= {{action "editlinksarray" index}} />
                 </a>
