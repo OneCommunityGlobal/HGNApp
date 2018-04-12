@@ -1,2 +1,6 @@
-<div class="h-100" data-toggle="tooltip" data-placement="right" title="Weekly Committed {{committedhours}} : &#010;Delivered in this week : {{actualhours}}">
+<div class="progress center-block">
+    <div class="progress-bar progress-bar-striped" role="progressbar " style="width: {{percentdelivered}}% ;text-align:center; background-color: {{color}}"
+        aria-valuenow=" {{actualhours}} " aria-valuemin="0 " aria-valuemax=" {{committedhours}} " data-toggle="tooltip" data-placement="right"
+        title="Weekly Committed: {{committedhours}} &#010;Delivered in this week: {{actualhours}}">{{actualhours}}&frasl;{{committedhours}}
+    </div>
 </div>
