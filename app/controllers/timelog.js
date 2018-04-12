@@ -12,7 +12,7 @@ export default Controller.extend({
     init() {
         this._super(...arguments);
         this.set("lastUpdatedDatetime", moment().format("MM/DD/YYYY hh:mm:ss A"));
-        this.run();
+        //this.run();
     },
 
     forweek: computed("", function () {
@@ -28,14 +28,14 @@ export default Controller.extend({
         );
     }),
 
-    run: function () {
-        var interval = 1000 * 10;
-        Ember.run.later(this, function () {
-            this.set("lastUpdatedDatetime", moment().format("MM/DD/YYYY hh:mm:ss A"));
-            this.run();
-        }, interval);
+    // run: function () {
+    //     var interval = 1000 * 10;
+    //     Ember.run.later(this, function () {
+    //         this.set("lastUpdatedDatetime", moment().format("MM/DD/YYYY hh:mm:ss A"));
+    //         this.run();
+    //     }, interval);
 
-    },
+    // },
 
     isEditable: computed('loggedinUser', 'forUserId', function () {
 

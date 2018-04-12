@@ -10,8 +10,8 @@ export default Component.extend({
     timeEntryService: inject('time-entry-service'),
     init() {
         this._super(...arguments);
-        this.set('fromDate', Date.now());
-        this.set('todate', Date.now());
+        //this.set('fromDate', Date.now());
+        // this.set('todate', Date.now());
         this.set("options", {
             plugins: ["autolink"],
             menubar: false,
@@ -36,7 +36,7 @@ export default Component.extend({
             });
         this.getDataforTime();
         this.set("lastUpdatedDateime", Date.now())
-        this.run();
+        //  this.run();
     },
     run: function () {
         var interval = 1000 * 600;

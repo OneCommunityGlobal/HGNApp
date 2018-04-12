@@ -41,46 +41,7 @@ export default Component.extend({
 
                 this.set("percentdelivered", parseInt(percentdelivered));
             })
-            .then(() => {
 
-                // google.charts.load('current', { 'packages': ['gauge'] });
-                // google.charts.setOnLoadCallback(function () {
-                //     let percentdelivered = self.get("percentdelivered");
-                //     let elementid = self.get('elementid');
-                //     self.updateWeeklyData(percentdelivered, elementid);
-                // });
-            })
-
-
-    },
-
-
-
-    run: function () {
-        var interval = 1000 * 60;
-        Ember.run.later(this, function () {
-            this.updateWeeklyData();
-            this.run();
-        }, interval);
-    },
-
-    updateWeeklyData: function (percentdelivered, elementid) {
-
-        var data = google.visualization.arrayToDataTable([
-            ['Label', 'Value'],
-            ['', percentdelivered]
-
-        ]);
-        var options = {
-            width: 180, height: 75,
-            redFrom: 0, redTo: 30,
-            yellowFrom: 31, yellowTo: 90,
-            greenFrom: 91, greenTo: 100,
-            min: 0, max: 100
-        };
-        var chart = new google.visualization.Gauge(document.getElementById(elementid));
-
-        chart.draw(data, options);
 
     }
 
