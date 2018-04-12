@@ -61,7 +61,6 @@ export default Component.extend({
             redFrom: 0, redTo: 30,
             yellowFrom: 31, yellowTo: 90,
             greenFrom: 91, greenTo: 100,
-            minorTicks: 10,
             min: 0, max: 100
         };
         var chart = new google.visualization.Gauge(document.getElementById(elementid));
