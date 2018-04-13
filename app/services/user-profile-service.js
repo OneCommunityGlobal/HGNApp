@@ -12,6 +12,7 @@ export default Service.extend({
     let method = "get";
 
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    console.log(request);
     return request;
   },
   getUserProfileData(requestor) {

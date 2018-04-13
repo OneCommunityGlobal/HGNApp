@@ -18,7 +18,7 @@ this._super();
     });
    this.set('displayTeams',temp);
     this.get('persons').forEach(function(item){
-      console.log(item);
+      //console.log(item);
     });
     //console.log(tempobj);
 }

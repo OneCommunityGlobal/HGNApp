@@ -84,6 +84,7 @@ export default Service.extend({
   },
 
   createEmberrequestObject(relativePath, data, method) {
+    
     return $.ajax({
       "url": ENV.webServer + relativePath,
       "data": data,

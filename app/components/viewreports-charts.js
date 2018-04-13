@@ -39,6 +39,7 @@ didInsertElement() {
     });
   google.charts.setOnLoadCallback(drawBarChart);
   google.charts.setOnLoadCallback(drawLineChart);
+  google.charts.setOnLoadCallback(drawLineChart2);
 
 //Set values for chart -- For now data is hard coded, will be pulled from DB and added dynamically
 function drawBarChart() {
@@ -53,7 +54,7 @@ function drawBarChart() {
 //set chart options.
   var options = {
     isStacked: true,
-    
+
     vAxis: {
       //viewWindow: {
         //max: 1100,
@@ -99,19 +100,44 @@ function drawLineChart(){
   ]);
   // Set chart options
   var options2 = {
-      width: 800,
-      height: 600,
-      chart: {
-          title: 'Year-by-year coffee consumption',
-          subtitle: 'This data is not real'
-      },
+      width: 600,
+      height: 500,
+          title: 'Current Week',
+
       vAxis: {
-        title: 'Total Action Items'
+        title: 'Total hours'
       },
       series: {
       }
   };
   var chart2 = new google.visualization.LineChart(document.getElementById('LineChart'));
+ chart2.draw(data2, options2);
+}
+
+
+function drawLineChart2(){
+  var data2 = google.visualization.arrayToDataTable([
+    ['Days', 'Team1', 'Team2', 'Team3'],
+    ['Monday', 30, 20, 10],
+    ['Tuesday', 15, 25, 10],
+    ['Wednesday', 10, 20, 30],
+    ['Thursday', 13, 25, 36],
+    ['Friday', 12, 22, 33]
+  ]);
+  // Set chart options
+  var options2 = {
+      width: 600,
+      height: 500,
+
+          title: 'Previous Week',
+
+      vAxis: {
+        title: 'Total hours'
+      },
+      series: {
+      }
+  };
+  var chart2 = new google.visualization.LineChart(document.getElementById('LineChart2'));
  chart2.draw(data2, options2);
 }
 }
