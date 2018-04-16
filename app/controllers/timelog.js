@@ -46,5 +46,10 @@ export default Controller.extend({
 
     }),
 
+    actions:
+        {
+
+        }
+
 
 });

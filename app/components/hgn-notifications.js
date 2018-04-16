@@ -9,10 +9,10 @@ export default Component.extend({
 
     didReceiveAttrs() {
         this._super(...arguments);
-
         this.getNotifications();
         this.run()
     },
+
 
     run: function () {
         var interval = 1000 * 60;
@@ -26,7 +26,8 @@ export default Component.extend({
 
     nummotifications: computed("notifications.[]", function () {
         let notifications = this.get("notifications");
-        return notifications.length;
+        let numnotifications = notifications.length;
+        return numnotifications;
     }),
 
     getNotifications: function () {
@@ -34,7 +35,9 @@ export default Component.extend({
         this.get('DataService').getUnreadNotifications(forUserId)
             .then(results => {
                 this.set('notifications', results);
+                this.get("notifyController")(results.length);
             });
+
     },
 
     isEditable: computed('loggedinUser', 'forUserId', function () {
@@ -55,9 +58,11 @@ export default Component.extend({
         },
 
         notifyController() {
-            let numnotifications = this.get('nummotifications');
-            alert(nummotifications)
-            this.send("notifyController", numnotifications);
+            this.get("notifyController")(this.get('nummotifications'));
+
+            alert("Hurrah");
         }
+
+
     }
 });

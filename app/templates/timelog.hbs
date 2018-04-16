@@ -9,10 +9,10 @@
             {{weekly-effort-chart forUserId= model.forUserId elementid = "timelogweeklychart"}}
           </li>
           <li class="nav-item  navbar-text mr-3">
-            <i class="fa fa-tasks pull-right" data-toggle="modal" data-target="#actionItems"></i>
+            <i class="fa fa-tasks pull-right" data-toggle="modal" data-target="#actionItems">{{numactionitems}}</i>
           </li>
           <li class="nav-item navbar-text mr-3 ">
-            <i class="fa fa-envelope pull-right" data-toggle="modal" data-target="#notifications"></i>
+            <i class="fa fa-envelope pull-right" data-toggle="modal" data-target="#notifications">{{numnotifications}}</i>
           </li>
           <li class="nav-item navbar-text mr-3">
             <a class="nav-link" href="/#/profile/{{model.forUserId}}">View Profile</a>
@@ -60,7 +60,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">
-          {{hgn-actionitems  loggedinUser = loggedinUser forUserId = model.forUserId  }}
+          {{hgn-actionitems  loggedinUser = loggedinUser forUserId = model.forUserId notifyController = (action (mut numactionitems ))  }}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -72,8 +72,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">
-          {{hgn-notifications loggedinUser = loggedinUser forUserId = model.forUserId notifyController = (action (mut numnotifications) 20)}}
-          #notifications{{numnotifications}}
+          {{hgn-notifications loggedinUser = loggedinUser forUserId = model.forUserId notifyController = (action (mut numnotifications ))}}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

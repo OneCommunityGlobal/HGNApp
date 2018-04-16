@@ -24,7 +24,10 @@ export default Component.extend({
             .then(results => { this.set('teamMembers', results.myteam); });
 
         this.get('dataService').getActionItems(user)
-            .then(results => { this.set('actionItems', results); })
+            .then(results => {
+                this.set('actionItems', results);
+                this.get("notifyController")(results.length);
+            })
     },
     isEditable: computed('loggedinUser', 'forUserId', 'forUser', function () {
 
