@@ -57,12 +57,6 @@ export default Component.extend({
 
         },
 
-        notifyController() {
-            this.get("notifyController")(this.get('nummotifications'));
-
-            alert("Hurrah");
-        }
-
 
     }
 });
