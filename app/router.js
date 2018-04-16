@@ -17,6 +17,7 @@ Router.map(function () {
   this.route('login');
   this.route('usermanagement');
   this.route('badges');
+  this.route('profile');
   this.route('profile', { path: '/profile/:user_id' });
   this.route('AllTimeEntries', { path: "/AllTimeEntries/:user_id" });
   this.route('updatepassword');
