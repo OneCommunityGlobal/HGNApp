@@ -46,10 +46,10 @@
                                 <div class="row form-group">
                                     <div class="input-group">
                                         <label class=" col-4 col-form-label">Project:</label>
-                                        <select class="col-8 form-control" name="projects" readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}
+                                        <select class="col-8" name="projects" readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}
                                             onchange= {{action (mut timelog.projectId) value = "target.value" }}>
                                             {{#each projects as |project|}}
-                                                <option value= {{project.projectId}} selected= {{if (eq project.projectId timelog.projectId) true }}>{{project.projectName}}</option>
+                                                <option class="form-control" value= {{project.projectId}} selected= {{if (eq project.projectId timelog.projectId) true }}>{{project.projectName}}</option>
                                             {{/each}}
                                         </select>
                                     </div>

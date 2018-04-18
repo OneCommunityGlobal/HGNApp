@@ -6,10 +6,10 @@ import $ from 'jquery';
 
 export default Ember.Controller.extend({
   isUserAdministrator: Ember.computed('userrole', function () {
-      let userrole = this.get('userrole');
-      //return userrole === "Administrator" ? true : false;
+    let userrole = this.get('userrole');
+    //return userrole === "Administrator" ? true : false;
 
-      return true;
+    return true;
   }),
   self: this,
   isFormSubmitted: "",
@@ -23,109 +23,80 @@ export default Ember.Controller.extend({
     Description: ""
   },
   newTeam: {
-    teamName:""
+    teamName: ""
   },
   projectTeams: "",
   dataService: inject("datastore-service"),
 
   validateform() {
-      this.set('isFormSubmitted', "submitted");
+    this.set('isFormSubmitted', "submitted");
 
-      let inputs = Ember.$("input").get();
+    let inputs = Ember.$("input").get();
 
-      let isFormValid = true;
+    let isFormValid = true;
 
-      inputs.forEach(element => {
+    inputs.forEach(element => {
 
-          if (!element.validity.valid) {
-              isFormValid = false;
-          }
-      });
-      return isFormValid;
+      if (!element.validity.valid) {
+        isFormValid = false;
+      }
+    });
+    return isFormValid;
   },
-  projectTeams: computed(function(){
+  projectTeams: computed(function () {
     let projectId = this.get('model._id');
     let allteams = [];
     return this.get('dataService').getAllTeams()
-        .then(results => {
-          for(var i = 0; i <results.length; i++){
+      .then(results => {
+        for (var i = 0; i < results.length; i++) {
 
-            if(results[i].projectId === projectId){
-              allteams.push(results[i])
-            }
+          if (results[i].projectId === projectId) {
+            allteams.push(results[i])
+          }
         }
         this.set("projectTeams", allteams);
 
       })
-    }),
+  }),
 
 
   actions: {
 
 
     notifyChange(key) {
-        let value = event.target.value;
-        let property = "model." + key;
-        this.set(property, value);
-      },
-
-    addNewTask() {
-      let projectId = this.get('model._id');
-      let project = this.get('model');
-      this.get('model.tasks').addObject(this.get('task'));
-      this.get('projectService').editProjectData(project, projectId);
-      this.set('task', {});
-
+      let value = event.target.value;
+      let property = "model." + key;
+      this.set(property, value);
     },
-    cancelTask(task) {
-      let projectId = this.get('model._id');
-      let project = this.get('model');
-      let taskId = this.get('task._id');
-      this.get('model.tasks').removeObject(task);
-      this.get('projectService').deletetask(projectId, taskId);
-      this.set('task', {});
-    },
+
+
     destroyProject() {
       let project = this.get('model');
       this.get('projectService').deleteProject(project._id)
-      .then(
-          toastr.success('Project Removed!')
-      );
+        .then(results => { toastr.success('Project Removed!') },
+          error => { toastr.warning(error) }
+
+        );
       this.transitionToRoute('projects');
 
-},
+    },
     postChanges() {
       if (this.validateform()) {
-          this.set('isFormSubmitted', "")
-      let projectId = this.get('model._id');
-      let project = this.get('model');
-      this.get('projectService').editProjectData(project, projectId)
-      .then(results => {
-          toastr.success("", 'Changes Saved');
-      });
+        this.set('isFormSubmitted', "")
+        let projectId = this.get('model._id');
+        let project = this.get('model');
+        this.get('projectService').editProjectData(project, projectId)
+          .then(results => {
+            toastr.success("", 'Changes Saved');
+          });
 
-      this.transitionToRoute('projects');
+        this.transitionToRoute('projects');
 
-    }else {
+      } else {
         alert("Please fix the form errors");
-    }
-  },
-  addNewTeam(){
-    let projectId = this.get('model._id');
-    let team = this.get('newTeam');
-    this.get('newTeam').projectId = projectId;
-    this.get('projectTeams').addObject(this.get('newTeam'));
-    this.get('dataService').postTeam(this.get('newTeam'));
-    this.set('newTeam', {});
-  },
-  removeTeam(team){
-    let teamId = team._id;
-    team.projectId = null;
+      }
+    },
 
-    this.get('dataService').editTeamData(team,teamId)
-    .then(alert('saved!'));
-
-  }
 
   }
 

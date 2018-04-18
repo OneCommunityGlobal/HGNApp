@@ -1,94 +1,30 @@
-
-{{outlet}}
+ {{outlet}}
 <form class="form-horizontal">
-  <input id="projectName" name="projectName" class="form-control" required=true type="text"
-  value= {{model.projectName}} placeholder="Project Name" minlength= {{minProjectName}} maxlength= {{maxProjectName}} readonly = {{if isUserAdministrator null "readonly"}} onchange= {{action "notifyChange" "projectName"}} />
-    <br>
-    <div>Tasks: </div>
-    <div class="form-group">
-      <ul class="list-group">
-        {{#each model.tasks as |task|}}
-          <li class="list-group-item">
-            <div class= "input-group">
-          <!--  <input id="taskDescription" name="taskDescription" class="form-control" required=true type="text"
-            value= {{task.Description}}  placeholder="Task" readonly = {{if isUserAdministrator null "readonly"}} onchange= {{action "notifyChange" "tasks"}} /> -->
-            {{input required = "true" class="form-control" name ="task" type = "text" value = task.Description readonly = (if isUserAdministrator null "readonly" )}}
-
-            {{#if isUserAdministrator }}
-            <span class="input-group-btn">
-            <button class="btn" type="button" {{ action 'cancelTask' task}} >Remove</button>
-          </span>
-          {{/if}}
-        </div>
-
-          </li>
-        {{/each}}
-      </ul>
-      {{#if isUserAdministrator}}
-      <br>
-
-
-    <div class="input-group">
-      {{input class="form-control required" type="text" placeholder= "Add Task..." value=task.Description }}
-      <span class="input-group-btn">
-        <button class="btn btn-secondary" {{ action 'addNewTask' task }}type="button">Add Task</button>
-      </span>
-    </div>
-
-    {{/if}}
-    </div>
-    {{#if isUserAdministrator}}
+  <input id="projectName" name="projectName" class="form-control" required=true type="text" value= {{model.projectName}} placeholder="Project Name"
+    minlength= {{minProjectName}} maxlength= {{maxProjectName}} readonly= {{if isUserAdministrator null "readonly"}} onchange= {{action "notifyChange" "projectName"}}
+  />
+  {{#if isUserAdministrator}}
     <fieldset class="form-group">
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="optionsRadios" id="projectActive" value="true" checked= {{if model.isActive "true" null }}
-                    onchange= {{ action (mut model.isActive) "true"}}> Active
-            </label>
-        </div>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="optionsRadios" id="projectInactive" value="false" checked= {{if model.isActive null "true" }}
-                    onchange= {{ action (mut model.isActive) "false"}}> Inactive</label>
-        </div>
-    </fieldset>
-    {{else}}
-    Project Status -
-    {{if model.isActive "Active" "Inactive"}}
-    {{/if}}
-    <div>Associated Teams:</div>
-
-    <ul class="list-group">
-    {{#each projectTeams as |team|}}
-    <li class="list-group-item">
-      <div class="input-group">
-        {{#link-to "team" team._id}}
-          {{team.teamName}}
-        {{/link-to}}
-  </div>
-  <span class="input-group-btn">
-    <button class="btn" type="submit" {{action "removeTeam" team}}>Remove</button>
-  </span>
-    </li>
-    {{/each}}
-    </ul>
-
-    <br>
-    {{#if isUserAdministrator }}
-
-    <div class="input-group">
-    {{input class="form-control" name ="team" type = "text" placeholder="Add New Team..." value = newTeam.teamName readonly = (if isUserAdministrator null "readonly" )}}
-    <span class="input-group-btn">
-      <button type="submit" class="btn btn-secondary" id="#newTeam" {{action 'addNewTeam'}}>Add New Team</button>
-      </span>
+      <div class="form-check form-check-inline">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="projectActive" value="true" checked= {{if model.isActive "true" null }}
+            onchange= {{ action (mut model.isActive) "true"}}> Active
+        </label>
       </div>
-    {{/if}}
-    <div>
-      <br>
+      <div class="form-check form-check-inline">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="projectInactive" value="false" checked= {{if model.isActive null "true" }}
+            onchange= {{ action (mut model.isActive) "false"}}> Inactive</label>
+      </div>
+    </fieldset>
+  {{else}}
+    Project Status - {{if model.isActive "Active" "Inactive"}}
+  {{/if}}
+  <div>
+    <br>
     {{#if isUserAdministrator}}
-    <button type="submit" class="btn btn-primary" {{ action 'postChanges' }}>Save</button>
-    <button type="submit" class="btn btn-danger" {{ action 'destroyProject' }}>Delete Project</button>
+      <button type="submit" class="btn btn-primary" {{ action 'postChanges' }}>Save</button>
+      <button type="submit" class="btn btn-danger" {{ action 'destroyProject' }}>Delete Project</button>
     {{/if}}
   </div>
-
-
-  </form>
+</form>
