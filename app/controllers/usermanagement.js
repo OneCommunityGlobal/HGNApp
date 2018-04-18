@@ -5,30 +5,49 @@ export default Controller.extend({
     
     userProfileService: inject('user-profile-service'),
 
-
     actions: {
        
 
         activeFilter: function () {
          return this.get('userProfileService').getActiveUserProfiles();
-        },
+        }
 
     },
+    
     columns:[
+      {
+        "component": "select-row-checkbox",
+        "useFilter": false,
+        "mayBeHidden": false,
+        "componentForSortCell": "select-all-rows-checkbox"
+      },
         {
-          "propertyName": "firstName"
+          "propertyName": "firstName",
+          "title":"First Name",
+          "routeName":"/"
         },
         {
-          "propertyName": "lastName"
+          "propertyName": "lastName",
+          "title":"Last Name"
         },
         {
-            "propertyName": "role"
+            "propertyName": "role",
+            "title":"Role",
+            "filterWithSelect":true
           },
           {
-            "propertyName": "email"
+            "propertyName": "email",
+            "title":"Email",
+            "sorting":false
           },
           {
-            "propertyName": "weeklyCommittedHours"
+            "propertyName": "weeklyComittedHours",
+            "title":"Weekly Committed hours"
           }
-        ]
+        ],
+
+        customIcons :[{
+          'sort-asc': 'fa fa-chevron-down',
+          'sort-desc': 'fa fa-chevron-down'
+        }]
 });
