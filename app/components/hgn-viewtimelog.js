@@ -13,10 +13,14 @@ export default Component.extend({
         //this.set('fromDate', Date.now());
         // this.set('todate', Date.now());
         this.set("options", {
-            plugins: ["autolink"],
+            plugins: ["autolink", "link", "autoresize"],
             menubar: false,
             //statusbar: false,
-            max_height: 200
+            toolbar: false,
+            default_link_target: "_blank",
+            toolbar: "link code",
+            link_context_toolbar: true,
+            link_title: false
         });
     },
 
@@ -103,47 +107,14 @@ export default Component.extend({
 
     actions: {
 
-        saveEditsToTimelog(timelog, index) {
-
+        saveEditsToTimelog(timelog) {
 
             let toastr = this.get("toast");
 
-            let updatedvalues = {};
-
-            updatedvalues.notes = timelog.notes;
-            updatedvalues.timeSpent = timelog.hours.trim() + ":" + timelog.minutes.trim();
-            updatedvalues.isTangible = timelog.isTangible;
-
-            let taskvalue = timelog.taskId;
-            if (taskvalue.includes("projectId")) //implying task and or project was updated
-            {
-                let valuesarray = taskvalue.split(",");
-
-                let projectId = ((valuesarray[0].split(":"))[1]).trim();
-                let taskId = ((valuesarray[1].split(":"))[1]).trim();
-
-
-                updatedvalues.projectId = projectId;
-                updatedvalues.taskId = taskId;
-            }
-            else {
-                updatedvalues.projectId = timelog.projectId;
-                updatedvalues.taskId = timelog.taskId;
-
-            }
-            this.get('timeEntryService').updateTimeEntry(timelog._id, updatedvalues).then(
+            this.get('timeEntryService').updateTimeEntry(timelog._id, timelog).then(
                 () => {
-                    var updatedtimelog = this.get("timelogs").objectAt(index);
-
-                    set(updatedtimelog, "notes", timelog.notes);
-                    set(updatedtimelog, "projectId", updatedvalues.projectId);
-                    set(updatedtimelog, "taskId", updatedvalues.taskId);
-                    set(updatedtimelog, "isTangible", timelog.isTangible);
-                    set(updatedtimelog, "hours", timelog.hours.trim());
-                    set(updatedtimelog, "minutes", timelog.minutes.trim());
                     toastr.success("Edits Successfully saved");
-                    this.set('isFormSubmitted', "");
-                },
+                    this.set('isFormSubmitted', "");                },
                 error => { toastr.error("", error); })
 
         },

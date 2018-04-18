@@ -56,13 +56,5 @@ export default Service.extend({
     return request;
   },
 
-  deletetask(projectId, taskId) {
-    let relativePath = "/project/" + projectId + "/task/" + taskId;
-    let data = null;
-    let method = "delete";
 
-    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
-    return request;
-
-  }
 });

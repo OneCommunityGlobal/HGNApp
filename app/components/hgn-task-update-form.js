@@ -86,7 +86,6 @@ export default Component.extend({
                 let dateofWork = (this.get('dateofWork')) ? (moment(this.get('dateofWork')).format('YYYY-MM-DD')) : (moment().format('YYYY-MM-DD'));
                 timeentry.personId = this.get('forUserId');
                 timeentry.projectId = this.get('forprojectId');
-                timeentry.taskId = this.get('fortaskId');
                 timeentry.dateofWork = dateofWork;
                 timeentry.timeSpent = timespent;
                 timeentry.isTangible = this.get('isTangible');
