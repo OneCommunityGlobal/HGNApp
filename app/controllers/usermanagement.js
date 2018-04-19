@@ -17,14 +17,6 @@ export default Controller.extend({
         return this.get('users').filter(user => user.isActive === isTrueSet);
       }
     }),
-    // filteredPeople: filter('users', function(user) {
-    //   if(this.get('currentFilter') === null) {
-    //     return true;
-    //   } else {
-       
-    //     return user.isActive === true;
-    //   }
-    // }).property('users', 'currentFilter'),
 
     actions: {
        
