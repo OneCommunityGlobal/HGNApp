@@ -6,7 +6,7 @@
 <ul class="list-group list-group-flush">
     {{#each memberships as |membership|}}
         <li class="list-group-item">
-            <a href="#/{{title}}/{{membership._id}}">{{if (eq title "Team") membership.teamName membership.projectName}}</a>
+            <a href="#/{{name}}/{{membership._id}}">{{if (eq title "Team") membership.teamName membership.projectName}}</a>
             {{#if isEditable}}
                 <span class="fa fa-trash pull-right" {{action "removeMembership" membership}}></span>
             {{/if}}
