@@ -5,16 +5,17 @@
     </div>
     <div class="form-group">
         <label for="show">Show:</label>
-        <select class="form-control" id="show" onchange={{action "activeFilter"}}>
-            <option>All</option>
-            <option>Active</option>
-            <option>Inactive</option>
+        <select class="form-control" id="show" onchange={{action "filterUpdated" value="target.value"}}>
+            <option value="null">All</option>
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
         </select>
     </div>
 
-    {{models-table data=model columns=columns showColumnsDropdown=false useNumericPagination=true filteringIgnoreCase=true showPageSize=true
+    {{models-table data=filteredUsers columns=columns showColumnsDropdown=false useNumericPagination=true filteringIgnoreCase=true showPageSize=true
     selectedItems=selectedItems
   multipleSelect=true
-  customIcons=customIcons}}
+  customIcons=customIcons
+  }}
 
 </div>
