@@ -25,20 +25,20 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">New {{label}}</h5>
-                    {{!-- <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button> --}}
+                    </button>
                 </div>
                 <div class="modal-body {{submitModal}}">
-                    <form class="form" id="formnew{{name}}">
-                        <input id="newLinkName" class="form-control col-md-6 mb-3" required minlength= {{minLinksNameLength}} maxlength= {{maxLinksNameLength}}
+                    <form class="{{isFormSubmitted}}" id="formnew{{name}}">
+                        <input id="newLink{{name}}Name" class="form-control col-md-6 mb-3" required minlength= {{minLinksNameLength}} maxlength= {{maxLinksNameLength}}
                             placeholder="Name" type="text" onchange= {{action (mut newLink.Name) value = "target.value" }} />
-                        <input id="newLinkLink" class="form-control col-md-6 mb-3" required type="url" placeholder="Link" onchange= {{action (mut newLink.Link) value = "target.value" }}
+                        <input id="newLink{{name}}Link" class="form-control col-md-6 mb-3" required type="url" placeholder="Link" onchange= {{action (mut newLink.Link) value = "target.value" }}
                         />
                     </form>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" {{action "CancelAddingLink" }}>Cancel</button>
-                        <button type="button" class="btn btn-primary" {{action "addLink" }}>Save changes</button>
+                        <button type="button" class="btn btn-secondary" {{action "cancelAddingLink" }}>Reset Form</button>
+                        <button type="button" class="btn btn-primary" {{action "addLink" }}>Save Changes</button>
                     </div>
                 </div>
             </div>
