@@ -42,7 +42,8 @@ export default Ember.Controller.extend({
           .then((results) => {
             toastr.success("", 'New Project Created!');
             this.set('newProject', {});
-          }
+          },
+            error => { toastr.error(error.responseJSON.error) }
           );
 
       } else {

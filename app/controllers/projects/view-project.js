@@ -74,7 +74,7 @@ export default Ember.Controller.extend({
       let project = this.get('model');
       this.get('projectService').deleteProject(project._id)
         .then(results => { toastr.success('Project Removed!') },
-          error => { toastr.warning(error) }
+          error => { toastr.warning(error.responseJSON.error) }
 
         );
       this.transitionToRoute('projects');

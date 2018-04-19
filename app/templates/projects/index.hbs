@@ -1,25 +1,26 @@
 {{outlet}}
-
 <div class="container">
-  <h2>Projects</h2>
-{{#if isUserAdministrator }}
-{{#link-to "projects.newProject" class="button"}}
-    Add New Project
-  {{/link-to}}
-  {{/if}}
+    <h2>Projects</h2>
+    {{#if isUserAdministrator }}
+        {{#link-to "projects.newProject" class="button" }}
+            <button class="btn btn-primary">Add New Project</button>
+        {{/link-to}}
+    {{/if}}
+    <table class="table"></table>
+    <thead></thead>
     <div class="card">
         <div class="card-block">
             <h4 class="card-title mb-2 text-muted list-group list-group-flush">
                 {{#each model as |project|}}
                     <ul class="list-unstyled">
                         <li class="card-header">
-                         {{#link-to "projects.viewProject" project._id }}
-                              {{project.projectName}}
-                         {{/link-to}}
-                      </li>
+                            {{#link-to "projects.viewProject" project._id }}
+                                {{project.projectName}}
+                            {{/link-to}}
+                        </li>
                     </ul>
                 {{/each}}
             </h4>
         </div>
     </div>
-  </div>
+</div>
