@@ -114,7 +114,8 @@ export default Component.extend({
             this.get('timeEntryService').updateTimeEntry(timelog._id, timelog).then(
                 () => {
                     toastr.success("Edits Successfully saved");
-                    this.set('isFormSubmitted', "");                },
+                    this.set('isFormSubmitted', "");
+                },
                 error => { toastr.error("", error); })
 
         },
