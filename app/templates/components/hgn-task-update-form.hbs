@@ -38,20 +38,9 @@
         <label class="col-3 label">Notes:</label>
         {{tinymce-editor options=options value=notes onValueChanged=(action (mut notes))}}
       </div>
-      <div class="form-group">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" value=true name="timeentrytypeoptions" type="radio" onchange= {{action (mut isTangible) value= "target.value"}}
-            checked>
-          <label class="form-check-label">
-            Tangible Work
-          </label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" value=false name="timeentrytypeoptions" type="radio" onchange= {{action (mut isTangible) value ="target.value"}}>
-          <label class="form-check-label">
-            Intangible Work
-          </label>
-        </div>
+      <div class="form-group row">
+        <input type="checkbox" class="form-control col-1" checked=true checked=true onchange= {{ action (mut isTangible) value = "target.checked"}}>
+        <label class="label col-5">Tangible</label>
       </div>
       <button class="btn btn-danger btn-sm pull-left" {{action "clearform"}}>Clear Form</button>
       <button type="submit" class="btn btn-primary btn-sm pull-right" {{action "submitTimeEntry"}}>Submit</button>
