@@ -45,6 +45,9 @@ export default Component.extend({
             this.get('notifications').removeObject(notification);
             this.get('DataService').deleteNotification(notification._id);
             alert('deleted');
+            let notifications = this.get('notifications');
+            this.get("notifyController")(notifications.length);
+
 
         },
 
