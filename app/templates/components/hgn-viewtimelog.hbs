@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="row form-group ">
                                     <div class="input-group ">
-                                        <label class="col-form-label mr-1 ">Time:</label>
+                                        <label class="col-form-label mr-1" data-toggle="tooltip" title=" This is in format HH:MM" data-placement="right">Time:</label>
                                         <input class="col-5 from-control
                             " value= {{timelog.hours}} readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}
                                             onchange= {{action (mut timelog.hours) value = "target.value"}} min=0 max=23 type="number ">
