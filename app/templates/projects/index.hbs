@@ -20,7 +20,7 @@
         <tbody>
             {{#each model as |project index|}}
                 <tr class="submitted">
-                    <td>
+                    <td contenteditable="true">
                         <input id="projectname_{{index}}" minlength= {{minProjectName}} maxlength= {{maxProjectName}} class="form-control w-100 h-100"
                             required value= {{project.projectName}} onchange= {{action (mut project.projectName) value = "target.value"}}
                             pattern="^[^\s]+(\s+[^\s]+)*$" readonly= {{if isUserAdministrator null true}}>

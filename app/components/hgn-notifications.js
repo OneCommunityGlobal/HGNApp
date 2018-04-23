@@ -10,19 +10,10 @@ export default Component.extend({
     didReceiveAttrs() {
         this._super(...arguments);
         this.getNotifications();
-        this.run()
-    },
-
-
-    run: function () {
-        var interval = 1000 * 60;
-        Ember.run.later(this, function () {
-            this.set("lastUpdatedDateime", Date.now())
-            this.getNotifications();
-            this.run();
-        }, interval);
 
     },
+
+
 
     nummotifications: computed("notifications.[]", function () {
         let notifications = this.get("notifications");

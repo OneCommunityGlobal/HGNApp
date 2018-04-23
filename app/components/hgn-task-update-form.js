@@ -94,6 +94,7 @@ export default Component.extend({
                     .then(results => {
                         console.log(results);
                         toastr.success("", 'Time Entry Saved');
+                        this.get("notifyController")(Date.now());
                         this.clearform();
                     }, error => {
                         toastr.warning(error.responseJSON.message, 'Error!!');

@@ -1,9 +1,9 @@
 <div class="card-deck mb-3">
     <div class="col-md-8">
-        {{hgn-leaderboard loggedinUser = loggedinUser}}
+        {{hgn-leaderboard loggedinUser = loggedinUser called_at = called_at}}
     </div>
     <div class="col-md-4">
-        {{hgn-timer loggedinUser = loggedinUser }}
+        {{hgn-timer loggedinUser = loggedinUser notifyController = (action (mut called_at )) }}
     </div>
 </div>
 <div class="card-deck mb-3">

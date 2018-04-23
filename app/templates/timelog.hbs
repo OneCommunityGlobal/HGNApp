@@ -36,7 +36,7 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-body">
-                      {{hgn-task-update-form forUserId = loggedinUser.requestorId}}
+                      {{hgn-task-update-form forUserId = loggedinUser.requestorId notifyController = (action (mut called_at ))}}
                     </div>
                   </div>
                 </div>
@@ -45,7 +45,7 @@
           </h6>
         </div>
         <div class="card-body" id="timelogs">
-          {{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId period = "custom" fromDate = forweek.fromDate toDate = forweek.toDate }}
+          {{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId period = "custom" fromDate = forweek.fromDate toDate = forweek.toDate  notifyController = (action (mut  called_at ))}}
           {{#if isEditable }}
             <a href="/#/AllTimeEntries/{{model.forUserId}}" class="card-link">View Entries For Other Period</a>
           {{/if }}
@@ -53,7 +53,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      {{hgn-leaderboard loggedinUser = loggedinUser}}
+      {{hgn-leaderboard loggedinUser = loggedinUser called_at = called_at}}
     </div>
   </div>
   <div class="modal fade" id="actionItems" tabindex="-1" role="dialog" aria-hidden="true">

@@ -10,24 +10,23 @@ export default Component.extend({
     dashboardService: inject("dashboard-service"),
     tagName: "card",
     classNames: ["card", "text-center", "mb-3", "w-33", "h-100", "prescrollable", "hgn-leaderboard"],
+    called_at: "",
 
     init() {
         this._super(...arguments);
         this.getLeaderboardData();
-        this.run();
+
     },
 
-    run: function () {
-        var interval = 1000 * 60;
-        Ember.run.later(this, function () {
-            this.getLeaderboardData();
-            this.run();
-        }, interval);
-
+    didUpdateAttrs() {
+        this._super(...arguments);
+        alert("leaderboard updated")
+        this.getLeaderboardData();
     },
 
 
     getLeaderboardData: function () {
+
         return this.get('dashboardService').getLeaderBoard(this.loggedinUser)
             .then(results => { this.set('leaderboarddata', results); })
             .then(() => {
@@ -110,8 +109,6 @@ export default Component.extend({
 
     didRender() {
         this._super(...arguments);
-        //scheduleOnce('afterRender', this, 'scrollToRow');
-
         this.scrollToRow();
     },
 

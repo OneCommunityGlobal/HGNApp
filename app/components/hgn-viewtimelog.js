@@ -10,8 +10,6 @@ export default Component.extend({
     timeEntryService: inject('time-entry-service'),
     init() {
         this._super(...arguments);
-        //this.set('fromDate', Date.now());
-        // this.set('todate', Date.now());
         this.set("options", {
             plugins: ["autolink", "link", "autoresize"],
             menubar: false,
@@ -40,24 +38,8 @@ export default Component.extend({
             });
         this.getDataforTime();
         this.set("lastUpdatedDateime", Date.now())
-        //  this.run();
-    },
-    run: function () {
-        var interval = 1000 * 600;
-        later(this, function () {
-            this.set("lastUpdatedDateime", Date.now())
-            this.getDataforTime();
-            this.run();
-        }, interval);
 
     },
-    whenUpdated: computed('lastUpdatedDateime', 'Datetime.now()', function () {
-        var now = moment().format("MM/DD/YYYY hh:mm:ss A");
-        // var lastUpdatedDateime = moment(this.get('lastUpdatedDateime'));
-        // var duration = moment.duration(now.diff(lastUpdatedDateime)).humanize();
-        return now;
-
-    }),
 
 
     timelogsview: computed("timelogs.@each", function () {
@@ -115,6 +97,7 @@ export default Component.extend({
                 () => {
                     toastr.success("Edits Successfully saved");
                     this.set('isFormSubmitted', "");
+                    this.get("notifyController")(Date.now())
                 },
                 error => { toastr.error("", error); })
 
@@ -127,7 +110,8 @@ export default Component.extend({
                     .then(() => {
 
                         this.get('timelogs').removeObject(timelog);
-                        toastr.success("Time Entry Succesfully Removed")
+                        toastr.success("Time Entry Succesfully Removed");
+                        this.get("notifyController")(Date.now())
                     },
                         error => { toastr.error("", error); }
                     )
