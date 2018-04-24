@@ -1,113 +1,21 @@
 {{outlet}}
 <div class="container">
-    <button class="btn" type="button" data-toggle="modal" data-target="#newUserModal">
-    Create New User</button>
-
+    <div>
+        <a class="btn btn-large btn-info" href="/#/profile"> Create New User</a>
+    </div>
     <div class="form-group">
         <label for="show">Show:</label>
-        <select class="form-control" id="show" onchange={{action "activeFilter"}}>
-            <option>All</option>
-            <option>Active</option>
-            <option>Inactive</option>
+        <select class="form-control" id="show" onchange={{action "filterUpdated" value="target.value"}}>
+            <option value="null">All</option>
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
         </select>
     </div>
 
-    <div class="modal fade" id="newUserModal" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <form name="createUser">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </button>
-                        <h4 class="modal-title">Create New User</h4>
-                    </div>
-
-                    <div class="modal-body">
-
-                        <div class="form-group">
-                            <label for="firstName">FirstName:</label> {{input type="text" class="form-control" value=newUser.firstName}}
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">LastName:</label> {{input type="text" class="form-control" value=newUser.lastName}}
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email:</label> {{input type="text" class="form-control" value=newUser.email}}
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password:</label> {{input type="text" class="form-control" value=newUser.password}}
-                        </div>
-                        <div class="form-group">
-                            <label for="role">Role:</label> {{input type="text" class="form-control" value=newUser.role}}
-                        </div>
-                        <div class="form-group">
-                            <label for="phoneNumber">Phone Number:</label> {{input type="text" class="form-control" value=newUser.phoneNumber}}
-                        </div>
-                        <div class="form-group">
-                            <label for="weeklyCommittedHours">Weekly Committed Hours:</label> {{input type="text" class="form-control" value=newUser.weeklyCommittedHours}}
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-default" {{action 'saveNewUser'}} data-dismiss="modal">Save</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-
-
-    
-     {{models-table
-     data=model 
-     columns=columns 
-      showColumnsDropdown=false
-      useNumericPagination=true
-      filteringIgnoreCase=true
-      showPageSize=true
-     }}
-     {{!-- // selectedItems=selectedItems
-  multipleSelect=true}}
- --}}
-
-    {{!-- <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>FirstName</th>
-                    <th>LastName</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Role</th>
-                    <th>Weekly Committed Hours</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each model as |user|}}
-                <tr>
-                    <td>
-                        <a href="/#/profile/{{user._id}}" title="View Profile">{{user.firstName}}</a>
-                    </td>
-                    <td>
-                        <a href="/#/profile/{{user._id}}" title="View Profile">{{user.lastName}}</a>
-                    </td>
-                    <td>{{user.email}}</td>
-                    <td>{{user.phoneNumber}}</td>
-                    <td>{{user.role}}</td>
-                    <td>{{user.weeklyCommittedHours}}</td>
-                    <td>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" value="">
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </div> --}}
+    {{models-table data=filteredUsers columns=columns showColumnsDropdown=false useNumericPagination=true filteringIgnoreCase=true showPageSize=true
+    selectedItems=selectedItems
+  multipleSelect=true
+  customIcons=customIcons
+  }}
 
 </div>

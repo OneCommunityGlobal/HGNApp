@@ -9,10 +9,14 @@
             {{weekly-effort-chart forUserId= model.forUserId elementid = "timelogweeklychart"}}
           </li>
           <li class="nav-item  navbar-text mr-3">
-            <i class="fa fa-tasks pull-right" data-toggle="modal" data-target="#actionItems"></i>
+            <span class="fa fa-tasks pull-right icon-large" data-toggle="modal" data-target="#actionItems">
+              <icon class="badge-notify">{{numactionitems}}</icon>
+            </span>
           </li>
           <li class="nav-item navbar-text mr-3 ">
-            <i class="fa fa-envelope pull-right" data-toggle="modal" data-target="#notifications"></i>
+            <i class="fa fa-envelope pull-right icon-large" data-toggle="modal" data-target="#notifications">
+              <icon class="badge-notify">{{numnotifications}}</icon>
+            </i>
           </li>
           <li class="nav-item navbar-text mr-3">
             <a class="nav-link" href="/#/profile/{{model.forUserId}}">View Profile</a>
@@ -22,7 +26,7 @@
     </nav>
   </div>
   <div class="row mb-3">
-    <div class="col-8">
+    <div class="col-md-8">
       <div class="card border-primary">
         <div class="card-header">
           <h4 class="card-title ">
@@ -36,7 +40,7 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-body">
-                      {{hgn-task-update-form forUserId = loggedinUser.requestorId}}
+                      {{hgn-task-update-form forUserId = loggedinUser.requestorId notifyController = (action (mut called_at ))}}
                     </div>
                   </div>
                 </div>
@@ -45,7 +49,7 @@
           </h6>
         </div>
         <div class="card-body" id="timelogs">
-          {{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId period = "custom" fromDate = forweek.fromDate toDate = forweek.toDate }}
+          {{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId period = "custom" fromDate = forweek.fromDate toDate = forweek.toDate  notifyController = (action (mut  called_at ))}}
           {{#if isEditable }}
             <a href="/#/AllTimeEntries/{{model.forUserId}}" class="card-link">View Entries For Other Period</a>
           {{/if }}
@@ -53,14 +57,14 @@
       </div>
     </div>
     <div class="col-md-4">
-      {{hgn-leaderboard loggedinUser = loggedinUser}}
+      {{hgn-leaderboard loggedinUser = loggedinUser called_at = called_at}}
     </div>
   </div>
   <div class="modal fade" id="actionItems" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">
-          {{hgn-actionitems  loggedinUser = loggedinUser forUserId = model.forUserId  }}
+          {{hgn-actionitems  loggedinUser = loggedinUser forUserId = model.forUserId notifyController = (action (mut numactionitems ))  }}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -72,8 +76,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">
-          {{hgn-notifications loggedinUser = loggedinUser forUserId = model.forUserId notifyController = (action (mut numnotifications) 20)}}
-          #notifications{{numnotifications}}
+          {{hgn-notifications loggedinUser = loggedinUser forUserId = model.forUserId notifyController = (action (mut numnotifications ))}}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

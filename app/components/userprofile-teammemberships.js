@@ -53,36 +53,24 @@ export default Component.extend({
 
             },
             manageMemberships() {
-                let ops = this.get('opsarray');
-
-                for (let i = 0; i < ops.length; i++) {
-                    let op = ops[i];
-                    if (op.action === "remove") {
-                        let _membership = this.get('memberships').findBy('_id', op._id);
-                        if (_membership) { this.get('memberships').removeObject(_membership); }
-                    }
-                    else {
-
-                        let _membership = (this.get("name") === "teams") ? { _id: op._id, teamName: op.teamName } : { _id: op._id, projectName: op.projectName };
-                        this.get('memberships').addObject(_membership);
-                    }
-                }
-                this.set('opsarray', []);
+                let title = this.get("title");
+                $("[data-dismiss=modal]").trigger({ type: "click" });
                 this.notifyparent();
 
             },
             editUserMembership(membership) {
 
-                let targetid = membership._id;
-                let targetname = (this.get("name") === "teams") ? membership.teamName : membership.projectName;
-                let op = {};
-
-                if (this.get("name") === "teams") { op = (event.target.checked) ? { _id: targetid, teamName: targetname, action: "add" } : { _id: targetid, action: "remove" } }
-                else {
-                    op = (event.target.checked) ? { _id: targetid, projectName: targetname, action: "add" } : { _id: targetid, action: "remove" }
+                if (event.target.checked) {
+                    this.get('memberships').addObject(membership);
 
                 }
-                this.get('opsarray').push(op);
+                else {
+                    let record = this.get('memberships').findBy("_id", membership._id)
+                    if (record) {
+                        this.get('memberships').removeObject(record);
+                    }
+                }
+
             }
         }
 });

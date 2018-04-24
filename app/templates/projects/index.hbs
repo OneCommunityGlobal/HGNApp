@@ -1,25 +1,79 @@
 {{outlet}}
-
 <div class="container">
-  <h2>Projects</h2>
-{{#if isUserAdministrator }}
-{{#link-to "projects.newProject" class="button"}}
-    Add New Project
-  {{/link-to}}
-  {{/if}}
-    <div class="card">
-        <div class="card-block">
-            <h4 class="card-title mb-2 text-muted list-group list-group-flush">
-                {{#each model as |project|}}
-                    <ul class="list-unstyled">
-                        <li class="card-header">
-                         {{#link-to "projects.viewProject" project._id }}
-                              {{project.projectName}}
-                         {{/link-to}}
-                      </li>
-                    </ul>
-                {{/each}}
-            </h4>
+    <h2>Projects
+        {{#if isUserAdministrator }}
+            <button class="btn btn-success pull-right" data-toggle="modal" data-target="#modalNewProject">Add New Project</button>
+        {{/if}}
+    </h2>
+    <table class="table table-striped" id="projectstable">
+        <thead>
+            <tr>
+                <th scope="col">Project Name</th>
+                <th scope="col"> Active</th>
+                <th scope="col">Membership Details</th>
+                {{#if isUserAdministrator}}
+                    <th scope="col"> Delete</th>
+                    <th scope="col">Save Edits</th>
+                {{/if}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#each model as |project index|}}
+                <tr class="submitted">
+                    <td contenteditable="true">
+                        <input id="projectname_{{index}}" minlength= {{minProjectName}} maxlength= {{maxProjectName}} class="form-control w-100 h-100"
+                            required value= {{project.projectName}} onchange= {{action (mut project.projectName) value = "target.value"}}
+                            pattern="^[^\s]+(\s+[^\s]+)*$" readonly= {{if isUserAdministrator null true}}>
+                    </td>
+                    <td>
+                        <input type=checkbox checked= {{project.isActive}} onchange= {{action (mut project.isActive) value = "target.checked"}} disabled= {{if isUserAdministrator null true}}>
+                    </td>
+                    <td>
+                        {{#link-to "projects.viewProject" project._id }}
+                            <i class="fa fa-users"></i>
+                        {{/link-to}}
+                    </td>
+                    {{#if isUserAdministrator}}
+                        <td>
+                            <i class="fa fa-trash" {{action "deleteProject" project}}></i>
+                        </td>
+                        <td>
+                            <i class="fa fa-floppy-o" {{action "saveEdits" project index}}></i>
+                        </td>
+                    {{/if}}
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+{{#if isUserAdministrator}}
+    <div class="modal fade" id="modalNewProject" tabindex="-1" role="dialog" aria-labelledby="#newproject" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newproject">New Project</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="frmNewProject" class="{{isFormsubmitted}}">
+                    <div class="modal-body">
+                        <div class="form-row col-12 mb-3">
+                            <label for="projectName" class="label col-3">ProjectName:</label>
+                            <input type="text" class="form-control  col-8" id="projectName" placeholder="Project Name" required=true minlength= {{minProjectName}}
+                                maxlength= {{maxProjectName}} onchange= {{ action (mut newProject.projectName) value = "target.value"}}>
+                        </div>
+                        <div class="form-row col-12 mb-3">
+                            <input type="checkbox" class="form-control col-2" checked=true onchange= {{ action (mut newProject.isActive) value = "target.checked"}}>
+                            <label class="form-check-label col-8">Active</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" {{action 'resetform' }}>Reset</button>
+                        <button type="button" class="btn btn-primary" {{action 'addNewProject'}}>Save changes</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-  </div>
+{{/if}}

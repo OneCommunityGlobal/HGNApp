@@ -31,7 +31,7 @@
         </li>
         <li class="nav-item navbar-text">
           <a class="nav-link" href="/#/timelog/{{userId}}">
-            <span class="fa fa-bell bell-large">
+            <span class="fa fa-bell icon-large">
               <icon class="badge-notify">{{if (eq notificationslength 0) 0 notificationslength}}</icon>
             </span>
           </a>
@@ -51,15 +51,14 @@
           </li>
         {{/if}}
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            {{#if userDashboardData.profilePic}}
-              <img src="{{userDashboardData.profilePic}}" alt="" class="img-fluid dashboardimg img-circle" height="35" width="40">
-            {{else}}
-              <img src="/assets/images/defaultprofilepic.jpg" alt="" class="img-fluid dashboardimg" height="35" width="40">
-            {{/if}}
-          </a>
+          <aitem class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <a href="/#/profile/{{userId}}">
+              <img src= {{if userDashboardData.profilePic userDashboardData.profilePic  "/assets/images/defaultprofilepic.jpg"}} alt=""
+                class="img-fluid dashboardimg img-circle" height="35" width="40">
+            </a>
+          </aitem>
           <div class="dropdown-menu">
-            <a href="#" class="dropdown-item">Hello {{userDashboardData.firstName}}
+            <a class="dropdown-item">Hello {{userDashboardData.firstName}}
               <div>
                 <small>You are logged in as
                   {{#if ( eq userDashboardData.role "Administrator")}}

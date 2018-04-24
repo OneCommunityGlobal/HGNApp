@@ -36,8 +36,11 @@ export default Component.extend({
     actions:
         {
             addLink() {
-                let namefield = ($("#newLinkName").get())[0];
-                let linkfield = ($("#newLinkLink").get())[0];
+                this.set("isFormSubmitted", "submitted");
+                let name = this.get('name');
+
+                let form = $(`#formnew${name}`)[0];
+
                 this.set('submitModal', 'submitModal');
 
                 let _newlink = {
@@ -46,11 +49,13 @@ export default Component.extend({
                     Link: this.get('newLink.Link')
                 };
 
-                if (namefield.validity.valid && linkfield.validity.valid) {
+                if (form.checkValidity()) {
                     this.set('submitModal', '');
                     this.get('linksarray').addObject(_newlink);
                     this.set('newLink.Name', "");
                     this.set('newLink.Link', "");
+                    this.set("isFormSubmitted", "");
+                    form.reset();
                     this.notifyparent();
 
                 }
@@ -64,10 +69,11 @@ export default Component.extend({
 
             },
 
-            CancelAddingLink() {
+            cancelAddingLink() {
                 this.set('submitModal', '')
-                let formid = `formnew${this.get('name')}`;
-                $(`#${formid}`)[0].reset();
+                let name = this.get('name');
+                let form = $(`#formnew${name}`)[0];
+                form.reset();
             },
 
 

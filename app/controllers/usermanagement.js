@@ -1,54 +1,72 @@
 
+import { alias } from '@ember/object/computed';
+import { computed } from '@ember/object';
 import { inject } from '@ember/service';
 import Controller from '@ember/controller';
 export default Controller.extend({
-    selectedOption: null,
+    
     userProfileService: inject('user-profile-service'),
+    users: alias('model'),
+    currentFilter: null,
 
-
-
-    newUser: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        role: "",
-        phoneNumber: "",
-        weeklyCommittedHours: ""
-    },
+    filteredUsers: computed('users.@each.isActive', 'currentFilter', function() {
+      if (this.get('currentFilter') === null) {
+        return this.get('users');
+      } else {
+        var isTrueSet = (this.get('currentFilter') == 'true');
+        return this.get('users').filter(user => user.isActive === isTrueSet);
+      }
+    }),
 
     actions: {
        
-
-        activeFilter: function () {
-           //alert("hi");
-         // return this.get('userProfileService').getActiveUserProfiles();
-        },
-
-        saveNewUser: function () {
-            let user = this.get('newUser');
-            this.get('model').addObject(user);
-            this.get('userProfileService').postUserProfileData(user)
-                .then(alert("saved"));
-            this.set('newUser', {});
+      filterUpdated: function (value) {
+        
+        alert(value);
+        if (value == "null") {
+          this.set('currentFilter', null);
         }
-
+        else {
+          this.set('currentFilter', value);
+        }
+      }
     },
+    
     columns:[
+      {
+        "component": "select-row-checkbox",
+        "useFilter": false,
+        "mayBeHidden": false,
+        "componentForSortCell": "select-all-rows-checkbox"
+      },
         {
-          "propertyName": "firstName"
+          "propertyName": "firstName",
+          "title":"First Name",
+          "routeName":"/"
         },
         {
-          "propertyName": "lastName"
+          "propertyName": "lastName",
+          "title":"Last Name"
         },
         {
-            "propertyName": "role"
+            "propertyName": "role",
+            "title":"Role",
+            "filterWithSelect":true,
+            "disableSorting":true
           },
           {
-            "propertyName": "email"
+            "propertyName": "email",
+            "title":"Email",
+            "disableSorting":true
           },
           {
-            "propertyName": "weeklyCommittedHours"
+            "propertyName": "weeklyComittedHours",
+            "title":"Weekly Committed hrs"
           }
-        ]
+        ],
+
+        customIcons :[{
+          'sort-asc': 'fa fa-chevron-down',
+          'sort-desc': 'fa fa-chevron-down'
+        }]
 });

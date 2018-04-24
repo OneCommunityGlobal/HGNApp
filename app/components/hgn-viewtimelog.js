@@ -10,13 +10,15 @@ export default Component.extend({
     timeEntryService: inject('time-entry-service'),
     init() {
         this._super(...arguments);
-        //this.set('fromDate', Date.now());
-        // this.set('todate', Date.now());
         this.set("options", {
-            plugins: ["autolink"],
+            plugins: ["autolink", "link", "autoresize"],
             menubar: false,
             //statusbar: false,
-            max_height: 200
+            toolbar: false,
+            default_link_target: "_blank",
+            toolbar: "link code",
+            link_context_toolbar: true,
+            link_title: false
         });
     },
 
@@ -36,24 +38,8 @@ export default Component.extend({
             });
         this.getDataforTime();
         this.set("lastUpdatedDateime", Date.now())
-        //  this.run();
-    },
-    run: function () {
-        var interval = 1000 * 600;
-        later(this, function () {
-            this.set("lastUpdatedDateime", Date.now())
-            this.getDataforTime();
-            this.run();
-        }, interval);
 
     },
-    whenUpdated: computed('lastUpdatedDateime', 'Datetime.now()', function () {
-        var now = moment().format("MM/DD/YYYY hh:mm:ss A");
-        // var lastUpdatedDateime = moment(this.get('lastUpdatedDateime'));
-        // var duration = moment.duration(now.diff(lastUpdatedDateime)).humanize();
-        return now;
-
-    }),
 
 
     timelogsview: computed("timelogs.@each", function () {
@@ -103,46 +89,15 @@ export default Component.extend({
 
     actions: {
 
-        saveEditsToTimelog(timelog, index) {
-
+        saveEditsToTimelog(timelog) {
 
             let toastr = this.get("toast");
 
-            let updatedvalues = {};
-
-            updatedvalues.notes = timelog.notes;
-            updatedvalues.timeSpent = timelog.hours.trim() + ":" + timelog.minutes.trim();
-            updatedvalues.isTangible = timelog.isTangible;
-
-            let taskvalue = timelog.taskId;
-            if (taskvalue.includes("projectId")) //implying task and or project was updated
-            {
-                let valuesarray = taskvalue.split(",");
-
-                let projectId = ((valuesarray[0].split(":"))[1]).trim();
-                let taskId = ((valuesarray[1].split(":"))[1]).trim();
-
-
-                updatedvalues.projectId = projectId;
-                updatedvalues.taskId = taskId;
-            }
-            else {
-                updatedvalues.projectId = timelog.projectId;
-                updatedvalues.taskId = timelog.taskId;
-
-            }
-            this.get('timeEntryService').updateTimeEntry(timelog._id, updatedvalues).then(
+            this.get('timeEntryService').updateTimeEntry(timelog._id, timelog).then(
                 () => {
-                    var updatedtimelog = this.get("timelogs").objectAt(index);
-
-                    set(updatedtimelog, "notes", timelog.notes);
-                    set(updatedtimelog, "projectId", updatedvalues.projectId);
-                    set(updatedtimelog, "taskId", updatedvalues.taskId);
-                    set(updatedtimelog, "isTangible", timelog.isTangible);
-                    set(updatedtimelog, "hours", timelog.hours.trim());
-                    set(updatedtimelog, "minutes", timelog.minutes.trim());
                     toastr.success("Edits Successfully saved");
                     this.set('isFormSubmitted', "");
+                    this.get("notifyController")(Date.now())
                 },
                 error => { toastr.error("", error); })
 
@@ -155,7 +110,8 @@ export default Component.extend({
                     .then(() => {
 
                         this.get('timelogs').removeObject(timelog);
-                        toastr.success("Time Entry Succesfully Removed")
+                        toastr.success("Time Entry Succesfully Removed");
+                        this.get("notifyController")(Date.now())
                     },
                         error => { toastr.error("", error); }
                     )

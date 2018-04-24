@@ -6,7 +6,7 @@
 <ul class="list-group list-group-flush">
     {{#each memberships as |membership|}}
         <li class="list-group-item">
-            <a href="#/{{title}}/{{membership._id}}">{{if (eq title "Team") membership.teamName membership.projectName}}</a>
+            <a href="#/{{name}}/{{membership._id}}">{{if (eq title "Team") membership.teamName membership.projectName}}</a>
             {{#if isEditable}}
                 <span class="fa fa-trash pull-right" {{action "removeMembership" membership}}></span>
             {{/if}}
@@ -24,6 +24,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Manage {{title}} Memberships</h5>
+                    <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body {{submitModal}}">
                     {{#each allMemberships as |membership|}}
@@ -36,8 +39,7 @@
                         </div>
                     {{/each}}
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" {{action "cancelAction" }}>Cancel</button>
-                        <button type="button" class="btn btn-primary" {{action "manageMemberships" }} data-dismiss="modal">Save changes</button>
+                        <button type="button" class="btn btn-primary" {{action "manageMemberships" }}>Done</button>
                     </div>
                 </div>
             </div>

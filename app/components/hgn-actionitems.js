@@ -24,7 +24,10 @@ export default Component.extend({
             .then(results => { this.set('teamMembers', results.myteam); });
 
         this.get('dataService').getActionItems(user)
-            .then(results => { this.set('actionItems', results); })
+            .then(results => {
+                this.set('actionItems', results);
+                this.get("notifyController")(results.length);
+            })
     },
     isEditable: computed('loggedinUser', 'forUserId', 'forUser', function () {
 
@@ -70,6 +73,7 @@ export default Component.extend({
             this.get('dataService').getActionItems(requestedfor)
                 .then(results => {
                     this.set('actionItems', results);
+                    this.get("notifyController")(results.length);
 
                 });
         },
@@ -94,6 +98,8 @@ export default Component.extend({
                     .then(results => {
                         let toastr = this.get("toast");
                         toastr.success("Deleted successfully");
+                        let actionitems = this.get("actionItems");
+                        this.get("notifyController")(actionitems.length);
                     })
             }
 
@@ -117,7 +123,8 @@ export default Component.extend({
                         this.get('actionItems').addObject(result);
                         this.set('isFormSumbitted', "");
                         $("#frmnewactionitem")[0].reset();
-
+                        let actionitems = this.get("actionItems");
+                        this.get("notifyController")(actionitems.length);
                         toastr.success("Action item sucessfully created");
 
 

@@ -8,5 +8,4 @@ export default Route.extend(UnAuthenticatedRouteMixin, {
     model() {
         return this.get('userProfileService').getAllUserProfiles();
     }
-
 });
