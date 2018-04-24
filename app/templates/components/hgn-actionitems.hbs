@@ -7,13 +7,13 @@
         </a>
       </h4>
     </div>
-    <div class="card-body collapse" id="showData">
+    <div class="card-body" id="showData">
       <div class="mb-3">
         <select class="col-md-6" onchange= {{action (mut forUser) value = "target.value"  }}>
           {{#each teamMembers as |teamMember|}}
             <option disabled= {{if (and (not-eq teamMember._id forUserId) (not isUseronSelfPage )) true null}} value= {{teamMember._id}}
               hidden= {{if (and (not-eq teamMember._id forUserId) (not isUseronSelfPage )) true null}} value= {{teamMember._id}}
-              selected= {{eq forUserId teamMember._id}}>{{teamMember.name}} {{if (check-userisloggedin-user teamMember loggedinUser ) " (You)" ""}}</option>
+              selected= {{eq forUserId teamMember._id}}>{{teamMember.fullName}} {{if (check-userisloggedin-user teamMember loggedinUser ) " (You)" ""}}</option>
           {{/each}}
         </select>
         {{#if isUseronSelfPage}}
@@ -29,8 +29,7 @@
             <thead>
               <tr class="row">
                 <th scope="col" class="col-3">Created By</th>
-                <th scope="col" class="col-7">Description</th>
-                <th scope="col" class="col-1">Edit</th>
+                <th scope="col" class="col-8">Description</th>
                 <th scope="col" class="col-1">Delete</th>
               </tr>
             </thead>
@@ -38,11 +37,9 @@
               {{#each actionItems as |actionItem index|}}
                 <tr class="row {{isSubmitted}}">
                   <td class="col-sm-3">{{actionItem.createdBy}}</td>
-                  <td class="col-sm-7 text-left">
-                    <input id="input_actionitem_{{index}}" required class="col-12" value= {{actionItem.description}} onchange= {{action (mut actionItem.description) value = "target.value"}}>
-                  </td>
-                  <td class="col-sm-1">
-                    <span class="fa fa-save" {{action "editActionItem" actionItem index}}></span>
+                  <td class="col-sm-8 text-left">
+                    <input id="input_actionitem_{{index}}" required class="col-12" value= {{actionItem.description}} oninput= {{action (mut actionItem.description) value = "target.value"}}
+                      onchange= {{action "editActionItem"  actionItem index}}>
                   </td>
                   <td class="col-sm-1">
                     <span class="fa fa-trash" {{action "deleteActionItem" actionItem}}></span>

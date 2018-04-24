@@ -12,24 +12,35 @@ export default Component.extend({
 
     init() {
         this._super(...arguments);
-        this.get('loginService').getLoggedinUser()
+        return this.get('loginService').getLoggedinUser()
             .then(results => {
                 this.set("userrole", results.role);
                 this.set("userId", results.requestorId);
-
-                this.get('dataService').getUnreadNotifications(results.requestorId)
-                    .then(notifications => {
-                        this.set('notificationslength', notifications.length);
-                    });
-
+                this.getNotifications();
+                this.run();
                 this.get('dashboardService').getDashboardData(results.requestorId)
                     .then(databoarddata => {
                         this.set("userDashboardData", databoarddata)
+
                     });
 
             });
+    },
+    run: function () {
+        var interval = 1000 * 60;
+        Ember.run.later(this, function () {
+            this.set("lastUpdatedDateime", Date.now())
+            this.getNotifications();
+            this.run();
+        }, interval);
 
+    },
 
+    getNotifications: function () {
+        this.get('dataService').getUnreadNotifications(this.get("userId"))
+            .then(notifications => {
+                this.set('notificationslength', notifications.length);
+            });
 
     },
 

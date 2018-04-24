@@ -1,37 +1,84 @@
 {{outlet}}
 <div class="container">
-  <h3 class="display-4 timelog-title">Viewing Time Log For: {{model.name}}</h3>
-  <div class="row mb-3">
-    <div class="col-md-6">
-      {{weekly-effort-chart forUserId = model.forUserId }}
-    </div>
-    <div class="col-md-6">
-      {{monthly-effort-chart forUserId = model.forUserId}}
-    </div>
+  <div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 justify-content-between">
+      <li class="navbar-brand">Viewing Timelog For: {{model.name}}</li>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav w-100">
+          <li class="nav-item navbar-text mr-3 w-25" id="timelogweeklychart">
+            {{weekly-effort-chart forUserId= model.forUserId elementid = "timelogweeklychart"}}
+          </li>
+          <li class="nav-item  navbar-text mr-3">
+            <i class="fa fa-tasks pull-right" data-toggle="modal" data-target="#actionItems"></i>
+          </li>
+          <li class="nav-item navbar-text mr-3 ">
+            <i class="fa fa-envelope pull-right" data-toggle="modal" data-target="#notifications"></i>
+          </li>
+          <li class="nav-item navbar-text mr-3">
+            <a class="nav-link" href="/#/profile/{{model.forUserId}}">View Profile</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </div>
   <div class="row mb-3">
-    <div class="col-md-8">
-      {{hgn-notifications loggedinUser = loggedinUser forUserId = model.forUserId}} {{hgn-actionitems  loggedinUser = loggedinUser forUserId = model.forUserId  }}
-      {{#if isEditable}}
-        {{hgn-task-update-form loggedinUser = loggedinUser forUserId = model.forUserId }}
-      {{/if}}
-      <div class="card border-primary mb-3">
+    <div class="col-8">
+      <div class="card border-primary">
         <div class="card-header">
           <h4 class="card-title ">
-            <a class="accordion-toggle" data-toggle="collapse" data-target="#timelogs"> Time Enteries </a>
+            <a class="accordion-toggle" data-toggle="collapse" data-target="#timelogs"> Time Entries </a>
           </h4>
-          <h6 class="card-subtitle mb-2 text-muted">Viewing time enteries for current week</h6>
+          <h6 class="card-subtitle mb-2 text-muted">Viewing time entries logged in last 3 weeks
+            {{#if isEditable}}
+              <button class="btn btn-success pull-right" data-toggle="modal" data-target="#timentrymodal">Add Time Entry
+              </button>
+              <div class="modal fade" id="timentrymodal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                      {{hgn-task-update-form forUserId = loggedinUser.requestorId}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {{/if}}
+          </h6>
         </div>
-        <div class="card-body collapse" id="timelogs">
-          {{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId period = "currentWeek" }}
+        <div class="card-body" id="timelogs">
+          {{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId period = "custom" fromDate = forweek.fromDate toDate = forweek.toDate }}
           {{#if isEditable }}
-            <a href="/#/AllTimeEntries/{{model.forUserId}}" class="card-link">View Enteries For Other Period</a>
+            <a href="/#/AllTimeEntries/{{model.forUserId}}" class="card-link">View Entries For Other Period</a>
           {{/if }}
         </div>
       </div>
     </div>
     <div class="col-md-4">
       {{hgn-leaderboard loggedinUser = loggedinUser}}
+    </div>
+  </div>
+  <div class="modal fade" id="actionItems" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          {{hgn-actionitems  loggedinUser = loggedinUser forUserId = model.forUserId  }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="notifications" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          {{hgn-notifications loggedinUser = loggedinUser forUserId = model.forUserId notifyController = (action (mut numnotifications) 20)}}
+          #notifications{{numnotifications}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

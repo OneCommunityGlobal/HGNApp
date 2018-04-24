@@ -14,8 +14,7 @@
             {{#each newProject.tasks as |task|}}
               <li class="list-group-item">
                 <div class= "input-group">
-              <!--  <input id="taskDescription" name="taskDescription" class="form-control" required=true type="text"
-                value= {{task.Description}}  placeholder="Task"  onchange= {{action "notifyChange" "tasks"}} /> -->
+
                 {{input required = "true" class="form-control" name ="task" type = "text" value = task.Description }}
 
                 <span class="input-group-btn">
@@ -27,7 +26,8 @@
             {{/each}}
           </ul>
         <div class="input-group">
-      <input type="text" class="form-control required" id="taskDescription" placeholder="Add Task..." minlength= {{minTaskLength}} maxlength= {{maxTaskLength}} onchange= {{ action (mut task.Description) value = "target.value"}}>
+          {{input class="form-control required" type="text" placeholder= "Add Task..." value=task.Description }}
+
       <span class="input-group-btn">
         <button class="btn btn-secondary" type="button" {{ action 'addNewTask' }} >Add Task</button>
       </span>
@@ -47,5 +47,34 @@
         </div>
     </fieldset>
 
+    <div class="form-group">
+      <label for="teams">
+        <span>*</span> Teams: </label>
+        <ul class="list-group">
+            {{#each projectTeams as |team|}}
+              <li class="list-group-item">
+                <div class= "input-group">
+
+                {{input required = "true" class="form-control" name ="team" type = "text" value = team.teamName }}
+
+                <span class="input-group-btn">
+                <button class="btn" type="button" {{ action 'cancelTeam' team}} >Remove</button>
+              </span>
+            </div>
+              </li>
+              <br>
+            {{/each}}
+          </ul>
+        <div class="input-group">
+          {{input class="form-control" name ="team" type = "text" placeholder="Add New Team..." value = newTeam.teamName readonly = (if isUserAdministrator null "readonly" )}}
+      <span class="input-group-btn">
+        <button class="btn btn-secondary" type="button" {{ action 'addNewTeam' }} >Add Team</button>
+      </span>
+    </div>
+    </div>
+
+    <div>
     <button type="submit" class="btn btn-primary" {{action 'addNewProject'}}>Add Project</button>
+    <button type="submit" class="btn btn-danger" {{action 'goBack'}}>Cancel</button>
+  </div>
 </form>

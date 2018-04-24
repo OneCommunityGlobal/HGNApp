@@ -3,6 +3,12 @@ import { computed } from '@ember/object';
 import { inject } from '@ember/service';
 
 export default Ember.Controller.extend({
+  isUserAdministrator: Ember.computed('userrole', function () {
+      let userrole = this.get('userrole');
+      //return userrole === "Administrator" ? true : false;
+
+      return true;
+  }),
 
     self: this,
     projectService: Ember.inject.service('project-service'),
@@ -16,6 +22,12 @@ export default Ember.Controller.extend({
     task: {
       Description: ""
     },
+    projectTeams: [],
+    newTeam: {
+      teamName: "",
+      projectId:{}
+    },
+    dataService: inject("datastore-service"),
     validateform() {
         let inputs = Ember.$("input").get();
         let isFormValid = true;
@@ -26,6 +38,14 @@ export default Ember.Controller.extend({
         });
         return isFormValid;
     },
+    addTeams(id, teams){
+      for(var i = 0; i < teams.length; i++){
+        teams[i].projectId = id;
+        this.get('dataService').postTeam(teams[i]);
+      };
+    this.transitionToRoute('projects');
+  },
+
     actions: {
       addNewTask() {
         this.get('newProject.tasks').addObject(this.get('task'));
@@ -34,21 +54,31 @@ export default Ember.Controller.extend({
       cancelTask(task) {
         this.get('newProject.tasks').removeObject(task);
       },
+      addNewTeam(){
+        this.get('projectTeams').addObject(this.get('newTeam'));
+        this.set('newTeam', {});
 
+      },
+      cancelTeam(team){
+        let projectTeams= this.get('projectTeams');
+        projectTeams.removeObject(team);
+      },
       addNewProject() {
         if (this.validateform()) {
-        this.get('model').addObject(this.get('newProject'));
         let project = this.get('newProject');
+        let projectTeams= this.get('projectTeams');
         this.get('projectService').postProject(project)
-        .then(results => {
-            toastr.success("", 'Changes Saved');
-        });
+        .then(results =>
+          this.addTeams(results,projectTeams)
+     );
+        toastr.success("", 'New Project Created!');
         this.set('newProject', {});
-        this.transitionToRoute('projects');
-
       }else {
           alert("Please fix the form errors");
       }
       },
+      goBack(){
+        this.transitionToRoute('projects');
+      }
     }
 });

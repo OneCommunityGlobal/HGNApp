@@ -3,15 +3,16 @@ import ENV from '../config/environment';
 import jwtDecode from 'ember-cli-jwt-decode';
 import Service from '@ember/service';
 import $ from 'jquery';
+import { inject } from '@ember/service';
 
 
 
 export default Service.extend({
 
   host: ENV.webServer,
-  router: Ember.inject.service(),
+  router: inject(),
   login(data) {
-    let self = this;
+
     let router = this.get('router');
 
     let loginPromise = $.ajax({
@@ -25,7 +26,7 @@ export default Service.extend({
           router.transitionTo('application');
         }, error => {
           alert("Invalid credentials");
-          console.log(error.responseText)
+          //console.log(error.responseText)
         }
       )
 

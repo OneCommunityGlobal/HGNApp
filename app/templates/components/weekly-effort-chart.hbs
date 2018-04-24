@@ -1,6 +1,8 @@
-<div class="card-body">
-  <h5 class="card-title">Hours Worked this week</h5>
-  <div class="card-text h-100">
-    {{ember-chart type='doughnut' data=hoursthisweek options= pieChartOptions animate=true}}
-  </div>
+<div> Current Week:
+    <div class="progress center-block">
+        <div class="progress-bar progress-bar-striped" role="progressbar " style="width: {{percentdelivered}}% ;text-align:center; background-color: {{color}}"
+            aria-valuenow=" {{actualhours}} " aria-valuemin="0 " aria-valuemax=" {{committedhours}} " data-toggle="tooltip" data-placement="right"
+            title="Weekly Committed: {{committedhours}} &#010;Delivered in this week: {{actualhours}}">{{actualhours}}&frasl;{{committedhours}}
+        </div>
+    </div>
 </div>

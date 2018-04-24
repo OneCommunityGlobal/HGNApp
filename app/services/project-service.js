@@ -57,7 +57,7 @@ export default Service.extend({
   },
 
   deletetask(projectId, taskId) {
-    let relativePath = "/project/" + projectid + "/task/" + taskId;
+    let relativePath = "/project/" + projectId + "/task/" + taskId;
     let data = null;
     let method = "delete";
 

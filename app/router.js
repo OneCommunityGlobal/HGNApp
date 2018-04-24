@@ -12,6 +12,7 @@ Router.map(function () {
     this.route('newProject');
     this.route('viewProject', { path: '/:project_id' });
   });
+  this.route('team', { path: 'team/:team_id'});
   this.route('timelog', { path: '/timelog/:user_id' });
   this.route('login');
   this.route('usermanagement');

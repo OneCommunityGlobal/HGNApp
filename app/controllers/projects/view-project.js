@@ -12,7 +12,6 @@ export default Ember.Controller.extend({
       return true;
   }),
   self: this,
-  showTeams: false,
   isFormSubmitted: "",
   minProjectName: "2",
   maxProjectName: "100",
@@ -23,7 +22,9 @@ export default Ember.Controller.extend({
   task: {
     Description: ""
   },
-
+  newTeam: {
+    teamName:""
+  },
   projectTeams: "",
   dataService: inject("datastore-service"),
 
@@ -42,29 +43,26 @@ export default Ember.Controller.extend({
       });
       return isFormValid;
   },
-  getProjectTeams(){
+  projectTeams: computed(function(){
     let projectId = this.get('model._id');
-    let teams = [];
+    let allteams = [];
     return this.get('dataService').getAllTeams()
         .then(results => {
           for(var i = 0; i <results.length; i++){
 
             if(results[i].projectId === projectId){
-              teams.push(results[i])
+              allteams.push(results[i])
             }
         }
-        this.set("projectTeams", teams);
+        this.set("projectTeams", allteams);
 
       })
-    },
+    }),
 
 
   actions: {
 
-    teamToggle() {
-      this.getProjectTeams();
-      this.toggleProperty('showTeams');
-    },
+
     notifyChange(key) {
         let value = event.target.value;
         let property = "model." + key;
@@ -77,12 +75,14 @@ export default Ember.Controller.extend({
       this.get('model.tasks').addObject(this.get('task'));
       this.get('projectService').editProjectData(project, projectId);
       this.set('task', {});
+
     },
     cancelTask(task) {
       let projectId = this.get('model._id');
       let project = this.get('model');
+      let taskId = this.get('task._id');
       this.get('model.tasks').removeObject(task);
-      this.get('projectService').editProjectData(project, projectId);
+      this.get('projectService').deletetask(projectId, taskId);
       this.set('task', {});
     },
     destroyProject() {
@@ -95,7 +95,6 @@ export default Ember.Controller.extend({
 
 },
     postChanges() {
-      let projectTeams = {};
       if (this.validateform()) {
           this.set('isFormSubmitted', "")
       let projectId = this.get('model._id');
@@ -110,6 +109,22 @@ export default Ember.Controller.extend({
     }else {
         alert("Please fix the form errors");
     }
+  },
+  addNewTeam(){
+    let projectId = this.get('model._id');
+    let team = this.get('newTeam');
+    this.get('newTeam').projectId = projectId;
+    this.get('projectTeams').addObject(this.get('newTeam'));
+    this.get('dataService').postTeam(this.get('newTeam'));
+    this.set('newTeam', {});
+  },
+  removeTeam(team){
+    let teamId = team._id;
+    team.projectId = null;
+
+    this.get('dataService').editTeamData(team,teamId)
+    .then(alert('saved!'));
+
   }
 
   }

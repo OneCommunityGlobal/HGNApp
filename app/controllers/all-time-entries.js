@@ -20,14 +20,20 @@ export default Controller.extend({
 
         let fromdate = this.get('fromDate');
         let todate = this.get('toDate');
-
-
-
         let obj = {
             "fromDate": fromdate,
             "toDate": todate
         };
         return obj
+    }),
+
+    fromDate: computed("", function () {
+
+        return moment().startOf('week').format("YYYY-MM-DD");
+    }),
+
+    toDate: computed("", function () {
+        return moment().startOf('week').add(1, 'week').format("YYYY-MM-DD");
     }),
 
     validateForm() {

@@ -55,21 +55,40 @@
     Project Status -
     {{if model.isActive "Active" "Inactive"}}
     {{/if}}
-    <button type="submit" class= "btn" id="#projectTeams" {{action 'teamToggle'}}>Teams</button>
-    {{#if showTeams}}
-    <ul class="list-group list-group-flush">
+    <div>Associated Teams:</div>
+
+    <ul class="list-group">
     {{#each projectTeams as |team|}}
     <li class="list-group-item">
-      <a href="/team/{{team._id}}">{{team.teamName}}</a>
+      <div class="input-group">
+        {{#link-to "team" team._id}}
+          {{team.teamName}}
+        {{/link-to}}
+  </div>
+  <span class="input-group-btn">
+    <button class="btn" type="submit" {{action "removeTeam" team}}>Remove</button>
+  </span>
     </li>
     {{/each}}
     </ul>
-    {{/if}}
 
+    <br>
+    {{#if isUserAdministrator }}
+
+    <div class="input-group">
+    {{input class="form-control" name ="team" type = "text" placeholder="Add New Team..." value = newTeam.teamName readonly = (if isUserAdministrator null "readonly" )}}
+    <span class="input-group-btn">
+      <button type="submit" class="btn btn-secondary" id="#newTeam" {{action 'addNewTeam'}}>Add New Team</button>
+      </span>
+      </div>
+    {{/if}}
+    <div>
+      <br>
     {{#if isUserAdministrator}}
     <button type="submit" class="btn btn-primary" {{ action 'postChanges' }}>Save</button>
     <button type="submit" class="btn btn-danger" {{ action 'destroyProject' }}>Delete Project</button>
     {{/if}}
+  </div>
 
 
   </form>

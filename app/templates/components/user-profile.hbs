@@ -1,91 +1,105 @@
 <div class="container">
     <form id="userProfileForm" class= {{isFormSubmitted}}>
-        <div class="form-row col-md-12">
-            <div class="form-group col-md-6">
-                {{#if model.profilePic}}
-                    <img input id="image" type="image  " alt="Profile Picture" src= {{model.profilePic}} name=profilePic class="img-responsive logo"
-                    />
-                {{else}}
-                    <img input id="image" type="image  " alt="Profile Picture" src="/assets/images/defaultprofilepic.jpg" name=profilePic class="img-responsive logo"
-                    />
-                {{/if}}
-                {{#if canUserEditPersonalFields}}
-                    <label for="newProfilePic" class="btn btn-sm btn-info">Update Profile Image</label>
-                    <input id="newProfilePic" style="visibility:hidden" multiple="true" onchange= {{action "updateProfilePic"}} accept="image/png,image/jpeg"
-                        name= {{newProfilePic}} type="file" />
-                {{/if}}
-            </div>
-            <div class="form-group col-md-6">
-                <div class="card border-info mb-3">
-                    <div class="card-header">My Badges</div>
-                    <div class="card-body">
-                        <p class="card-text">Some badges to show up here</p>
+        <div class="form-row col-12">
+            <div class="form-group col-md-4">
+                <div class="form-row mb-1">
+                    <div class="form-row">
+                        {{#if model.profilePic}}
+                            <img input id="image" type="image" alt="Profile Picture" src= {{model.profilePic}} name=profilePic class="img-responsive logo profilepic"
+                            />
+                        {{else}}
+                            <img input id="image" type="image" alt="Profile Picture" src="/assets/images/defaultprofilepic.jpg" name=profilePic class="img-responsive logo profilepic"
+                            />
+                        {{/if}}
+                    </div>
+                    <div class="form-row mt-1">
+                        {{#if canUserEditPersonalFields}}
+                            <label for="newProfilePic" class="fa fa-edit" data-toggle="tooltip" data-placement="bottom" title="Click to update profile picture"></label>
+                            <input id="newProfilePic" class="newProfilePic" multiple="true" onchange= {{action "updateProfilePic"}} accept="image/png,image/jpeg"
+                                name= {{newProfilePic}} type="file" />
+                        {{/if}}
+                        <a class="btn btn-info btn-sm text-center ml-2" href="/#/timelog/{{model._id}}">View Timelog</a>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-5">
-                {{userprofile-inputboxes  type = "text" name = "firstName" label = "First Name" isRequired = true value = model.firstName minlength= minNamelength 
+            <div class="form-row col-md-8">
+                <div class="form-group col-md-5">
+                    {{userprofile-inputboxes  type = "text" name = "firstName" label = "First Name" isRequired = true value = model.firstName minlength= minNamelength 
                 maxlength= maxNamelength isEditable = canUserEditPersonalFields onchangeaction =(action "updateProperty") }}
-            </div>
-            <div class="form-group col-md-5">
-                {{userprofile-inputboxes  type = "text" name = "lastName" label = "Last Name" isRequired = true value = model.lastName minlength= minNamelength 
+                </div>
+                <div class="form-group col-md-5">
+                    {{userprofile-inputboxes  type = "text" name = "lastName" label = "Last Name" isRequired = true value = model.lastName minlength= minNamelength 
                 maxlength= maxNamelength isEditable = canUserEditPersonalFields onchangeaction =(action "updateProperty")}}
-            </div>
-            <div class="form-group col-md-2">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" value=1 name="userActiveOptions" onchange= {{action (mut model.isActive) 1}}
-                        checked= {{if model.isActive "true" null}} readonly= {{if isLoggedinUserAdministrator null "readonly"}}>
-                    <label class="form-check-label" for="inlineRadio1">Active</label>
                 </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="userActiveOptions" value=0 onchange= {{action (mut model.isActive) 0}}
-                        checked= {{if model.isActive null true}} readonly= {{if isLoggedinUserAdministrator null "readonly"}}>
-                    <label class="form-check-label" for="inlineRadio2">Inactive</label>
+                <div class="form-group col-md-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" value=1 name="userActiveOptions" onchange= {{action (mut model.isActive) 1}}
+                            checked= {{if model.isActive "true" null}} disabled= {{if isLoggedinUserAdministrator null "readonly"}}>
+                        <label class="form-check-label" for="inlineRadio1">Active</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="userActiveOptions" value=0 onchange= {{action (mut model.isActive) 0}}
+                            checked= {{if model.isActive null true}} disabled= {{if isLoggedinUserAdministrator null "readonly"}}>
+                        <label class="form-check-label" for="inlineRadio2">Inactive</label>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                {{userprofile-inputboxes  type = "email" name = "email" label = "Email" isRequired = true value = model.email  
+                <div class="form-group col-md-4">
+                    {{userprofile-inputboxes  type = "email" name = "email" label = "Email" isRequired = true value = model.email  
                  isEditable = isLoggedinUserAdministrator onchangeaction =(action "updateProperty")}}
-            </div>
-            <div class="form-group col-md-4">
-                {{userprofile-inputboxes  type = "text" name = "role" list="roleslist" label = "Role" isRequired = true value = model.role  isEditable = isLoggedinUserAdministrator onchangeaction =(action "updateProperty") }}
-                <datalist id="roleslist">
-                    <option value="Administrator"></option>
-                    <option value="Volunteer"></option>
-                    <option value="Manager"></option>
-                    <option value="Core Team"></option>
-                </datalist>
-            </div>
-            <div class="form-group col-md-4">
-                {{userprofile-inputboxes  type = "number" min =minWeeklyCommittedHours  max = maxWeeklyCommittedHours name = "weeklyComittedHours" label = "Weekly Comitted Hours" isRequired = true value = model.weeklyComittedHours  isEditable = isLoggedinUserAdministrator onchangeaction =(action "updateProperty")}}
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-xs-12">
-                <label class="control-label" for="bio">*Bio:</label>
-                {{ textarea id = "bio" class = "form-control" value= model.bio options=options readonly = (if canUserEditPersonalFields null "readonly" )}}
+                </div>
+                <div class="form-group col-md-4">
+                    {{userprofile-inputboxes  type = "text" name = "role" list="roleslist" label = "Role" isRequired = true value = model.role  isEditable = isLoggedinUserAdministrator onchangeaction =(action "updateProperty") }}
+                    <datalist id="roleslist">
+                        <option value="Administrator"></option>
+                        <option value="Volunteer"></option>
+                        <option value="Manager"></option>
+                        <option value="Core Team"></option>
+                    </datalist>
+                </div>
+                <div class="form-group col-md-4">
+                    {{userprofile-inputboxes  type = "number" min =minWeeklyCommittedHours  max = maxWeeklyCommittedHours name = "weeklyComittedHours" label = "Weekly Comitted Hours" isRequired = true value = model.weeklyComittedHours  isEditable = isLoggedinUserAdministrator onchangeaction =(action "updateProperty")}}
+                </div>
             </div>
         </div>
         <div class="form-row">
-            {{userprofile-profilelinks label = "Social/ Professional Link" linksarray =  model.personalLinks isEditable =canUserEditPersonalFields name = "personalLinks" onchangeaction =(action "updateProperty")}}
             {{userprofile-profilelinks label = "Administrative Link" linksarray =  model.adminLinks isEditable =isLoggedinUserAdministrator name = "adminLinks" onchangeaction =(action "updateProperty")}}
         </div>
         <div class="form-row">
-            {{userprofile-teammemberships name = "teamId" userteams = model.teamId isEditable = isLoggedinUserAdministrator  onchangeaction =(action "updateProperty")}}
-        </div>
-        <div class="form-row col-12">
-            <div class="col-xs-6">
-                <a href="#" class=" button btn btn-danger">Cancel</a>
-            </div>
-            {{#if canUserEditPersonalFields }}
-                <div class="col-xs-6">
-                    <button type="submit" class="btn btn-primary pull-right" {{action 'postChanges'}}> Save Changes</button>
+            <div class="card border-info mb-3 w-100">
+                <div class="card-header">Badges</div>
+                <div class="card-body">
+                    <p class="card-text">Some badges to show up here</p>
                 </div>
-            {{/if}}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-12">
+                <label class="control-label" for="bio">*Bio:</label>
+                {{tinymce-editor value= model.bio options=options  onValueChanged=(action (mut model.bio))}}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6">
+                {{userprofile-teammemberships title = "Team" name = "teams" memberships = model.teams isEditable = isLoggedinUserAdministrator  onchangeaction =(action "updateProperty")}}
+            </div>
+            <div class="col-md-6">
+                {{userprofile-teammemberships title = "Project" name = "projects" memberships = model.projects isEditable = isLoggedinUserAdministrator  onchangeaction =(action "updateProperty")}}
+            </div>
+        </div>
+        <div class="form-row">
+        </div>
+        <div class="form-row">
+            {{userprofile-profilelinks label = "Social/ Professional Link" linksarray =  model.personalLinks isEditable =canUserEditPersonalFields name = "personalLinks" onchangeaction =(action "updateProperty")}}
+        </div>
+        <div class="form-row">
+            <div class="col-6 justify-content-start">
+                <a href="#" class="btn btn-danger float-left">Cancel</a>
+            </div>
+            <div class="col-6 justify-content-end">
+                {{#if canUserEditPersonalFields }}
+                    <button type="submit" class="btn btn-primary float-right" {{action 'postChanges'}}>Save Changes</button>
+                {{/if}}
+            </div>
         </div>
     </form>
 </div>

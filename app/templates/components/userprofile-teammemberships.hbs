@@ -1,43 +1,43 @@
 {{yield}}
 <div class="card-body">
-    <h4 class="card-title">Team Memberships</h4>
+    <h4 class="card-title">{{title}} Memberships</h4>
     <p class="card-text">{{isArrayEmptyText}}</p>
 </div>
 <ul class="list-group list-group-flush">
-    {{#each userteams as |team|}}
+    {{#each memberships as |membership|}}
         <li class="list-group-item">
-            <a href="/team/{{team._id}}">{{team.teamName}}</a>
+            <a href="#/{{title}}/{{membership._id}}">{{if (eq title "Team") membership.teamName membership.projectName}}</a>
             {{#if isEditable}}
-                <span class="fa fa-trash pull-right" {{action "removeTeamMembership" team}}></span>
+                <span class="fa fa-trash pull-right" {{action "removeMembership" membership}}></span>
             {{/if}}
         </li>
     {{/each}}
 </ul>
-<div class="card-body">
+<div class="card-footer">
     {{#if isEditable}}
-        <a href="#" class="card-link" data-toggle="modal" data-target="#newteammembership" {{action "loadAllTeams"}}>Manage Membership</a>
+        <a href="#" class="card-link btn btn-success" data-toggle="modal" data-target="#new{{title}}membership" {{action "loadAllmemberships"}}>Manage {{title}} Membership</a>
     {{/if}}
 </div>
 {{#if isEditable}}
-    <div class="modal fade" id="newteammembership" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="new{{title}}membership" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Manage Memberships</h5>
+                    <h5 class="modal-title">Manage {{title}} Memberships</h5>
                 </div>
                 <div class="modal-body {{submitModal}}">
-                    <div class="form-row">
-                        {{#each allTeams as |team|}}
+                    {{#each allMemberships as |membership|}}
+                        <div class="form-row mb-1 mr-3">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id= {{team._id}} value= {{team._id}} checked= {{if (record-in-array userteams team) "checked" null}}
-                                    onchange= {{action "edituserteams" team}}>
-                                <label class="form-check-label" for= {{team._id}}>{{team.teamName}}</label>
+                                <input class="form-check-input" type="checkbox" id= {{membership._id}} value= {{membership._id}} checked= {{if (record-in-array memberships membership) "checked" null}}
+                                    onchange= {{action "editUserMembership" membership}}>
+                                <label class="form-check-label" for= {{membership._id}}>{{if (eq title "Team") membership.teamName membership.projectName}}</label>
                             </div>
-                        {{/each}}
-                    </div>
+                        </div>
+                    {{/each}}
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" {{action "cancelAction" }}>Cancel</button>
-                        <button type="button" class="btn btn-primary" {{action "manageTeamMemberships" }} data-dismiss="modal">Save changes</button>
+                        <button type="button" class="btn btn-primary" {{action "manageMemberships" }} data-dismiss="modal">Save changes</button>
                     </div>
                 </div>
             </div>

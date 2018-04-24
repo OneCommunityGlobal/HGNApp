@@ -2,24 +2,24 @@ import Component from '@ember/component';
 import moment from 'moment';
 import { inject } from '@ember/service';
 import { computed } from '@ember/object';
+import { set } from '@ember/object';
+import { later } from '@ember/runloop';
 
 export default Component.extend({
 
     timeEntryService: inject('time-entry-service'),
-    fromDate: Date.now(),
-    todate: Date.now(),
-
     init() {
-
         this._super(...arguments);
-        let foruser = this.get('forUserId');
-        this.get('timeEntryService').getUserProjects(foruser)
-            .then(results => {
-                this.set('projects', results);
-            });
-
-
+        //this.set('fromDate', Date.now());
+        // this.set('todate', Date.now());
+        this.set("options", {
+            plugins: ["autolink"],
+            menubar: false,
+            //statusbar: false,
+            max_height: 200
+        });
     },
+
     isEditable: computed("forUserId", "loggedinUser", function () {
         let foruser = this.get('forUserId');
         let loggedinUserId = this.get('loggedinUser.requestorId');
@@ -27,23 +27,33 @@ export default Component.extend({
         return (loggedinUserRole === "Administrator" || foruser === loggedinUserId);
 
     }),
-    editableoptions: {
-        plugins: ["link", "autolink"],
-        menubar: "insert",
-        toolbar: ""
-    },
-
-    noneditableoptions: {
-        plugins: ["link", "autolink"],
-        menubar: "insert",
-        toolbar: "",
-        readonly: 1
-    },
-
     didReceiveAttrs() {
+        this._super(...arguments);
+        let foruser = this.get('forUserId');
+        this.get('timeEntryService').getUserProjects(foruser)
+            .then(results => {
+                this.set('projects', results);
+            });
         this.getDataforTime();
+        this.set("lastUpdatedDateime", Date.now())
+        //  this.run();
     },
+    run: function () {
+        var interval = 1000 * 600;
+        later(this, function () {
+            this.set("lastUpdatedDateime", Date.now())
+            this.getDataforTime();
+            this.run();
+        }, interval);
 
+    },
+    whenUpdated: computed('lastUpdatedDateime', 'Datetime.now()', function () {
+        var now = moment().format("MM/DD/YYYY hh:mm:ss A");
+        // var lastUpdatedDateime = moment(this.get('lastUpdatedDateime'));
+        // var duration = moment.duration(now.diff(lastUpdatedDateime)).humanize();
+        return now;
+
+    }),
 
 
     timelogsview: computed("timelogs.@each", function () {
@@ -53,27 +63,12 @@ export default Component.extend({
 
     getDataforTime() {
 
-
-
         let period = this.get("period");
         let userid = this.get('forUserId');
         let fromdate;
         let todate;
 
-        if (period === "currentWeek") {
-
-            let start = moment().startOf("week");
-
-            fromdate = start.clone().format('X');
-            todate = start.clone().add(7, 'days').format('X');
-
-            let startdate = start.clone().format("MM/DD/YYYY");
-            let enddate = start.clone().add(1, 'week').format("MM/DD/YYYY");;
-
-            this.set("period", `current week [ ${startdate} to ${enddate}]`);
-        }
-
-        else if (period === "custom") {
+        if (period === "custom") {
             let start = moment(this.get('fromDate'));
             let end = moment(this.get('toDate'))
 
@@ -84,7 +79,19 @@ export default Component.extend({
 
             let enddate = end.clone().format("MM/DD/YYYY");
 
-            this.set("period", `custom range [ ${startdate} to ${enddate}]`);
+            this.set("perioddates", `custom range [ ${startdate} to ${enddate}]`);
+
+        }
+        else {
+            let start = moment().startOf("week");
+
+            fromdate = start.clone().format('X');
+            todate = start.clone().add(7, 'days').format('X');
+
+            let startdate = start.clone().format("MM/DD/YYYY");
+            let enddate = start.clone().add(1, 'week').format("MM/DD/YYYY");
+
+            this.set("perioddates", `current week [ ${startdate} to ${enddate}]`);
 
         }
 
@@ -92,9 +99,12 @@ export default Component.extend({
             .then(results => { this.set('timelogs', results) });
     },
 
+
+
     actions: {
 
         saveEditsToTimelog(timelog, index) {
+
 
             let toastr = this.get("toast");
 
@@ -122,26 +132,28 @@ export default Component.extend({
 
             }
             this.get('timeEntryService').updateTimeEntry(timelog._id, updatedvalues).then(
-                results => {
+                () => {
                     var updatedtimelog = this.get("timelogs").objectAt(index);
 
-                    Ember.set(updatedtimelog, "notes", timelog.notes);
-                    Ember.set(updatedtimelog, "projectId", updatedvalues.projectId);
-                    Ember.set(updatedtimelog, "taskId", updatedvalues.taskId);
-                    Ember.set(updatedtimelog, "isTangible", timelog.isTangible);
-                    Ember.set(updatedtimelog, "hours", timelog.hours.trim());
-                    Ember.set(updatedtimelog, "minutes", timelog.minutes.trim());
+                    set(updatedtimelog, "notes", timelog.notes);
+                    set(updatedtimelog, "projectId", updatedvalues.projectId);
+                    set(updatedtimelog, "taskId", updatedvalues.taskId);
+                    set(updatedtimelog, "isTangible", timelog.isTangible);
+                    set(updatedtimelog, "hours", timelog.hours.trim());
+                    set(updatedtimelog, "minutes", timelog.minutes.trim());
                     toastr.success("Edits Successfully saved");
+                    this.set('isFormSubmitted', "");
                 },
                 error => { toastr.error("", error); })
+
         },
 
         deleteTimelog(timelog) {
             if (confirm("Are you sure you want to delete this entry")) {
                 let toastr = this.get('toast');
                 this.get('timeEntryService').deleteTimeEntry(timelog._id)
-                    .then(results => {
-                        console.log(results);
+                    .then(() => {
+
                         this.get('timelogs').removeObject(timelog);
                         toastr.success("Time Entry Succesfully Removed")
                     },

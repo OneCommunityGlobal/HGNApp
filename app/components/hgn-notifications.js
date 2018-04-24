@@ -1,6 +1,8 @@
 
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import moment from 'moment';
+
 
 export default Component.extend({
 
@@ -8,10 +10,31 @@ export default Component.extend({
     didReceiveAttrs() {
         this._super(...arguments);
 
-        let forUserId = this.get('forUserId');
+        this.getNotifications();
+        this.run()
+    },
 
+    run: function () {
+        var interval = 1000 * 60;
+        Ember.run.later(this, function () {
+            this.set("lastUpdatedDateime", Date.now())
+            this.getNotifications();
+            this.run();
+        }, interval);
+
+    },
+
+    nummotifications: computed("notifications.[]", function () {
+        let notifications = this.get("notifications");
+        return notifications.length;
+    }),
+
+    getNotifications: function () {
+        let forUserId = this.get('forUserId');
         this.get('DataService').getUnreadNotifications(forUserId)
-            .then(results => { this.set('notifications', results); });
+            .then(results => {
+                this.set('notifications', results);
+            });
     },
 
     isEditable: computed('loggedinUser', 'forUserId', function () {
@@ -29,6 +52,12 @@ export default Component.extend({
             this.get('DataService').deleteNotification(notification._id);
             alert('deleted');
 
+        },
+
+        notifyController() {
+            let numnotifications = this.get('nummotifications');
+            alert(nummotifications)
+            this.send("notifyController", numnotifications);
         }
     }
 });

@@ -1,11 +1,35 @@
 <div>
   <h4 class="card-title">Reports</h4>
-  <h4 class="card-title">Project name: <i>{{projectName}}</i></h4>
+  <div class="">
+    <h4 class="card-title">Project name: {{projectName}}</h4>
+  </div>
+
+  <p><i>Showing results for week: {{dates.FromDate}} - {{dates.ToDate}}</i></p>
+
   <div>
     <!--including component for charts display-->
-    {{viewreports-charts projects=projects option=project_id }}
-    <h5 class="card-title">Man-hours contributed to the project:</h5>
+
+    {{!#power-select
+       searchEnabled=true
+       searchField="firstName"
+       placeholder="Select a Person"
+      options=projectmembers
+      selected=selectedmember
+      onchange=(mut 'option' )
+      as |filter| }}
+      {{!filter.firstName}}
+    {{!/power-select}}
+    {{!#if mytemp}}
+    <!--<h6>Hours Contributed by <i>{{selectedmember.firstName}}</i></h6>-->
+    {{viewreports-charts timeentrydata = model.timeentrydata projectmembers=model.projectmembers previousweekdata = model.previuostimeentrydata}}
+    {{!else}}
+    <!--<p>Please select a person to see the contribution trend</p>-->
+    {{!/if}}
+
+    {{!line-chart data=model.data options=options chartDidRender='selectCountry'}}
+    <!--<h5 class="card-title">Man-hours contributed to the project:</h5>-->
     <!--including component for teams display-->
-    {{viewreports-teams teams=teams option=project_id persons=persons}}
+    {{!viewreports-teams teams=teams option=project_id persons=persons}}
+
   </div>
 </div>

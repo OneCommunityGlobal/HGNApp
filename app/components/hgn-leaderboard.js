@@ -2,7 +2,9 @@
 import { inject } from '@ember/service';
 import Component from '@ember/component';
 import $ from 'jquery';
-import { scheduleOnce } from '@ember/runloop';
+import moment from 'moment';
+import { computed } from '@ember/object';
+
 
 export default Component.extend({
     dashboardService: inject("dashboard-service"),
@@ -11,6 +13,21 @@ export default Component.extend({
 
     init() {
         this._super(...arguments);
+        this.getLeaderboardData();
+        this.run();
+    },
+
+    run: function () {
+        var interval = 1000 * 60;
+        Ember.run.later(this, function () {
+            this.getLeaderboardData();
+            this.run();
+        }, interval);
+
+    },
+
+
+    getLeaderboardData: function () {
         return this.get('dashboardService').getLeaderBoard(this.loggedinUser)
             .then(results => { this.set('leaderboarddata', results); })
             .then(() => {
@@ -55,9 +72,6 @@ export default Component.extend({
                 this.set('maxtotaltime', maxtotal);
                 this.set('resultset', resultset);
             })
-
-
-
     },
 
     getcolor: function (effort) {
@@ -96,7 +110,9 @@ export default Component.extend({
 
     didRender() {
         this._super(...arguments);
-        scheduleOnce('afterRender', this, 'scrollToRow');
+        //scheduleOnce('afterRender', this, 'scrollToRow');
+
+        this.scrollToRow();
     },
 
     scrollToRow() {

@@ -1,10 +1,11 @@
+import { inject } from '@ember/service';
 import Route from '@ember/routing/route';
 import UnAuthenticatedRouteMixin from '../mixins/un-authenticated-route-mixin';
 
 export default Route.extend(UnAuthenticatedRouteMixin, {
-    model(params) {
-        let forUserId = params.user_id;
+  dataService: inject('datastore-service'),
+  model(params) {
 
-        return { "forUserId": forUserId }
-    }
+    return this.get('dataService').getTeamById(params.team_id);
+  }
 });
