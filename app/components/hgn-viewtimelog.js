@@ -12,16 +12,14 @@ export default Component.extend({
         this._super(...arguments);
         this.set("timelogs", []);
         this.set("options", {
-            plugins: ["autolink", "link", "autoresize"],
+            plugins: ["autolink", "link"],
             menubar: false,
-            //statusbar: false,
-            toolbar: false,
-            default_link_target: "_blank",
-            toolbar: "link code",
-            link_context_toolbar: true,
-            link_title: false
+            toolbar: ["cut copy paste link numlist bullist outdent indent"],
+            browser_spellcheck: true,
         });
     },
+
+
 
     isEditable: computed("forUserId", "loggedinUser", function () {
         let foruser = this.get('forUserId');

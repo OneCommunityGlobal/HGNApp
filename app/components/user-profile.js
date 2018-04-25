@@ -21,7 +21,8 @@ export default Component.extend({
     options: {
         plugins: ["link", "autolink"],
         menubar: "insert",
-        toolbar: ""
+        toolbar: "",
+        browser_spellcheck: true
     },
 
     isLoggedinUserAdministrator: computed('userrole', function () {

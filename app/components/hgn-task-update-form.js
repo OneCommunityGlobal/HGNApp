@@ -18,8 +18,10 @@ export default Component.extend({
 
     options: {
         plugins: ["link", "autolink"],
-        menubar: "insert",
-        toolbar: ""
+        menubar: false,
+        toolbar: ["cut copy paste link numlist bullist outdent indent"],
+        browser_spellcheck: true
+
     },
 
     init() {
