@@ -96,6 +96,7 @@ export default Component.extend({
                         toastr.success("", 'Time Entry Saved');
                         this.get("notifyController")(Date.now());
                         this.clearform();
+                        $("[data-dismiss=modal]").trigger({ type: "click" });
                     }, error => {
                         toastr.warning(error.responseJSON.message, 'Error!!');
                     });

@@ -49,21 +49,14 @@
           </li>
         {{/if}}
         <li class="nav-item dropdown">
-          <aitem class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            <a href="/#/profile/{{userId}}">
-              <img src= {{if userDashboardData.profilePic userDashboardData.profilePic  "/assets/images/defaultprofilepic.jpg"}} alt=""
-                class="img-fluid dashboardimg img-circle" height="35" width="40">
-            </a>
-          </aitem>
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <img src= {{if userDashboardData.profilePic userDashboardData.profilePic  "/assets/images/defaultprofilepic.jpg"}} alt=""
+              class="img-fluid dashboardimg img-circle" height="35" width="40" onclick= {{action "navigatetoProfile"}}>
+          </a>
           <div class="dropdown-menu">
             <a class="dropdown-item">Hello {{userDashboardData.firstName}}
               <div>
-                <small>You are logged in as
-                  {{#if ( eq userDashboardData.role "Administrator")}}
-                    an {{userDashboardData.role}}
-                  {{else}}
-                    a {{userDashboardData.role}}
-                  {{/if}}
+                <small>You current role is: {{userDashboardData.role}}
                 </small>
               </div>
             </a>

@@ -41,6 +41,10 @@ export default Component.extend({
 
     },
 
+    didUpdateAttrs() {
+        this.getDataforTime();
+    },
+
 
     timelogsview: computed("timelogs.@each", function () {
 

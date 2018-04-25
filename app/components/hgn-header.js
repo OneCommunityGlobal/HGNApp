@@ -55,11 +55,15 @@ export default Component.extend({
         logout() {
             this.get('loginService').logout();
 
+        },
+
+        navigatetoProfile() {
+           
+            let userId = this.get("userId")
+
+            this.get(`navigatetoProfile`)(userId);
+
         }
-
-
-
-
 
     }
 
