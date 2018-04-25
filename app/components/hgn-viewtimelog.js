@@ -10,6 +10,7 @@ export default Component.extend({
     timeEntryService: inject('time-entry-service'),
     init() {
         this._super(...arguments);
+        this.set("timelogs", []);
         this.set("options", {
             plugins: ["autolink", "link", "autoresize"],
             menubar: false,
@@ -51,6 +52,29 @@ export default Component.extend({
         return this.get("timelogs");
     }),
 
+    timedistribution: computed("timelogs.@each", function () {
+
+        let timelogs = this.get("timelogs");
+
+        let tangibletime = 0;
+        let intangibletime = 0;
+        let total = 0;
+
+        timelogs.forEach(element => {
+            let timeSpent = element.hours + ":" + element.minutes;
+            let totalSeconds = moment.duration(timeSpent).asSeconds();
+            total += totalSeconds;
+            element.isTangible ? (tangibletime += totalSeconds) : (intangibletime += totalSeconds)
+
+        });
+
+        return {
+            "tangibletime": parseFloat(tangibletime / 3600).toFixed(2),
+            "intangibletime": parseFloat(intangibletime / 3600).toFixed(2),
+            "totaltime": parseFloat(total / 3600).toFixed(2)
+        }
+    }),
+
     getDataforTime() {
 
         let period = this.get("period");
@@ -58,38 +82,24 @@ export default Component.extend({
         let fromdate;
         let todate;
 
-        if (period === "custom") {
-            let start = moment(this.get('fromDate'));
-            let end = moment(this.get('toDate'))
 
-            fromdate = start.clone().format('X');
-            todate = end.clone().format('X');
+        let start = this.get('fromDate') ? moment(this.get('fromDate')) : moment().startOf("week");
+        let end = this.get('toDate') ? moment(this.get('toDate')) : moment().startOf("week").add(1, "week");
 
-            let startdate = start.clone().format("MM/DD/YYYY");
+        fromdate = start.clone().format('X');
+        todate = end.clone().format('X');
 
-            let enddate = end.clone().format("MM/DD/YYYY");
+        let startdate = start.clone().format("MM/DD/YYYY");
 
-            this.set("perioddates", `custom range [ ${startdate} to ${enddate}]`);
+        let enddate = end.clone().format("MM/DD/YYYY");
 
-        }
-        else {
-            let start = moment().startOf("week");
-
-            fromdate = start.clone().format('X');
-            todate = start.clone().add(7, 'days').format('X');
-
-            let startdate = start.clone().format("MM/DD/YYYY");
-            let enddate = start.clone().add(1, 'week').format("MM/DD/YYYY");
-
-            this.set("perioddates", `current week [ ${startdate} to ${enddate}]`);
-
-        }
+        this.set("perioddates", ` ${startdate} to ${enddate}`);
 
         this.get('timeEntryService').getTimeEntriesForPeriod(userid, fromdate, todate)
-            .then(results => { this.set('timelogs', results) });
+            .then(results => {
+                this.set('timelogs', results);
+            });
     },
-
-
 
     actions: {
 
@@ -101,7 +111,7 @@ export default Component.extend({
                 () => {
                     toastr.success("Edits Successfully saved");
                     this.set('isFormSubmitted', "");
-                    this.get("notifyController")(Date.now())
+                    this.get("notifyController")(Date.now());
                 },
                 error => { toastr.error("", error); })
 

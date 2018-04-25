@@ -1,5 +1,17 @@
-<div>
-    <small>Viewing time Entries for {{perioddates}}</small>
+<div class="h-100 w-100">
+    <small>Viewing time Entries for {{perioddates}}
+        <div class="w-100 border border-dark mb-1 rounded">
+            <span class="bg-success mb-1  w-25 ml-1 mr-1 mt-1">
+                Tangible Effort: {{timedistribution.tangibletime}} hrs
+            </span>
+            <span class="bg-info mb-1  w-25 mr-1 mt-1">
+                Intangible Effort: {{timedistribution.intangibletime}} hrs
+            </span>
+            <span class="bg-primary mb-1  w-25 mt-1">
+                Total Effort :{{timedistribution.totaltime}} hrs
+            </span>
+        </div>
+    </small>
 </div>
 {{#if timelogs}}
     <div class="table-responsive  h-100">
@@ -7,8 +19,7 @@
             <tbody>
                 {{#each timelogsview as |timelog index|}}
                     <tr class="col-12 w-100 mb-3 row tr-tangible-{{timelog.isTangible}}" scope="row">
-                        <form id="frmEditTimeEntry_{{index}}" class="w-100 form-inline" readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}
-                            onformchange="alert('rememberr to save changes')">
+                        <form id="frmEditTimeEntry_{{index}}" class="w-100 form-inline" readonly= {{if (and isEditable (is-timeentry-within-week timelog.dateOfWork)) null "true"}}>
                             <div class=" col-5 w-100 ">
                                 <div class="row form-group ">
                                     <label class="col-form-label mr-1 ">Date:</label>
