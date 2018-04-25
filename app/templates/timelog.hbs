@@ -1,24 +1,27 @@
 {{outlet}}
 <div class="container">
   <div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 justify-content-between">
+    <nav class="navbar navbar-expand-md navbar-light bg-light mb-3 nav-fill">
       <li class="navbar-brand">Viewing Timelog For: {{model.name}}</li>
-      <div class="collapse navbar-collapse">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#timelogsnapshot" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+      </button>
+      <div class="collapse navbar-collapse" id="timelogsnapshot">
         <ul class="navbar-nav w-100">
           <li class="nav-item navbar-text mr-3 w-25" id="timelogweeklychart">
             {{weekly-effort-chart forUserId= model.forUserId elementid = "timelogweeklychart"}}
           </li>
-          <li class="nav-item  navbar-text mr-3">
-            <span class="fa fa-tasks pull-right icon-large" data-toggle="modal" data-target="#actionItems">
+          <li class="nav-item  navbar-text">
+            <span class="fa fa-tasks icon-large" data-toggle="modal" data-target="#actionItems">
               <icon class="badge-notify">{{numactionitems}}</icon>
             </span>
           </li>
-          <li class="nav-item navbar-text mr-3 ">
-            <i class="fa fa-envelope pull-right icon-large" data-toggle="modal" data-target="#notifications">
+          <li class="nav-item navbar-text">
+            <i class="fa fa-envelope icon-large" data-toggle="modal" data-target="#notifications">
               <icon class="badge-notify">{{numnotifications}}</icon>
             </i>
           </li>
-          <li class="nav-item navbar-text mr-3">
+          <li class="nav-item navbar-text">
             <a class="nav-link" href="/#/profile/{{model.forUserId}}">View Profile</a>
           </li>
         </ul>
