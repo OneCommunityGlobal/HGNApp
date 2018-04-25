@@ -5,7 +5,7 @@ import { computed } from '@ember/object';
 
 export default Component.extend({
   tagName: "card",
-  classNames: ["card", "text-center", "mb-3", "w-33", "h-100", "prescrollable", "hgn-timer", "text-white"],
+  classNames: ["text-center", "hgn-timer"],
   showMyModal: false,
 
   clock: inject('hgn-clock'),

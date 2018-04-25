@@ -24,16 +24,13 @@ export default Component.extend({
 
     },
 
-    init() {
+    didReceiveAttrs() {
         this._super(...arguments);
-
         let user = this.get('forUserId');
 
         this.get('timeEntryService').getUserProjects(user)
             .then(results => { this.set('projects', results); });
     },
-
-
 
     minDateForLogging: computed("loggedinUser.role", function () {
 

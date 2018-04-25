@@ -1,33 +1,26 @@
-<div class="card-body">
-  <h5 class="card-title">Add Time To Task</h5>
-  <div class="card-text">
-    <div class="task-timer">
-      <div class="timer-text">
-        <span class="hours"> {{hours}} </span> :
-        <span class="minutes"> {{minutes}} </span> :
-        <span class="seconds">{{seconds}} </span>
-      </div>
-      <div style="margin:10px">
-        (HH : MM : SS)
-      </div>
-      <div style="margin:10px">
-        <button id="timerButton" {{action "timerAction"}}>
-          <span class="fa fa-{{actionIcon}}" aria-hidden="true"></span> {{actionText}} </button>
-        <button id="timerButtonReset" disabled="{{stopDisabled}}" {{action "resetTimer"}}>
-          <span class="fa fa-eject" aria-hidden="true"></span> Reset </button>
-      </div>
-      <div>
-        <div class="col-md-12">
-          <button type="button" class="btn btn-large btn-primary dashboardbutton" data-toggle="modal" data-target="#timentrymodal">Add time to task</button>
-          <div class="modal fade" id="timentrymodal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-body">
-                  {{hgn-task-update-form forUserId = loggedinUser.requestorId notifyController = notifyController }}
-                </div>
-              </div>
-            </div>
-          </div>
+<div class="border">
+  <div>
+    <span class="hours"> {{hours}} HH </span> :
+    <span class="minutes"> {{minutes}} MM </span>
+  </div>
+  <div>
+    <button type="button" class="btn btn-sm" id="timerButton" {{action "timerAction"}} data-toggle="tooltip" data-placement="botton"
+      title= {{actionText}}>
+      <span class="fa fa-{{actionIcon}}" aria-hidden="true"></span>
+    </button>
+    <button type="button" class="btn btn-sm" id="timerButtonReset" disabled="{{stopDisabled}}" {{action "resetTimer"}} data-toggle="tooltip"
+      data-placement="botton" title="Reset">
+      <span class="fa fa-eject" aria-hidden="true"></span>
+    </button>
+    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#timentrymodal">
+      <i class="fa fa-check"></i>
+    </button>
+  </div>
+  <div class="modal fade" id="timentrymodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          {{hgn-task-update-form forUserId = loggedinUser notifyController = notifyController taskhours = hours taskminutes = minutes }}
         </div>
       </div>
     </div>
