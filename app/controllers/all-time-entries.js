@@ -29,11 +29,11 @@ export default Controller.extend({
 
     fromDate: computed("", function () {
 
-        return moment().startOf('week').format("YYYY-MM-DD");
+        return moment().startOf('isoWeek').format("YYYY-MM-DD");
     }),
 
     toDate: computed("", function () {
-        return moment().startOf('week').add(1, 'week').format("YYYY-MM-DD");
+        return moment().startOf('isoWeek').add(1, 'week').format("YYYY-MM-DD");
     }),
 
     validateForm() {
