@@ -44,6 +44,8 @@ export default Component.extend({
 
 
     }),
+
+
     validateform() {
         this.set('isFormSubmitted', "submitted");
 
@@ -97,6 +99,7 @@ export default Component.extend({
                     this.get('userProfileService').editUserProfileData(user, userId)
                         .then(() => {
                             toastr.success("", 'Changes Saved');
+                            this.set("showwarning", "");
                         }, error => {
 
                             toastr.warning(error.responseJSON.message, 'Error!!');

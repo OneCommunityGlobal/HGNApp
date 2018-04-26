@@ -1,5 +1,5 @@
 <div class="container">
-    <form id="userProfileForm" class= {{isFormSubmitted}}>
+    <form id="userProfileForm" class= {{isFormSubmitted}} oninput= {{action (mut showwarning) true}}>
         <div class="form-row col-12">
             <div class="form-group col-md-4">
                 <div class="form-row mb-1">
@@ -61,6 +61,12 @@
                 </div>
             </div>
         </div>
+        {{#if showwarning}}
+            <div class="border bg-danger text-white form-row mt-2 mb-2">
+                * REMEMBER TO CLICK THE "SAVE CHANGES" BUTTON AT THE BOTTOM OF THE PAGE BEFORE LEAVING. YOUR CHANGES WILL BE LOST IF YOU
+                DON'T DO THIS."
+            </div>
+        {{/if}}
         <div class="form-row">
             {{userprofile-profilelinks label = "Administrative Link" linksarray =  model.adminLinks isEditable =isLoggedinUserAdministrator name = "adminLinks" onchangeaction =(action "updateProperty")}}
         </div>
@@ -89,7 +95,7 @@
         <div class="form-row">
         </div>
         <div class="form-row">
-            {{userprofile-profilelinks label = "Social/ Professional Link" linksarray =  model.personalLinks isEditable =canUserEditPersonalFields name = "personalLinks" onchangeaction =(action "updateProperty")}}
+            {{userprofile-profilelinks label = "Social/Professional Link" linksarray =  model.personalLinks isEditable =canUserEditPersonalFields name = "personalLinks" onchangeaction =(action "updateProperty")}}
         </div>
         <div class="form-row">
             <div class="col-6 justify-content-start">
