@@ -17,6 +17,7 @@ export default Component.extend({
     showErrors: true,
     showFormErrors: false,
     newProfilePic: "",
+    showwarning: "",
 
     options: {
         plugins: ["link", "autolink"],
