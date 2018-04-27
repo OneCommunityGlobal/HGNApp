@@ -17,11 +17,13 @@ export default Component.extend({
     showErrors: true,
     showFormErrors: false,
     newProfilePic: "",
+    showwarning: "",
 
     options: {
         plugins: ["link", "autolink"],
         menubar: "insert",
-        toolbar: ""
+        toolbar: "",
+        browser_spellcheck: true
     },
 
     isLoggedinUserAdministrator: computed('userrole', function () {
@@ -43,6 +45,8 @@ export default Component.extend({
 
 
     }),
+
+
     validateform() {
         this.set('isFormSubmitted', "submitted");
 
@@ -96,6 +100,7 @@ export default Component.extend({
                     this.get('userProfileService').editUserProfileData(user, userId)
                         .then(() => {
                             toastr.success("", 'Changes Saved');
+                            this.set("showwarning", "");
                         }, error => {
 
                             toastr.warning(error.responseJSON.message, 'Error!!');

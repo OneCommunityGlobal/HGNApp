@@ -1,5 +1,8 @@
 <div class="card-body text-white">
-    <h5 class="card-title">LeaderBoard</h5>
+    <h5 class="card-title">LeaderBoard
+        <i class="fa fa-refresh pull-right" data-toggle="tooltip" data-placement="right" title="Click to refresh the leaderboard"
+            onclick= {{action (mut called_at) }} aria-hidden="true"></i>
+    </h5>
     <div class="card-text">
         <div>
             <table class="table table-sm dashboardtable">

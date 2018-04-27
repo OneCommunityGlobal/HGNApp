@@ -12,9 +12,16 @@ export default Controller.extend({
     return this.get('hideHeaderRoutes').indexOf(this.get('currentRouteName')) === -1;
   }),
 
+  actions:
+    {
+      navigatetoProfile(userId) {
+        this.transitionToRoute(`/profile/${userId}`);
+
+      }
 
 
 
 
-}
-);
+
+    }
+});

@@ -18,8 +18,10 @@ export default Component.extend({
 
     options: {
         plugins: ["link", "autolink"],
-        menubar: "insert",
-        toolbar: ""
+        menubar: false,
+        toolbar: ["cut copy paste link numlist bullist outdent indent"],
+        browser_spellcheck: true
+
     },
 
     init() {
@@ -38,7 +40,7 @@ export default Component.extend({
         let userrole = this.get("loggedinUser.role");
 
         if (userrole != "Administrator") {
-            return moment().startOf('week').format("YYYY-MM-DD");
+            return moment().startOf('isoWeek').format("YYYY-MM-DD");
         }
 
     }),
@@ -96,6 +98,7 @@ export default Component.extend({
                         toastr.success("", 'Time Entry Saved');
                         this.get("notifyController")(Date.now());
                         this.clearform();
+                        $("[data-dismiss=modal]").trigger({ type: "click" });
                     }, error => {
                         toastr.warning(error.responseJSON.message, 'Error!!');
                     });
