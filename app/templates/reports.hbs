@@ -83,45 +83,43 @@
 
 <div>
 <p>Select a time period:</p>
-
-  <div class="form-check">
-
-    <input class="form-check-input" value=project name="timePeriod" type="radio"
-      checked>
-    <label class="form-check-label">
-        Choose one or all:
-    </label>
-    <div>
-<div>
-  <input class="form-check-input" value=show name="project.current" type="checkbox"
+<div class="form-check">
+  <input class="form-check-input" value=currentWeek name="timeSelect" type="radio" onchange= {{action timeSelect value= "target.value"}}
     >
   <label class="form-check-label">
     Current Week
   </label>
 </div>
-<div class="">
-  <input class="form-check-input" value=hidden name="project.all" type="checkbox"
+  <div class="form-check">
+  <input class="form-check-input" value=weekRange name="timeSelect" type="radio" onchange= {{action timeSelect value ="target.value"}}>
+  <label class="form-check-label">
+    Week Range
+  </label>
+  <div >
+  <select class="" onchange= {{action (mut weekselection) value="target.value"}}>
+    <option value="0">No Selection</option>
+    <option value="4">4 week</option>
+    <option value= "6">6 weeks</option>
+  </select>
+</div>
+</div>
+
+<div class="form-check">
+  <input class="form-check-input" value=customPeriod name="timeSelect" type="radio" onchange= {{action timeSelect value= "target.value"}}
     >
   <label class="form-check-label">
-    Till Date
+    Custom Period
   </label>
-</div>
-</div><br/>
-    <input class="form-check-input" value=project name="timePeriod" type="radio" onchange=
-      >
-    <label class="form-check-label">
-        Custom
-    </label>
-    <div>
-  <form class= "form-inline {{isFormSubmitted}}" id="customPeriod">
+  <form class= "form-inline">
       <label class="label" for="fromdate">From:</label>
-      <input type="date" class="form-control" id="fromdate" required>
+      <input type="date" class="form-control" id="Fromdate" required>
       <label class="label" for="todate">To:</label>
-      <input type="date" class="form-control" id="todate" required>
+      <input type="date" class="form-control" id="Todate" required>
   </form>
 </div>
+
 </div>
-</div>
+
 <button type="submit" class="btn btn-primary btn-sm" {{action "submitForm"}}>Submit</button>
 </form>
 </div>

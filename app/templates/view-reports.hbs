@@ -4,9 +4,15 @@
     <h4 class="card-title">Project name: {{projectName}}</h4>
   </div>
 
-  <p><i>Showing results for week: {{dates.FromDate}} - {{dates.ToDate}}</i></p>
+  <p><i>Showing results for time period: {{dates.FromDate}} - {{dates.ToDate}}</i></p>
+  <div id="weeks" style="display: none;">
+    <ul>
+      <li>Week</li>
+    </ul>
+  </div>
 
   <div>
+
     <!--including component for charts display-->
 
     {{!#power-select
