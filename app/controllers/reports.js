@@ -1,18 +1,18 @@
-import { inject } from '@ember/service';
-import { computed } from '@ember/object';
-
-
+//import { inject } from '@ember/service';
+//import { computed } from '@ember/object';
+import moment from 'moment';
+import { sort } from '@ember/object/computed';
 import Controller from '@ember/controller';
 
 
 export default Controller.extend({
   display: "project",
   sortProjProperties: ['projectName:asc'],
-  sortedProjects: Ember.computed.sort('projects', 'sortProjProperties'),
+  sortedProjects: sort('projects', 'sortProjProperties'),
   sortPersonProperties: ['lastName:asc'],
-  sortedPersons: Ember.computed.sort('persons', 'sortPersonProperties'),
+  sortedPersons: sort('persons', 'sortPersonProperties'),
   sortTeamProperties: ['teamName:asc'],
-  sortedTeams: Ember.computed.sort('teams', 'sortTeamProperties'),
+  sortedTeams: sort('teams', 'sortTeamProperties'),
   time: {},
   custom: 'false',
   weekrange: 'false',
@@ -23,6 +23,8 @@ export default Controller.extend({
 
       //custom time period - to get date from date picker
       if((this.get('custom'))=='true'){
+        //console.log('custom');
+        //console.log(moment($("#Todate").get(0).value).clone().format('DD/MM'));
         let todatevalue = moment($("#Todate").get(0).value).clone().format('X');
         let fromdatevalue = moment($("#Fromdate").get(0).value).clone().format('X');
         //console.log(todatevalue);
@@ -31,7 +33,8 @@ export default Controller.extend({
         tempTime.FromDate = fromdatevalue;
         tempTime.ToDate = todatevalue;
         this.set('time',tempTime);
-      };
+        //console.log(this.get('time'));
+      }
 
 if((this.get('weekrange'))=='true'){
   //console.log(this.get('weekselection'));
@@ -45,7 +48,7 @@ if((this.get('weekrange'))=='true'){
   tempTime.ToDate = ToDate;
   this.set('time',tempTime);
 
-};
+}
 
 
       let timePeriod =this.get('time');
@@ -77,8 +80,7 @@ if((this.get('weekrange'))=='true'){
     }
 
   },
-  myaction(target) {
-},
+
 
   timeSelect(target){
     switch(target) {
@@ -100,7 +102,9 @@ if((this.get('weekrange'))=='true'){
 
       case 'customPeriod':
       this.set('custom','true');
+      this.set('weekrange','false');
       break;
+
     }
 
   }

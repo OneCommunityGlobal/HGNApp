@@ -8,25 +8,9 @@ export default Route.extend({
   timeEntryService: inject('time-entry-service'),
 
   model(params) {
-    //let start = moment().startOf("week");
-    //let FromDate = start.clone().format('X');
-    //let ToDate = start.clone().add(7, 'days').format('X');
-  //console.log(params);
-  //console.log(params.FromDate);
-  //console.log(this.controllerFor('reports').get('weekrange'));
-
-  //  let FromDate = moment().clone().subtract(6, "days").format('X');
-  //  let ToDate = moment().clone().format('X');
-  //  console.log(FromDate);
-  //  console.log(ToDate);
-  //console.log(params.FromDate );
-
     let formatedDates = {'FromDate': moment(params.FromDate, 'X').format('DD/MM'), "ToDate": moment(params.ToDate, 'X').format('DD/MM')}
     let PWToDate = moment().clone().subtract(8, "days").format('X');
     let PWFromDate = moment().clone().subtract(14, "days").format('X');
-    //console.log(PWToDate);
-    //console.log(PWFromDate);
-
   return Ember.RSVP.hash({
     teams: this.get('teamService').getAllTeams(),
     projects: this.get('projectService').getAllProjects(),
