@@ -1,5 +1,6 @@
 import UnAuthenticatedRouteMixin from '../mixins/un-authenticated-route-mixin';
 import Route from '@ember/routing/route';
+import { set } from '@ember/object';
 import {
     inject
 } from '@ember/service';
@@ -18,9 +19,9 @@ export default Route.extend(UnAuthenticatedRouteMixin, {
 
     setupController(controller, model) {
         this._super(...arguments);
-        Ember.set(controller, 'projects', model.projects);
-        Ember.set(controller, 'persons', model.persons);
-        Ember.set(controller, 'teams', model.teams);
+        set(controller, 'projects', model.projects);
+        set(controller, 'persons', model.persons);
+        set(controller, 'teams', model.teams);
     },
 
 

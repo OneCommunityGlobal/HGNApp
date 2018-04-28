@@ -1,4 +1,6 @@
 import Route from '@ember/routing/route';
+import moment from 'moment';
+import { set } from '@ember/object';
 import {
     inject
 } from '@ember/service';
@@ -30,13 +32,13 @@ export default Route.extend({
 
     setupController(controller, model) {
         this._super(...arguments);
-        Ember.set(controller, 'teams', model.teams);
-        Ember.set(controller, 'projects', model.projects);
-        Ember.set(controller, 'persons', model.persons);
-        Ember.set(controller, 'projectmembers', model.projectmembers);
-        Ember.set(controller, 'timeentrydata', model.timeentrydata);
-        Ember.set(controller, 'previuostimeentrydata', model.previuostimeentrydata);
-        Ember.set(controller, 'dates', model.dates);
+        set(controller, 'teams', model.teams);
+        set(controller, 'projects', model.projects);
+        set(controller, 'persons', model.persons);
+        set(controller, 'projectmembers', model.projectmembers);
+        set(controller, 'timeentrydata', model.timeentrydata);
+        set(controller, 'previuostimeentrydata', model.previuostimeentrydata);
+        set(controller, 'dates', model.dates);
     },
 
 });
