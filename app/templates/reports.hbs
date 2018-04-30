@@ -1,2 +1,123 @@
-
-{{outlet}}
+<div>
+   <h5 class="card-title">Generate Reports</h5>
+   <form class= "form-group">
+      <div>
+         <p>Select a category:</p>
+         <div class="form-check">
+            <input class="form-check-input" value=project name="optionSelect" type="radio" onchange= {{action optionSelect value= "target.value"}}
+            checked>
+            <label class="form-check-label">
+            Project
+            </label>
+         </div>
+         <div class="form-check">
+            <input class="form-check-input" value=person name="optionSelect" type="radio" onchange= {{action optionSelect value ="target.value"}}>
+            <label class="form-check-label">
+            Person
+            </label>
+         </div>
+         <div class="form-check">
+            <input class="form-check-input" value=team name="optionSelect" type="radio" onchange= {{action optionSelect value ="target.value"}}>
+            <label class="form-check-label">
+            Team
+            </label>
+         </div>
+         <div class="form-check">
+            <input class="form-check-input" value=task name="optionSelect" type="radio" onchange= {{action optionSelect value ="target.value"}}>
+            <label class="form-check-label">
+            Task
+            </label>
+         </div>
+      </div>
+      <br/>
+      <div>
+         <p>Select one:</p>
+         {{#if (eq 'project' display)}}
+         {{#power-select
+         searchEnabled=true
+         searchField="projectName"
+         placeholder="Select a Project"
+         options=sortedProjects
+         selected=option
+         onchange=(action (mut option))
+         as |filter| }}
+         {{filter.projectName}}
+         {{/power-select}}
+         {{/if}}
+         {{#if (eq 'person' display)}}
+         {{#power-select
+         searchEnabled=true
+         searchField="lastName"
+         placeholder="Select a Person"
+         options=sortedPersons
+         selected=option
+         onchange=(action (mut option))
+         as |filter| }}
+         {{filter.lastName}}
+         {{/power-select}}
+         {{/if}}
+         {{#if (eq 'team' display)}}
+         {{#power-select
+         searchEnabled=true
+         placeholder="Select a Team"
+         searchField="projectName"
+         options=sortedProjects
+         selected=option
+         onchange=(action (mut option))
+         as |filter| }}
+         {{filter.projectName}}
+         {{/power-select}}
+         {{/if}}
+         {{#if (eq 'task' display)}}
+         {{#power-select
+         searchEnabled=true
+         searchField="projectName"
+         placeholder="Select a Task"
+         options=sortedProjects
+         selected=option
+         onchange=(action (mut option))
+         as |filter| }}
+         {{filter.projectName}}
+         {{/power-select}}
+         {{/if}}
+      </div>
+      <br/>
+      <div>
+         <p>Select a time period:</p>
+         <div class="form-check">
+            <input class="form-check-input" value=currentWeek name="timeSelect" type="radio" onchange= {{action timeSelect value= "target.value"}}
+               >
+            <label class="form-check-label">
+            Current Week
+            </label>
+         </div>
+         <div class="form-check">
+            <input class="form-check-input" value=weekRange name="timeSelect" type="radio" onchange= {{action timeSelect value ="target.value"}}>
+            <label class="form-check-label">
+            Week Range
+            </label>
+            <div >
+               <select class="" onchange= {{action (mut weekselection) value="target.value"}}>
+               <option value="0">No Selection</option>
+               <option value="4">4 week</option>
+               <option value= "6">6 weeks</option>
+               </select>
+            </div>
+         </div>
+         <div class="form-check">
+            <input class="form-check-input" value=customPeriod name="timeSelect" type="radio" onchange= {{action timeSelect value= "target.value"}}
+               >
+            <label class="form-check-label">
+            Custom Period
+            </label>
+   <form class= "form-inline">
+   <label class="label" for="fromdate">From:</label>
+   <input type="date" class="form-control" id="Fromdate" required>
+   <label class="label" for="todate">To:</label>
+   <input type="date" class="form-control" id="Todate" required>
+   </form>
+   </div>
+ </div><br>
+   <button type="submit" class="btn btn-primary btn-sm" {{action "submitForm"}}>Submit</button>
+   </form>
+</div>

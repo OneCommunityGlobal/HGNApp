@@ -48,6 +48,10 @@ export default Component.extend({
         let userrole = this.get('userrole');
         return userrole === "Administrator" ? true : false;
     }),
+    isUserReportAdmin: computed('userrole', function () {
+        let userrole = this.get('userrole');
+        return userrole === "Manager" ? true : userrole === "Administrator" ? true : userrole === "Core Team" ? true : false;
+    }),
 
 
     actions: {

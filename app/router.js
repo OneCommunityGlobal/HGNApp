@@ -21,6 +21,8 @@ Router.map(function () {
   this.route('profile', { path: '/profile/:user_id' });
   this.route('AllTimeEntries', { path: "/AllTimeEntries/:user_id" });
   this.route('updatepassword');
+  this.route('reports');
+  this.route('view-reports');
 });
 
 export default Router;

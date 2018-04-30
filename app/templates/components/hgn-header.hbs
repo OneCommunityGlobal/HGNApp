@@ -16,9 +16,11 @@
           <a class="nav-link" href="/#/timelog/{{userId}}">Timelog
           </a>
         </li>
+        {{#if isUserReportAdmin}}
         <li class="nav-item navbar-text">
           <a class="nav-link" href="/#/reports">Reports</a>
         </li>
+        {{/if}}
         <li class="nav-item navbar-text">
           <form class="form-inline my-2 my-lg-0">
             <div class="form-group">

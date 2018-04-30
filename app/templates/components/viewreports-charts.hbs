@@ -1,0 +1,40 @@
+<div class="">
+   <p>Total Hours contributed to the project: <strong>{{totalTime}} Hrs</strong></p>
+   <p>Difference from the past week: <strong>{{percentChange}} Hrs </strong>
+      {{#if setColor}}<i class="fa fa-arrow-up"  style="font-size:20px;color:green"></i>{{else}}
+      <i class="fa fa-arrow-down"  style="font-size:20px;color:red"></i>{{/if}}
+   </p>
+</div>
+<div class="row">
+   <div class="col-md-6">
+      <p><b>Members contributing to the project:</b></p>
+      <div class="">
+         {{#each projectmembers as |value|}}
+         <a href="/#/profile/{{value._id}}">{{value.firstName}}</a><br/>
+         {{/each}}
+      </div>
+   </div>
+   <div class="col-md-6">
+      <p><b>Members Contribution:</b></p>
+      <div id="member_pie">
+      </div>
+   </div>
+</div>
+<br>
+<p><b>Individual Member Contribution:</b></p>
+<div id="dashboard_div">
+   <div id="colFilter_div"></div>
+   <div id="BarChart" class="col-md-6"  ></div>
+   <div id="noData" style="display: none;">
+      No Member Data
+   </div>
+</div>
+<p><b>Members with no time entries:</b></p>
+{{#if notContributed}}
+{{#each notContributed as |value|}}
+<a href="/#/profile/{{value._id}}">{{value.firstName}}</a><br>
+{{/each}}
+{{else}}
+<p>None</p>
+{{/if}}
+{{yield}}

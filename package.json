@@ -36,6 +36,7 @@
         "ember-load-initializers": "^1.0.0",
         "ember-maybe-import-regenerator": "^0.1.6",
         "ember-models-table": "^2.5.0",
+        "ember-power-select": "^2.0.0-beta.3",
         "ember-resolver": "^4.0.0",
         "ember-source": "~3.0.0",
         "ember-toastr": "^1.7.1",
@@ -53,6 +54,7 @@
         "ember-cli-moment-shim": "^3.6.0",
         "ember-cli-tinymce": "^0.3.2",
         "ember-radio-buttons": "^4.1.0",
-        "ember-truth-helpers": "^2.0.0"
+        "ember-truth-helpers": "^2.0.0",
+        "group-array": "^0.3.3"
     }
 }
