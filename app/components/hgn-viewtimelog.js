@@ -8,6 +8,7 @@ import { later } from '@ember/runloop';
 export default Component.extend({
 
     timeEntryService: inject('time-entry-service'),
+    projectService: inject("project-service"),
     init() {
         this._super(...arguments);
         this.set("timelogs", []);
@@ -31,7 +32,7 @@ export default Component.extend({
     didReceiveAttrs() {
         this._super(...arguments);
         let foruser = this.get('forUserId');
-        this.get('timeEntryService').getUserProjects(foruser)
+        this.get('projectService').getUserProjects(foruser)
             .then(results => {
                 this.set('projects', results);
             });
@@ -82,10 +83,10 @@ export default Component.extend({
 
 
         let start = this.get('fromDate') ? moment(this.get('fromDate')) : moment().startOf('isoWeek');
-        let end = this.get('toDate') ? moment(this.get('toDate')) : moment().startOf('isoWeek').add(1, "week");
+        let end = this.get('toDate') ? moment(this.get('toDate')) : moment().startOf('isoWeek').add(6, "days");
 
-        fromdate = start.clone().format('X');
-        todate = end.clone().format('X');
+        fromdate = start.clone().format();
+        todate = end.clone().format();
 
         let startdate = start.clone().format("MM/DD/YYYY");
 

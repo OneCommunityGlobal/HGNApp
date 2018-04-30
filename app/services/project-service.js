@@ -6,10 +6,18 @@ export default Service.extend({
 
   dataService: inject("datastore-service"),
 
+  getUserProjects(requestorId) {
+    let relativePath = "/projects/user/" + requestorId;
+    let data = "";
+    let method = "get";
+
+    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    return request;
+  },
 
   getAllProjects() {
 
-    let relativePath = "/project";
+    let relativePath = "/projects";
     let data = "";
     let method = "get";
 

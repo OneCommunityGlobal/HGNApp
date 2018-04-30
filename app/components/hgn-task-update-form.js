@@ -8,14 +8,13 @@ import { computed } from '@ember/object';
 export default Component.extend({
 
     timeEntryService: inject('time-entry-service'),
+    projectService: inject("project-service"),
     notes: "",
     dateofWork: "",
     taskhours: "",
     taskminutes: "",
-
     isTangible: true,
     isFormSubmitted: "",
-
     options: {
         plugins: ["link", "autolink"],
         menubar: false,
@@ -29,7 +28,7 @@ export default Component.extend({
 
         let user = this.get('forUserId');
 
-        this.get('timeEntryService').getUserProjects(user)
+        this.get('projectService').getUserProjects(user)
             .then(results => { this.set('projects', results); });
     },
 
@@ -85,7 +84,7 @@ export default Component.extend({
                 let minutes = (this.get('taskminutes')) ? this.get('taskminutes') : "00";
 
                 let timespent = hours + ":" + minutes;
-                let dateofWork = (this.get('dateofWork')) ? (moment(this.get('dateofWork')).format('YYYY-MM-DD')) : (moment().format('YYYY-MM-DD'));
+                let dateofWork = (this.get('dateofWork')) ? moment(this.get('dateofWork')).format() : moment().format();
                 timeentry.personId = this.get('forUserId');
                 timeentry.projectId = this.get('forprojectId');
                 timeentry.dateofWork = dateofWork;

@@ -33,7 +33,7 @@ export default Controller.extend({
     }),
 
     toDate: computed("", function () {
-        return moment().startOf('isoWeek').add(1, 'week').format("YYYY-MM-DD");
+        return moment().startOf('isoWeek').add(6, 'days').format("YYYY-MM-DD");
     }),
 
     validateForm() {
