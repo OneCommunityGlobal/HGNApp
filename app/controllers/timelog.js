@@ -17,13 +17,13 @@ export default Controller.extend({
 
     forweek: computed("", function () {
         let fromDate_wk_2 = moment().startOf('isoWeek').subtract(2, 'weeks');
-        let toDate_wk_2 = moment().startOf('isoWeek').subtract(2, "weeks").endOf("isoWeek");
+        let toDate_wk_2 = moment().subtract(2, "weeks").endOf("isoWeek");
 
         let fromDate_wk_1 = moment().startOf('isoWeek').subtract(1, 'weeks');
-        let toDate_wk_1 = moment().startOf('isoWeek').subtract(1, "weeks").endOf("isoWeek");
+        let toDate_wk_1 = moment().subtract(1, "weeks").endOf("isoWeek");
 
         let fromDate_wk_0 = moment().startOf('isoWeek');
-        let toDate_wk_0 = moment().startOf('isoWeek').endOf("isoWeek");
+        let toDate_wk_0 = moment().endOf("isoWeek");
 
 
         return (
