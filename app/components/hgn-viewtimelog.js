@@ -61,7 +61,6 @@ export default Component.extend({
             let result = element;
 
             result.dateOfWork = moment(element.dateOfWork).local().format("YYYY-MM-DD");
-            alert(result.dateOfWork);
             results.push(result);
         })
 
