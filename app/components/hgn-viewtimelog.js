@@ -20,6 +20,11 @@ export default Component.extend({
         });
     },
 
+    isUserAdministrator: computed("", "loggedinUser", function () {
+        let loggedinUserRole = this.get('loggedinUser.role');
+        return (loggedinUserRole === "Administrator");
+    }),
+
 
 
     isEditable: computed("forUserId", "loggedinUser", function () {
@@ -48,7 +53,18 @@ export default Component.extend({
 
     timelogsview: computed("timelogs.@each", function () {
 
-        return this.get("timelogs");
+        let timelogs = this.get("timelogs");
+        let results = [];
+
+        timelogs.forEach(element => {
+
+            let result = element;
+
+            result.dateOfWork = moment(element.dateOfWork).local().format("YYYY-MM-DD");
+            results.push(result);
+        })
+
+        return results;
     }),
 
     timedistribution: computed("timelogs.@each", function () {
@@ -83,7 +99,7 @@ export default Component.extend({
 
 
         let start = this.get('fromDate') ? moment(this.get('fromDate')) : moment().startOf('isoWeek');
-        let end = this.get('toDate') ? moment(this.get('toDate')) : moment().startOf('isoWeek').add(6, "days");
+        let end = this.get('toDate') ? moment(this.get('toDate')) : moment().startOf('isoWeek').endOf("isoWeek");
 
         fromdate = start.clone().format();
         todate = end.clone().format();
