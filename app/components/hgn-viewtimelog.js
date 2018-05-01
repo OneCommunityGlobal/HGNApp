@@ -6,7 +6,7 @@ import { set } from '@ember/object';
 import { later } from '@ember/runloop';
 
 export default Component.extend({
-
+    tagName: "",
     timeEntryService: inject('time-entry-service'),
     projectService: inject("project-service"),
     init() {
