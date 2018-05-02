@@ -6,7 +6,7 @@ import {
 } from '@ember/service';
 
 export default Route.extend({
-    teamService: inject('datastore-service'),
+    //teamService: inject('datastore-service'),
     projectService: inject('project-service'),
     userProfileService: inject('user-profile-service'),
     timeEntryService: inject('time-entry-service'),
@@ -19,7 +19,7 @@ export default Route.extend({
         let PWToDate = moment().clone().subtract(8, "days").format('X');
         let PWFromDate = moment().clone().subtract(14, "days").format('X');
         return Ember.RSVP.hash({
-            teams: this.get('teamService').getAllTeams(),
+            //teams: this.get('teamService').getAllTeams(),
             projects: this.get('projectService').getAllProjects(),
             persons: this.get('userProfileService').getAllUserProfiles(),
             projectmembers: this.get('userProfileService').getAllProjectMembers(params.project_id),
