@@ -16,7 +16,7 @@
             Person
             </label>
          </div>
-         <div class="form-check">
+         <!--<div class="form-check">
             <input class="form-check-input" value=team name="optionSelect" type="radio" onchange= {{action optionSelect value ="target.value"}}>
             <label class="form-check-label">
             Team
@@ -27,25 +27,41 @@
             <label class="form-check-label">
             Task
             </label>
-         </div>
+         </div>-->
       </div>
       <br/>
       <div>
          <p>Select one:</p>
-         {{#if (eq 'project' display)}}
-         {{#power-select
+
+         <select onchange={{action (mut option) value= "target.value"}} required>
+           {{#if (eq 'project' display)}}
+           {{#each sortedProjects as |project|}}
+              <option value={{project._id}}>{{project.projectName}}</option>
+           {{/each}}
+            {{/if}}
+
+          {{#if (eq 'person' display)}}
+          {{#each sortedPersons as |person|}}
+             <option value={{person._id}}>{{person.lastName}}</option>
+          {{/each}}
+            {{/if}}
+
+         </select>
+
+         {{!#power-select
          searchEnabled=true
          searchField="projectName"
          placeholder="Select a Project"
          options=sortedProjects
          selected=option
          onchange=(action (mut option))
-         as |filter| }}
-         {{filter.projectName}}
-         {{/power-select}}
-         {{/if}}
-         {{#if (eq 'person' display)}}
-         {{#power-select
+         as |filter| !}}
+         {{!filter.projectName}}
+         {{!/power-select}}
+
+         {{!#if (eq 'person' display)}}
+          <!--<select onchange={{action (mut option) value= "target.value"}}>
+         {{!#power-select
          searchEnabled=true
          searchField="lastName"
          placeholder="Select a Person"
@@ -53,11 +69,12 @@
          selected=option
          onchange=(action (mut option))
          as |filter| }}
-         {{filter.lastName}}
-         {{/power-select}}
-         {{/if}}
-         {{#if (eq 'team' display)}}
-         {{#power-select
+         {{!filter.lastName}}
+         {{!/power-select}}
+         {{!/if}}
+         {{!#if (eq 'team' display)}}
+          <select onchange={{action (mut option) value= "target.value"}}>
+         {{!#power-select
          searchEnabled=true
          placeholder="Select a Team"
          searchField="projectName"
@@ -66,20 +83,9 @@
          onchange=(action (mut option))
          as |filter| }}
          {{filter.projectName}}
-         {{/power-select}}
-         {{/if}}
-         {{#if (eq 'task' display)}}
-         {{#power-select
-         searchEnabled=true
-         searchField="projectName"
-         placeholder="Select a Task"
-         options=sortedProjects
-         selected=option
-         onchange=(action (mut option))
-         as |filter| }}
-         {{filter.projectName}}
-         {{/power-select}}
-         {{/if}}
+         {{!/power-select}}
+         {{!/if}}-->
+
       </div>
       <br/>
       <div>

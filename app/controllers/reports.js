@@ -22,7 +22,10 @@ export default Controller.extend({
         submitForm() {
             let optionSelected = this.get('option');
             //console.log(optionSelected.projectName);
-
+            let selectedProject = this.get('sortedProjects').filter(function(project) {
+              return project._id === optionSelected;
+            })[0];
+            //console.log(selectedProject);
             //custom time period - to get date from date picker
             if ((this.get('custom')) == 'true') {
                 //console.log('custom');
@@ -56,8 +59,8 @@ export default Controller.extend({
             let timePeriod = this.get('time');
             this.transitionToRoute('view-reports', {
                 queryParams: {
-                    project_id: optionSelected._id,
-                    projectName: optionSelected.projectName,
+                    project_id: selectedProject._id,
+                    projectName: selectedProject.projectName,
                     FromDate: timePeriod.FromDate,
                     ToDate: timePeriod.ToDate
                 }
