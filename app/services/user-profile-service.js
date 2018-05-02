@@ -20,9 +20,9 @@ export default Service.extend({
     let relativePath = "/userprofile/project/" + projectId;
     let data = "";
     let method = "get";
-    console.log(relativePath);
+    //console.log(relativePath);
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
-    console.log(request);
+    //console.log(request);
     return request;
   },
 
