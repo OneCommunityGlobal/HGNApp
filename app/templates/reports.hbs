@@ -16,7 +16,7 @@
             Person
             </label>
          </div>
-         <!--<div class="form-check">
+         <div class="form-check">
             <input class="form-check-input" value=team name="optionSelect" type="radio" onchange= {{action optionSelect value ="target.value"}}>
             <label class="form-check-label">
             Team
@@ -27,12 +27,11 @@
             <label class="form-check-label">
             Task
             </label>
-         </div>-->
+         </div>
       </div>
       <br/>
       <div>
          <p>Select one:</p>
-
          <select onchange={{action (mut option) value= "target.value"}} required>
            {{#if (eq 'project' display)}}
            {{#each sortedProjects as |project|}}
@@ -47,45 +46,6 @@
             {{/if}}
 
          </select>
-
-         {{!#power-select
-         searchEnabled=true
-         searchField="projectName"
-         placeholder="Select a Project"
-         options=sortedProjects
-         selected=option
-         onchange=(action (mut option))
-         as |filter| !}}
-         {{!filter.projectName}}
-         {{!/power-select}}
-
-         {{!#if (eq 'person' display)}}
-          <!--<select onchange={{action (mut option) value= "target.value"}}>
-         {{!#power-select
-         searchEnabled=true
-         searchField="lastName"
-         placeholder="Select a Person"
-         options=sortedPersons
-         selected=option
-         onchange=(action (mut option))
-         as |filter| }}
-         {{!filter.lastName}}
-         {{!/power-select}}
-         {{!/if}}
-         {{!#if (eq 'team' display)}}
-          <select onchange={{action (mut option) value= "target.value"}}>
-         {{!#power-select
-         searchEnabled=true
-         placeholder="Select a Team"
-         searchField="projectName"
-         options=sortedProjects
-         selected=option
-         onchange=(action (mut option))
-         as |filter| }}
-         {{filter.projectName}}
-         {{!/power-select}}
-         {{!/if}}-->
-
       </div>
       <br/>
       <div>
