@@ -10,8 +10,10 @@ export default Component.extend({
     timeEntryService: inject('time-entry-service'),
     projectService: inject("project-service"),
     init() {
+
         this._super(...arguments);
         this.set("timelogs", []);
+        this.set("projectfiltervalue", "");
         this.set("options", {
             plugins: ["autolink", "link"],
             menubar: false,
@@ -33,6 +35,7 @@ export default Component.extend({
         let loggedinUserRole = this.get('loggedinUser.role');
         return (loggedinUserRole === "Administrator" || foruser === loggedinUserId);
 
+
     }),
     didReceiveAttrs() {
         this._super(...arguments);
@@ -51,44 +54,36 @@ export default Component.extend({
     },
 
 
-    timelogsview: computed("timelogs.@each", function () {
+    timelogsview: computed("timelogs.@each", "projectfiltervalue", function () {
 
         let timelogs = this.get("timelogs");
-        let results = [];
-
-        timelogs.forEach(element => {
-
-            let result = element;
-
-            result.dateOfWork = moment(element.dateOfWork).local().format("YYYY-MM-DD");
-            results.push(result);
-        })
-
-        return results;
-    }),
-
-    timedistribution: computed("timelogs.@each", function () {
-
-        let timelogs = this.get("timelogs");
-
+        let projectfiltervalue = this.get("projectfiltervalue");
         let tangibletime = 0;
         let intangibletime = 0;
         let total = 0;
+        let records = [];
+
 
         timelogs.forEach(element => {
-            let timeSpent = element.hours + ":" + element.minutes;
-            let totalSeconds = moment.duration(timeSpent).asSeconds();
-            total += totalSeconds;
-            element.isTangible ? (tangibletime += totalSeconds) : (intangibletime += totalSeconds)
+            if (projectfiltervalue == "" || projectfiltervalue == element.projectId) {
+                records.push(element);
+                let timeSpent = element.hours + ":" + element.minutes;
+                let totalSeconds = moment.duration(timeSpent).asSeconds();
+                total += totalSeconds;
+                element.isTangible ? (tangibletime += totalSeconds) : (intangibletime += totalSeconds)
+            }
 
-        });
+        })
 
         return {
+            "records": records,
             "tangibletime": parseFloat(tangibletime / 3600).toFixed(2),
             "intangibletime": parseFloat(intangibletime / 3600).toFixed(2),
             "totaltime": parseFloat(total / 3600).toFixed(2)
         }
     }),
+
+
 
     getDataforTime() {
 

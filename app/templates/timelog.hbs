@@ -37,13 +37,18 @@
           </h4>
           <h6 class="card-subtitle mb-2 text-muted">Viewing time entries logged in last 3 weeks
             {{#if isEditable}}
-              <button class="btn btn-success pull-right" data-toggle="modal" data-target="#timentrymodal">Add Time Entry
-              </button>
+              {{#if (eq model.forUserId loggedinUser.requestorId)}}
+                <button class="btn btn-success pull-right" data-toggle="modal" data-target="#timentrymodal">Add Time Entry
+                </button>
+              {{else}}
+                <button class="btn btn-warning pull-right" data-toggle="modal" data-target="#timentrymodal">Add Time Entry for {{model.name}}
+                </button>
+              {{/if}}
               <div class="modal fade" id="timentrymodal" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-body">
-                      {{hgn-task-update-form forUserId = loggedinUser.requestorId notifyController = (action (mut called_at ))}}
+                      {{hgn-task-update-form forUserId = model.forUserId notifyController = (action (mut called_at ))}}
                     </div>
                   </div>
                 </div>
@@ -67,13 +72,13 @@
           </ul>
           <div class="tab-content" id="myTabContent">
             <div id="current-week" class="tab-pane fade show active" role="tabpanel" aria-labelledby="current-week-tab">
-              {{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId  fromDate = forweek.fromDate_wk_0 toDate = forweek.toDate_wk_0 called_at = called_at  notifyController = (action (mut  called_at ))}}
+              {{hgn-viewtimelog loggedinUser = loggedinUser projectfiltervalue = "" forUserId = model.forUserId  fromDate = forweek.fromDate_wk_0 toDate = forweek.toDate_wk_0 called_at = called_at  notifyController = (action (mut  called_at ))}}
             </div>
             <div id="last-week" class="tab-pane fade" role="tabpanel" aria-labelledby="last-week-tab">
-              {{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId  fromDate = forweek.fromDate_wk_1 toDate = forweek.toDate_wk_1 called_at = called_at  notifyController = (action (mut  called_at ))}}
+              {{hgn-viewtimelog loggedinUser = loggedinUser projectfiltervalue = "" forUserId = model.forUserId  fromDate = forweek.fromDate_wk_1 toDate = forweek.toDate_wk_1 called_at = called_at  notifyController = (action (mut  called_at ))}}
             </div>
             <div id="penultimate-week" class="tab-pane fade" role="tabpanel" aria-labelledby="penultimate-week-tab">
-              {{hgn-viewtimelog loggedinUser = loggedinUser forUserId = model.forUserId  fromDate = forweek.fromDate_wk_2 toDate = forweek.toDate_wk_2 called_at = called_at  notifyController = (action (mut  called_at ))}}
+              {{hgn-viewtimelog loggedinUser = loggedinUser projectfiltervalue = "" forUserId = model.forUserId  fromDate = forweek.fromDate_wk_2 toDate = forweek.toDate_wk_2 called_at = called_at  notifyController = (action (mut  called_at ))}}
             </div>
           </div>
           {{#if isEditable }}

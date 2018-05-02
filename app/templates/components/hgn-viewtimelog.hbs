@@ -1,29 +1,37 @@
 <div class="h-100 w-100">
-    <small>Viewing time Entries for {{perioddates}}
-        <div class="w-100 m-1 row text-white text-center">
-            <span class="bg-success col-md-4 p-1 ">
-                Tangible Effort: {{timedistribution.tangibletime}} hrs
-            </span>
-            <span class="bg-info col-md-4 p-1">
-                Intangible Effort: {{timedistribution.intangibletime}} hrs
-            </span>
-            <span class="bg-primary col-md-4 p-1">
-                Total Effort :{{timedistribution.totaltime}} hrs
-            </span>
-        </div>
-    </small>
+    <small>Viewing time Entries for {{perioddates}}</small>
+    <div class="m-2">
+        <label class=" col-form-label mr-1 ">Filter Entries by Project:</label>
+        <select class="" name="userprojects " readonly onchange= {{action (mut projectfiltervalue) value = "target.value" }}>
+            <option class="form-control " value="" selected>All Projects (Default)</option>
+            {{#each projects as |project|}}
+                <option class="form-control" value= {{project.projectId}}>{{project.projectName}} </option>
+            {{/each}}
+        </select>
+    </div>
+    <div class="w-100 m-1 row text-white text-center">
+        <span class="bg-success col-md-4 p-1 ">
+            Tangible Effort: {{timelogsview.tangibletime}} hrs
+        </span>
+        <span class="bg-info col-md-4 p-1">
+            Intangible Effort: {{timelogsview.intangibletime}} hrs
+        </span>
+        <span class="bg-primary col-md-4 p-1">
+            Total Effort :{{timelogsview.totaltime}} hrs
+        </span>
+    </div>
 </div>
 {{#if timelogs}}
     <div class="table-responsive  h-100">
         <table class="table table-sm tbltimelog pre-scrollable" id="tbltimelog">
             <tbody>
-                {{#each timelogsview as |timelog index|}}
+                {{#each timelogsview.records as |timelog index|}}
                     <tr class="col-12 w-100 mb-3 row tr-tangible-{{timelog.isTangible}}" scope="row">
                         <form id="frmEditTimeEntry_{{index}}" class="w-100 form-inline" readonly= {{if (or isUserAdministrator (and isEditable (is-timeentry-within-week timelog.dateOfWork))) null "true"}}>
                             <div class=" col-5 w-100 ">
                                 <div class="row form-group ">
                                     <label class="col-form-label mr-1 ">Date:</label>
-                                    <input class="from-control" value= {{timelog.dateOfWork}} type="date" readonly>
+                                    <input class="from-control" value= {{format-datetime timelog.dateOfWork}} type="date" readonly>
                                 </div>
                                 <div class="row form-group ">
                                     <label class="col-form-label mr-1 ">Tangible</label>
