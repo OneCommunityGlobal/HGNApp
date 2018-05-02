@@ -1,7 +1,7 @@
 import { helper } from '@ember/component/helper';
 import moment from 'moment';
 
-export function isTimeentryWithinWeek(params/*, hash*/) {
+export function isTimeentryWithinWeek(params) {
 
   let dateofwork = params[0];
   let dow = moment(dateofwork).local();
