@@ -13,16 +13,14 @@ export default Controller.extend({
       if (this.get('currentFilter') === null) {
         return this.get('users');
       } else {
-        var isTrueSet = (this.get('currentFilter') == 'true');
-        return this.get('users').filter(user => user.isActive === isTrueSet);
+        var isActiveS = (this.get('currentFilter') == 'true');
+        return this.get('users').filter(user => user.isActive === isActiveS);
       }
     }),
 
     actions: {
        
       filterUpdated: function (value) {
-        
-        alert(value);
         if (value == "null") {
           this.set('currentFilter', null);
         }
@@ -42,7 +40,8 @@ export default Controller.extend({
         {
           "propertyName": "firstName",
           "title":"First Name",
-          "routeName":"/"
+          "routeName":"/#profile",
+          "routeProperty":"_id"
         },
         {
           "propertyName": "lastName",
