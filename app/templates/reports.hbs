@@ -22,12 +22,6 @@
             Team
             </label>
          </div>
-         <div class="form-check">
-            <input class="form-check-input" value=task name="optionSelect" type="radio" onchange= {{action optionSelect value ="target.value"}}>
-            <label class="form-check-label">
-            Task
-            </label>
-         </div>
       </div>
       <br/>
       <div>
@@ -35,13 +29,15 @@
          <select onchange={{action (mut option) value= "target.value"}} required>
            {{#if (eq 'project' display)}}
            {{#each sortedProjects as |project|}}
+              <option value="" selected disabled hidden>Choose a project</option>
               <option value={{project._id}}>{{project.projectName}}</option>
            {{/each}}
             {{/if}}
 
           {{#if (eq 'person' display)}}
           {{#each sortedPersons as |person|}}
-             <option value={{person._id}}>{{person.lastName}}</option>
+             <option value="" selected disabled hidden>Choose a person</option>
+             <option value={{person._id}}>{{concat person.firstName " " person.lastName}}</option>
           {{/each}}
             {{/if}}
 
