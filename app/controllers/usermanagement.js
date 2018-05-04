@@ -8,6 +8,14 @@ export default Controller.extend({
     userProfileService: inject('user-profile-service'),
     users: alias('model'),
     currentFilter: null,
+    user:{firtName:"",
+          lastName: "",
+          email:"",
+          password:"Test@123",
+          isActive:"",
+          weeklyComittedHours:"",
+          role:""
+},
 
     filteredUsers: computed('users.@each.isActive', 'currentFilter', function() {
       if (this.get('currentFilter') === null) {
