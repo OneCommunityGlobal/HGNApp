@@ -50,7 +50,7 @@ export default Component.extend({
     }),
     isUserReportAdmin: computed('userrole', function () {
         let userrole = this.get('userrole');
-        return userrole === "Manager" ? true : userrole === "Administrator" ? true : userrole === "Core Team" ? true : false;
+        return (userrole === "Volunteer" || userrole === "Administrator" || userrole === "Core Team")
     }),
 
 
@@ -62,7 +62,7 @@ export default Component.extend({
         },
 
         navigatetoProfile() {
-           
+
             let userId = this.get("userId")
 
             this.get(`navigatetoProfile`)(userId);

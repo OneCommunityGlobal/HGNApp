@@ -37,7 +37,7 @@ export default Service.extend({
   },
 
   postProject(project) {
-    let relativePath = "/project/";
+    let relativePath = "/projects/";
     let data = project;
     let method = "post";
 
