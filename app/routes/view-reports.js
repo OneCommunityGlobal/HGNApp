@@ -13,8 +13,8 @@ export default Route.extend({
 
     model(params) {
         let formatedDates = {
-            'FromDate': moment(params.FromDate, 'X').format('DD/MM'),
-            "ToDate": moment(params.ToDate, 'X').format('DD/MM')
+            'FromDate': moment(params.FromDate, 'X').format('MM/DD/YYYY'),
+            "ToDate": moment(params.ToDate, 'X').format('MM/DD/YYYY')
         }
         let PWToDate = moment().clone().subtract(8, "days").format('X');
         let PWFromDate = moment().clone().subtract(14, "days").format('X');

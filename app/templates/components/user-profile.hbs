@@ -99,11 +99,20 @@
         </div>
         <div class="form-row">
             <div class="col-6 justify-content-start">
-                <a href="#" class="btn btn-danger float-left">Cancel</a>
+                 {{#if isNewUser}}
+                       
+                        {{else }}
+                       <a href="#" class="btn btn-danger float-left">Cancel</a>
+                        {{/if}}        
             </div>
             <div class="col-6 justify-content-end">
                 {{#if canUserEditPersonalFields }}
-                    <button type="submit" class="btn btn-primary float-right" {{action 'postChanges'}}>Save Changes</button>
+                    <button type="submit" class="btn btn-primary float-right" {{action 'postChanges'}}>
+                        {{#if isNewUser}}
+                        Create New user
+                        {{else }}
+                        Save Changes
+                        {{/if}}</button>
                 {{/if}}
             </div>
         </div>

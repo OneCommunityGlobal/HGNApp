@@ -82,9 +82,6 @@ export default Controller.extend({
             case 'person':
                 this.set('display', 'person');
                 break;
-            case 'task':
-                this.set('display', 'task');
-                break;
             case 'team':
                 this.set('display', 'team');
                 break;
