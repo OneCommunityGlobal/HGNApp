@@ -50,7 +50,7 @@ export default Component.extend({
     }),
     isUserReportAdmin: computed('userrole', function () {
         let userrole = this.get('userrole');
-        return (userrole === "Volunteer" || userrole === "Administrator" || userrole === "Core Team")
+        return (userrole === "Manager" || userrole === "Administrator" || userrole === "Core Team")
     }),
 
 
