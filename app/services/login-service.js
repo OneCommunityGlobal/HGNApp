@@ -64,6 +64,8 @@ export default Service.extend({
 
   },
 
-
+  forgotpassword(data){
+    alert(data.email);
+  }
 });
 
