@@ -7,5 +7,11 @@ export default Route.extend(UnAuthenticatedRouteMixin, {
     userProfileService: inject('user-profile-service'),
     model() {
         return this.get('userProfileService').getAllUserProfiles();
+    },
+
+    actions:{
+        refresh: function(){
+        this.refresh();
+      }
     }
 });

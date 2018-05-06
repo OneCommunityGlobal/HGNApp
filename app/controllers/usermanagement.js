@@ -8,6 +8,7 @@ export default Controller.extend({
     userProfileService: inject('user-profile-service'),
     users: alias('model'),
     currentFilter: null,
+    
     user:{firtName:"",
           lastName: "",
           email:"",
@@ -35,6 +36,10 @@ export default Controller.extend({
         else {
           this.set('currentFilter', value);
         }
+      },
+
+      close: function(){
+       this.get('target').send('refresh');
       }
     },
     
@@ -48,7 +53,7 @@ export default Controller.extend({
         {
           "propertyName": "firstName",
           "title":"First Name",
-          "routeName":"/#profile",
+          "routeName":"/#/profile",
           "routeProperty":"_id"
         },
         {
@@ -72,7 +77,7 @@ export default Controller.extend({
           }
         ],
 
-        customIcons :[{
+        customClasses :[{
           'sort-asc': 'fa fa-chevron-down',
           'sort-desc': 'fa fa-chevron-down'
         }]

@@ -62,10 +62,14 @@
             </div>
         </div>
         {{#if showwarning}}
-            <div class="border bg-danger text-white form-row mt-2 mb-2">
-                * REMEMBER TO CLICK THE "SAVE CHANGES" BUTTON AT THE BOTTOM OF THE PAGE BEFORE LEAVING. YOUR CHANGES WILL BE LOST IF YOU
-                DON'T DO THIS."
-            </div>
+                <div class="border bg-danger text-white form-row mt-2 mb-2">
+                    {{#if isNewUser}}
+                    Fields Marked as * are required to create new user
+                    {{else}}
+                    * REMEMBER TO CLICK THE "SAVE CHANGES" BUTTON AT THE BOTTOM OF THE PAGE BEFORE LEAVING. YOUR CHANGES WILL BE LOST IF YOU
+                    DON'T DO THIS."
+                    {{/if}}
+                </div>
         {{/if}}
         <div class="form-row">
             {{userprofile-profilelinks label = "Administrative Link" linksarray =  model.adminLinks isEditable =isLoggedinUserAdministrator name = "adminLinks" onchangeaction =(action "updateProperty")}}
