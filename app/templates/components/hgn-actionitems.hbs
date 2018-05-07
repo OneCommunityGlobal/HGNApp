@@ -38,8 +38,8 @@
                 <tr class="row {{isSubmitted}}">
                   <td class="col-sm-3">{{actionItem.createdBy}}</td>
                   <td class="col-sm-8 text-left">
-                    <input id="input_actionitem_{{index}}" required class="col-12" value= {{actionItem.description}} oninput= {{action (mut actionItem.description) value = "target.value"}}
-                      onchange= {{action "editActionItem"  actionItem index}}>
+                    <textarea id="input_actionitem_{{index}}" autocomplete="on" required rows="1" class="col-12" value= {{actionItem.description}}
+                      oninput= {{action (mut actionItem.description) value = "target.value"}} onchange= {{action "editActionItem"  actionItem index}}></textarea>
                   </td>
                   <td class="col-sm-1">
                     <span class="fa fa-trash" {{action "deleteActionItem" actionItem}}></span>
@@ -54,9 +54,9 @@
           </div>
         {{/if}}
         <form class="form-inline {{isFormSumbitted}}" id="frmnewactionitem">
-          <div class="row col-12">
-            <input required type="text" class="form-control col-9 mr-1" placeholder="Assign new action item to {{nameofUserForWhomActionItemsAreBeingViewed}}"
-              onchange= {{action (mut newAIdescription) value = "target.value"}}>
+          <div class="col-12">
+            <textarea required type="text" class="form-control col-9 mr-1" rows="3" cols="50" placeholder="Assign new action item to {{nameofUserForWhomActionItemsAreBeingViewed}}"
+              onchange= {{action (mut newAIdescription) value = "target.value"}}></textarea>
             <button type="submit" class=" ml-1 btn btn-primary col-2" {{action "createActionItem"}}>Assign</button>
           </div>
         </form>
