@@ -64,6 +64,21 @@ export default Service.extend({
 
   },
 
-
+  forgotpassword(data){
+    let router = this.get('router');
+    $.ajax({
+      url: this.host + "/forgotpassword",
+      type: "POST",
+      data: data
+    })
+    .then(
+      res => {
+        alert('you will get an email with new password shortly');
+        router.transitionTo('login');
+      }, error => {
+        alert("something went wrong");
+      }
+    )
+  }
 });
 

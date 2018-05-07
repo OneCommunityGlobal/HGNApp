@@ -23,6 +23,7 @@ Router.map(function () {
   this.route('updatepassword');
   this.route('reports');
   this.route('view-reports');
+  this.route('forgotpassword');
 });
 
 export default Router;
