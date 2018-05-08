@@ -96,8 +96,8 @@ export default Component.extend({
         let start = this.get('fromDate') ? moment(this.get('fromDate')) : moment().startOf('isoWeek');
         let end = this.get('toDate') ? moment(this.get('toDate')) : moment().startOf('isoWeek').endOf("isoWeek");
 
-        fromdate = start.clone().format();
-        todate = end.clone().format();
+        fromdate = start.clone().startOf("day").format();
+        todate = end.clone().endOf("day").format();
 
         let startdate = start.clone().format("MM/DD/YYYY");
 
