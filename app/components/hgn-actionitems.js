@@ -42,17 +42,18 @@ export default Component.extend({
         }
 
     }),
-    nameofUserForWhomActionItemsAreBeingViewed: computed("forUser", "teamMembers", function () {
+    nameofUserForWhomActionItemsAreBeingViewed: computed("forUser", "teamMembers.@each", function () {
 
         let teamMembers = this.get("teamMembers");
         let forUser = this.get("forUser");
         let name = "";
         teamMembers.forEach(element => {
             if (forUser === element._id) {
-                name = element.name;
+                name = element.fullName;
             }
         });
-        return name;
+          return name;
+
     }),
 
 

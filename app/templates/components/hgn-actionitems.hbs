@@ -38,7 +38,7 @@
                 <tr class="row {{isSubmitted}}">
                   <td class="col-sm-3">{{actionItem.createdBy}}</td>
                   <td class="col-sm-8 text-left">
-                    <textarea id="input_actionitem_{{index}}" autocomplete="on" required rows="1" class="col-12" value= {{actionItem.description}}
+                    <textarea id="input_actionitem_{{index}}" autocomplete="on" required rows="3" class="col-12" value= {{actionItem.description}}
                       oninput= {{action (mut actionItem.description) value = "target.value"}} onchange= {{action "editActionItem"  actionItem index}}></textarea>
                   </td>
                   <td class="col-sm-1">
