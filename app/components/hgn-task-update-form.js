@@ -11,8 +11,8 @@ export default Component.extend({
     projectService: inject("project-service"),
     notes: "",
     dateofWork: "",
-    taskhours: "",
-    taskminutes: "",
+    taskhours: 0,
+    taskminutes: 0,
     isTangible: true,
     isFormSubmitted: "",
     options: {
