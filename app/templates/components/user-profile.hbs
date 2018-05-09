@@ -62,14 +62,14 @@
             </div>
         </div>
         {{#if showwarning}}
-                <div class="border bg-danger text-white form-row mt-2 mb-2">
-                    {{#if isNewUser}}
+            <div class="border bg-danger text-white form-row mt-2 mb-2">
+                {{#if isNewUser}}
                     Fields Marked as * are required to create new user
-                    {{else}}
+                {{else}}
                     * REMEMBER TO CLICK THE "SAVE CHANGES" BUTTON AT THE BOTTOM OF THE PAGE BEFORE LEAVING. YOUR CHANGES WILL BE LOST IF YOU
                     DON'T DO THIS."
-                    {{/if}}
-                </div>
+                {{/if}}
+            </div>
         {{/if}}
         <div class="form-row">
             {{userprofile-profilelinks label = "Administrative Link" linksarray =  model.adminLinks isEditable =isLoggedinUserAdministrator name = "adminLinks" onchangeaction =(action "updateProperty")}}
@@ -84,7 +84,7 @@
         </div>
         <div class="form-row">
             <div class="form-group col-12">
-                <label class="control-label" for="bio">*Bio:</label>
+                <label class="control-label" for="bio">Bio:</label>
                 {{tinymce-editor value= model.bio options=options  onValueChanged=(action (mut model.bio))}}
             </div>
         </div>
@@ -103,20 +103,18 @@
         </div>
         <div class="form-row">
             <div class="col-6 justify-content-start">
-                 {{#if isNewUser}}
-                       
-                        {{else }}
-                       <a href="#" class="btn btn-danger float-left">Cancel</a>
-                        {{/if}}        
+                {{#if isNewUser}}
+                    {{else }}
+                    <a href="#" class="btn btn-danger float-left">Cancel</a>
+                {{/if}}
             </div>
             <div class="col-6 justify-content-end">
                 {{#if canUserEditPersonalFields }}
                     <button type="submit" class="btn btn-primary float-right" {{action 'postChanges'}}>
                         {{#if isNewUser}}
-                        Create New user
-                        {{else }}
-                        Save Changes
-                        {{/if}}</button>
+                            Create New user {{else }} Save Changes
+                        {{/if}}
+                    </button>
                 {{/if}}
             </div>
         </div>
