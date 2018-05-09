@@ -15,7 +15,9 @@ export default Component.extend({
         let self = this;
         let userId = this.get('forUserId')
         let forUserId = { requestorId: userId }
-        this.get('dashboardService').getWeeklyEffort(forUserId)
+        let startdate = moment().startOf("isoWeek").format();
+        let enddate = moment().endOf("isoWeek").format();
+        this.get('dashboardService').getWeeklyEffort(forUserId, startdate, enddate)
             .then(result => { this.set('laborthisweek', result); })
             .then(() => {
                 let actual = this.get('laborthisweek');

@@ -32,7 +32,7 @@
                     {{#each allMemberships as |membership|}}
                         <div class="form-row mb-1 mr-3">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id= {{membership._id}} value= {{membership._id}} checked= {{if (record-in-array memberships membership) "checked" null}}
+                                <input class="form-check-input" type="checkbox" id= {{membership._id}} value= {{membership._id}} checked= {{if (record-in-array memberships membership._id "_id") "checked" null}}
                                     onchange= {{action "editUserMembership" membership}}>
                                 <label class="form-check-label" for= {{membership._id}}>{{if (eq title "Team") membership.teamName membership.projectName}}</label>
                             </div>

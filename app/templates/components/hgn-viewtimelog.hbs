@@ -4,7 +4,7 @@
         <label class=" col-form-label mr-1 ">Filter Entries by Project:</label>
         <select class="" name="userprojects " readonly onchange= {{action (mut projectfiltervalue) value = "target.value" }}>
             <option class="form-control " value="" selected>All Projects (Default)</option>
-            {{#each projects as |project|}}
+            {{#each projectfilterlist as |project|}}
                 <option class="form-control" value= {{project.projectId}}>{{project.projectName}} </option>
             {{/each}}
         </select>
@@ -57,6 +57,9 @@
                                             {{#each projects as |project|}}
                                                 <option class="form-control " value= {{project.projectId}} selected= {{if (eq project.projectId timelog.projectId) true }}>{{project.projectName}}</option>
                                             {{/each}}
+                                            {{#if (not (record-in-array projects timelog.projectId "projectId") )}}
+                                                <option class="form-control " value= {{timelog.projectId}} selected disabled>{{timelog.projectName}}</option>
+                                            {{/if}}
                                         </select>
                                     </div>
                                 </div>

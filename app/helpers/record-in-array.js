@@ -2,12 +2,13 @@ import { helper } from '@ember/component/helper';
 
 export function recordInArray(params) {
   let masterarray = params[0];
-  let record = params[1]._id;
+  let record = params[1];
+  let fieldname = params[2];
   let result = false;
 
   masterarray.forEach(element => {
 
-    if (element._id === record) {
+    if (element[fieldname] === record) {
       result = true;
       return;
     }

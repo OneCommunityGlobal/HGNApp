@@ -14,8 +14,8 @@ export default Service.extend({
     return request;
   },
 
-  getWeeklyEffort(requestor) {
-    let relativePath = "/dashboard/weeklydata/" + requestor.requestorId;
+  getWeeklyEffort(requestor, startdate, enddate) {
+    let relativePath = "/dashboard/weeklydata/" + `${requestor.requestorId}/${startdate}/${enddate}`;
     let data = null;
     let method = "get";
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
@@ -30,8 +30,8 @@ export default Service.extend({
     return request;
 
   },
-  getMonthlyEffort(requestor) {
-    let relativePath = "/dashboard/monthlydata/" + requestor.requestorId;
+  getMonthlyEffort(requestor, startdate, enddate) {
+    let relativePath = "/dashboard/monthlydata/" + `${requestor.requestorId}/${startdate}/${enddate}`;
     let data = null;
     let method = "get";
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);

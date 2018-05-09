@@ -13,6 +13,7 @@ export default Component.extend({
 
         this._super(...arguments);
         this.set("timelogs", []);
+        this.set("projects", []);
         this.set("projectfiltervalue", "");
         this.set("options", {
             plugins: ["autolink", "link"],
@@ -53,6 +54,27 @@ export default Component.extend({
         this.getDataforTime();
     },
 
+    projectfilterlist: computed("projects.@each", "timelogs.@each", function () {
+
+        let allprojects = new Map();
+
+        let timelogs = this.get("timelogs");
+        let projects = this.get("projects");
+
+        timelogs.forEach(element => {
+            let project = { projectId: element.projectId, projectName: element.projectName };
+            allprojects.set(project.projectId, project);
+        });
+
+        projects.forEach(element => {
+            let project = { projectId: element.projectId, projectName: element.projectName };
+            allprojects.set(project.projectId, project);
+        })
+
+
+        return allprojects;
+
+    }),
 
     timelogsview: computed("timelogs.@each", "projectfiltervalue", function () {
 

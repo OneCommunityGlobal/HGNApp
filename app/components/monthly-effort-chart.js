@@ -26,7 +26,9 @@ export default Component.extend({
 
     updateMonthlyData: function () {
         let forUserId = { requestorId: this.get('forUserId') }
-        return this.get('dashboardService').getMonthlyEffort(forUserId)
+        let startdate = moment().startOf("month").format();
+        let enddate = moment().endOf("month").format();
+        return this.get('dashboardService').getMonthlyEffort(forUserId, startdate, enddate)
             .then(result => { this.set('laborthismonth', result); })
             .then(() => {
 
