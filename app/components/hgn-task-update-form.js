@@ -25,14 +25,15 @@ export default Component.extend({
 
     init() {
         this._super(...arguments);
+        this.set("projects", []);
+    },
 
+    didUpdateAttrs() {
+        this._super(...arguments);
         let user = this.get('forUserId');
-
         this.get('projectService').getUserProjects(user)
             .then(results => { this.set('projects', results); });
     },
-
-
 
     minDateForLogging: computed("loggedinUser.role", function () {
 
