@@ -28,6 +28,13 @@ export default Component.extend({
         this.set("projects", []);
     },
 
+    didReceiveAttrs() {
+        this._super(...arguments);
+        let user = this.get('forUserId');
+        this.get('projectService').getUserProjects(user)
+            .then(results => { this.set('projects', results); });
+    },
+
     didUpdateAttrs() {
         this._super(...arguments);
         let user = this.get('forUserId');
