@@ -2,7 +2,7 @@
     <form id="userProfileForm" class= {{isFormSubmitted}} oninput= {{action (mut showwarning) true}}>
         <div class="form-row col-12">
             <div class="form-group col-md-4">
-                <div class="form-row mb-1">
+                <div class="form-row mb-1 col-12">
                     <div class="form-row">
                         {{#if model.profilePic}}
                             <img input id="image" type="image" alt="Profile Picture" src= {{model.profilePic}} name=profilePic class="img-responsive logo profilepic"
@@ -12,7 +12,7 @@
                             />
                         {{/if}}
                     </div>
-                    <div class="form-row mt-1">
+                    <div class="form-row mt-1 col-12">
                         {{#if canUserEditPersonalFields}}
                             <label for="newProfilePic" class="fa fa-edit" data-toggle="tooltip" data-placement="bottom" title="Click to update profile picture"></label>
                             <input id="newProfilePic" class="newProfilePic" multiple="true" onchange= {{action "updateProfilePic"}} accept="image/png,image/jpeg"
@@ -62,7 +62,7 @@
             </div>
         </div>
 <!-- Reset Pwd available only for admin to do : may change as component in future-->
-        <div class="">
+        <div class="form-row col-12 mb-1">
             {{#if isLoggedinUserAdministrator}}
                 {{#unless isNewUser}}
                 <a href="#" class="card-link btn btn-success" data-toggle="modal" data-target="#resetPwd" {{action "loadAllmemberships"}}>Reset Password</a>
