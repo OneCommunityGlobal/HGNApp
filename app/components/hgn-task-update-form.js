@@ -30,6 +30,7 @@ export default Component.extend({
 
     didReceiveAttrs() {
         this._super(...arguments);
+        this.set("projects", []);
         let user = this.get('forUserId');
         this.get('projectService').getUserProjects(user)
             .then(results => { this.set('projects', results); });
@@ -37,6 +38,7 @@ export default Component.extend({
 
     didUpdateAttrs() {
         this._super(...arguments);
+        this.set("projects", []);
         let user = this.get('forUserId');
         this.get('projectService').getUserProjects(user)
             .then(results => { this.set('projects', results); });
