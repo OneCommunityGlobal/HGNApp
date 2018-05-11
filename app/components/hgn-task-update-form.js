@@ -68,6 +68,8 @@ export default Component.extend({
         this.set('isFormSubmitted', "");
         $("#frmSubmitTimeEntry")[0].reset();
         $("#dateofwork")[0].value = this.get("today");
+        this.set('taskhours', 0);
+        this.set('minutes', 0)
 
     },
 
@@ -103,7 +105,6 @@ export default Component.extend({
                 timeentry.notes = this.get('notes');
                 this.get('timeEntryService').postTimeEntry(timeentry)
                     .then(results => {
-                        console.log(results);
                         toastr.success("", 'Time Entry Saved');
                         this.get("notifyController")(Date.now());
                         this.clearform();
