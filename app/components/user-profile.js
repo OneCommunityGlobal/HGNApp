@@ -88,7 +88,7 @@ export default Component.extend({
             }
         },
 
-        postChanges() {
+        postChanges(isNewUser) {
             let toastr = this.get('toast');
             if (this.validateform()) {
                 this.set('isFormSubmitted', "")
@@ -110,6 +110,12 @@ export default Component.extend({
                     this.get('userProfileService').postUserProfileData(user)
                         .then(() => {
                             toastr.success("", 'New user created successfully');
+                           
+                            if(isNewUser)
+                            {
+                                $("#userProfileForm")[0].reset();
+                                $("[data-dismiss=modal]").trigger({ type: "click" });
+                            }
                         }, error => {
 
                             toastr.warning(error.responseJSON.message, 'Error!!');
@@ -123,8 +129,12 @@ export default Component.extend({
 
 
 
-        }
+        },
 
+        reset : function()
+        {
+            $("#userProfileForm")[0].reset();
+        }
     }
 
 });
