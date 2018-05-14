@@ -39,6 +39,7 @@ export default Controller.extend({
       },
 
       close: function(){
+        $("#userProfileForm")[0].reset();
        this.get('target').send('refresh');
       }
     },
@@ -53,12 +54,13 @@ export default Controller.extend({
         {
           "propertyName": "firstName",
           "title":"First Name",
-          "routeName":"/#/profile",
+          "routeName":"profile",
           "routeProperty":"_id"
         },
         {
           "propertyName": "lastName",
-          "title":"Last Name"
+          "title":"Last Name",
+          "routeName":"/#/profile/",
         },
         {
             "propertyName": "role",
