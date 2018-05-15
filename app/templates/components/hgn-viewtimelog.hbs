@@ -29,7 +29,7 @@
                     <tr class="col-12 w-100 mb-3 row tr-tangible-{{timelog.isTangible}}" scope="row">
                         <form id="frmEditTimeEntry_{{index}}" class="w-100 form-inline" readonly= {{if (or isUserAdministrator (and isEditable (is-timeentry-within-week timelog.dateOfWork))) null "true"}}>
                             <div class=" col-5 w-100 ">
-                                <div class="row form-group ">
+                                <div class="row form-group">
                                     <label class="col-form-label mr-1 ">Date:</label>
                                     <input class="from-control" value= {{format-datetime timelog.dateOfWork}} type="date" readonly>
                                 </div>

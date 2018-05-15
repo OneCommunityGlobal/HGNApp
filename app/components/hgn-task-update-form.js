@@ -55,8 +55,6 @@ export default Component.extend({
     }),
     maxDateForLogging: computed("loggedinUser.role", function () {
         return moment().format("YYYY-MM-DD");
-
-
     }),
 
     today: computed("", function () {
@@ -65,11 +63,12 @@ export default Component.extend({
 
 
     clearform() {
-        this.set('isFormSubmitted', "");
         $("#frmSubmitTimeEntry")[0].reset();
         $("#dateofwork")[0].value = this.get("today");
+        this.set('isFormSubmitted', "");
         this.set('taskhours', 0);
-        this.set('minutes', 0)
+        this.set("isTangible", true);
+        this.set('taskminutes', 0);
 
     },
 
