@@ -46,11 +46,7 @@
         "surge": "^0.20.1",
         "toastr": "^2.1.4"
     },
-    "git": {
-        "scripts": {
-            "pre-push": "ember build && mv dist/index.html dist/200.html && surge dist --domain hgnapplication.surge.sh"
-        }
-    },
+    "pre-push": "ember build && mv dist/index.html dist/200.html && surge dist --domain hgnapplication.surge.sh",
     "engines": {
         "node": " >= 8.*"
     },
