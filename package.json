@@ -41,7 +41,9 @@
         "ember-source": "~3.0.0",
         "ember-toastr": "^1.7.1",
         "eslint-plugin-ember": "^5.0.0",
+        "git-pre-push": "0.0.5",
         "loader.js": "^4.2.3",
+        "surge": "^0.20.1",
         "toastr": "^2.1.4"
     },
     "git": {
