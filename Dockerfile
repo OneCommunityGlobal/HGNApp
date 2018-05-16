@@ -5,10 +5,11 @@ MAINTAINER SHUBHRA MITTAL
 COPY . /app
 WORKDIR /app
 
+EXPOSE 80
+
 RUN npm install ember-cli -g
 RUN npm install --loglevel verbose
 
-RUN npm run start
+ENTRYPOINT ["npm" "start"]
 
 
-EXPOSE 80
