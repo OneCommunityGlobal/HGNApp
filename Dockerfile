@@ -2,7 +2,8 @@ FROM node:boron as builder
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 COPY package.json /usr/src/app
-RUN npm install --loglevel verbose -g
+RUN npm intall ember-cli -g
+RUN npm install --loglevel verbose
 COPY . /usr/src/app
 RUN npm run build
 
