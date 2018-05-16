@@ -1,14 +1,12 @@
-FROM node:boron as builder
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+FROM node:latest
+
+MAINTAINER SHUBHRA MITTAL
+
 COPY package.json /usr/src/app
-RUN npm intall ember-cli -g
+RUN npm install ember-cli -g
 RUN npm install --loglevel verbose
 COPY . /usr/src/app
-RUN npm run build
+RUN npm run start
 
-FROM nginx
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=builder /usr/src/app/build /usr/share/nginx/html
+
 EXPOSE 80
-RUN chown nginx.nginx /usr/share/nginx/html/ -R
