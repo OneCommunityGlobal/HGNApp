@@ -1,45 +1,22 @@
-FROM node:8.1.2
-MAINTAINER Shubhra Mittal <shubhra.goel@gmail.com>
+# base image
+FROM node:9.6.1
 
-COPY . /opt/startup
-COPY ./app/index.html /home/site/wwwroot/hostingstart.html
-COPY sshd_config /etc/ssh/
 
-RUN mkdir -p /home/LogFiles \
-     && echo "root:Docker!" | chpasswd \
-     && apt update \
-     && apt install -y --no-install-recommends openssh-server
 
-# Workaround for https://github.com/npm/npm/issues/16892
-# Running npm install as root blows up in a  --userns-remap
-# environment.
+# set working directory
+RUN mkdir /usr/src/app
+WORKDIR /usr/src/app
 
-RUN chmod -R 777 /opt/startup \
-     && mkdir /opt/pm2 \
-     && chmod 777 /opt/pm2 \
-     && ln -s /opt/pm2/node_modules/pm2/bin/pm2 /usr/local/bin/pm2
+# add `/usr/src/app/node_modules/.bin` to $PATH
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
-USER node
+# install and cache app dependencies
+COPY package.json /usr/src/app/package.json
+RUN npm install
+RUN npm install -g ember-cli
 
-RUN cd /opt/pm2 \
-  && npm install pm2 \
-  && cd /opt/startup \
-  && npm install \
-  && npm install ember-cli -g --verbose
+# add app
+COPY . /usr/src/app
 
-USER root
-
-# End workaround
-
-EXPOSE 2222 8080
-
-ENV PM2HOME /pm2home
-
-ENV PORT 8080
-ENV WEBSITE_ROLE_INSTANCE_ID localRoleInstance
-ENV WEBSITE_INSTANCE_ID localInstance
-ENV PATH ${PATH}:/home/site/wwwroot
-
-WORKDIR /home/site/wwwroot
-
-ENTRYPOINT ["/opt/startup/init_container.sh"]
+# start app
+CMD ember serve --port 8080 --host 0.0.0.0
