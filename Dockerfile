@@ -1,22 +1,15 @@
-# base image
-FROM node:9.6.1
-
-
-
-# set working directory
-
-WORKDIR /home/site/wwwroot
-
-# add `/home/site/wwwroot/node_modules/.bin` to $PATH
-ENV PATH /home/site/wwwroot/node_modules/.bin:$PATH
-
-# install and cache app dependencies
-COPY package.json /home/site/wwwroot/package.json
+# Stage 0, based on Node.js, to build and compile Angular
+FROM node:8.6 as node
+WORKDIR /app
+COPY package.json /app/
 RUN npm install
-RUN npm install -g ember-cli
+RUN npm install ember-cli -g
+COPY ./ /app/
+ARG env=production
 
-# add app
-COPY . /home/site/wwwroot
+RUN npm run build -- --prod --environment $env
 
-# start app
-CMD ember serve --port 8080 --host 0.0.0.0
+# Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
+FROM nginx:1.13
+COPY --from=node /app/dist/ /usr/share/nginx/html
+COPY ./nginx-custom.conf /etc/nginx/conf.d/default.conf
