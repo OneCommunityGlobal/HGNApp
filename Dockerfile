@@ -25,7 +25,7 @@ RUN cd /opt/pm2 \
   && npm install pm2 \
   && cd /opt/startup \
   && npm install \
-  && npm install ember-cli -g
+  && npm install ember-cli -g --verbose
 
 USER root
 
