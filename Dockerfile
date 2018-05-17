@@ -1,8 +1,8 @@
 FROM node:8.1.2
 MAINTAINER Shubhra Mittal <shubhra.goel@gmail.com>
 
-COPY startup /opt/startup
-COPY hostingstart.html /home/site/wwwroot/hostingstart.html
+COPY . /opt/startup
+COPY ./app/index.html /home/site/wwwroot/hostingstart.html
 COPY sshd_config /etc/ssh/
 
 RUN mkdir -p /home/LogFiles \
