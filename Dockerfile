@@ -1,30 +1,45 @@
-FROM node:latest
+FROM node:8.1.2
+MAINTAINER Shubhra Mittal <shubhra.goel@gmail.com>
 
-MAINTAINER SHUBHRA MITTAL
-
-COPY . /app
-WORKDIR /app
-
-EXPOSE 80
-
-RUN npm install ember-cli -g
-RUN npm install --loglevel verbose
-
-# ssh
-ENV SSH_PASSWD "root:Docker!"
-RUN apt-get update \
-        && apt-get install -y --no-install-recommends dialog \
-        && apt-get update \
-    && apt-get install -y --no-install-recommends openssh-server \
-    && echo "$SSH_PASSWD" | chpasswd 
-
+COPY startup /opt/startup
+COPY hostingstart.html /home/site/wwwroot/hostingstart.html
 COPY sshd_config /etc/ssh/
-COPY init.sh /usr/local/bin/
 
-RUN chmod u+x /usr/local/bin/init.sh
+RUN mkdir -p /home/LogFiles \
+     && echo "root:Docker!" | chpasswd \
+     && apt update \
+     && apt install -y --no-install-recommends openssh-server
 
+# Workaround for https://github.com/npm/npm/issues/16892
+# Running npm install as root blows up in a  --userns-remap
+# environment.
 
+RUN chmod -R 777 /opt/startup \
+     && mkdir /opt/pm2 \
+     && chmod 777 /opt/pm2 \
+     && ln -s /opt/pm2/node_modules/pm2/bin/pm2 /usr/local/bin/pm2
 
-ENTRYPOINT ["npm" "start"]
+USER node
 
+RUN cd /opt/pm2 \
+  && npm install pm2 \
+  && cd /opt/startup \
+  && npm install \
+  && npm install ember-cli -g
 
+USER root
+
+# End workaround
+
+EXPOSE 2222 8080
+
+ENV PM2HOME /pm2home
+
+ENV PORT 8080
+ENV WEBSITE_ROLE_INSTANCE_ID localRoleInstance
+ENV WEBSITE_INSTANCE_ID localInstance
+ENV PATH ${PATH}:/home/site/wwwroot
+
+WORKDIR /home/site/wwwroot
+
+ENTRYPOINT ["/opt/startup/init_container.sh"]
