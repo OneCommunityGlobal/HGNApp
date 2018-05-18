@@ -1,11 +1,17 @@
 import Component from '@ember/component';
+import moment from 'moment';
 export default Component.extend({
     data: [],
+    linechartdata: [],
     piedata: [],
     totalTime: 0,
     notContributed: [],
     percentChange: 0,
     setColor: false,
+    isweek: false,
+    test: 1,
+
+
     init: function() {
         this._super();
         Array.prototype.groupBy = function(prop) {
@@ -21,27 +27,162 @@ export default Component.extend({
         projectmembers: this.get('projectmembers');
         let members = this.get('projectmembers');
         let memberdata = timeentrydata.groupBy('personId');
+        let prevmemberdata = previousweekdata.groupBy('personId');
+
+
+
+        //Weeekly total hours contributed by each member
+        let weeks = this.get('weeks');
+        if (weeks > 0) {
+            this.set('isweek', true);
+        }
+        let lastWeek = moment().clone().startOf('isoWeek').subtract(1, 'days').isoWeek();
+        let daterange = [];
+        let dates = [];
+        for (var i = weeks; i > 0; i--) {
+            let monday = moment().day("Monday").week(lastWeek).format('M/DD');
+            let sunday = moment(monday).add('6', 'days').format('M/DD');
+            dates.push(monday + '-' + sunday);
+            daterange.push(lastWeek);
+            lastWeek--;
+        };
+        dates.reverse();
+        daterange.sort();
+        let templinedata = {};
+        $.each(memberdata, function(key, value) {
+
+            let temphourdata = [];
+            let hourdata = [];
+            let finaltemphourdata = [];
+            let totalHours = 0;
+            let person = "";
+            let temp = value.groupBy('dateofWork');
+            for (var i in temp) {
+                let hours = (temp[i].reduce(function(acc, obj) {
+                    let x = acc + obj.totalSeconds;
+                    return x;
+                }, 0));
+                let tempobj = {};
+                tempobj['date'] = moment(temp[i][0].dateofWork).isoWeek();
+                tempobj['hours'] = hours;
+                temphourdata.push(tempobj);
+            };
+
+            finaltemphourdata = temphourdata.groupBy('date');
+            for (var i in finaltemphourdata) {
+                let temphours = (finaltemphourdata[i].reduce(function(acc, obj) {
+                    let x = acc + obj.hours;
+                    return x;
+                }, 0));
+
+                let finaltempobj = {};
+                finaltempobj[finaltemphourdata[i][0].date] = (temphours / 3600).toFixed(2);
+                hourdata.push(finaltempobj);
+
+            };
+            templinedata[key] = hourdata;
+        });
+        let tempchartdata = [];
+        let sendlinedata = [
+            ['Weeks']
+        ];
+        for (var i = 0; i < daterange.length; i++) {
+            let temp = [daterange[i]];
+            sendlinedata.push(temp);
+        }
+
+        var deletelinedata = Object.assign({}, templinedata);
+        for (var item in deletelinedata) {
+            sendlinedata[0].push(item);
+            let tempdaterange = daterange;
+            for (i = 1; i < sendlinedata.length; i++) {
+                let count = 0;
+                //console.log('i',sendlinedata[i]);
+                for (var x = 0; x < deletelinedata[item].length; x++) {
+                    count = 1;
+                    //console.log('x',deletelinedata[item][x]);
+                    if (Object.keys(deletelinedata[item][x])[0] == sendlinedata[i][0]) {
+                        sendlinedata[i].push(parseInt(deletelinedata[item][x][Object.keys(deletelinedata[item][x])[0]]));
+                        //  console.log('add',sendlinedata[i]);
+                        deletelinedata[item].shift();
+                        break;
+                    } else {
+                        sendlinedata[i].push(0);
+                        //console.log('zero',sendlinedata[i]);
+                        break;
+                    }
+
+                }
+                if (count == 0) {
+                    sendlinedata[i].push(0);
+                }
+
+            }
+
+        }
+
+        //get name for id
+        for (var i = 1; i < sendlinedata[0].length; i++) {
+            //console.log(sendlinedata[0][i]);
+            for (name in members) {
+                if (members[name]._id == sendlinedata[0][i]) {
+
+                    sendlinedata[0][i] = members[name].firstName;
+                };
+            }
+        }
+
+        //get daterange for weeknumber
+        for (i = 1; i < sendlinedata.length; i++) {
+            sendlinedata[i][0] = dates[i - 1];
+
+        }
+
+        //console.log(sendlinedata);
+        this.set('linechartdata', sendlinedata);
+
+
+
+
         let tempdata = [
-            ['Name', 'Hours']
+            ['Name', 'Prior Week', 'Selected Period']
         ];
         let tempdataid = [];
         let tempContributed = [];
+        //console.log(memberdata);
+        //console.log(prevmemberdata);
         $.each(memberdata, function(key, value) {
             let temp = [];
             let total = 0;
             //console.log(value);
+            let prevtotal = 0;
             for (var i = 0; i < value.length; i++) {
                 total += value[i].totalSeconds;
             }
             total = total / 3600;
-            temp.push(key, total);
+
+            for (var item in prevmemberdata) {
+                if (item == key) {
+                    //console.log(prevmemberdata[item]);
+                    let x = (prevmemberdata[item].reduce((a, b) => ({
+                        totalSeconds: a.totalSeconds + b.totalSeconds
+                    })));
+                    prevtotal = (x.totalSeconds) / 3600;
+                }
+            }
+            //console.log(prevtotal);
+            temp.push(key, prevtotal, total);
             //console.log(temp);
             //tempdataid.push(temp);
             tempdata.push(temp);
 
         });
+
+        //console.log(tempdata);
+
         //console.log(members);
         var tempmembers = JSON.parse(JSON.stringify(members));
+        //console.log(tempmembers);
         for (var i = 0; i < tempdata.length; i++) { //Admin, Core
             //console.log(data[i][0]);
             for (var name in tempmembers) { //Swathy, Jaem, Admin, Core
@@ -53,16 +194,12 @@ export default Component.extend({
                     tempmembers.splice(name, 1);
                     //tempContributed.push(members[name]._id);
                 }
-                /*else {
-      tempContributed.push(members[name].firstName);
-      console.log(tempContributed);
-      var unique = tempContributed.filter(function(elem, index, self) {
-    return index === self.indexOf(elem);
-})
-}*/
+
 
             }
         }
+
+
         this.set('notContributed', tempmembers);
         this.set('data', tempdata);
         var temppie = [
@@ -93,9 +230,18 @@ export default Component.extend({
         }
     },
 
+    didUpdateAttrs() {
+        this._super(...arguments);
+        //console.log('didUpdatedAttrs called');
+    },
+
+
+
+
     //Add code to integrate google charts in this life cycle hook
     didInsertElement() {
         //load google chart packages
+
 
         google.charts.load('visualization', '1.1', {
             'packages': ['bar', 'corechart', 'controls']
@@ -103,7 +249,7 @@ export default Component.extend({
         var senddata = this.get('data');
         //console.log(senddata);
         var piedata = this.get('piedata');
-
+        var sendlinedata = this.get('linechartdata');
         //console.log(this.get('data'));
         //google.charts.setOnLoadCallback(drawBarChart);
         google.charts.setOnLoadCallback(function() {
@@ -112,6 +258,14 @@ export default Component.extend({
         google.charts.setOnLoadCallback(function() {
             drawPieChart(piedata);
         });
+        //console.log('weeks', this.get('weeks'));
+        if (this.get('weeks') > 0) {
+
+            google.charts.setOnLoadCallback(function() {
+                drawLineChart(sendlinedata);
+            });
+        }
+
 
 
         function drawBarChart(senddata) {
@@ -126,7 +280,7 @@ export default Component.extend({
             for (var i = 1; i < numRows; i++)
                 dataTable.addRow(senddata[i]);
             dataTable.sort(([{
-                column: 1,
+                column: 2,
                 desc: true
             }]));
             if (dataTable.getNumberOfRows() === 0) {
@@ -151,22 +305,26 @@ export default Component.extend({
                 containerId: 'BarChart',
                 dataTable: dataTable,
                 options: {
-                    title: '',
-                    width: 500,
+                    title: 'Member Contribution for the Selected Period',
+                    width: '100%',
                     height: 400,
-                    bar: {
-                        groupWidth: "30%"
-                    },
-                    legend: {
-                        position: "none"
-                    },
+
+
                     vAxis: {
                         title: 'Total Hours'
                     },
                     hAxis: {
-                        title: 'Members'
+                        title: 'Members',
+
+                        slantedText: true,
+                        slantedTextAngle: 90
                     },
 
+                    series: {
+                        0: {
+                            color: 'lightgray'
+                        }
+                    }
 
                 }
             });
@@ -233,6 +391,84 @@ export default Component.extend({
             var chart = new google.visualization.PieChart(document.getElementById('member_pie'));
 
             chart.draw(data, options);
+        }
+        //console.log(this.get('isweek'));
+
+        function drawLineChart(sendlinedata) {
+            var dataTable = new google.visualization.DataTable();
+            var numRows = sendlinedata.length;
+            //console.log(sendlinedata);
+            var numCols = sendlinedata[0].length;
+            dataTable.addColumn('string', sendlinedata[0][0]);
+            for (var i = 1; i < numCols; i++)
+                dataTable.addColumn('number', sendlinedata[0][i]);
+            for (var i = 1; i < numRows; i++)
+                dataTable.addRow(sendlinedata[i]);
+            var columnsTable = new google.visualization.DataTable();
+            columnsTable.addColumn('number', 'colIndex');
+            columnsTable.addColumn('string', 'colLabel');
+            var initState = {
+                selectedValues: []
+            };
+            for (var i = 1; i < dataTable.getNumberOfColumns(); i++) {
+                columnsTable.addRow([i, dataTable.getColumnLabel(i)]);
+                initState.selectedValues.push(dataTable.getColumnLabel(i));
+            }
+
+            //console.log(dataTable);
+            var chart = new google.visualization.ChartWrapper({
+                chartType: 'LineChart',
+                containerId: 'WeeklyTrend',
+                dataTable: dataTable,
+                options: {
+                    title: 'Weekly contribution trend',
+                    width: '100%',
+                    height: 400,
+
+                }
+            });
+
+            var columnFilter = new google.visualization.ControlWrapper({
+                controlType: 'CategoryFilter',
+                containerId: 'colFilterWeek_div',
+                dataTable: columnsTable,
+                options: {
+                    filterColumnLabel: 'colLabel',
+                    ui: {
+                        label: 'Columns',
+                        allowTyping: false,
+                        allowMultiple: true,
+                        allowNone: false,
+                        selectedValuesLayout: 'below'
+                    }
+                },
+                state: initState
+            });
+
+            function setChartView() {
+                var state = columnFilter.getState();
+                var row;
+                var view = {
+                    columns: [0]
+                };
+                for (var i = 0; i < state.selectedValues.length; i++) {
+                    row = columnsTable.getFilteredRows([{
+                        column: 1,
+                        value: state.selectedValues[i]
+                    }])[0];
+                    view.columns.push(columnsTable.getValue(row, 0));
+                }
+                // sort the indices into their original order
+                view.columns.sort(function(a, b) {
+                    return (a - b);
+                });
+                chart.setView(view);
+                chart.draw();
+            }
+            google.visualization.events.addListener(columnFilter, 'statechange', setChartView);
+
+            setChartView();
+            columnFilter.draw();
         }
 
     }

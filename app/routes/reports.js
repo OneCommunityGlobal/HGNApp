@@ -1,6 +1,8 @@
 import UnAuthenticatedRouteMixin from '../mixins/un-authenticated-route-mixin';
 import Route from '@ember/routing/route';
-import { set } from '@ember/object';
+import {
+    set
+} from '@ember/object';
 import {
     inject
 } from '@ember/service';
