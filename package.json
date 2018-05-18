@@ -52,7 +52,7 @@
         "surgedeploy"
     ],
     "engines": {
-        "node": " >= 8.*"
+        "node": " >= 9.4"
     },
     "dependencies": {
         "ember-cli-clock": "^2.1.1",
