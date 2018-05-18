@@ -74,12 +74,12 @@ echo Handling react app deployment.
 if [ -e "$DEPLOYMENT_SOURCE/package.json" ]; then
   cd "$DEPLOYMENT_SOURCE"
   echo "Running npm install"
-  eval /opt/nodejs/9.4.0/bin/npm install
-  #eval npm install
+  #eval /opt/nodejs/9.4.0/bin/npm install
+  eval npm install
   exitWithMessageOnError "npm failed"
   echo "Building ember app"
-  eval /opt/nodejs/9.4.0/bin/npm run build
-  #eval npm run build
+  #eval /opt/nodejs/9.4.0/bin/npm run build
+  eval npm run build
   exitWithMessageOnError "ember build failed"
  cd - > /dev/null
 fi
