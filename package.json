@@ -11,9 +11,9 @@
     },
     "repository": "",
     "scripts": {
-        "build": "node_modules\\ember-cli\\bin\\ember build --loglevel verbose",
+        "build": "ember build --loglevel verbose",
         "lint:js": "eslint ./*.js app config lib server tests",
-        "start": "ember serve --port 80",
+        "start": "ember serve",
         "test": "ember test",
         "logstart": "echo $(date)",
         "surgedeploy": "echo 'hello' && mv dist/index.html dist/200.html && ember build && surge dist --domain hgnapplication.surge.sh"
