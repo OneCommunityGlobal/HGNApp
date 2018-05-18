@@ -1,5 +1,3 @@
-//import { inject } from '@ember/service';
-//import { computed } from '@ember/object';
 import moment from 'moment';
 import {
     sort
@@ -8,63 +6,111 @@ import Controller from '@ember/controller';
 
 
 export default Controller.extend({
-    display: "project",
+    display: "Projects",
     sortProjProperties: ['projectName:asc'],
     sortedProjects: sort('projects', 'sortProjProperties'),
     sortPersonProperties: ['lastName:asc'],
     sortedPersons: sort('persons', 'sortPersonProperties'),
     sortTeamProperties: ['teamName:asc'],
     sortedTeams: sort('teams', 'sortTeamProperties'),
+    sortedFinalProjects: [],
+    sortedFinalPersons: [],
     time: {},
     custom: 'false',
-    weekrange: 'false',
+    noofWeeks: 0,
+    weekrange: false,
+    viewreports: Ember.inject.controller('view-reports'),
+
+    init() {
+        this._super(...arguments);
+        this.set('weekselection', "");
+    },
+
     actions: {
-        submitForm() {
-            let optionSelected = this.get('option');
-            //console.log(optionSelected.projectName);
-            let selectedProject = this.get('sortedProjects').filter(function(project) {
-              return project._id === optionSelected;
+        submitForm(option, weekselection, custom, allprojects) {
+
+            let optionSelected;
+            let customPeriod = this.get('custom');
+            let weekRange = this.get('weekrange');
+            let weeks = this.get('weekselection');
+            let reorgcustomPeriod = null;
+            let projectlist = this.get('sortedProjects');
+            //console.log(this.get('weekrange'));
+            if (option !== undefined) {
+
+                optionSelected = option;
+
+                if (custom == null) {
+                    weekRange = 'true';
+                    weeks = weekselection;
+                    customPeriod = 'false';
+                } else {
+                    reorgcustomPeriod = custom;
+                    this.set('time', reorgcustomPeriod);
+                    this.set('weekselection', "");
+                    weekRange = 'false';
+                    weeks = 0;
+                    customPeriod = 'false';
+                    this.set('noofWeeks', 0);
+                }
+                projectlist = allprojects;
+
+            } else {
+                optionSelected = this.get('option');
+            }
+
+            let selectedProject = projectlist.filter(function(project) {
+                return project._id === optionSelected;
             })[0];
-            //console.log(selectedProject);
             //custom time period - to get date from date picker
-            if ((this.get('custom')) == 'true') {
-                //console.log('custom');
-                //console.log(moment($("#Todate").get(0).value).clone().format('DD/MM'));
+            if (customPeriod == 'true') {
                 let todatevalue = moment($("#Todate").get(0).value).clone().format('X');
                 let fromdatevalue = moment($("#Fromdate").get(0).value).clone().format('X');
-                //console.log(todatevalue);
                 let tempTime = {};
-                //console.log(tempTime);
                 tempTime.FromDate = fromdatevalue;
                 tempTime.ToDate = todatevalue;
                 this.set('time', tempTime);
-                //console.log(this.get('time'));
             }
+            //week
 
-            if ((this.get('weekrange')) == 'true') {
-                //console.log(this.get('weekselection'));
-                let ToDate = moment().clone().startOf('isoWeek').format('X');
-                let FromDate = moment(ToDate, 'X').clone().subtract(this.get('weekselection'), 'weeks').format('X');
-                //console.log(FromDate);
-                //console.log(ToDate);
-                let tempTime = {};
-                //console.log(tempTime);
-                tempTime.FromDate = FromDate;
-                tempTime.ToDate = ToDate;
-                this.set('time', tempTime);
+            if (weekRange == 'true') {
+                if (weeks == "" || weeks == "9") {
+                    let FromDate = moment().startOf('isoWeek').format('X');
+                    let ToDate = moment().clone().format('X');
+                    let tempTime = {};
 
+                    tempTime.FromDate = FromDate;
+                    tempTime.ToDate = ToDate;
+                    this.set('time', tempTime);
+                    this.set('custom', 'false');
+                    this.set('weekrange', 'false');
+                    this.set('noofWeeks', 0);
+                } else {
+                    let ToDate = moment().clone().startOf('isoWeek').subtract(1, 'days').format('X');
+                    let FromDate = moment(ToDate, 'X').clone().subtract(weeks, 'weeks').add(1, 'days').format('X');
+                    this.set('noofWeeks', weeks);
+                    let tempTime = {};
+
+                    tempTime.FromDate = FromDate;
+                    tempTime.ToDate = ToDate;
+                    this.set('time', tempTime);
+                    this.set('weekselection', "");
+                }
             }
 
 
             let timePeriod = this.get('time');
             this.transitionToRoute('view-reports', {
                 queryParams: {
-                    project_id: selectedProject._id,
+                    project_id: optionSelected,
                     projectName: selectedProject.projectName,
                     FromDate: timePeriod.FromDate,
-                    ToDate: timePeriod.ToDate
+                    ToDate: timePeriod.ToDate,
+                    week: this.get('noofWeeks')
                 }
+
             });
+
         },
         customOrAll(target) {
             if (target == 'show') {
@@ -74,48 +120,60 @@ export default Controller.extend({
         }
     },
     optionSelect(target) {
-        //console.log(target);
+        var ele = document.getElementsByName("isActive");
+        for (var i = 0; i < ele.length; i++)
+            ele[i].checked = false;
         switch (target) {
             case 'project':
-                this.set('display', 'project');
+                this.set('display', 'Projects');
                 break;
             case 'person':
-                this.set('display', 'person');
+                this.set('display', 'Persons');
                 break;
             case 'team':
                 this.set('display', 'team');
                 break;
         }
+    },
+
+    isActive(target) {
+        let display = this.get('display');
+        switch (target) {
+            case 'active':
+                let temp = (this.get('sorted' + display)).filter(function(item) {
+                    return item.isActive == true;
+                });
+                this.set('sortedFinal' + display, temp);
+                break;
+
+            case 'inactive':
+                let inactivetemp = (this.get('sorted' + display)).filter(function(item) {
+                    return item.isActive == false;
+                });
+                this.set('sortedFinal' + display, inactivetemp);
+                break;
+
+            case 'all':
+                this.set('sortedFinal' + display, this.get('sorted' + display));
+                break;
+        }
 
     },
 
-
     timeSelect(target) {
         switch (target) {
-            case 'currentWeek':
-                let FromDate = moment().startOf('isoWeek').format('X');
-                let ToDate = moment().clone().format('X');
-                let tempTime = {};
-                tempTime.FromDate = FromDate;
-                tempTime.ToDate = ToDate;
-                this.set('time', tempTime);
-                this.set('custom', 'false');
-                this.set('weekrange', 'false');
-                break;
-
             case 'weekRange':
                 this.set('weekrange', 'true');
                 break;
-
-
             case 'customPeriod':
                 this.set('custom', 'true');
                 this.set('weekrange', 'false');
+                this.set('noofWeeks', 0);
                 break;
-
         }
-
     }
+
+
 
 
 });

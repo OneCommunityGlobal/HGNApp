@@ -1,85 +1,93 @@
 <div>
-   <h5 class="card-title">Generate Reports</h5>
-   <form class= "form-group">
-      <div>
-         <p>Select a category:</p>
-         <div class="form-check">
-            <input class="form-check-input" value=project name="optionSelect" type="radio" onchange= {{action optionSelect value= "target.value"}}
-            checked>
-            <label class="form-check-label">
+    <h5 class="card-title">Generate Reports</h5>
+    <form class="form-group">
+        <div>
+            <p>Select a category:</p>
+            <div class="form-check">
+                <input class="form-check-input" value=project name="optionSelect" type="radio" onchange={{action optionSelect value="target.value" }} checked>
+                <label class="form-check-label">
             Project
             </label>
-         </div>
-         <div class="form-check">
-            <input class="form-check-input" value=person name="optionSelect" type="radio" onchange= {{action optionSelect value ="target.value"}}>
-            <label class="form-check-label">
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" value=person name="optionSelect" type="radio" onchange={{action optionSelect value="target.value" }}>
+                <label class="form-check-label">
             Person
             </label>
-         </div>
-         <div class="form-check">
-            <input class="form-check-input" value=team name="optionSelect" type="radio" onchange= {{action optionSelect value ="target.value"}}>
-            <label class="form-check-label">
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" value=team name="optionSelect" type="radio" onchange={{action optionSelect value="target.value" }}>
+                <label class="form-check-label">
             Team
             </label>
-         </div>
-      </div>
-      <br/>
-      <div>
-         <p>Select one:</p>
-         <select onchange={{action (mut option) value= "target.value"}} required>
-           {{#if (eq 'project' display)}}
-           {{#each sortedProjects as |project|}}
+            </div>
+        </div>
+        <br/>
+        <div>
+            <p>Select one:</p>
+            <div class="report-radio">
+                <input type="radio" name="isActive" value="active" onchange={{action isActive value="target.value" }}>Active
+                <input type="radio" name="isActive" value="inactive" onchange={{action isActive value="target.value" }}>InActive
+                <input type="radio" name="isActive" value="all" onchange={{action isActive value="target.value" }}>All
+            </div>
+            <select onchange={{action (mut option) value="target.value" }} required>
+           {{#if (eq 'Projects' display)}}
+           {{#each sortedFinalProjects as |project|}}
               <option value="" selected disabled hidden>Choose a project</option>
               <option value={{project._id}}>{{project.projectName}}</option>
            {{/each}}
             {{/if}}
 
-          {{#if (eq 'person' display)}}
-          {{#each sortedPersons as |person|}}
+          {{#if (eq 'Persons' display)}}
+          {{#each sortedFinalPersons as |person|}}
              <option value="" selected disabled hidden>Choose a person</option>
              <option value={{person._id}}>{{concat person.firstName " " person.lastName}}</option>
           {{/each}}
             {{/if}}
 
          </select>
-      </div>
-      <br/>
-      <div>
-         <p>Select a time period:</p>
+        </div>
+        <br/>
+        <div>
+            <p>Select a time period:</p>
+            <!--
          <div class="form-check">
             <input class="form-check-input" value=currentWeek name="timeSelect" type="radio" onchange= {{action timeSelect value= "target.value"}}
                >
             <label class="form-check-label">
-            Current Week
+            Current Week + Prior Week
             </label>
          </div>
-         <div class="form-check">
-            <input class="form-check-input" value=weekRange name="timeSelect" type="radio" onchange= {{action timeSelect value ="target.value"}}>
-            <label class="form-check-label">
-            Week Range
-            </label>
-            <div >
-               <select class="" onchange= {{action (mut weekselection) value="target.value"}}>
-               <option value="0">No Selection</option>
-               <option value="4">4 week</option>
-               <option value= "6">6 weeks</option>
+       -->
+            <div class="form-check">
+                <input class="form-check-input" value=weekRange name="timeSelect" type="radio" onchange={{action timeSelect value="target.value" }}>
+                <label class="form-check-label">
+            Weekly Report <sub><i>*Includes Weekly Trend Analysis</i></sub>
+          </label><br>
+                <br>
+                <div>
+                    <select class="" onchange={{action (mut weekselection) value="target.value" }}>
+              <option value="8">Current Week</option>
+               <option value="2">Past 2 weeks</option>
+               <option value="4">Past 4 weeks</option>
+               <option value= "6">Past 6 weeks</option>
                </select>
+                </div><br>
             </div>
-         </div>
-         <div class="form-check">
-            <input class="form-check-input" value=customPeriod name="timeSelect" type="radio" onchange= {{action timeSelect value= "target.value"}}
-               >
-            <label class="form-check-label">
+            <div class="form-check">
+                <input class="form-check-input" value=customPeriod name="timeSelect" type="radio" onchange={{action timeSelect value="target.value" }}>
+                <label class="form-check-label">
             Custom Period
-            </label>
-   <form class= "form-inline">
-   <label class="label" for="fromdate">From:</label>
-   <input type="date" class="form-control" id="Fromdate" required>
-   <label class="label" for="todate">To:</label>
-   <input type="date" class="form-control" id="Todate" required>
-   </form>
-   </div>
- </div><br>
-   <button type="submit" class="btn btn-primary btn-sm" {{action "submitForm"}}>Submit</button>
-   </form>
+          </label><br>
+                <br>
+                <form class="form-inline">
+                    <label class="label" for="fromdate">From:</label>
+                    <input type="date" class="form-control" id="Fromdate" required>
+                    <label class="label" for="todate">To:</label>
+                    <input type="date" class="form-control" id="Todate" required>
+                </form>
+            </div>
+        </div><br>
+        <button type="submit" class="btn btn-primary btn-sm" {{action "submitForm"}}>Submit</button>
+    </form>
 </div>
