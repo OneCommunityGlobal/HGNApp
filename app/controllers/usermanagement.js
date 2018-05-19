@@ -51,8 +51,17 @@ export default Controller.extend({
       },
 
       deleteRecord(record) {
-        alert(JSON.stringify(record));
-        //record.destroyRecord();
+       
+        if (confirm("Are you sure you want to delete this user? Note: You cannot retrieve the user back.")) {
+          let toastr = this.get('toast');
+          this.get('userProfileService').deleteUserProfile(record._id)
+            .then(() => {
+              this.get('usersIdModified').removeObject(record);
+              toastr.success("User Removed Succesfully");
+            },
+              error => { toastr.error("", error); }
+            )
+        }
       }
 
     },
