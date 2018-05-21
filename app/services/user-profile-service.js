@@ -84,6 +84,15 @@ export default Service.extend({
 
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
     return request;
+  },
+
+  deleteUserProfile(userId){
+    let relativePath = "/userprofile/"+userId;
+    let data = null;
+    let method = "delete";
+
+    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    return request;
   }
 
 });
