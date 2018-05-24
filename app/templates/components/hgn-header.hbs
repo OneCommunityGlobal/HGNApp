@@ -46,7 +46,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <img src= {{if userDashboardData.profilePic userDashboardData.profilePic  "/assets/images/defaultprofilepic.jpg"}} alt=""
-              class="img-fluid dashboardimg img-circle" height="35" width="40" onclick= {{action "navigatetoProfile"}}>
+              class="img-fluid dashboardimg img-circle" height="35" width="40" onclick= {{action "navigatetoProfile"}}> Welcome {{userDashboardData.firstName}}
           </a>
           <div class="dropdown-menu">
             <a class="dropdown-item">Hello {{userDashboardData.firstName}}
