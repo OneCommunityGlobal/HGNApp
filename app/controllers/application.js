@@ -1,5 +1,3 @@
-
-import { inject } from '@ember/service';
 import Controller from '@ember/controller';
 import { computed } from '@ember/object'
 
