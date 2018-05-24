@@ -8,23 +8,48 @@ import { inject } from '@ember/service';
 export default Controller.extend({
     isUserAdministrator: computed('userrole', function () {
         let userrole = this.get('userrole');
-        //return userrole === "Administrator" ? true : false;
-        return true;
+        alert(userrole)
+        return (userrole === "Administrator");
+        //return true;
 
     }),
     projectService: inject('project-service'),
+    userProfileService: inject('user-profile-service'),
     minProjectName: "2",
     maxProjectName: "100",
     newProject: {
         projectName: "",
         isActive: true
     },
+    projectmembers: [],
+    allUsers: [],
 
-   
+    getProjectMembers: function (project) {
+        this.get('projectService').getProjectMembers(project._id)
+            .then(results => {
+                this.set("projectmembers", results);
+                this.set("currentProject", project.projectName);
+
+            })
+    },
+
+    allUsers: computed("userrole", function () {
+        let userrole = this.get('userrole');
+        if (userrole == "Administrator") {
+            return this.get('userProfileService').getAllUserProfiles()
+            // .then(results => { return results });
+
+        }
+        else {
+            return [];
+        }
+
+
+    }),
     actions: {
-     
+
         addNewProject() {
-            
+
             let newProjectform = $("#frmNewProject")[0];
             this.set("isFormsubmitted", "submitted");
 
@@ -88,9 +113,13 @@ export default Controller.extend({
                 toastr.error("Project name is a mandatory field. Please fix the erorrs before saving the changes.")
 
             }
-
-
         },
+        showusersforproject(project) {
+            this.getProjectMembers(project);
+        },
+        editmembersforprojects(project) {
+            this.getProjectMembers(project);
+        }
     }
 
 });
