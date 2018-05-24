@@ -1,30 +1,10 @@
  {{outlet}}
-<form class="form-horizontal">
-  <input id="projectName" name="projectName" class="form-control" required=true type="text" value= {{model.projectName}} placeholder="Project Name"
-    minlength= {{minProjectName}} maxlength= {{maxProjectName}} readonly= {{if isUserAdministrator null "readonly"}} onchange= {{action "notifyChange" "projectName"}}
-  />
-  {{#if isUserAdministrator}}
-    <fieldset class="form-group">
-      <div class="form-check form-check-inline">
-        <label class="form-check-label">
-          <input type="radio" class="form-check-input" name="optionsRadios" id="projectActive" value="true" checked= {{if model.isActive "true" null }}
-            onchange= {{ action (mut model.isActive) "true"}}> Active
-        </label>
-      </div>
-      <div class="form-check form-check-inline">
-        <label class="form-check-label">
-          <input type="radio" class="form-check-input" name="optionsRadios" id="projectInactive" value="false" checked= {{if model.isActive null "true" }}
-            onchange= {{ action (mut model.isActive) "false"}}> Inactive</label>
-      </div>
-    </fieldset>
-  {{else}}
-    Project Status - {{if model.isActive "Active" "Inactive"}}
-  {{/if}}
-  <div>
-    <br>
-    {{#if isUserAdministrator}}
-      <button type="submit" class="btn btn-primary" {{ action 'postChanges' }}>Save</button>
-      <button type="submit" class="btn btn-danger" {{ action 'destroyProject' }}>Delete Project</button>
-    {{/if}}
-  </div>
-</form>
+<h1>Members list for {{project}} </h1>
+<ul class="list-group">
+  {{#each model as |member|}}
+    <li> member.firstName member.lastName</li>
+  {{/each}}
+</ul>
+{{#if isUserAdministator}}
+  <button class="btn btn-primary btn-large">Edit Members</button>
+{{/if}}

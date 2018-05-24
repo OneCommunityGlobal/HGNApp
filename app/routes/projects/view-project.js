@@ -5,6 +5,6 @@ export default Route.extend({
 
   projectService: inject('project-service'),
   model(params) {
-    return this.get('projectService').getProjectById(params.project_id);
+    return this.get('projectService').getProjectMembers(params.project_id);
   }
 });
