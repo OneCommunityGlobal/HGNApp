@@ -20,10 +20,11 @@ export default Controller.extend({
         isActive: true
     },
 
-
+   
     actions: {
-
+     
         addNewProject() {
+            
             let newProjectform = $("#frmNewProject")[0];
             this.set("isFormsubmitted", "submitted");
 
@@ -33,14 +34,10 @@ export default Controller.extend({
                 this.get('projectService').postProject(project)
                     .then((results) => {
                         toastr.success("", 'New Project Created!');
-                        this.set('newProject', {
-                            projectName: "",
-                            isActive: true
-                        });
                         this.set("isFormsubmitted", "");
                         newProjectform.reset();
                         this.get("model").addObject(results);
-
+                        $("[data-dismiss=modal]").trigger({ type: "click" });
                     },
                         error => { toastr.error(error.responseJSON.error) }
                     );
