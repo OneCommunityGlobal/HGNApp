@@ -117,11 +117,9 @@ export default Controller.extend({
 
 
         editProjectMembership(user) {
-            alert(user)
             var entry = (event.target.checked) ? { userId: user._id, operation: "Assign" } : { userId: user._id, operation: "Unassign" };
             this.get("assignment_changes").addObject(entry);
             this.set("editingform", true);
-            console.log(this.get("assignment_changes"))
         },
 
         savemembershipchanges() {
@@ -144,8 +142,7 @@ export default Controller.extend({
                 this.get("assignment_changes").addObject(entry);
 
             })
-            console.log(this.get("assignment_changes"))
-
+            
         },
 
         unselectallusers() {
