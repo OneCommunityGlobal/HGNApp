@@ -8,13 +8,9 @@ import { inject } from '@ember/service';
 export default Controller.extend({
     isUserAdministrator: computed('userrole', function () {
         let userrole = this.get('userrole');
-        alert(userrole)
         return (userrole === "Administrator");
-        //return true;
-
     }),
     projectService: inject('project-service'),
-    userProfileService: inject('user-profile-service'),
     minProjectName: "2",
     maxProjectName: "100",
     newProject: {
@@ -23,30 +19,32 @@ export default Controller.extend({
     },
     projectmembers: [],
     allUsers: [],
+    assignment_changes: [],
+    editingform: false,
 
     getProjectMembers: function (project) {
+        this.set("projectmembers", []);
         this.get('projectService').getProjectMembers(project._id)
             .then(results => {
                 this.set("projectmembers", results);
-                this.set("currentProject", project.projectName);
-
+                this.set("currentProjectName", project.projectName);
+                this.set("currentProjectId", project._id);
             })
     },
 
-    allUsers: computed("userrole", function () {
-        let userrole = this.get('userrole');
-        if (userrole == "Administrator") {
-            return this.get('userProfileService').getAllUserProfiles()
-            // .then(results => { return results });
-
-        }
-        else {
-            return [];
-        }
+    resetForm() {
+        this.set("assignment_changes", []);
+        this.set("editingform", false);
+        this.set("projectmembers", []);
+        this.set("currentProjectId", "");
+        this.set("currentProjectName", "");
+    },
 
 
-    }),
     actions: {
+        resetForm() {
+            this.resetForm();
+        },
 
         addNewProject() {
 
@@ -114,11 +112,28 @@ export default Controller.extend({
 
             }
         },
-        showusersforproject(project) {
+        getusersforproject(project) {
             this.getProjectMembers(project);
         },
-        editmembersforprojects(project) {
-            this.getProjectMembers(project);
+
+
+        editProjectMembership(user) {
+            var entry = (event.target.checked) ? { userId: user._id, operation: "Assign" } : { userId: user._id, operation: "Unassign" };
+            this.get("assignment_changes").addObject(entry);
+            this.set("editingform", true);
+            console.log(this.get("assignment_changes"))
+        },
+
+        savemembershipchanges() {
+            let memberships = this.get("assignment_changes");
+            let projectId = this.get("currentProjectId");
+            this.get('projectService').manageProjectMembers(projectId, { "users": memberships })
+                .then(results => {
+                    toastr.success("", 'Membership updated');
+                }, error => {
+                    toastr.error("", error);
+                })
+
         }
     }
 
