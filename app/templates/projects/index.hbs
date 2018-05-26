@@ -116,6 +116,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="row m-3">
+                        <button class="btn btn-primary col-6" {{action "selectallusers"}}>Select all Users</button>
+                        <button class="btn btn-warning col-6" {{action "unselectallusers"}}>Unselect all Users</button>
+                    </div>
                     {{#if editingform}}
                         <div class="p-3 mb-2 bg-danger text-white"> Please remember to save the changes by clicking the button at the bottom of this popup. Failure to
                             do so will result in changes not being saved</div>

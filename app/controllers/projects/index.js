@@ -72,7 +72,6 @@ export default Controller.extend({
             }
 
         },
-
         resetform() {
             let newProjectform = $("#frmNewProject")[0];
             this.set("isFormsubmitted", "")
@@ -118,6 +117,7 @@ export default Controller.extend({
 
 
         editProjectMembership(user) {
+            alert(user)
             var entry = (event.target.checked) ? { userId: user._id, operation: "Assign" } : { userId: user._id, operation: "Unassign" };
             this.get("assignment_changes").addObject(entry);
             this.set("editingform", true);
@@ -132,7 +132,31 @@ export default Controller.extend({
                     toastr.success("", 'Membership updated');
                 }, error => {
                     toastr.error("", error);
-                })
+                });
+        },
+
+        selectallusers() {
+            $(".form-check-input").prop("checked", true);
+            this.set("editingform", true);
+            let allusers = this.get("model.allUsers");
+            allusers.forEach(element => {
+                var entry = { userId: element._id, operation: "Assign" };
+                this.get("assignment_changes").addObject(entry);
+
+            })
+            console.log(this.get("assignment_changes"))
+
+        },
+
+        unselectallusers() {
+            $(".form-check-input").prop("checked", false);
+            this.set("editingform", true);
+            let allusers = this.get("model.allUsers");
+            allusers.forEach(element => {
+                var entry = { userId: element._id, operation: "Unassign" };
+                this.get("assignment_changes").addObject(entry);
+
+            })
 
         }
     }
