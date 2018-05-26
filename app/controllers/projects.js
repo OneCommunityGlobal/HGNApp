@@ -22,6 +22,11 @@ export default Controller.extend({
     assignment_changes: [],
     editingform: false,
 
+    modalName: computed("userrole", function () {
+        let userrole = this.get('userrole');
+        return (userrole === "Administrator") ? "editprojectmembersmodal" : "projectmembersmodal";
+
+    }),
     getProjectMembers: function (project) {
         this.set("projectmembers", []);
         this.get('projectService').getProjectMembers(project._id)
@@ -142,7 +147,7 @@ export default Controller.extend({
                 this.get("assignment_changes").addObject(entry);
 
             })
-            
+
         },
 
         unselectallusers() {
