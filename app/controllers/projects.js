@@ -18,7 +18,6 @@ export default Controller.extend({
         isActive: true
     },
     projectmembers: [],
-    allUsers: [],
     assignment_changes: [],
     editingform: false,
 
@@ -43,6 +42,7 @@ export default Controller.extend({
         this.set("projectmembers", []);
         this.set("currentProjectId", "");
         this.set("currentProjectName", "");
+        $(".form-check-input").prop("checked", false);
     },
 
 
@@ -89,7 +89,7 @@ export default Controller.extend({
                 .then(
                     results => {
                         toastr.success('Project Removed!')
-                        this.get("model").removeObject(project);
+                        this.get("model.allProjects").removeObject(project);
                     },
                     error => {
                         toastr.warning(error.responseJSON.error);

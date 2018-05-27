@@ -122,7 +122,7 @@
                         {{#each model.allUsers as |user|}}
                             <div class="form-row mb-1 mr-3">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id= {{user._id}} value= {{user._id}} checked= {{if (record-in-array projectmembers user._id "_id") "checked" null}}
+                                    <input type="checkbox" class="form-check-input" id= {{user._id}} value= {{user._id}} checked= {{if (record-in-array projectmembers user._id "_id") "true" null}}
                                         onchange= {{action "editProjectMembership" user}}>
                                     <label class="form-check-label" for= {{user._id}}>
                                         <a href="/#/profile/{{user._id}}" target="_blank">{{user.firstName}} {{user.lastName}}

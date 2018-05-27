@@ -48,7 +48,7 @@
                  isEditable = isLoggedinUserAdministrator onchangeaction =(action "updateProperty")}}
                 </div>
                 <div class="form-group col-md-4">
-                    {{userprofile-inputboxes  type = "text" name = "role" list="roleslist" label = "Role" isRequired = true value = model.role  isEditable = isLoggedinUserAdministrator onchangeaction =(action "updateProperty") }}
+                    {{userprofile-inputboxes autocomplete="off" name = "role" list="roleslist" label = "Role" isRequired = true value = model.role  isEditable = isLoggedinUserAdministrator onchangeaction =(action "updateProperty") }}
                     <datalist id="roleslist">
                         <option value="Administrator"></option>
                         <option value="Volunteer"></option>
@@ -61,26 +61,25 @@
                 </div>
             </div>
         </div>
-<!-- Reset Pwd available only for admin to do : may change as component in future-->
+        <!-- Reset Pwd available only for admin to do : may change as component in future-->
         <div class="form-row col-12 mb-1">
             {{#if isLoggedinUserAdministrator}}
                 {{#unless isNewUser}}
-                <a href="#" class="card-link btn btn-success" data-toggle="modal" data-target="#resetPwd" {{action "loadAllmemberships"}}>Reset Password</a>
+                    <a href="#" class="card-link btn btn-success" data-toggle="modal" data-target="#resetPwd" {{action "loadAllmemberships"}}>Reset Password</a>
                 {{/unless}}
             {{/if}}
         </div>
-<!-- end -->
+        <!-- end -->
         {{#if showwarning}}
-                <div class="border bg-danger text-white form-row mt-2 mb-2">
-                    {{#if isNewUser}}
+            <div class="border bg-danger text-white form-row mt-2 mb-2">
+                {{#if isNewUser}}
                     Fields Marked as * are required to create new user
-                    {{else}}
+                {{else}}
                     * REMEMBER TO CLICK THE "SAVE CHANGES" BUTTON AT THE BOTTOM OF THE PAGE BEFORE LEAVING. YOUR CHANGES WILL BE LOST IF YOU
                     DON'T DO THIS."
-                    {{/if}}
-                </div>
+                {{/if}}
+            </div>
         {{/if}}
-        
         <div class="form-row">
             {{userprofile-profilelinks label = "Administrative Link" linksarray =  model.adminLinks isEditable =isLoggedinUserAdministrator name = "adminLinks" onchangeaction =(action "updateProperty")}}
         </div>
@@ -113,20 +112,19 @@
         </div>
         <div class="form-row">
             <div class="col-6 justify-content-start">
-                 {{#if isNewUser}}
-                       <button type="button" class="btn btn-info float-left" {{action 'reset'}}>Reset</button>
-                        {{else }}
-                       <a href="#" class="btn btn-danger float-left">Cancel</a>
-                        {{/if}}        
+                {{#if isNewUser}}
+                    <button type="button" class="btn btn-info float-left" {{action 'reset'}}>Reset</button>
+                    {{else }}
+                    <a href="#" class="btn btn-danger float-left">Cancel</a>
+                {{/if}}
             </div>
             <div class="col-6 justify-content-end">
                 {{#if canUserEditPersonalFields }}
                     <button type="submit" class="btn btn-primary float-right" {{action 'postChanges' isNewUser}}>
                         {{#if isNewUser}}
-                        Create New user
-                        {{else }}
-                        Save Changes
-                        {{/if}}</button>
+                            Create New user {{else }} Save Changes
+                        {{/if}}
+                    </button>
                 {{/if}}
             </div>
         </div>
