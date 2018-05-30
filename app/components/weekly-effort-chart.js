@@ -8,7 +8,7 @@ import { computed } from '@ember/object';
 export default Component.extend({
     classNames: ["w-100", "h-100", "text-center"],
     actualhours: computed("tangiblelaborthisweek", function () {
-        return parseFloat(this.get("tangiblelaborthisweek"));
+        return parseFloat(this.get("tangiblelaborthisweek")).toFixed(2);
     }),
 
     committedhours: computed("weeklyCommitted", function () {
