@@ -20,7 +20,7 @@ export default Component.extend({
         let toastr = this.get('toast');
         
         let data={
-          "status" : status
+          "status" : (record.isActive)? "InActive" : "Active"
         }
         this.get('userProfileService').changeUserStatus(record._id, data)
           .then(() => {
@@ -29,7 +29,6 @@ export default Component.extend({
             error => { toastr.error("", error); }
           );
       }
-      //event.stopPropagation();
     }
   }
 });
