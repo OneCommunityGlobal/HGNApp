@@ -10,38 +10,38 @@ export default Controller.extend({
         let userrole = this.get('userrole');
         return (userrole === "Administrator");
     }),
-    projectService: inject('project-service'),
-    minProjectName: "2",
-    maxProjectName: "100",
-    newProject: {
-        projectName: "",
+    teamService: inject('team-service'),
+    minTeamName: "2",
+    maxTeamName: "100",
+    newTeam: {
+        teamName: "",
         isActive: true
     },
-    projectmembers: [],
+    teamMembers: [],
     assignment_changes: [],
     editingform: false,
 
     modalName: computed("userrole", function () {
         let userrole = this.get('userrole');
-        return (userrole === "Administrator") ? "editprojectmembersmodal" : "projectmembersmodal";
+        return (userrole === "Administrator") ? "editTeammembersmodal" : "teammembersmodal";
 
     }),
-    getProjectMembers: function (project) {
-        this.set("projectmembers", []);
-        this.get('projectService').getProjectMembers(project._id)
+    getTeamMembers: function (team) {
+        this.set("teammembers", []);
+        this.get('teamService').getTeamMembers(team._id)
             .then(results => {
-                this.set("projectmembers", results);
-                this.set("currentProjectName", project.projectName);
-                this.set("currentProjectId", project._id);
+                this.set("teamMembers", results);
+                this.set("currentTeamName", team.teamName);
+                this.set("currentTeamId", team._id);
             })
     },
 
     resetForm() {
         this.set("assignment_changes", []);
         this.set("editingform", false);
-        this.set("projectmembers", []);
-        this.set("currentProjectId", "");
-        this.set("currentProjectName", "");
+        this.set("teamMembers", []);
+        this.set("currentTeamId", "");
+        this.set("currentTeamName", "");
         $(".form-check-input").prop("checked", false);
     },
 
@@ -51,20 +51,20 @@ export default Controller.extend({
             this.resetForm();
         },
 
-        addNewProject() {
+        addNewTeam() {
 
-            let newProjectform = $("#frmNewProject")[0];
+            let newteamform = $("#frmNewTeam")[0];
             this.set("isFormsubmitted", "submitted");
 
-            let project = this.get("newProject");
+            let team = this.get("newTeam");
 
-            if (newProjectform.checkValidity()) {
-                this.get('projectService').postProject(project)
+            if (newteamform.checkValidity()) {
+                this.get('teamService').postTeam(team)
                     .then((results) => {
-                        toastr.success("", 'New Project Created!');
+                        toastr.success("", 'New team Created!');
+                        this.get("model.allTeams").addObject(results);
                         this.set("isFormsubmitted", "");
-                        newProjectform.reset();
-                        this.get("model.allProjects").addObject(results);
+                        newteamform.reset();
                         $("[data-dismiss=modal]").trigger({ type: "click" });
                     },
                         error => { toastr.error(error.responseJSON.error) }
@@ -77,19 +77,19 @@ export default Controller.extend({
             }
 
         },
-        resetform() {
-            let newProjectform = $("#frmNewProject")[0];
+        resetNewTeamform() {
+            let newteamform = $("#frmNewTeam")[0];
             this.set("isFormsubmitted", "")
-            newProjectform.reset();
+            newteamform.reset();
         },
 
-        deleteProject(project) {
+        deleteTeam(team) {
 
-            this.get('projectService').deleteProject(project._id)
+            this.get('teamService').deleteTeam(team._id)
                 .then(
                     results => {
-                        toastr.success('Project Removed!')
-                        this.get("model.allProjects").removeObject(project);
+                        toastr.success('Team successfully deleted');
+                        this.get("model.allTeams").removeObject(team);
                     },
                     error => {
                         toastr.warning(error.responseJSON.error);
@@ -98,12 +98,12 @@ export default Controller.extend({
                 );
 
         },
-        saveEdits(project, index) {
+        saveEdits(team, index) {
 
-            let projectnamefield = $(`#projectname_${index}`)[0];
+            let teamnamefield = $(`#teamname_${index}`)[0];
 
-            if (projectnamefield.checkValidity()) {
-                this.get('projectService').editProjectData(project, project._id)
+            if (teamnamefield.checkValidity()) {
+                this.get('teamService').editTeamData(team, team._id)
                     .then(results => {
                         toastr.success("", 'Changes Saved');
                     },
@@ -112,16 +112,16 @@ export default Controller.extend({
             }
             else {
 
-                toastr.error("Project name is a mandatory field. Please fix the erorrs before saving the changes.")
+                toastr.error("team name is a mandatory field. Please fix the erorrs before saving the changes.")
 
             }
         },
-        getusersforproject(project) {
-            this.getProjectMembers(project);
+        getusersforTeam(team) {
+            this.getTeamMembers(team);
         },
 
 
-        editProjectMembership(user) {
+        editTeamMembership(user) {
             var entry = (event.target.checked) ? { userId: user._id, operation: "Assign" } : { userId: user._id, operation: "Unassign" };
             this.get("assignment_changes").addObject(entry);
             this.set("editingform", true);
@@ -129,10 +129,11 @@ export default Controller.extend({
 
         savemembershipchanges() {
             let memberships = this.get("assignment_changes");
-            let projectId = this.get("currentProjectId");
-            this.get('projectService').manageProjectMembers(projectId, { "users": memberships })
+            let teamId = this.get("currentTeamId");
+            this.get('teamService').manageTeamMembers(teamId, { "users": memberships })
                 .then(results => {
                     toastr.success("", 'Membership updated');
+                    this.set("editingform", false);
                 }, error => {
                     toastr.error("", error);
                 });

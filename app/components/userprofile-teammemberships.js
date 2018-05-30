@@ -12,8 +12,8 @@ export default Component.extend({
         return (memberships && memberships.length > 0) ? "" : `No ${this.get("title")} Memberships defined`;
     }),
     allTeams: "",
-    dataService: inject("datastore-service"),
     projectService: inject('project-service'),
+    teamService: inject("team-service"),
     opsarray: [],
 
     notifyparent: function () {
@@ -34,7 +34,7 @@ export default Component.extend({
             loadAllmemberships() {
 
                 if (this.get("name") === "teams") {
-                    return this.get('dataService').getAllTeams()
+                    return this.get('teamService').getAllTeams()
                         .then(results => {
                             this.set("allMemberships", results);
                         })

@@ -10,7 +10,7 @@ import {
 export default Route.extend(UnAuthenticatedRouteMixin, {
     userProfileService: inject('user-profile-service'),
     projectService: inject('project-service'),
-    teamService: inject('datastore-service'),
+    teamService: inject('team-service'),
     model() {
         return Ember.RSVP.hash({
             projects: this.get('projectService').getAllProjects(),
