@@ -1,4 +1,15 @@
 <div class="container">
+     <!-- Reset Pwd available only for admin -->
+        <div class="row col-12 mb-1">
+            <div class="col-12">
+            {{#if isLoggedinUserAdministrator}}
+                {{#unless isNewUser}}
+                    {{hgn-reset-password userId=model._id}}
+                {{/unless}}
+            {{/if}}
+           </div>
+        </div>
+        <!-- end -->
     <form id="userProfileForm" class= {{isFormSubmitted}} oninput= {{action (mut showwarning) true}}>
         <div class="form-row col-12">
             <div class="form-group col-md-4">
@@ -61,15 +72,6 @@
                 </div>
             </div>
         </div>
-        <!-- Reset Pwd available only for admin to do : may change as component in future-->
-        <div class="form-row col-12 mb-1">
-            {{#if isLoggedinUserAdministrator}}
-                {{#unless isNewUser}}
-                    <a href="#" class="card-link btn btn-success" data-toggle="modal" data-target="#resetPwd" {{action "loadAllmemberships"}}>Reset Password</a>
-                {{/unless}}
-            {{/if}}
-        </div>
-        <!-- end -->
         {{#if showwarning}}
             <div class="border bg-danger text-white form-row mt-2 mb-2">
                 {{#if isNewUser}}

@@ -93,6 +93,25 @@ export default Service.extend({
 
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
     return request;
+  },
+
+  changeUserStatus(userId,status){
+    let relativePath = "/userprofile/"+userId;
+    let data = status;
+    let method = "patch";
+
+    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    return request;
+  },
+
+  ResetPassword(userId, resetPwdData){
+    let relativePath = "/userprofile/"+userId+"/resetPassword";
+    let data = resetPwdData;
+    let method = "patch";
+
+    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    return request;
   }
+
 
 });
