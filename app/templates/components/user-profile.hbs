@@ -48,13 +48,16 @@
                  isEditable = isLoggedinUserAdministrator onchangeaction =(action "updateProperty")}}
                 </div>
                 <div class="form-group col-md-4">
-                    {{userprofile-inputboxes autocomplete="off" name = "role" list="roleslist" label = "Role" isRequired = true value = model.role  isEditable = isLoggedinUserAdministrator onchangeaction =(action "updateProperty") }}
-                    <datalist id="roleslist">
-                        <option value="Administrator"></option>
-                        <option value="Volunteer"></option>
-                        <option value="Manager"></option>
-                        <option value="Core Team"></option>
-                    </datalist>
+                    <label class="control-label" for=role>
+                        <span>*</span>
+                        Role:</label>
+                    <select name="role" class="form-control" label="Role" isRequired=true value=model.role isEditable=isLoggedinUserAdministrator
+                        onchange= {{action (mut model.role) value = "target.value" }}>
+                        <option value="Administrator">Administrator</option>
+                        <option value="Volunteer">Volunteer</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Core Team">Core Team</option>
+                    </select>
                 </div>
                 <div class="form-group col-md-4">
                     {{userprofile-inputboxes  type = "number" min =minWeeklyCommittedHours  max = maxWeeklyCommittedHours name = "weeklyComittedHours" label = "Weekly Comitted Hours" isRequired = true value = model.weeklyComittedHours  isEditable = isLoggedinUserAdministrator onchangeaction =(action "updateProperty")}}

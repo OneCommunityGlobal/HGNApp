@@ -32,18 +32,18 @@
         <li class="nav-item navbar-text" id="headertimelog">
           {{weekly-effort-chart forUserId= userId elementid = "headertimelog"}}
         </li>
-        {{#if isUserAdministrator}}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-              Administrative Links
-            </a>
-            <div class="dropdown-menu">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            Other Links
+          </a>
+          <div class="dropdown-menu">
+            {{#if isUserAdministrator}}
               <a class="dropdown-item" href="/#/usermanagement">User Management</a>
-              <a class="dropdown-item" href="/#/projects">Manage Projects</a>
-              <a class="dropdown-item" href="/#/teams">Manage Teams</a>
-            </div>
-          </li>
-        {{/if}}
+            {{/if}}
+            <a class="dropdown-item" href="/#/projects">Projects</a>
+            <a class="dropdown-item" href="/#/teams">Teams</a>
+          </div>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <img src= {{if userDashboardData.profilePic userDashboardData.profilePic  "/assets/images/defaultprofilepic.jpg"}} alt=""
