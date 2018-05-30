@@ -35,7 +35,7 @@
     </div>
 
     {{models-table data=filteredUsers columns=columns showColumnsDropdown=false useNumericPagination=true filteringIgnoreCase=true
-    showPageSize=true  multipleSelect=true customIcons=customIcons
+    showPageSize=true customIcons=customIcons
     columnComponents=(hash deleteRow=(component "delete-row-comp" onClick=(action "deleteRecord"))) }}
 
 </div>
