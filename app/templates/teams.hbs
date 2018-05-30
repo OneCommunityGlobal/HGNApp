@@ -1,0 +1,142 @@
+{{outlet}}
+<div class="container">
+    <h2>Teams
+        {{#if isUserAdministrator }}
+            <button class="btn btn-success pull-right" data-toggle="modal" data-target="#modalNewTeam">Add New Team</button>
+        {{/if}}
+    </h2>
+    <table class="table table-striped" id="Teamstable">
+        <thead>
+            <tr>
+                <th scope="col">Team Name</th>
+                <th scope="col"> Active</th>
+                <th scope="col">Membership Details</th>
+                {{#if isUserAdministrator}}
+                    <th scope="col"> Delete</th>
+                    <th scope="col">Save Edits</th>
+                {{/if}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#each model.allTeams as |team index|}}
+                <tr class="submitted">
+                    <td contenteditable="true">
+                        <input id="teamname_{{index}}" minlength= {{minTeamName}} maxlength= {{maxTeamName}} class="form-control w-100 h-100" required
+                            value= {{team.teamName}} onchange= {{action (mut team.teamName) value = "target.value"}} pattern="^[^\s]+(\s+[^\s]+)*$"
+                            readonly= {{if isUserAdministrator null true}}>
+                    </td>
+                    <td>
+                        <input type=checkbox checked= {{team.isActive}} onchange= {{action (mut team.isActive) value = "target.checked"}} disabled= {{if isUserAdministrator null true}}>
+                    </td>
+                    <td>
+                        <i class="fa fa-users m-3" {{action "getusersforTeam" team}} data-toggle="modal" data-target="#{{modalName}}"></i>
+                    </td>
+                    {{#if isUserAdministrator}}
+                        <td>
+                            <i class="fa fa-trash" {{action "deleteTeam" team}}></i>
+                        </td>
+                        <td>
+                            <i class="fa fa-floppy-o" {{action "saveEdits" team index}}></i>
+                        </td>
+                    {{/if}}
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+{{#if isUserAdministrator}}
+    <div class="modal fade" id="modalNewTeam" tabindex="-1" role="dialog" aria-labelledby="#newTeam" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newTeam">New Team</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="frmNewTeam" class="{{isFormsubmitted}}">
+                    <div class="modal-body">
+                        <div class="form-row col-12 mb-3">
+                            <label for="TeamName" class="label col-3">TeamName:</label>
+                            <input type="text" class="form-control  col-8" id="TeamName" placeholder="Team Name" required=true minlength= {{minTeamName}}
+                                maxlength= {{maxTeamName}} onchange= {{ action (mut newTeam.teamName) value = "target.value"}}>
+                        </div>
+                        <div class="form-row col-12 mb-3">
+                            <input type="checkbox" class="form-control col-2" checked=true onchange= {{ action (mut newTeam.isActive) value = "target.checked"}}>
+                            <label class="form-check-label col-8">Active</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" {{action 'resetNewTeamform' }}>Reset</button>
+                        <button type="button" class="btn btn-primary" {{action 'addNewTeam'}}>Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{/if}}
+{{#unless isUserAdministrator}}
+    <div class="modal fade" id="teammembersmodal" tabindex="-1" role="dialog" aria-labelledby="Teammembersmodal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Viewing Members for Team: {{currentTeamName}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        {{#each teamMembers as |member|}}
+                            <li class="list-group-item">
+                                <a href="/#/profile/{{member._id}}" target="_blank"> {{member.firstName}} {{member.lastName}} </a>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/unless}}
+{{#if isUserAdministrator}}
+    <div class="modal fade" id="editTeammembersmodal" tabindex="-1" role="dialog" aria-labelledby="editTeammembersmodal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Members for Team: {{currentTeamName}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" {{action "resetForm"}}>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="clearfix">
+                        <button class="btn btn-primary m-1 float-left" {{action "selectallusers"}}>Select all Users</button>
+                        <button class="btn btn-warning m-1 float-right" {{action "unselectallusers"}}>Unselect all Users</button>
+                    </div>
+                    {{#if editingform}}
+                        <div class="p-3 mb-2 bg-danger text-white"> Please remember to save the changes by clicking the button at the bottom of this popup. Failure to
+                            do so will result in changes not being saved.</div>
+                    {{/if}}
+                    <ul class="list-group">
+                        {{#each model.allUsers as |user|}}
+                            <div class="form-row mb-1 mr-3">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id= {{user._id}} value= {{user._id}} checked= {{if (record-in-array teamMembers user._id "_id") "true" null}}
+                                        onchange= {{action "editTeamMembership" user}}>
+                                    <label class="form-check-label" for= {{user._id}}>
+                                        <a href="/#/profile/{{user._id}}" target="_blank">{{user.firstName}} {{user.lastName}}
+                                        </a>
+                                    </label>
+                                </div>
+                            </div>
+                        {{/each}}
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" {{action "resetForm"}}>Close</button>
+                    <button type="button" class="btn btn-primary" {{action "savemembershipchanges"}}>Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/if}}
