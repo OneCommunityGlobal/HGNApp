@@ -1,9 +1,51 @@
 import Component from '@ember/component';
 import { inject } from '@ember/service';
+import { computed } from '@ember/object';
 
 export default Component.extend({
     isSubmitted:"",
     userProfileService: inject('user-profile-service'),
+    errorlist: computed("showErrors.[]", function () {
+
+        return (this.get("showErrors"));
+
+    }),
+    validateForm(newPassword,confirmPassword,form) {
+        this.set("isSubmitted", "submitted");
+        this.set("showErrors", "");
+        let passwordregex = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+        let errormessagesarray = [];
+        let errormessages = "";
+        let fnewPassword=newPassword;
+        let fconfirmnewPassword=confirmPassword;
+
+
+        if (fconfirmnewPassword.validity.valid && fnewPassword.validity.valid) {
+            fnewPassword.setCustomValidity("");
+            fconfirmnewPassword.setCustomValidity("");
+        }
+
+        if (!passwordregex.test(fnewPassword.value) || !passwordregex.test(fconfirmnewPassword.value)) {
+
+            let errormessage = "New password should be at least 8 charcaters long with uppercase, lowercase and number/special char"
+            errormessages += errormessage;
+            errormessagesarray.push(errormessage);
+        }
+
+        if (fnewPassword.value != fconfirmnewPassword.value) {
+            let errormessage = "New password and confirm password fields don't match"
+            errormessages += errormessage;
+            errormessagesarray.push(errormessage);
+
+        }
+        fnewPassword.setCustomValidity(errormessages);
+        fconfirmnewPassword.setCustomValidity(errormessages);
+
+        this.set('showErrors', errormessagesarray);
+        return form.checkValidity();
+
+    },
+    
 
     clearForm() {
         $("#frmResetPwd")[0].reset();
@@ -11,16 +53,18 @@ export default Component.extend({
     },
     actions:{
         ResetPassword(){
+            
 
             let form = $("#frmResetPwd").get(0);
-
-            this.set("isSubmitted", "submitted");
+            let newPassword =  $("#resetpassword").get(0);
+            let confirmPassword =$("#confirmresetpassword").get(0);
+            
             let toastr = this.get("toast");
-
-            if (form.checkValidity()) {
+            let validity = this.validateForm(newPassword,confirmPassword,form);
+           
+            if (validity) {
                 this.set("isSubmitted", "");
-                let newPassword = this.get('password');
-                let confirmPassword = this.get('confirmpassword');
+               
                 let forUserId = this.get('userId');
                
                 let resetPwdData = {
@@ -30,7 +74,7 @@ export default Component.extend({
 
 
                 this.get('userProfileService').ResetPassword(forUserId, resetPwdData)
-                    .then(()=> {
+                    .then(results=> {
                         $("[data-dismiss=modal]").trigger({ type: "click" });
                         toastr.success("", 'Password successfully reset');
                     },
