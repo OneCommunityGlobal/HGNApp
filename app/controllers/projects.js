@@ -65,7 +65,7 @@ export default Controller.extend({
                         this.set("isFormsubmitted", "");
                         newProjectform.reset();
                         this.get("model.allProjects").addObject(results);
-                        $("[data-dismiss=modal]").trigger({ type: "click" });
+                        $("#modalNewProject").find(".close")[0].click();
                     },
                         error => { toastr.error(error.responseJSON.error) }
                     );
@@ -133,6 +133,7 @@ export default Controller.extend({
             this.get('projectService').manageProjectMembers(projectId, { "users": memberships })
                 .then(results => {
                     toastr.success("", 'Membership updated');
+                    $("#editprojectmembersmodal").find(".close")[0].click();
                 }, error => {
                     toastr.error("", error);
                 });

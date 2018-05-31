@@ -65,7 +65,7 @@ export default Controller.extend({
                         this.get("model.allTeams").addObject(results);
                         this.set("isFormsubmitted", "");
                         newteamform.reset();
-                        $("[data-dismiss=modal]").trigger({ type: "click" });
+                        $("#modalNewTeam").find(".close")[0].click();
                     },
                         error => { toastr.error(error.responseJSON.error) }
                     );
@@ -134,6 +134,7 @@ export default Controller.extend({
                 .then(results => {
                     toastr.success("", 'Membership updated');
                     this.set("editingform", false);
+                    $("#editTeammembersmodal").find(".close")[0].click();
                 }, error => {
                     toastr.error("", error);
                 });
