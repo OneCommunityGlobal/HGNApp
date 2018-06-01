@@ -10,15 +10,16 @@ export default Component.extend({
         return (this.get("showErrors"));
 
     }),
-    validateForm(newPassword,confirmPassword,form) {
+    //future this function has to be changed to helper : combine logic for reset and update password
+    validateForm() {
         this.set("isSubmitted", "submitted");
         this.set("showErrors", "");
         let passwordregex = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+        let form = $("#frmResetPwd").get(0);
+        let fnewPassword =  $("#resetpassword").get(0);
+        let fconfirmnewPassword =$("#confirmresetpassword").get(0);
         let errormessagesarray = [];
         let errormessages = "";
-        let fnewPassword=newPassword;
-        let fconfirmnewPassword=confirmPassword;
-
 
         if (fconfirmnewPassword.validity.valid && fnewPassword.validity.valid) {
             fnewPassword.setCustomValidity("");
@@ -45,22 +46,17 @@ export default Component.extend({
         return form.checkValidity();
 
     },
-    
-
     clearForm() {
         $("#frmResetPwd")[0].reset();
         this.set("isSubmitted", "");
     },
     actions:{
         ResetPassword(){
-            
-
-            let form = $("#frmResetPwd").get(0);
-            let newPassword =  $("#resetpassword").get(0);
-            let confirmPassword =$("#confirmresetpassword").get(0);
-            
+            let newPassword=this.get('password');
+            let confirmPassword= this.get('confirmpassword');
+                   
             let toastr = this.get("toast");
-            let validity = this.validateForm(newPassword,confirmPassword,form);
+            let validity = this.validateForm();
            
             if (validity) {
                 this.set("isSubmitted", "");
@@ -74,7 +70,7 @@ export default Component.extend({
 
 
                 this.get('userProfileService').ResetPassword(forUserId, resetPwdData)
-                    .then(results=> {
+                    .then(()=> {
                         $("[data-dismiss=modal]").trigger({ type: "click" });
                         toastr.success("", 'Password successfully reset');
                     },
