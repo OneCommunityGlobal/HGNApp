@@ -1,15 +1,15 @@
 <div class="container">
-     <!-- Reset Pwd available only for admin -->
-        <div class="row col-12 mb-1">
-            <div class="col-12">
+    <!-- Reset Pwd available only for admin -->
+    <div class="row col-12 mb-1">
+        <div class="col-12">
             {{#if isLoggedinUserAdministrator}}
                 {{#unless isNewUser}}
                     {{hgn-reset-password userId=model._id}}
                 {{/unless}}
             {{/if}}
-           </div>
         </div>
-        <!-- end -->
+    </div>
+    <!-- end -->
     <form id="userProfileForm" class= {{isFormSubmitted}} oninput= {{action (mut showwarning) true}}>
         <div class="form-row col-12">
             <div class="form-group col-md-4">
@@ -64,10 +64,11 @@
                         Role:</label>
                     <select name="role" class="form-control" label="Role" isRequired=true value=model.role isEditable=isLoggedinUserAdministrator
                         onchange= {{action (mut model.role) value = "target.value" }}>
-                        <option value="Administrator">Administrator</option>
-                        <option value="Volunteer">Volunteer</option>
-                        <option value="Manager">Manager</option>
-                        <option value="Core Team">Core Team</option>
+                        <option disabled>Please select a role</option>
+                        <option value="Administrator" selected= {{if (eq model.role "Administrator") true null}}>Administrator</option>
+                        <option value="Volunteer" selected= {{if (eq model.role "Volunteer")true null}}>Volunteer</option>
+                        <option value="Manager" selected= {{if (eq model.role "Manager")true null}}>Manager</option>
+                        <option value="Core Team" selected= {{if (eq model.role "Core Team")true null}}>Core Team</option>
                     </select>
                 </div>
                 <div class="form-group col-md-4">

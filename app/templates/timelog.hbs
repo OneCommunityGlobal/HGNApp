@@ -9,7 +9,7 @@
       <div class="collapse navbar-collapse" id="timelogsnapshot">
         <ul class="navbar-nav w-100">
           <li class="nav-item navbar-text mr-3 w-25" id="timelogweeklychart">
-            {{weekly-effort-chart forUserId= model.forUserId elementid = "timelogweeklychart"}}
+            {{weekly-effort-chart forUserId= model.forUserId elementid = "timelogweeklychart" called_at = called_at}}
           </li>
           <li class="nav-item  navbar-text">
             <span class="fa fa-tasks icon-large" data-toggle="modal" data-target="#actionItems">

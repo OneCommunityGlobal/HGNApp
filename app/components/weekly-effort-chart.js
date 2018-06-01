@@ -6,8 +6,26 @@ import moment from 'moment';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-    classNames: ["w-100", "h-100", "prescrollable", "text-center"],
-    tagName: "card",
+    classNames: ["w-100", "h-100", "text-center"],
+    actualhours: computed("tangiblelaborthisweek", function () {
+        return parseFloat(this.get("tangiblelaborthisweek")).toFixed(2);
+    }),
+
+    committedhours: computed("weeklyCommitted", function () {
+        return parseFloat(this.get("weeklyCommitted"));
+    }),
+    percentdelivered: computed("tangiblelaborthisweek", "committedhours", function () {
+        let actualhours = parseFloat(this.get('tangiblelaborthisweek')).toFixed(2);
+        let committedhours = parseFloat(this.get("weeklyCommitted")).toFixed(2);
+        return parseFloat(actualhours * 100 / committedhours).toFixed(2);
+    }),
+    color: computed("tangiblelaborthisweek", "committedhours", function () {
+        let actualhours = parseFloat(this.get('tangiblelaborthisweek')).toFixed(2);
+        let committedhours = parseFloat(this.get("weeklyCommitted")).toFixed(2);
+        let percentdelivered = parseFloat(actualhours * 100 / committedhours).toFixed(2);
+        return (percentdelivered <= 30) ? "red" : (percentdelivered > 30 && percentdelivered <= 90) ? "orange" : "green";
+    }),
+
 
     dashboardService: inject('dashboard-service'),
     didReceiveAttrs() {
@@ -17,36 +35,13 @@ export default Component.extend({
         let forUserId = { requestorId: userId }
         let startdate = moment().startOf("isoWeek").format();
         let enddate = moment().endOf("isoWeek").format();
-        this.get('dashboardService').getWeeklyEffort(forUserId, startdate, enddate)
-            .then(result => { this.set('laborthisweek', result); })
-            .then(() => {
-                let actual = this.get('laborthisweek');
-                let actualhours = parseFloat(actual[0].timeSpent_hrs).toFixed(2);
-                let committedhours = parseFloat(actual[0].weeklyComittedHours).toFixed(2);
-                let percentdelivered = parseFloat(actualhours * 100 / committedhours).toFixed(2);
+        return this.get('dashboardService').getWeeklyEffort(forUserId, startdate, enddate)
+            .then((result) => {
+                this.set('tangiblelaborthisweek', result[0].timeSpent_hrs);
+                this.set("weeklyCommitted", result[0].weeklyComittedHours);
+            });
 
-                if (percentdelivered < 30) {
-                    this.set("color", "red");
-
-                }
-                else if (percentdelivered > 30 && percentdelivered < 90) {
-                    this.set("color", "orange");
-
-                }
-                else if (percentdelivered > 90) {
-                    this.set("color", "green");
-
-                }
-                this.set('actualhours', parseInt(actualhours));
-                this.set("committedhours", parseInt(committedhours));
-
-
-                this.set("percentdelivered", parseInt(percentdelivered));
-            })
-
-
-    }
-
+    },
 
 
 });
