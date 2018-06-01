@@ -33,7 +33,9 @@
             <option value="false">Inactive</option>
         </select>
     </div>
-
+    <div class ="text-info">
+        <p>*Status column indicates the current user status. checked boxes indicate the person is active and vice versa. </p>
+    </div>
     {{models-table data=filteredUsers columns=columns showColumnsDropdown=false useNumericPagination=true filteringIgnoreCase=true
     showPageSize=true customIcons=customIcons
     columnComponents=(hash deleteRow=(component "delete-row-comp" onClick=(action "deleteRecord"))) }}
