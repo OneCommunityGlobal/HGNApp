@@ -8,7 +8,8 @@ export default Controller.extend({
     users: alias('model'),
     currentFilter: null,
     
-    user:{firtName:"",
+    user:{
+      firtName:"",
           lastName: "",
           email:"",
           password:"Test@123",
@@ -112,8 +113,8 @@ export default Controller.extend({
           }
         ],
 
-        customIcons :[{
-          'sort-asc': 'fa fa-chevron-down',
-          'sort-desc': 'fa fa-chevron-down'
-        }]
+        // customIcons :[{
+        //   'sort-asc': 'fa fa-chevron-down',
+        //   'sort-desc': 'fa fa-chevron-down'
+        // }]
 });

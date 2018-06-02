@@ -6,11 +6,10 @@ export default Component.extend({
     isSubmitted:"",
     userProfileService: inject('user-profile-service'),
     errorlist: computed("showErrors.[]", function () {
-
         return (this.get("showErrors"));
-
     }),
     //future this function has to be changed to helper : combine logic for reset and update password
+   
     validateForm() {
         this.set("isSubmitted", "submitted");
         this.set("showErrors", "");
@@ -67,7 +66,6 @@ export default Component.extend({
                     "newpassword": newPassword,
                     "confirmnewpassword": confirmPassword
                 };
-
 
                 this.get('userProfileService').ResetPassword(forUserId, resetPwdData)
                     .then(()=> {
