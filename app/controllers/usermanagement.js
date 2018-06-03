@@ -75,7 +75,7 @@ export default Controller.extend({
     
     columns:[
       {
-        "title" : "Status",
+        "title" : "Active/ Inactive",
         "component": "select-row-checkbox",
         "useFilter": false,
         "mayBeHidden": false
