@@ -73,19 +73,50 @@ export default Component.extend({
         },
 
         updateProfilePic: function (event) {
-            const reader = new FileReader();
             const file = event.target.files[0];
-            let imageData;
+            let errormessages = [];
+            let isValid = true;
+            let maxFileSize_KB = 50;
 
-            reader.onload = () => {
-                imageData = reader.result;
-                this.set('model.profilePic', imageData);
+            let validfileTypes = [
+                'image/jpeg',
+                'image/png'
+            ]
 
-            };
-
-            if (file) {
-                reader.readAsDataURL(file);
+            if (!validfileTypes.includes(file.type)) {
+                isValid = false;
+                errormessages.push(`File name ${file.name} is not a valid file type. Please update your selection.`);
             }
+
+            let filesize_KB = file.size / 1024;
+
+            if (filesize_KB > maxFileSize_KB) {
+                isValid = false;
+                errormessages.push(`Please limit the file size to ${maxFileSize_KB}KB by using another image or an online compressor like TinyPNG https://tinypng.com.`);
+
+            }
+
+            if (isValid) {
+                const reader = new FileReader();
+                let imageData;
+                reader.onload = () => {
+                    imageData = reader.result;
+                    this.set('model.profilePic', imageData);
+
+                };
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            }
+            else {
+                errormessages.forEach(element => {
+                    toastr.error(element);
+
+                });
+
+            }
+
         },
 
         postChanges(isNewUser) {
@@ -110,9 +141,8 @@ export default Component.extend({
                     this.get('userProfileService').postUserProfileData(user)
                         .then(() => {
                             toastr.success("", 'New user created successfully');
-                           
-                            if(isNewUser)
-                            {
+
+                            if (isNewUser) {
                                 $("#userProfileForm")[0].reset();
                                 $("[data-dismiss=modal]").trigger({ type: "click" });
                             }
@@ -131,8 +161,7 @@ export default Component.extend({
 
         },
 
-        reset : function()
-        {
+        reset: function () {
             $("#userProfileForm")[0].reset();
         }
     }

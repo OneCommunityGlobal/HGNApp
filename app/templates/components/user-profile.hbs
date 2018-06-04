@@ -25,7 +25,7 @@
                     </div>
                     <div class="form-row mt-1 col-12">
                         {{#if canUserEditPersonalFields}}
-                            <label for="newProfilePic" class="fa fa-edit" data-toggle="tooltip" data-placement="bottom" title="Click to update profile picture"></label>
+                            <label for="newProfilePic" class="fa fa-edit" data-toggle="tooltip" data-placement="bottom" title="Click to update profile picture (PNG, JPG)"></label>
                             <input id="newProfilePic" class="newProfilePic" multiple="true" onchange= {{action "updateProfilePic"}} accept="image/png,image/jpeg"
                                 name= {{newProfilePic}} type="file" />
                         {{/if}}
