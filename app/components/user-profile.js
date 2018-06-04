@@ -69,6 +69,7 @@ export default Component.extend({
         updateProperty(key, value) {
             let property = "model." + key;
             this.set(property, value);
+            this.set("showwarning", true);
 
         },
 
