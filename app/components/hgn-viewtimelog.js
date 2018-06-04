@@ -130,6 +130,7 @@ export default Component.extend({
         this.get('timeEntryService').getTimeEntriesForPeriod(userid, fromdate, todate)
             .then(results => {
                 this.set('timelogs', results);
+
             });
     },
 

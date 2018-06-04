@@ -1,4 +1,3 @@
-
 import { alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject } from '@ember/service';
@@ -9,7 +8,8 @@ export default Controller.extend({
     users: alias('model'),
     currentFilter: null,
     
-    user:{firtName:"",
+    user:{
+      firtName:"",
           lastName: "",
           email:"",
           password:"Test@123",
@@ -51,8 +51,11 @@ export default Controller.extend({
       },
 
       deleteRecord(record) {
-       
-        if (confirm("Are you sure you want to delete this user? Note: You cannot retrieve the user back.")) {
+        let confirmMsg ="Are you sure you want to delete this user? This action cannot be undone. Switch them to 'Inactive' if you'd like to keep their associated data instead of completely deleting them."
+ 
+        if (confirm(confirmMsg)) {
+          let saveTimeData ="Do you want to save the associated time Entries?"
+          if(confirm(saveTimeData)){
           let toastr = this.get('toast');
           this.get('userProfileService').deleteUserProfile(record._id)
             .then(() => {
@@ -61,6 +64,10 @@ export default Controller.extend({
             },
               error => { toastr.error("", error); }
             )
+          }
+          else{
+            
+          }
         }
       }
 
@@ -68,10 +75,10 @@ export default Controller.extend({
     
     columns:[
       {
+        "title" : "Active/ Inactive",
         "component": "select-row-checkbox",
         "useFilter": false,
-        "mayBeHidden": false,
-        "componentForSortCell": "select-all-rows-checkbox"
+        "mayBeHidden": false
       },
       
         {
@@ -106,8 +113,8 @@ export default Controller.extend({
           }
         ],
 
-        customIcons :[{
-          'sort-asc': 'fa fa-chevron-down',
-          'sort-desc': 'fa fa-chevron-down'
-        }]
+        // customIcons :[{
+        //   'sort-asc': 'fa fa-chevron-down',
+        //   'sort-desc': 'fa fa-chevron-down'
+        // }]
 });

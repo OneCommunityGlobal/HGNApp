@@ -12,27 +12,70 @@ export default Controller.extend({
     sortedProjects: sort('projects', 'sortProjProperties'),
     mytemp: false,
     week: '',
+    isCurrent: Ember.computed('week', function(){
+      return (this.get('week') == '0');
+    }),
+    isCustom:  Ember.computed('week', function(){
+      return (this.get('week') == '');
+    }),
     reports: Ember.inject.controller(),
+    isWeek: Ember.computed('week', function(){
+      return (this.get('week') == '2' || '4' || '6');
+    }),
+    custom: 'false',
+    weekselection: 8,
+
+    option: '',
+
+    init() {
+let prevvalue = String(sessionStorage.getItem("SelectedItem"));
+   if(prevvalue != null){
+
+   }
+
+},
 
     actions: {
+      ReOrgOption(val){
+        this.set('option',val);
+      },
+      ReorgCustom(val){
+        if(val == 7){
+          document.getElementById("ShowCustom").style.display = "block";
+          this.set('custom', 'true');
+          this.set('weekselection',0);
+        }
+        else{
+            document.getElementById("ShowCustom").style.display = "none";
+            this.set('weekselection', val);
+            this.set('custom', 'false');
+        }
+
+      },
         submitForm() {
-            let custom;
+
+          let val = $("#projdropdown2 :selected").val();
+          sessionStorage.setItem('SelectedItem', val);
+
             //console.log(this.get('period'));
-            if (this.get('period') == 'weekRange') {
-                custom = null;
-                this.get('reports').send('submitForm', this.get('option'), this.get('weekselection'), custom, this.get('sortedProjects'));
-            }
-            if (this.get('period') == 'customPeriod') {
+            if (this.get('weekselection') == 0) {
+
                 let todatevalue = moment($("#ToDate").get(0).value).clone().format('X');
                 let fromdatevalue = moment($("#FromDate").get(0).value).clone().format('X');
                 let tempTime = {};
                 tempTime.FromDate = fromdatevalue;
                 tempTime.ToDate = todatevalue;
-                custom = tempTime;
-                this.get('reports').send('submitForm', this.get('option'), 0, custom, this.get('sortedProjects'));
+                this.set('custom', tempTime);
+            }
+             else {
+
+                this.set('custom',null);
 
             }
+
+            this.get('reports').send('submitForm', this.get('option'),this.get('weekselection') , this.get('custom'), this.get('sortedProjects'));
             window.location.reload(true);
+            //this.set('reload',true);
         },
 
 

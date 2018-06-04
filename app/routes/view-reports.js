@@ -14,6 +14,7 @@ export default Route.extend({
 
 
     model(params) {
+      
         let formattedDates = {
             'FromDate': moment(params.FromDate, 'X').format('MM/DD/YYYY'),
             "ToDate": moment(params.ToDate, 'X').format('MM/DD/YYYY')

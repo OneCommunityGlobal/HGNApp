@@ -1,5 +1,8 @@
 import Component from '@ember/component';
 import moment from 'moment';
+import {
+    sort
+} from '@ember/object/computed';
 export default Component.extend({
     data: [],
     linechartdata: [],
@@ -10,9 +13,12 @@ export default Component.extend({
     setColor: false,
     isweek: false,
     test: 1,
+    sortMembersByName: ['firstName:asc'],
+    sortedProjectMembers: Ember.computed.sort('projectmembers', 'sortMembersByName'),
 
 
     init: function() {
+
         this._super();
         Array.prototype.groupBy = function(prop) {
             return this.reduce(function(groups, item) {
@@ -24,8 +30,9 @@ export default Component.extend({
         }
         let timeentrydata = this.get('timeentrydata');
         let previousweekdata = this.get('previousweekdata');
-        projectmembers: this.get('projectmembers');
         let members = this.get('projectmembers');
+
+
         let memberdata = timeentrydata.groupBy('personId');
         let prevmemberdata = previousweekdata.groupBy('personId');
 
@@ -97,18 +104,14 @@ export default Component.extend({
             let tempdaterange = daterange;
             for (i = 1; i < sendlinedata.length; i++) {
                 let count = 0;
-                //console.log('i',sendlinedata[i]);
                 for (var x = 0; x < deletelinedata[item].length; x++) {
                     count = 1;
-                    //console.log('x',deletelinedata[item][x]);
                     if (Object.keys(deletelinedata[item][x])[0] == sendlinedata[i][0]) {
                         sendlinedata[i].push(parseInt(deletelinedata[item][x][Object.keys(deletelinedata[item][x])[0]]));
-                        //  console.log('add',sendlinedata[i]);
                         deletelinedata[item].shift();
                         break;
                     } else {
                         sendlinedata[i].push(0);
-                        //console.log('zero',sendlinedata[i]);
                         break;
                     }
 
@@ -123,7 +126,6 @@ export default Component.extend({
 
         //get name for id
         for (var i = 1; i < sendlinedata[0].length; i++) {
-            //console.log(sendlinedata[0][i]);
             for (name in members) {
                 if (members[name]._id == sendlinedata[0][i]) {
 
@@ -137,8 +139,6 @@ export default Component.extend({
             sendlinedata[i][0] = dates[i - 1];
 
         }
-
-        //console.log(sendlinedata);
         this.set('linechartdata', sendlinedata);
 
 
@@ -149,12 +149,9 @@ export default Component.extend({
         ];
         let tempdataid = [];
         let tempContributed = [];
-        //console.log(memberdata);
-        //console.log(prevmemberdata);
         $.each(memberdata, function(key, value) {
             let temp = [];
             let total = 0;
-            //console.log(value);
             let prevtotal = 0;
             for (var i = 0; i < value.length; i++) {
                 total += value[i].totalSeconds;
@@ -163,44 +160,49 @@ export default Component.extend({
 
             for (var item in prevmemberdata) {
                 if (item == key) {
-                    //console.log(prevmemberdata[item]);
                     let x = (prevmemberdata[item].reduce((a, b) => ({
                         totalSeconds: a.totalSeconds + b.totalSeconds
                     })));
                     prevtotal = (x.totalSeconds) / 3600;
                 }
             }
-            //console.log(prevtotal);
             temp.push(key, prevtotal, total);
-            //console.log(temp);
-            //tempdataid.push(temp);
             tempdata.push(temp);
 
         });
 
-        //console.log(tempdata);
-
-        //console.log(members);
         var tempmembers = JSON.parse(JSON.stringify(members));
         //console.log(tempmembers);
-        for (var i = 0; i < tempdata.length; i++) { //Admin, Core
-            //console.log(data[i][0]);
+        let temparray = [];
+        for (var i = 0; i < tempdata.length; i++) {
+           //Admin, Core
             for (var name in tempmembers) { //Swathy, Jaem, Admin, Core
-                //console.log(members[name]);
                 if (tempmembers[name]._id == tempdata[i][0]) {
-                    //console.log(data[i][0],members[name].firstName);
                     tempdata[i][0] = tempmembers[name].firstName;
-                    //console.log(name);
                     tempmembers.splice(name, 1);
-                    //tempContributed.push(members[name]._id);
+
                 }
-
-
             }
+        }
+        tempmembers.sort(function(a, b){
+    var nameA=a.firstName.toLowerCase();
+    var nameB=b.firstName.toLowerCase();
+    if (nameA < nameB) //sort string ascending
+        return -1
+    if (nameA > nameB)
+        return 1
+    return 0 //default return value (no sorting)
+});
+        this.set('notContributed', tempmembers);
+
+
+        if(this.get('weeks') > 0){
+           tempdata.map(function(val){
+    return val.splice(1, 1);
+});
         }
 
 
-        this.set('notContributed', tempmembers);
         this.set('data', tempdata);
         var temppie = [
             ['Category', 'No. of Members']
@@ -230,24 +232,16 @@ export default Component.extend({
         }
     },
 
-    didUpdateAttrs() {
-        this._super(...arguments);
-        //console.log('didUpdatedAttrs called');
-    },
-
-
 
 
     //Add code to integrate google charts in this life cycle hook
     didInsertElement() {
         //load google chart packages
 
-
         google.charts.load('visualization', '1.1', {
             'packages': ['bar', 'corechart', 'controls']
         });
         var senddata = this.get('data');
-        //console.log(senddata);
         var piedata = this.get('piedata');
         var sendlinedata = this.get('linechartdata');
         //console.log(this.get('data'));
@@ -280,7 +274,7 @@ export default Component.extend({
             for (var i = 1; i < numRows; i++)
                 dataTable.addRow(senddata[i]);
             dataTable.sort(([{
-                column: 2,
+                column: 1,
                 desc: true
             }]));
             if (dataTable.getNumberOfRows() === 0) {
@@ -322,7 +316,7 @@ export default Component.extend({
 
                     series: {
                         0: {
-                            color: 'lightgray'
+                            color: '#4169E1'
                         }
                     }
 
@@ -338,7 +332,7 @@ export default Component.extend({
 
 
                     ui: {
-                        label: 'Members',
+                        label: 'Restore(If Deleted)',
                         allowTyping: false,
                         allowMultiple: true,
                         allowNone: false,
@@ -383,8 +377,9 @@ export default Component.extend({
             var options = {
 
                 chartArea: {
-                    width: 400,
-                    height: 300
+                    width: 300,
+                    height: 100,
+                    top: '5%'
                 }
             };
 
@@ -392,7 +387,7 @@ export default Component.extend({
 
             chart.draw(data, options);
         }
-        //console.log(this.get('isweek'));
+    
 
         function drawLineChart(sendlinedata) {
             var dataTable = new google.visualization.DataTable();
@@ -435,7 +430,7 @@ export default Component.extend({
                 options: {
                     filterColumnLabel: 'colLabel',
                     ui: {
-                        label: 'Columns',
+                        label: 'Restore(If Deleted)',
                         allowTyping: false,
                         allowMultiple: true,
                         allowNone: false,
