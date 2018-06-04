@@ -18,15 +18,33 @@ export default Controller.extend({
     time: {},
     custom: 'false',
     noofWeeks: 0,
-    weekrange: false,
+    weekrange: 'true',
     viewreports: Ember.inject.controller('view-reports'),
+    weekselection: 8,
 
     init() {
         this._super(...arguments);
-        this.set('weekselection', "");
+        this.set('weekselection', "8");
     },
 
     actions: {
+      Custom(val) {
+        if(val == 7){
+          document.getElementById("showCustom").style.display = "block";
+          this.set('weekrange', 'false');
+          this.set('custom', 'true');
+          this.set('noofWeeks', null);
+        }
+        else{
+            document.getElementById("showCustom").style.display = "none";
+            this.set('weekselection', val);
+            console.log(this.get('weekselection'));
+            this.set('weekrange', 'true');
+            this.set('custom', 'false');
+        }
+
+
+      },
         submitForm(option, weekselection, custom, allprojects) {
 
             let optionSelected;
@@ -51,7 +69,7 @@ export default Controller.extend({
                     weekRange = 'false';
                     weeks = 0;
                     customPeriod = 'false';
-                    this.set('noofWeeks', 0);
+                    this.set('noofWeeks', null);
                 }
                 projectlist = allprojects;
 
@@ -74,9 +92,11 @@ export default Controller.extend({
             //week
 
             if (weekRange == 'true') {
-                if (weeks == "" || weeks == "9") {
+                if (weeks == "8" || weeks == "9") {
                     let FromDate = moment().startOf('isoWeek').format('X');
+                    console.log(FromDate);
                     let ToDate = moment().clone().format('X');
+                    console.log(ToDate);
                     let tempTime = {};
 
                     tempTime.FromDate = FromDate;
@@ -168,7 +188,7 @@ export default Controller.extend({
             case 'customPeriod':
                 this.set('custom', 'true');
                 this.set('weekrange', 'false');
-                this.set('noofWeeks', 0);
+                this.set('noofWeeks', null);
                 break;
         }
     }

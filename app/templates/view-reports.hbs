@@ -1,37 +1,31 @@
 <div>
-    <h4 class="card-title">Reports</h4>
-
-    <form class="form-inline row" action="">
-
-        <div class="form-group col-md-4">
-            <select onchange={{action (mut option) value="target.value" }} required>
-           {{#each projects as |project|}}
-              <option value="" selected disabled hidden>Choose a project</option>
-              <option value={{project._id}}>{{project.projectName}}</option>
-           {{/each}}
-
-         </select>
+    <form class="container topForm" action="">
+        <div class="row">
+          <div class="col-md-4 offset-md-4">
+            <h4 class="card-title">Reports</h4>
+            <select name= "options" id="projdropdown" onchange={{action "ReOrgOption" value="target.value" }} required>
+              <option value="">Choose a project</option>
+              {{#each projects as |project|}}
+                <option value={{project._id}}>{{project.projectName}}</option>
+              {{/each}}
+            </select>
+          </div><br>
         </div>
 
-        <div class="form-group col-md-4">
+        <div class="row">
+          <div class="col-md-4 offset-md-4">
             <div>
-                <input class="form-check-input" value=weekRange name="timeSelect" type="radio" onchange={{action (mut period) value="target.value" }}>
-                <label class="form-check-label">
-     Weekly Report :
-   </label>
-                <select class="" onchange={{action (mut weekselection) value="target.value" }}>
-       <option value="0">Select a Week Range</option>
-    <option value="9">Current Week</option>
-     <option value="2">Past 2 weeks</option>
-     <option value="4">Past 4 weeks</option>
-     <option value= "6">Past 6 weeks</option>
-   </select>
-            </div>
-            <div>
-                <input class="form-check-input" value=customPeriod name="timeSelect" type="radio" onchange={{action (mut period) value="target.value" }}>
-                <label class="form-check-label">
-       Custom Period :
-     </label>
+              <select class="" onchange={{action "ReorgCustom" value="target.value" }}>
+                <option value=""  >Choose an option</option>
+                <option value="8">Current Week</option>
+                <option value="2">Past 2 weeks</option>
+                <option value="4">Past 4 weeks</option>
+                <option value= "6">Past 6 weeks</option>
+                <option value="7">Choose a Custom Range</option>
+              </select>
+            </div><br>
+            <div id="ShowCustom" style="display: none;">
+                <!--<input class="form-check-input" value=customPeriod name="timeSelect" type="radio" onchange={{action (mut period) value="target.value" }}>-->
                 <form>
                     <label class="label" for="fromdate">From:</label>
                     <input type="date" class="form-control" id="FromDate" required>
@@ -40,22 +34,27 @@
                 </form>
             </div>
         </div>
-
-        <div class="col-md-4">
-            <button type="submit" class="btn btn-primary btn-sm" {{action "submitForm"}}>Submit</button>
+      </div>
+      <div class="row">
+        <div class="col-md-4 offset-md-4 button" >
+            <button type="submit" class="btn btn-primary btn-sm" {{action "submitForm"}}>Re-Submit</button>
         </div>
-
-
-    </form><br>
+      </div>
+  </form><br>
 
     <div class="">
         <h4 class="card-title">Project name: {{projectName}}</h4>
     </div>
-
-
-    <p><i>Showing results for time period: {{dates.FromDate}} - {{dates.ToDate}}</i></p>
+    <p>Showing results for
+    {{#if isCurrent}}
+    <b>Current Week + Past Week</b>
+    {{else if isCustom}}
+    <b>Custom Range</b>
+    {{else if isWeek}}
+    <b>Past {{week}} Weeks</b>
+    {{/if}}</p>
+  <p><i>[Time period: {{dates.FromDate}} - {{dates.ToDate}}]</i></p>
     <div>
         {{viewreports-charts timeentrydata = model.timeentrydata projectmembers=model.projectmembers previousweekdata = model.previuostimeentrydata weeks=week}}
     </div>
-
 </div>

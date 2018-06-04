@@ -1,35 +1,41 @@
 <div>
-    <h5 class="card-title">Generate Reports</h5>
+    <h5 class="card-title">GENERATE REPORTS</h5>
     <form class="form-group">
         <div>
+          <div class="sidebyside">
             <p>Select a category:</p>
-            <div class="form-check">
+          </div>
+
+            <div class="form-check sidebyside ">
                 <input class="form-check-input" value=project name="optionSelect" type="radio" onchange={{action optionSelect value="target.value" }} checked>
                 <label class="form-check-label">
             Project
             </label>
             </div>
-            <div class="form-check">
+            <div class="form-check sidebyside">
                 <input class="form-check-input" value=person name="optionSelect" type="radio" onchange={{action optionSelect value="target.value" }}>
                 <label class="form-check-label">
             Person
             </label>
             </div>
-            <div class="form-check">
+            <div class="form-check sidebyside">
                 <input class="form-check-input" value=team name="optionSelect" type="radio" onchange={{action optionSelect value="target.value" }}>
                 <label class="form-check-label">
             Team
             </label>
             </div>
         </div>
-        <br/>
+
         <div>
-            <p>Select one:</p>
-            <div class="report-radio">
+          <div class="sidebyside">
+            <p>Select a filter:</p>
+          </div>
+            <div class="report-radio sidebyside">
                 <input type="radio" name="isActive" value="active" onchange={{action isActive value="target.value" }}>Active
                 <input type="radio" name="isActive" value="inactive" onchange={{action isActive value="target.value" }}>InActive
                 <input type="radio" name="isActive" value="all" onchange={{action isActive value="target.value" }}>All
             </div>
+            <div>
             <select onchange={{action (mut option) value="target.value" }} required>
            {{#if (eq 'Projects' display)}}
            {{#each sortedFinalProjects as |project|}}
@@ -46,39 +52,24 @@
             {{/if}}
 
          </select>
-        </div>
-        <br/>
+       </div>
+     </div><br>
+
         <div>
-            <p>Select a time period:</p>
-            <!--
-         <div class="form-check">
-            <input class="form-check-input" value=currentWeek name="timeSelect" type="radio" onchange= {{action timeSelect value= "target.value"}}
-               >
-            <label class="form-check-label">
-            Current Week + Prior Week
-            </label>
-         </div>
-       -->
-            <div class="form-check">
-                <input class="form-check-input" value=weekRange name="timeSelect" type="radio" onchange={{action timeSelect value="target.value" }}>
-                <label class="form-check-label">
-            Weekly Report <sub><i>*Includes Weekly Trend Analysis</i></sub>
-          </label><br>
-                <br>
-                <div>
-                    <select class="" onchange={{action (mut weekselection) value="target.value" }}>
+            <div>
+
+
+                    <select class="" onchange={{action "Custom" value="target.value" }}>
               <option value="8">Current Week</option>
                <option value="2">Past 2 weeks</option>
                <option value="4">Past 4 weeks</option>
                <option value= "6">Past 6 weeks</option>
+               <option value="7">Choose a Custom Range</option>
                </select>
-                </div><br>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" value=customPeriod name="timeSelect" type="radio" onchange={{action timeSelect value="target.value" }}>
-                <label class="form-check-label">
-            Custom Period
-          </label><br>
+
+            </div><br>
+
+            <div id='showCustom' style="display: none;">
                 <br>
                 <form class="form-inline">
                     <label class="label" for="fromdate">From:</label>
@@ -87,7 +78,9 @@
                     <input type="date" class="form-control" id="Todate" required>
                 </form>
             </div>
+
         </div><br>
+
         <button type="submit" class="btn btn-primary btn-sm" {{action "submitForm"}}>Submit</button>
     </form>
 </div>

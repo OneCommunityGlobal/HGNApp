@@ -1,25 +1,36 @@
-<div class="">
-    <p>Total Hours contributed to the project: <strong>{{totalTime}} Hrs</strong></p>
-    <p>Difference from prior week: <strong>{{percentChange}} Hrs </strong> {{#if setColor}}<i class="fa fa-arrow-up" style="font-size:20px;color:green"></i>{{else}}
+<div>
+    <p class="sidebyside">Total Hours contributed this Period: <strong>{{totalTime}} Hrs</strong></p>
+    {{#unless isweek}}
+    <p class="sidebyside">Difference from Previous Period of Same Duration: <strong>{{percentChange}} Hrs </strong> {{#if setColor}}<i class="fa fa-arrow-up" style="font-size:20px;color:green"></i>{{else}}
         <i class="fa fa-arrow-down" style="font-size:20px;color:red"></i>{{/if}}
     </p>
+    {{/unless}}
 </div>
+<div class="container">
 <div class="row">
-    <div class="col-md-6">
+    <div class="scrollBox">
         <p><b>Members contributing to the project:</b></p>
         <div class="">
-            {{#each projectmembers as |value|}}
+            {{#each sortedProjectMembers as |value|}}
             <a href="/#/profile/{{value._id}}">{{value.firstName}}</a><br/> {{/each}}
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4 scrollBox">
         <p><b>Members Contribution:</b></p>
         <div id="member_pie">
         </div>
     </div>
+    <div class="scrollBox">
+    <p><b>Members with no time entries:</b></p>
+    {{#if notContributed}} {{#each notContributed as |value|}}
+    <a href="/#/profile/{{value._id}}">{{value.firstName}}</a><br> {{/each}} {{else}}
+    <p>None</p>
+    {{/if}}
+    </div>
+</div>
 </div>
 <br>
-<p><b>Individual Member Contribution:</b></p>
+<p><b>CONTRIBUTION TOTALS COMPARISON FOR CHOSEN MEMBERS & PERIOD:</b></p>
 <div id="dashboard_div">
     <div id="colFilter_div"></div>
     <div id="BarChart" class="col-md-6"></div>
@@ -27,14 +38,10 @@
         No Member Data
     </div>
 </div>
-<p><b>Members with no time entries:</b></p>
-{{#if notContributed}} {{#each notContributed as |value|}}
-<a href="/#/profile/{{value._id}}">{{value.firstName}}</a><br> {{/each}} {{else}}
-<p>None</p>
-{{/if}}
+
 <br> {{#if isweek}}
 <div id="dashboardWeekly_div">
-    <p><b>Member Contribution Weekly Trend Analysis:</b></p>
+    <p><b>WEEKLY TREND COMPARISON FOR CHOSEN MEMBERS & PERIOD:</b></p>
     <div id="colFilterWeek_div"></div>
     <div id="WeeklyTrend" class=""></div>
 </div>
