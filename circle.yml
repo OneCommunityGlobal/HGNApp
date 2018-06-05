@@ -1,3 +1,11 @@
+machine:
+  node:
+    version: 9.5.0
+dependencies:
+  override:
+    - bundle install: # note the colon here
+        timeout: 2400 # note the double indentation (four spaces) here
+        
 deployment:
   production:
     branch: master
