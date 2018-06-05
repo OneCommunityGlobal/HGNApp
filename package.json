@@ -17,7 +17,7 @@
         "test1": "ember test",
         "test": "echo all is well",
         "surgedeploy": "mv dist/index.html dist/200.html && ember build && surge dist --domain hgnapplication.surge.sh",
-        "deploy": "npm run build && surge dist --domain hgnapplication.surge.sh"
+        "deploy": "npm install ember-cli -g && npm run build && surge dist --domain hgnapplication.surge.sh"
     },
     "devDependencies": {
         "broccoli-asset-rev": "^2.4.5",
