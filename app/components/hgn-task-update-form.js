@@ -22,37 +22,34 @@ export default Component.extend({
         browser_spellcheck: true
 
     },
-    getUserProjects() {
-        this.set("projects", []);
-        let user = this.get('forUserId');
-        alert(user);
-        this.get('projectService').getUserProjects(user)
-            .then(results => { this.set('projects', results); });
-    },
+
 
     init() {
         this._super(...arguments);
-        alert("init")
         this.set("projects", []);
-        this.getUserProjects();
     },
 
     didReceiveAttrs() {
         this._super(...arguments);
-        alert("recievd")
-        this.getUserProjects();
+        let user = this.get('forUserId');
+        if (user) {
+            this.get('projectService').getUserProjects(user)
+                .then(results => { this.set('projects', results); });
+        }
     },
+
+    some: computed("forUserId", function () { alert("for userupdated"); }),
 
     didUpdateAttrs() {
         this._super(...arguments);
-
-        this.getUserProjects();
+        let user = this.get('forUserId');
+        this.get('projectService').getUserProjects(user)
+            .then(results => { this.set('projects', results); });
     },
 
     minDateForLogging: computed("loggedinUser.role", function () {
 
         let userrole = this.get("loggedinUser.role");
-
         if (userrole != "Administrator") {
             return moment().startOf('isoWeek').format("YYYY-MM-DD");
         }
@@ -110,7 +107,7 @@ export default Component.extend({
                 this.get('timeEntryService').postTimeEntry(timeentry)
                     .then(results => {
                         toastr.success("", 'Time Entry Saved');
-                        this.get("notifyController")(Date.now());
+                        //this.get("notifyController")(Date.now());
                         this.clearform();
                         $("[data-dismiss=modal]").trigger({ type: "click" });
                     }, error => {

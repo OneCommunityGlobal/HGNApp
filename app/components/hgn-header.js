@@ -26,6 +26,11 @@ export default Component.extend({
             });
     },
 
+    loggedin_user: computed("loggedinUser", function () {
+        return this.get("loggedinUser");
+    }
+    ),
+
 
     getNotifications: function () {
         this.get('dataService').getUnreadNotifications(this.get("userId"))

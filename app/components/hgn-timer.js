@@ -9,6 +9,10 @@ export default Component.extend({
   showMyModal: false,
   clock: inject('hgn-clock'),
 
+  loggedin_user: computed("loggedinUser", function () {
+    return this.get("loggedinUser");
+  }),
+
   minutes: computed('clock.second', function () {
 
     var minute = this.get('clock.minute');
