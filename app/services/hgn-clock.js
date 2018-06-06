@@ -24,7 +24,7 @@ export default Clock.extend({
   reset() {
     this.stop();
     this.started = false;
-    this.setProperties({ second: 0, minute: 0, five: 0, quarter: 0, hour: 0 });
+    this.setProperties({ second: 0, minute: 0, hour: 0 });
   },
 
 
@@ -43,13 +43,6 @@ export default Clock.extend({
       this.setProperties({ second: 0 });
 
       if (minute !== 0) {
-        if ((minute % 5) === 0) {
-          this.incrementProperty('five');
-        }
-
-        if ((minute % 15) === 0) {
-          this.incrementProperty('quarter');
-        }
 
         if ((minute % 60) === 0) {
           this.incrementProperty('hour');

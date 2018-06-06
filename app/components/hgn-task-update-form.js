@@ -38,7 +38,6 @@ export default Component.extend({
         }
     },
 
-    some: computed("forUserId", function () { alert("for userupdated"); }),
 
     didUpdateAttrs() {
         this._super(...arguments);
@@ -107,7 +106,7 @@ export default Component.extend({
                 this.get('timeEntryService').postTimeEntry(timeentry)
                     .then(results => {
                         toastr.success("", 'Time Entry Saved');
-                        //this.get("notifyController")(Date.now());
+                        this.get("notifyController")(Date.now());
                         this.clearform();
                         $("[data-dismiss=modal]").trigger({ type: "click" });
                     }, error => {

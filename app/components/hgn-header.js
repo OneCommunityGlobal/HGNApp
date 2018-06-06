@@ -16,7 +16,6 @@ export default Component.extend({
             .then(results => {
                 this.set("userrole", results.role);
                 this.set("userId", results.requestorId);
-                this.set("loggedinUser", { "role": results.role, requestorId: results.requestorId });
                 this.getNotifications();
                 this.get('dashboardService').getDashboardData(results.requestorId)
                     .then(databoarddata => {
@@ -25,12 +24,6 @@ export default Component.extend({
 
             });
     },
-
-    loggedin_user: computed("loggedinUser", function () {
-        return this.get("loggedinUser");
-    }
-    ),
-
 
     getNotifications: function () {
         this.get('dataService').getUnreadNotifications(this.get("userId"))

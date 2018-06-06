@@ -48,7 +48,11 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-body">
-                      {{hgn-task-update-form forUserId = model.forUserId notifyController = (action (mut called_at ))}}
+                      {{#if (eq model.forUserId loggedinUser.requestorId)}}
+                        {{hgn-task-update-form forUserId = model.forUserId notifyController = (action (mut called_at )) taskhours = loggedinUserTaskHours taskminutes = loggedinUserTaskMinutes}}
+                      {{else}}
+                        {{hgn-task-update-form forUserId = model.forUserId notifyController = (action (mut called_at ))}}
+                      {{/if}}
                     </div>
                   </div>
                 </div>

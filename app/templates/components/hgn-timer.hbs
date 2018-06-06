@@ -1,4 +1,4 @@
-<h6> Add Time To Task</h6>
+<h6> Start Timer</h6>
 <div class="task-timer">
   <div class="timer-text">
     <span class="hours"> {{hours}} </span> :
@@ -6,22 +6,15 @@
   </div>
   <div>
     <button class="btn btn-small" id="timerButton" {{action "timerAction"}}>
-      <span class="fa fa-{{actionIcon}}" aria-hidden="true"></span> {{actionText}} </button>
+      <span class="fa fa-{{actionIcon}}" aria-hidden="true" {{action "timerAction"}}></span> {{actionText}} </button>
     <button class="btn btn-small" id="timerButtonReset" disabled="{{stopDisabled}}" {{action "resetTimer"}}>
       <span class="fa fa-eject" aria-hidden="true"></span> Reset </button>
+    <button class="btn btn-small" id="logTime">
+      <span class="fa fa-check" aria-hidden="true">
+        <a href="/#/timelog/{{userId}}">Log Time</a>
+      </span>
+    </button>
   </div>
   <div>
-    <div class="col-md-12">
-      <button type="button" class="btn btn-large btn-primary dashboardbutton" data-toggle="modal" data-target="#timentrymodal1">Add Time</button>
-      <div class="modal fade" id="timentrymodal1" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-body">
-              {{hgn-task-update-form loggedinUser = loggedin_user forUserId = loggedin_user.requestorId  taskhours= hours taskminutes = minutes}}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
