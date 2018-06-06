@@ -16,6 +16,7 @@ export default Component.extend({
             .then(results => {
                 this.set("userrole", results.role);
                 this.set("userId", results.requestorId);
+                this.set("loggedinUser", { "role": results.role, requestorId: results.requestorId });
                 this.getNotifications();
                 this.get('dashboardService').getDashboardData(results.requestorId)
                     .then(databoarddata => {

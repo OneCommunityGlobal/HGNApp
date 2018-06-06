@@ -34,10 +34,12 @@ export default Clock.extend({
     }
   }),
 
+
   tick() {
     var second = this.incrementProperty('second');
 
     if (second && (second % 60) === 0) {
+      alert("minute incremented");
       var minute = this.incrementProperty('minute');
       this.setProperties({ second: 0 });
 

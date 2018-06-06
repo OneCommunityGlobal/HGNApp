@@ -19,9 +19,9 @@
       <div class="form-group row">
         <label class="col-3 label">Time:</label>
         <input id="hours" class="form-control col-4 ml-1" type="number" min=0 max=23 onchange= {{action (mut taskhours) value = "target.value"}}
-          placeholder="Hours">
+          placeholder="Hours" value= {{taskhours}}>
         <input id="minutes" class="form-control col-4  ml-1" type="number" min=0 max=59 onchange= {{action (mut taskminutes) value = "target.value"}}
-          placeholder="Minutes">
+          placeholder="Minutes" value= {{taskminutes}}>
       </div>
       <div class="form-group row">
         <label class="col-3 label">Project:</label>

@@ -22,26 +22,31 @@ export default Component.extend({
         browser_spellcheck: true
 
     },
+    getUserProjects() {
+        this.set("projects", []);
+        let user = this.get('forUserId');
+        alert(user);
+        this.get('projectService').getUserProjects(user)
+            .then(results => { this.set('projects', results); });
+    },
 
     init() {
         this._super(...arguments);
+        alert("init")
         this.set("projects", []);
+        this.getUserProjects();
     },
 
     didReceiveAttrs() {
         this._super(...arguments);
-        this.set("projects", []);
-        let user = this.get('forUserId');
-        this.get('projectService').getUserProjects(user)
-            .then(results => { this.set('projects', results); });
+        alert("recievd")
+        this.getUserProjects();
     },
 
     didUpdateAttrs() {
         this._super(...arguments);
-        this.set("projects", []);
-        let user = this.get('forUserId');
-        this.get('projectService').getUserProjects(user)
-            .then(results => { this.set('projects', results); });
+
+        this.getUserProjects();
     },
 
     minDateForLogging: computed("loggedinUser.role", function () {

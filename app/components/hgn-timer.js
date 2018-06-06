@@ -7,16 +7,8 @@ export default Component.extend({
   tagName: "card",
   classNames: ["card", "text-center", "mb-3", "w-33", "h-100", "prescrollable", "hgn-timer", "text-white"],
   showMyModal: false,
-
   clock: inject('hgn-clock'),
-  seconds: computed('clock.second', function () {
 
-    var second = this.get('clock.second');
-    if (second < 10) {
-      second = "0" + second;
-    }
-    return second;
-  }),
   minutes: computed('clock.second', function () {
 
     var minute = this.get('clock.minute');
@@ -59,6 +51,5 @@ export default Component.extend({
       this.setProperties({ status: 0, actionText: "Start", actionIcon: "play", stopDisabled: "disabled" });
 
     }
-
   }
 });
