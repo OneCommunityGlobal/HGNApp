@@ -49,9 +49,7 @@
         "surge": "^0.20.1",
         "toastr": "^2.1.4"
     },
-    "pre-push": [
-        "surgedeploy"
-    ],
+    
     "engines": {
         "node": " >= 9.4"
     },
