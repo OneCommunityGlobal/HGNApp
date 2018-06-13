@@ -85,7 +85,7 @@
 
 <div class="form-group m-1">
         <label for="infringmentdescription" class = "sr-only"> Date of Infringment</label>
-        <input name = "infringmentdescription" id = "infringmentdescription" value = {{newinfringment.description}} class = "form-control" type="text" placeholder = "Enter description of infringment" required onchange = {{action (mut newinfringment.description) value = "target.value"}}>
+        <input name = "infringmentdescription" spellcheck="true" id = "infringmentdescription" value = {{newinfringment.description}} class = "form-control" type="text" placeholder = "Enter description of infringment" required onchange = {{action (mut newinfringment.description) value = "target.value"}}>
 </div>      
         
       </div>
