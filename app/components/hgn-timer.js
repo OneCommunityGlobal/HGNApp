@@ -12,6 +12,14 @@ export default Component.extend({
   loggedin_user: computed("loggedinUser", function () {
     return this.get("loggedinUser");
   }),
+  seconds: computed('clock.second', function () {
+
+    var second = this.get('clock.second');
+    if (second < 10) {
+      second = "0" + second;
+    }
+    return second;
+  }),
 
   minutes: computed('clock.second', function () {
 
