@@ -16,7 +16,7 @@ export default Controller.extend({
         this.set("lastUpdatedDatetime", moment().format("MM/DD/YYYY hh:mm:ss A"));
         //this.run();
     },
-    loggedinUserTaskMinutes: computed('clock.second', function () {
+    loggedinUserTaskMinutes: computed('clock.minute', function () {
         return this.get('clock.minute');
     }),
     loggedinUserTaskHours: computed('clock.hour', function () {
