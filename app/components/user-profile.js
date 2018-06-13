@@ -18,7 +18,11 @@ export default Component.extend({
     showFormErrors: false,
     newProfilePic: "",
     showwarning: "",
-
+    newinfringment : {
+        date: "",
+        description : ""
+    },
+    
     options: {
         plugins: ["link", "autolink"],
         menubar: "insert",
@@ -26,12 +30,30 @@ export default Component.extend({
         browser_spellcheck: true
     },
 
+    allowable_infringements: computed("model.infringments.[]", function(){
+        let infringments = this.get("model.infringments");
+        let allowed_infringments = 5;
+        if (infringments)
+        {
+            allowed_infringments = 5-infringments.length;
+        }
+
+        return new Array(allowed_infringments);
+        
+
+    }),
+
     isLoggedinUserAdministrator: computed('userrole', function () {
 
         let userrole = this.get('userrole');
         return userrole === "Administrator" ? true : false;
 
+    }),
 
+    isLoggedinUserManager: computed('userrole', function () {
+
+        let userrole = this.get('userrole');
+        return userrole === "Manager" ? true : false;
 
     }),
 
@@ -118,6 +140,33 @@ export default Component.extend({
 
             }
 
+        },
+        deleteinfrigment(infringment)
+        {
+            this.get("model.infringments").removeObject(infringment);
+            this.set("showwarning", true);            
+        },
+
+        createInfringment()
+        {
+            let infringment = this.get("newinfringment");
+
+            if (infringment.date && infringment.description)
+            {
+                this.get("model.infringments").addObject(infringment);
+                this.set("showwarning", true);
+                this.set("newinfringment", {
+                    date: "",
+                    description : ""
+                });
+                $("#newinfringment").find(".close")[0].click();
+
+            }
+            else
+            {
+                alert("Date and description are mandatory fields");
+            }
+            
         },
 
         postChanges(isNewUser) {
