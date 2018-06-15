@@ -20,7 +20,8 @@ export default Controller.extend({
     noofWeeks: 0,
     weekrange: 'true',
     viewreports: Ember.inject.controller('view-reports'),
-    weekselection: 8,
+    weekselection: '',
+
 
     init() {
         this._super(...arguments);
@@ -38,7 +39,6 @@ export default Controller.extend({
         else{
             document.getElementById("showCustom").style.display = "none";
             this.set('weekselection', val);
-            console.log(this.get('weekselection'));
             this.set('weekrange', 'true');
             this.set('custom', 'false');
         }
@@ -53,7 +53,10 @@ export default Controller.extend({
             let weeks = this.get('weekselection');
             let reorgcustomPeriod = null;
             let projectlist = this.get('sortedProjects');
-            //console.log(this.get('weekrange'));
+            let personlist = this.get('sortedPersons');
+
+
+            //TopForm in reports page
             if (option !== undefined) {
 
                 optionSelected = option;
@@ -77,9 +80,6 @@ export default Controller.extend({
                 optionSelected = this.get('option');
             }
 
-            let selectedProject = projectlist.filter(function(project) {
-                return project._id === optionSelected;
-            })[0];
             //custom time period - to get date from date picker
             if (customPeriod == 'true') {
                 let todatevalue = moment($("#Todate").get(0).value).clone().format('X');
@@ -94,11 +94,8 @@ export default Controller.extend({
             if (weekRange == 'true') {
                 if (weeks == "8" || weeks == "9") {
                     let FromDate = moment().startOf('isoWeek').format('X');
-                    console.log(FromDate);
                     let ToDate = moment().clone().format('X');
-                    console.log(ToDate);
                     let tempTime = {};
-
                     tempTime.FromDate = FromDate;
                     tempTime.ToDate = ToDate;
                     this.set('time', tempTime);
@@ -118,26 +115,46 @@ export default Controller.extend({
                 }
             }
 
-
             let timePeriod = this.get('time');
-            this.transitionToRoute('view-reports', {
-                queryParams: {
-                    project_id: optionSelected,
-                    projectName: selectedProject.projectName,
-                    FromDate: timePeriod.FromDate,
-                    ToDate: timePeriod.ToDate,
-                    week: this.get('noofWeeks')
-                }
 
+            if(this.get('display') == 'Projects'){
+              let selectedProject = projectlist.filter(function(project) {
+                  return project._id === optionSelected;
+              })[0];
+              var name = selectedProject.projectName;
+              var params = {
+                project_id: optionSelected,
+                projectName: name,
+                person_id: null,
+                personName: null,
+                FromDate: timePeriod.FromDate,
+                ToDate: timePeriod.ToDate,
+                week: this.get('noofWeeks')
+              };
+
+            }
+            else{
+              let selectedPerson = personlist.filter(function(person) {
+                  return person._id === optionSelected;
+              })[0];
+              name = selectedPerson.firstName+' '+selectedPerson.lastName;
+              var params = {
+                person_id: optionSelected,
+                personName: name,
+                project_id: null,
+                projectName: null,
+                FromDate: timePeriod.FromDate,
+                ToDate: timePeriod.ToDate,
+                week: this.get('noofWeeks')
+              };
+            }
+
+            this.transitionToRoute('view-reports', {
+                queryParams: params
             });
 
         },
-        customOrAll(target) {
-            if (target == 'show') {
-                document.getElementById('customPeriod').style.visibility = 'visible';
-            } else document.getElementById('customPeriod').style.visibility = 'hidden';
 
-        }
     },
     optionSelect(target) {
         var ele = document.getElementsByName("isActive");

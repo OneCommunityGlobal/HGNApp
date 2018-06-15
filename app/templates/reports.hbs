@@ -1,24 +1,28 @@
-<div>
-    <h5 class="card-title">GENERATE REPORTS</h5>
-    <form class="form-group">
-        <div>
-          <div class="sidebyside">
+<div class="reports-center container">
+  <div class="row topForm">
+    <div class="col-md-12">
+      <h4 class="card-title ">GENERATE REPORTS</h4>
+    </div>
+  </div>
+    <form class=" topForm">
+        <div class="row">
+          <div class=" col-md-5">
             <p>Select a category:</p>
           </div>
 
-            <div class="form-check sidebyside ">
+            <div class="form-check  col-md-3 ">
                 <input class="form-check-input" value=project name="optionSelect" type="radio" onchange={{action optionSelect value="target.value" }} checked>
                 <label class="form-check-label">
             Project
             </label>
             </div>
-            <div class="form-check sidebyside">
+            <div class="form-check  col-md-3">
                 <input class="form-check-input" value=person name="optionSelect" type="radio" onchange={{action optionSelect value="target.value" }}>
                 <label class="form-check-label">
             Person
             </label>
             </div>
-            <div class="form-check sidebyside">
+            <div class="form-check  col-md-1">
                 <input class="form-check-input" value=team name="optionSelect" type="radio" onchange={{action optionSelect value="target.value" }}>
                 <label class="form-check-label">
             Team
@@ -26,16 +30,28 @@
             </div>
         </div>
 
-        <div>
-          <div class="sidebyside">
+        <div class="row">
+          <div class="col-md-5">
             <p>Select a filter:</p>
           </div>
-            <div class="report-radio sidebyside">
-                <input type="radio" name="isActive" value="active" onchange={{action isActive value="target.value" }}>Active
-                <input type="radio" name="isActive" value="inactive" onchange={{action isActive value="target.value" }}>InActive
-                <input type="radio" name="isActive" value="all" onchange={{action isActive value="target.value" }}>All
+            <div class="form-check col-md-3">
+                <input type="radio" class="form-check-input" name="isActive" value="active" onchange={{action isActive value="target.value" }}>
+                <label class="form-check-label">Active</label>
+              </div>
+                <div class="form-check col-md-3">
+                <input type="radio" class="form-check-input" name="isActive" value="inactive" onchange={{action isActive value="target.value" }}>
+                <label class="form-check-label">InActive</label>
+</div>
+  <div class="form-check col-md-1">
+                <input type="radio" class="form-check-input" name="isActive" value="all" onchange={{action isActive value="target.value" }}>
+                <label class="form-check-label">All</label>
+
             </div>
-            <div>
+          </div>
+
+
+            <div class="row">
+              <div class="col-md-6 offset-md-3">
             <select onchange={{action (mut option) value="target.value" }} required>
            {{#if (eq 'Projects' display)}}
            {{#each sortedFinalProjects as |project|}}
@@ -52,14 +68,15 @@
             {{/if}}
 
          </select>
+
        </div>
      </div><br>
 
-        <div>
-            <div>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
 
 
-                    <select class="" onchange={{action "Custom" value="target.value" }}>
+                    <select  onchange={{action "Custom" value="target.value" }}>
               <option value="8">Current Week</option>
                <option value="2">Past 2 weeks</option>
                <option value="4">Past 4 weeks</option>
@@ -78,9 +95,12 @@
                     <input type="date" class="form-control" id="Todate" required>
                 </form>
             </div>
-
         </div><br>
+        <div class="button">
+            <button type="submit" class="button btn btn-primary btn-sm" {{action "submitForm"}}>Submit</button>
 
-        <button type="submit" class="btn btn-primary btn-sm" {{action "submitForm"}}>Submit</button>
+        </div>
     </form>
+
+
 </div>

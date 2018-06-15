@@ -16,7 +16,6 @@ export default Component.extend({
     sortMembersByName: ['firstName:asc'],
     sortedProjectMembers: Ember.computed.sort('projectmembers', 'sortMembersByName'),
 
-
     init: function() {
 
         this._super();
@@ -31,17 +30,15 @@ export default Component.extend({
         let timeentrydata = this.get('timeentrydata');
         let previousweekdata = this.get('previousweekdata');
         let members = this.get('projectmembers');
-
-
         let memberdata = timeentrydata.groupBy('personId');
         let prevmemberdata = previousweekdata.groupBy('personId');
-
-
-
         //Weeekly total hours contributed by each member
         let weeks = this.get('weeks');
         if (weeks > 0) {
             this.set('isweek', true);
+        }
+        else {
+          this.set('isweek', false);
         }
         let lastWeek = moment().clone().startOf('isoWeek').subtract(1, 'days').isoWeek();
         let daterange = [];
@@ -233,15 +230,19 @@ export default Component.extend({
     },
 
 
-
+    didUpdateAttrs(){
+      //console.log('called');
+      this.init();
+      this.didInsertElement();
+    },
     //Add code to integrate google charts in this life cycle hook
     didInsertElement() {
         //load google chart packages
-
         google.charts.load('visualization', '1.1', {
             'packages': ['bar', 'corechart', 'controls']
         });
         var senddata = this.get('data');
+
         var piedata = this.get('piedata');
         var sendlinedata = this.get('linechartdata');
         //console.log(this.get('data'));
@@ -249,6 +250,7 @@ export default Component.extend({
         google.charts.setOnLoadCallback(function() {
             drawBarChart(senddata);
         });
+
         google.charts.setOnLoadCallback(function() {
             drawPieChart(piedata);
         });
@@ -260,11 +262,7 @@ export default Component.extend({
             });
         }
 
-
-
         function drawBarChart(senddata) {
-
-            //console.log(senddata);
             var dataTable = new google.visualization.DataTable();
             var numRows = senddata.length;
             var numCols = senddata[0].length;
@@ -387,7 +385,7 @@ export default Component.extend({
 
             chart.draw(data, options);
         }
-    
+
 
         function drawLineChart(sendlinedata) {
             var dataTable = new google.visualization.DataTable();

@@ -1,0 +1,25 @@
+<div>
+    <p class="sidebyside">Total Hours contributed this Period: <strong>Hrs</strong></p>
+    {{#unless isweek}}
+    <p class="sidebyside">Difference from Previous Period of Same Duration: <strong>{{percentChange}} Hrs </strong> {{#if setColor}}<i class="fa fa-arrow-up" style="font-size:20px;color:green"></i>{{else}}
+        <i class="fa fa-arrow-down" style="font-size:20px;color:red"></i>{{/if}}
+    </p>
+    {{/unless}}
+    <div class="row">
+      <div class="col-md-6">
+        <p><b>CONTRIBUTION TOTALS COMPARISON FOR PROJECTS:</b></p>
+
+            <div id="dashboard_div">
+                <div id="colFilter_div"></div>
+                <div id="barchart"></div>
+
+            </div>
+      </div>
+      <div class="col-md-6">
+        <p><b>CONTRIBUTION DISTRIBUTION:</b></p>
+        <div id="piechart">
+        </div>
+      </div>
+    </div>
+
+    </div>

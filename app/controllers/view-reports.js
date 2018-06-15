@@ -1,13 +1,17 @@
 import Controller from '@ember/controller';
+import moment from 'moment';
+import Ember from 'ember';
 
 import {
     sort
 } from '@ember/object/computed';
 export default Controller.extend({
     needs: "view-reports",
-    queryParams: ['project_id', 'projectName', 'FromDate', 'ToDate', 'week'],
+    queryParams: ['project_id', 'projectName','person_id','personName', 'FromDate', 'ToDate', 'week'],
     project_id: null,
+    person_id: null,
     projectName: '',
+    personName: '',
     sortProjProperties: ['projectName:asc'],
     sortedProjects: sort('projects', 'sortProjProperties'),
     mytemp: false,
@@ -24,16 +28,11 @@ export default Controller.extend({
     }),
     custom: 'false',
     weekselection: 8,
-
     option: '',
-
-    init() {
-let prevvalue = String(sessionStorage.getItem("SelectedItem"));
-   if(prevvalue != null){
-
-   }
-
-},
+    isPersonReport: Ember.computed('project_id', function(){
+      return (this.get('project_id') == null);
+    }),
+    data_changed: 'true',
 
     actions: {
       ReOrgOption(val){
@@ -74,8 +73,13 @@ let prevvalue = String(sessionStorage.getItem("SelectedItem"));
             }
 
             this.get('reports').send('submitForm', this.get('option'),this.get('weekselection') , this.get('custom'), this.get('sortedProjects'));
-            window.location.reload(true);
-            //this.set('reload',true);
+            if(this.get('data_changed')=='true'){
+              this.set('data_changed','false');
+            }
+            else {
+              this.set('data_changed','true');
+            }
+
         },
 
 
