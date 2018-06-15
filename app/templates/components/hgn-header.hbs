@@ -10,7 +10,7 @@
     <div class="collapse navbar-collapse" id="headeritems">
       <ul class=" navbar-nav" style="width : 100%;">
         <li class="nav-item navbar-text">
-          <a class="nav-link" href="/">Dashboard</a>
+          <a class="nav-link" href="/#">Dashboard</a>
         </li>
         <li class="nav-item navbar-text">
           <a class="nav-link" href="/#/timelog/{{userId}}">Timelog
@@ -28,6 +28,9 @@
               <span class="sr-only">unread messages</span>
             </icon>
           </a>
+        </li>
+        <li class="nav-item">
+          {{hgn-timer userId= userId }}
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">

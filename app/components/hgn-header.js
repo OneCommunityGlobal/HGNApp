@@ -25,7 +25,6 @@ export default Component.extend({
             });
     },
 
-
     getNotifications: function () {
         this.get('dataService').getUnreadNotifications(this.get("userId"))
             .then(notifications => {

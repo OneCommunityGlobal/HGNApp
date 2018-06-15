@@ -5,10 +5,13 @@ import { computed } from '@ember/object';
 
 export default Component.extend({
   tagName: "card",
-  classNames: ["card", "text-center", "mb-3", "w-33", "h-100", "prescrollable", "hgn-timer", "text-white"],
+  classNames: ["text-center", "mb-3", "w-33", "h-100", "prescrollable", "hgn-timer", "text-white"],
   showMyModal: false,
-
   clock: inject('hgn-clock'),
+
+  loggedin_user: computed("loggedinUser", function () {
+    return this.get("loggedinUser");
+  }),
   seconds: computed('clock.second', function () {
 
     var second = this.get('clock.second');
@@ -17,6 +20,7 @@ export default Component.extend({
     }
     return second;
   }),
+
   minutes: computed('clock.second', function () {
 
     var minute = this.get('clock.minute');
@@ -59,6 +63,5 @@ export default Component.extend({
       this.setProperties({ status: 0, actionText: "Start", actionIcon: "play", stopDisabled: "disabled" });
 
     }
-
   }
 });

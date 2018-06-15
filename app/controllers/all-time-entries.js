@@ -49,7 +49,7 @@ export default Controller.extend({
         if (fromdate > todate) {
             ffromdate.setCustomValidity("From Date should be before To Date");
             ftodate.setCustomValidity("From Date should be before To Date");
-            alert("From Date should ne before To Date");
+            alert("From Date should be before To Date");
         }
         else {
             ffromdate.setCustomValidity("");

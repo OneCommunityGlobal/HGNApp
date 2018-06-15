@@ -29,7 +29,75 @@
                             <input id="newProfilePic" class="newProfilePic" multiple="true" onchange= {{action "updateProfilePic"}} accept="image/png,image/jpeg"
                                 name= {{newProfilePic}} type="file" />
                         {{/if}}
+                        <div class="row col-6 m-1">
                         <a class="btn btn-info btn-sm text-center ml-2" href="/#/timelog/{{model._id}}">View Timelog</a>
+                        </div>
+                        <div class = "row col-12">
+                            {{#each model.infringments as |infringment|}}
+
+                            <span class="">
+                                <tr> 
+                                    <td>
+                                 <span class = "fa fa-square infringement m-1" data-toggle="tooltip" data-placement="bottom" title = "Date: {{infringment.date}} &#010;Description: {{infringment.description}}" ></span> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    {{#if isLoggedinUserAdministrator}}                                
+                                 <span class="fa fa-trash m-1"{{action "deleteinfrigment" infringment}}></span>                                
+                                 {{/if}}
+                                    </td>
+                                </tr>
+                            </span>
+                            {{/each}}
+                            {{#each allowable_infringements as | allowed_infringment|}}
+                             <span class="">
+                                <tr> 
+                                    <td>
+                                 <span class = "fa fa-square m-1" ></span> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    {{#if isLoggedinUserManager}}                                
+                                  <span class="fa fa-plus m-1"data-toggle = "modal" data-target = "#newinfringment"></span>                                                                  
+                                 {{/if}}
+                                    </td>
+                                </tr>
+                            </span>
+                            {{/each}}
+                            {{#if isLoggedinUserManager}}
+                            <div class="modal fade" id="newinfringment" tabindex="-1" role="dialog" aria-labelledby="newinfringment" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New Infringment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+<div class="form-group m-1">
+        <label for="infringmentdate" class = "sr-only"> Date of Infringment</label>
+        <input name = "infringmentdate" id = "infringmentdate" value = {{newinfringment.date}} class = "form-control" type="date" placeholder = "Enter data of infringment" required onchange = {{action (mut newinfringment.date) value = "target.value"}}>
+</div>
+
+<div class="form-group m-1">
+        <label for="infringmentdescription" class = "sr-only"> Date of Infringment</label>
+        <input name = "infringmentdescription" spellcheck="true" id = "infringmentdescription" value = {{newinfringment.description}} class = "form-control" type="text" placeholder = "Enter description of infringment" required onchange = {{action (mut newinfringment.description) value = "target.value"}}>
+</div>      
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick = {{action "createInfringment"}}>Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+                            {{/if}}
+                        </div>
                     </div>
                 </div>
             </div>

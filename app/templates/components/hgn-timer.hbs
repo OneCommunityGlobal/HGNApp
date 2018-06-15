@@ -1,35 +1,21 @@
-<div class="card-body">
-  <h5 class="card-title">Add Time To Task</h5>
-  <div class="card-text">
-    <div class="task-timer">
-      <div class="timer-text">
-        <span class="hours"> {{hours}} </span> :
-        <span class="minutes"> {{minutes}} </span> :
-        <span class="seconds">{{seconds}} </span>
-      </div>
-      <div style="margin:10px">
-        (HH : MM : SS)
-      </div>
-      <div style="margin:10px">
-        <button id="timerButton" {{action "timerAction"}}>
-          <span class="fa fa-{{actionIcon}}" aria-hidden="true"></span> {{actionText}} </button>
-        <button id="timerButtonReset" disabled="{{stopDisabled}}" {{action "resetTimer"}}>
-          <span class="fa fa-eject" aria-hidden="true"></span> Reset </button>
-      </div>
-      <div>
-        <div class="col-md-12">
-          <button type="button" class="btn btn-large btn-primary dashboardbutton" data-toggle="modal" data-target="#timentrymodal">Add Time</button>
-          <div class="modal fade" id="timentrymodal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-body">
-                  {{hgn-task-update-form forUserId = loggedinUser.requestorId notifyController = notifyController }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<h6> Start Timer</h6>
+<div class="task-timer">
+  <div class="timer-text">
+    <span class="hours"> {{hours}} </span> :
+    <span class="minutes"> {{minutes}} </span> :
+    <span class="seconds"> {{seconds}} </span>
+  </div>
+  <div>
+    <button class="btn btn-small" id="timerButton" {{action "timerAction"}}>
+      <span class="fa fa-{{actionIcon}}" aria-hidden="true" {{action "timerAction"}}></span> {{actionText}} </button>
+    <button class="btn btn-small" id="timerButtonReset" disabled="{{stopDisabled}}" {{action "resetTimer"}}>
+      <span class="fa fa-eject" aria-hidden="true"></span> Reset </button>
+    <button class="btn btn-small" id="logTime">
+      <span class="fa fa-check" aria-hidden="true">
+        <a href="/#/timelog/{{userId}}">Log Time</a>
+      </span>
+    </button>
+  </div>
+  <div>
   </div>
 </div>

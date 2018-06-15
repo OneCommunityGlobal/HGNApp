@@ -23,6 +23,7 @@ export default Component.extend({
 
     },
 
+
     init() {
         this._super(...arguments);
         this.set("projects", []);
@@ -30,15 +31,16 @@ export default Component.extend({
 
     didReceiveAttrs() {
         this._super(...arguments);
-        this.set("projects", []);
         let user = this.get('forUserId');
-        this.get('projectService').getUserProjects(user)
-            .then(results => { this.set('projects', results); });
+        if (user) {
+            this.get('projectService').getUserProjects(user)
+                .then(results => { this.set('projects', results); });
+        }
     },
+
 
     didUpdateAttrs() {
         this._super(...arguments);
-        this.set("projects", []);
         let user = this.get('forUserId');
         this.get('projectService').getUserProjects(user)
             .then(results => { this.set('projects', results); });
@@ -47,7 +49,6 @@ export default Component.extend({
     minDateForLogging: computed("loggedinUser.role", function () {
 
         let userrole = this.get("loggedinUser.role");
-
         if (userrole != "Administrator") {
             return moment().startOf('isoWeek').format("YYYY-MM-DD");
         }
