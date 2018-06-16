@@ -43,10 +43,8 @@ export default Route.extend({
             'FromDate': moment(params.FromDate, 'X').format('MM/DD/YYYY'),
             "ToDate": moment(params.ToDate, 'X').format('MM/DD/YYYY')
         }
-        //let allprojects = this.get('projectService').getAllProjects();
         let PWToDate = moment(params.FromDate, 'X').clone().subtract(1, "days").format('X');
         let PWFromDate = moment(PWToDate, 'X').clone().subtract(6, "days").format('X');
-
         if(params.project_id != null){
           return hash({
               projects: this.get('projectService').getAllProjects(),

@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import moment from 'moment';
+
 import {
     sort
 } from '@ember/object/computed';
@@ -300,8 +301,7 @@ export default Component.extend({
                     title: 'Member Contribution for the Selected Period',
                     width: '100%',
                     height: 400,
-
-
+                    chartArea: {  width: "50%", height: "70%" },
                     vAxis: {
                         title: 'Total Hours'
                     },
@@ -408,7 +408,6 @@ export default Component.extend({
                 initState.selectedValues.push(dataTable.getColumnLabel(i));
             }
 
-            //console.log(dataTable);
             var chart = new google.visualization.ChartWrapper({
                 chartType: 'LineChart',
                 containerId: 'WeeklyTrend',

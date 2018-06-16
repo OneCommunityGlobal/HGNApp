@@ -55,10 +55,7 @@ export default Controller.extend({
 
           let val = $("#projdropdown2 :selected").val();
           sessionStorage.setItem('SelectedItem', val);
-
-            //console.log(this.get('period'));
             if (this.get('weekselection') == 0) {
-
                 let todatevalue = moment($("#ToDate").get(0).value).clone().format('X');
                 let fromdatevalue = moment($("#FromDate").get(0).value).clone().format('X');
                 let tempTime = {};
@@ -67,19 +64,11 @@ export default Controller.extend({
                 this.set('custom', tempTime);
             }
              else {
-
                 this.set('custom',null);
-
             }
 
             this.get('reports').send('submitForm', this.get('option'),this.get('weekselection') , this.get('custom'), this.get('sortedProjects'));
-            if(this.get('data_changed')=='true'){
-              this.set('data_changed','false');
-            }
-            else {
-              this.set('data_changed','true');
-            }
-
+            this.set('data_changed', !(this.get('data_changed')));
         },
 
 
