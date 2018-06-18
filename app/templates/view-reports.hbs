@@ -1,50 +1,61 @@
-<div>
-    <form class="container topForm" action="">
-        <div class="row">
-          <div class="col-md-4 offset-md-4">
-            <h4 class="card-title">Reports</h4>
-            <select name= "options" id="projdropdown" onchange={{action "ReOrgOption" value="target.value" }} required>
-              <option value="">Choose a project</option>
-              {{#each projects as |project|}}
-                <option value={{project._id}}>{{project.projectName}}</option>
-              {{/each}}
-            </select>
-          </div><br>
-        </div>
-
-        <div class="row">
-          <div class="col-md-4 offset-md-4">
-            <div>
-              <select class="" onchange={{action "ReorgCustom" value="target.value" }}>
-                <option value=""  >Choose an option</option>
-                <option value="8">Current Week</option>
-                <option value="2">Past 2 weeks</option>
-                <option value="4">Past 4 weeks</option>
-                <option value= "6">Past 6 weeks</option>
-                <option value="7">Choose a Custom Range</option>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <form class="container topForm" action="">
+          <div class="row">
+            <div class="col-md-4 offset-md-4">
+              <h4 class="card-title">Reports</h4>
+              <select name= "options" id="projdropdown" onchange={{action "ReOrgOption" value="target.value" }} required>
+                <option value="">Choose a project</option>
+                {{#each projects as |project|}}
+                  <option value={{project._id}}>{{project.projectName}}</option>
+                {{/each}}
               </select>
             </div><br>
-            <div id="ShowCustom" style="display: none;">
-                <!--<input class="form-check-input" value=customPeriod name="timeSelect" type="radio" onchange={{action (mut period) value="target.value" }}>-->
-                <form>
-                    <label class="label" for="fromdate">From:</label>
-                    <input type="date" class="form-control" id="FromDate" required>
-                    <label class="label" for="todate">To:</label>
-                    <input type="date" class="form-control" id="ToDate" required>
-                </form>
-            </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4 offset-md-4 button" >
-            <button type="submit" class="btn btn-primary btn-sm" {{action "submitForm"}}>Re-Submit</button>
-        </div>
-      </div>
-  </form><br>
+          </div>
 
-    <div class="">
-        <h4 class="card-title">Project name: {{projectName}}</h4>
+          <div class="row">
+            <div class="col-md-4 offset-md-4">
+              <div>
+                <select class="" onchange={{action "ReorgCustom" value="target.value" }}>
+                  <option value="">Choose an option</option>
+                  <option value="8">Current Week</option>
+                  <option value="2">Past 2 weeks</option>
+                  <option value="4">Past 4 weeks</option>
+                  <option value= "6">Past 6 weeks</option>
+                  <option value="7">Choose a Custom Range</option>
+                </select>
+              </div><br>
+              <div id="ShowCustom" style="display: none;">
+                  <form>
+                      <label class="label" for="fromdate">From:</label>
+                      <input type="date" class="form-control" id="FromDate" required>
+                      <label class="label" for="todate">To:</label>
+                      <input type="date" class="form-control" id="ToDate" required>
+                  </form>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 offset-md-4 button" >
+              <button type="submit" class="btn btn-primary btn-sm" {{action "submitForm"}}>Re-Submit</button>
+          </div>
+        </div>
+    </form>
     </div>
+
+  </div><br>
+<div class="row">
+  <div class="col-md-12">
+    {{#if isPersonReport}}
+      <h4 class="card-title">Name: {{personName}}</h4>
+      {{else}}
+        <h4 class="card-title">Project Name: {{projectName}}</h4>
+        {{/if}}
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
     <p>Showing results for
     {{#if isCurrent}}
     <b>Current Week + Past Week</b>
@@ -54,7 +65,22 @@
     <b>Past {{week}} Weeks</b>
     {{/if}}</p>
   <p><i>[Time period: {{dates.FromDate}} - {{dates.ToDate}}]</i></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    {{#if isPersonReport}}
     <div>
-        {{viewreports-charts timeentrydata = model.timeentrydata projectmembers=model.projectmembers previousweekdata = model.previuostimeentrydata weeks=week}}
+      {{viewpersonreports-charts projectmembers=model.projectmembers timeentrydata=model.timeentrydata previousweekdata = model.previoustimeentrydata}}
     </div>
+    {{else}}
+      <div>
+      {{viewreports-charts timeentrydata = model.timeentrydata projectmembers=model.projectmembers previousweekdata = model.previoustimeentrydata weeks=week data_changed=data_changed}}
+      </div>
+      {{/if}}
+  </div>
+
+</div>
+
 </div>
