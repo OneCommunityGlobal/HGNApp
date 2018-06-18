@@ -63,7 +63,7 @@ export default Component.extend({
         let viewingProfileOf = this.get('model._id');
         let userrole = this.get('userrole');
 
-        return (loggedinUser === viewingProfileOf || userrole === "Administrator") ? true : false;
+        return (loggedinUser === viewingProfileOf || userrole === "Administrator"|| userrole === "Manager") ? true : false;
 
 
     }),
