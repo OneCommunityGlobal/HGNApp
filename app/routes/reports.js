@@ -25,6 +25,4 @@ export default Route.extend(UnAuthenticatedRouteMixin, {
         set(controller, 'persons', model.persons);
         set(controller, 'teams', model.teams);
     },
-
-
 });

@@ -29,22 +29,21 @@ export default Controller.extend({
     },
 
     actions: {
-      Custom(val) {
-        if(val == 7){
-          document.getElementById("showCustom").style.display = "block";
-          this.set('weekrange', 'false');
-          this.set('custom', 'true');
-          this.set('noofWeeks', null);
-        }
-        else{
-            document.getElementById("showCustom").style.display = "none";
-            this.set('weekselection', val);
-            this.set('weekrange', 'true');
-            this.set('custom', 'false');
-        }
+        Custom(val) {
+            if (val == 7) {
+                document.getElementById("showCustom").style.display = "block";
+                this.set('weekrange', 'false');
+                this.set('custom', 'true');
+                this.set('noofWeeks', null);
+            } else {
+                document.getElementById("showCustom").style.display = "none";
+                this.set('weekselection', val);
+                this.set('weekrange', 'true');
+                this.set('custom', 'false');
+            }
 
 
-      },
+        },
         submitForm(option, weekselection, custom, allprojects) {
 
             let optionSelected;
@@ -117,36 +116,35 @@ export default Controller.extend({
 
             let timePeriod = this.get('time');
 
-            if(this.get('display') == 'Projects'){
-              let selectedProject = projectlist.filter(function(project) {
-                  return project._id === optionSelected;
-              })[0];
-              var name = selectedProject.projectName;
-              var params = {
-                project_id: optionSelected,
-                projectName: name,
-                person_id: null,
-                personName: null,
-                FromDate: timePeriod.FromDate,
-                ToDate: timePeriod.ToDate,
-                week: this.get('noofWeeks')
-              };
+            if (this.get('display') == 'Projects') {
+                let selectedProject = projectlist.filter(function(project) {
+                    return project._id === optionSelected;
+                })[0];
+                var name = selectedProject.projectName;
+                var params = {
+                    project_id: optionSelected,
+                    projectName: name,
+                    person_id: null,
+                    personName: null,
+                    FromDate: timePeriod.FromDate,
+                    ToDate: timePeriod.ToDate,
+                    week: this.get('noofWeeks')
+                };
 
-            }
-            else{
-              let selectedPerson = personlist.filter(function(person) {
-                  return person._id === optionSelected;
-              })[0];
-              name = selectedPerson.firstName+' '+selectedPerson.lastName;
-              var params = {
-                person_id: optionSelected,
-                personName: name,
-                project_id: null,
-                projectName: null,
-                FromDate: timePeriod.FromDate,
-                ToDate: timePeriod.ToDate,
-                week: this.get('noofWeeks')
-              };
+            } else {
+                let selectedPerson = personlist.filter(function(person) {
+                    return person._id === optionSelected;
+                })[0];
+                name = selectedPerson.firstName + ' ' + selectedPerson.lastName;
+                var params = {
+                    person_id: optionSelected,
+                    personName: name,
+                    project_id: null,
+                    projectName: null,
+                    FromDate: timePeriod.FromDate,
+                    ToDate: timePeriod.ToDate,
+                    week: this.get('noofWeeks')
+                };
             }
 
             this.transitionToRoute('view-reports', {
@@ -209,8 +207,4 @@ export default Controller.extend({
                 break;
         }
     }
-
-
-
-
 });

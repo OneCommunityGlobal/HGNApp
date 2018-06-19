@@ -37,9 +37,8 @@ export default Component.extend({
         let weeks = this.get('weeks');
         if (weeks > 0) {
             this.set('isweek', true);
-        }
-        else {
-          this.set('isweek', false);
+        } else {
+            this.set('isweek', false);
         }
         let lastWeek = moment().clone().startOf('isoWeek').subtract(1, 'days').isoWeek();
         let daterange = [];
@@ -173,7 +172,7 @@ export default Component.extend({
         //console.log(tempmembers);
         let temparray = [];
         for (var i = 0; i < tempdata.length; i++) {
-           //Admin, Core
+            //Admin, Core
             for (var name in tempmembers) { //Swathy, Jaem, Admin, Core
                 if (tempmembers[name]._id == tempdata[i][0]) {
                     tempdata[i][0] = tempmembers[name].firstName;
@@ -182,22 +181,22 @@ export default Component.extend({
                 }
             }
         }
-        tempmembers.sort(function(a, b){
-    var nameA=a.firstName.toLowerCase();
-    var nameB=b.firstName.toLowerCase();
-    if (nameA < nameB) //sort string ascending
-        return -1
-    if (nameA > nameB)
-        return 1
-    return 0 //default return value (no sorting)
-});
+        tempmembers.sort(function(a, b) {
+            var nameA = a.firstName.toLowerCase();
+            var nameB = b.firstName.toLowerCase();
+            if (nameA < nameB) //sort string ascending
+                return -1
+            if (nameA > nameB)
+                return 1
+            return 0 //default return value (no sorting)
+        });
         this.set('notContributed', tempmembers);
 
 
-        if(this.get('weeks') > 0){
-           tempdata.map(function(val){
-    return val.splice(1, 1);
-});
+        if (this.get('weeks') > 0) {
+            tempdata.map(function(val) {
+                return val.splice(1, 1);
+            });
         }
 
 
@@ -231,10 +230,10 @@ export default Component.extend({
     },
 
 
-    didUpdateAttrs(){
-      //console.log('called');
-      this.init();
-      this.didInsertElement();
+    didUpdateAttrs() {
+        //console.log('called');
+        this.init();
+        this.didInsertElement();
     },
     //Add code to integrate google charts in this life cycle hook
     didInsertElement() {
@@ -301,7 +300,10 @@ export default Component.extend({
                     title: 'Member Contribution for the Selected Period',
                     width: '100%',
                     height: 400,
-                    chartArea: {  width: "50%", height: "70%" },
+                    chartArea: {
+                        width: "50%",
+                        height: "70%"
+                    },
                     vAxis: {
                         title: 'Total Hours'
                     },
