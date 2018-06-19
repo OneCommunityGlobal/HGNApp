@@ -41,13 +41,25 @@
                                  <span class = "fa fa-square infringement m-1" data-toggle="tooltip" data-placement="bottom" title = "Date: {{infringment.date}} &#010;Description: {{infringment.description}}" ></span> 
                                     </td>
                                 </tr>
-                                <tr>
+                                
                                     <td>
+                                        <tr>
                                     {{#if isLoggedinUserAdministrator}}                                
                                  <span class="fa fa-trash m-1"{{action "deleteinfrigment" infringment}}></span>                                
                                  {{/if}}
-                                    </td>
+                                  </tr>
+                                  <tr>
+                                  {{#if  (or isLoggedinUserManager isLoggedinUserAdministrator)}}                                
+                                 <span class="fa fa-pencil m-1"  onclick = {{action (mut iseditingInfringment) true}}></span>
+                                 {{#if iseditingInfringment}}
+                                 <input type = "date" class = "form-control m-1" required value = {{infringment.date}} disabled = {{if isLoggedinUserManager "disabled" null}} onchange = {{action (mut infringment.date) value = "target.value"}}>
+                                 <input type = "text" class = "form-control m-1" spellcheck="true" required value = {{infringment.description}} onchange = {{action (mut infringment.description) value = "target.value"}}>
+                                 <button class = "btn btn-small btn-primary"onclick = {{action (mut iseditingInfringment) false}} >Done</button>
+                                 {{/if}}                                
+                                 {{/if}}
+                                    
                                 </tr>
+                                </td>
                             </span>
                             {{/each}}
                             {{#each allowable_infringements as | allowed_infringment|}}
@@ -59,7 +71,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                    {{#if isLoggedinUserManager}}                                
+                                    {{#if (or isLoggedinUserManager isLoggedinUserAdministrator)}}                                
                                   <span class="fa fa-plus m-1"data-toggle = "modal" data-target = "#newinfringment"></span>                                                                  
                                  {{/if}}
                                     </td>
