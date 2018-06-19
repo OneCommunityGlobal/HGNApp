@@ -32,8 +32,9 @@
                         <div class="row col-6 m-1">
                         <a class="btn btn-info btn-sm text-center ml-2" href="/#/timelog/{{model._id}}">View Timelog</a>
                         </div>
+                        {{#if (or isLoggedinUserAdministrator canUserEditPersonalFields)}}
                         <div class = "row col-12">
-                            {{#each model.infringments as |infringment|}}
+                            {{#each model.infringments as |infringment index|}}
 
                             <span class="">
                                 <tr> 
@@ -50,12 +51,12 @@
                                   </tr>
                                   <tr>
                                   {{#if  (or isLoggedinUserManager isLoggedinUserAdministrator)}}                                
-                                 <span class="fa fa-pencil m-1"  onclick = {{action (mut iseditingInfringment) true}}></span>
-                                 {{#if iseditingInfringment}}
+                                 <span class="fa fa-pencil m-1" data-toggle="collapse" data-target = "#editinfringment_{{index}}"  ></span>
+                                <div class="collapse" id = "editinfringment_{{index}}">
                                  <input type = "date" class = "form-control m-1" required value = {{infringment.date}} disabled = {{if isLoggedinUserManager "disabled" null}} onchange = {{action (mut infringment.date) value = "target.value"}}>
                                  <input type = "text" class = "form-control m-1" spellcheck="true" required value = {{infringment.description}} onchange = {{action (mut infringment.description) value = "target.value"}}>
-                                 <button class = "btn btn-small btn-primary"onclick = {{action (mut iseditingInfringment) false}} >Done</button>
-                                 {{/if}}                                
+                                                                  </div>
+                                
                                  {{/if}}
                                     
                                 </tr>
@@ -110,6 +111,7 @@
 </div>
                             {{/if}}
                         </div>
+                        {{/if}}
                     </div>
                 </div>
             </div>
