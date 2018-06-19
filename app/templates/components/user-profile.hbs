@@ -78,7 +78,7 @@
                                 </tr>
                             </span>
                             {{/each}}
-                            {{#if isLoggedinUserManager}}
+                            {{#if (or isLoggedinUserManager isLoggedinUserAdministrator)}}
                             <div class="modal fade" id="newinfringment" tabindex="-1" role="dialog" aria-labelledby="newinfringment" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
