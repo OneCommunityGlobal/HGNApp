@@ -137,10 +137,6 @@ export default Component.extend({
 
         }
         this.set('linechartdata', sendlinedata);
-
-
-
-
         let tempdata = [
             ['Name', 'Prior Week', 'Selected Period']
         ];
@@ -199,7 +195,6 @@ export default Component.extend({
             });
         }
 
-
         this.set('data', tempdata);
         var temppie = [
             ['Category', 'No. of Members']
@@ -229,9 +224,7 @@ export default Component.extend({
         }
     },
 
-
     didUpdateAttrs() {
-        //console.log('called');
         this.init();
         this.didInsertElement();
     },
@@ -245,8 +238,6 @@ export default Component.extend({
 
         var piedata = this.get('piedata');
         var sendlinedata = this.get('linechartdata');
-        //console.log(this.get('data'));
-        //google.charts.setOnLoadCallback(drawBarChart);
         google.charts.setOnLoadCallback(function() {
             drawBarChart(senddata);
         });
@@ -254,7 +245,6 @@ export default Component.extend({
         google.charts.setOnLoadCallback(function() {
             drawPieChart(piedata);
         });
-        //console.log('weeks', this.get('weeks'));
         if (this.get('weeks') > 0) {
 
             google.charts.setOnLoadCallback(function() {
@@ -288,7 +278,6 @@ export default Component.extend({
             };
             for (i = 0; i < dataTable.getNumberOfRows(); i++) {
                 columnsTable.addRow([i, dataTable.getValue(i, 0)]);
-                //console.log(dataTable.getValue(i,0));
                 initState.selectedValues.push(dataTable.getValue(i, 0));
             }
 
@@ -355,12 +344,9 @@ export default Component.extend({
                     }])[0];
                     view.rows.push(columnsTable.getValue(row, 0));
                 }
-                //console.log(view.rows);
-                // sort the indices into their original order
                 view.rows.sort(function(a, b) {
                     return (a - b);
                 });
-                //console.log(view);
                 chart.setView(view);
                 chart.draw();
             }
@@ -392,7 +378,6 @@ export default Component.extend({
         function drawLineChart(sendlinedata) {
             var dataTable = new google.visualization.DataTable();
             var numRows = sendlinedata.length;
-            //console.log(sendlinedata);
             var numCols = sendlinedata[0].length;
             dataTable.addColumn('string', sendlinedata[0][0]);
             for (var i = 1; i < numCols; i++)
