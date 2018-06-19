@@ -11,19 +11,19 @@
           </div>
 
             <div class="form-check  col-md-3 ">
-                <input class="form-check-input" value=project name="optionSelect" type="radio" onchange={{action optionSelect value="target.value" }} checked>
+                <input class="form-check-input" value=project name="optionSelect" type="radio" onchange={{ action optionSelect value="target.value" }} checked>
                 <label class="form-check-label">
             Project
             </label>
             </div>
             <div class="form-check  col-md-3">
-                <input class="form-check-input" value=person name="optionSelect" type="radio" onchange={{action optionSelect value="target.value" }}>
+                <input class="form-check-input" value=person name="optionSelect" type="radio" onchange={{ action optionSelect value="target.value" }}>
                 <label class="form-check-label">
             Person
             </label>
             </div>
             <div class="form-check  col-md-1">
-                <input class="form-check-input" value=team name="optionSelect" type="radio" onchange={{action optionSelect value="target.value" }}>
+                <input class="form-check-input" value=team name="optionSelect" type="radio" onchange={{ action optionSelect value="target.value" }}>
                 <label class="form-check-label">
             Team
             </label>
@@ -35,15 +35,15 @@
             <p>Select a filter:</p>
           </div>
             <div class="form-check col-md-3">
-                <input type="radio" class="form-check-input" name="isActive" value="active" onchange={{action isActive value="target.value" }}>
+                <input type="radio" class="form-check-input" name="isActive" value="active" onchange={{ action isActive value="target.value" }}>
                 <label class="form-check-label">Active</label>
               </div>
                 <div class="form-check col-md-3">
-                <input type="radio" class="form-check-input" name="isActive" value="inactive" onchange={{action isActive value="target.value" }}>
+                <input type="radio" class="form-check-input" name="isActive" value="inactive" onchange={{ action isActive value="target.value" }}>
                 <label class="form-check-label">InActive</label>
 </div>
   <div class="form-check col-md-1">
-                <input type="radio" class="form-check-input" name="isActive" value="all" onchange={{action isActive value="target.value" }}>
+                <input type="radio" class="form-check-input" name="isActive" value="all" onchange={{ action isActive value="target.value" }}>
                 <label class="form-check-label">All</label>
 
             </div>
@@ -52,18 +52,18 @@
 
             <div class="row">
               <div class="col-md-6 offset-md-3">
-            <select onchange={{action (mut option) value="target.value" }} required>
+            <select onchange={{ action (mut option) value="target.value" }} required>
            {{#if (eq 'Projects' display)}}
            {{#each sortedFinalProjects as |project|}}
               <option value="" selected disabled hidden>Choose a project</option>
-              <option value={{project._id}}>{{project.projectName}}</option>
+              <option value={{ project._id }}>{{ project.projectName }}</option>
            {{/each}}
             {{/if}}
 
           {{#if (eq 'Persons' display)}}
           {{#each sortedFinalPersons as |person|}}
              <option value="" selected disabled hidden>Choose a person</option>
-             <option value={{person._id}}>{{concat person.firstName " " person.lastName}}</option>
+             <option value={{person._id}}>{{ concat person.firstName " " person.lastName }}</option>
           {{/each}}
             {{/if}}
 
@@ -76,7 +76,7 @@
             <div class="col-md-6 offset-md-3">
 
 
-                    <select  onchange={{action "Custom" value="target.value" }}>
+                    <select  onchange={{ action "Custom" value="target.value" }}>
               <option value="8">Current Week</option>
                <option value="2">Past 2 weeks</option>
                <option value="4">Past 4 weeks</option>
@@ -97,7 +97,7 @@
             </div>
         </div><br>
         <div class="button">
-            <button type="submit" class="button btn btn-primary btn-sm" {{action "submitForm"}}>Submit</button>
+            <button type="submit" class="button btn btn-primary btn-sm" {{ action "submitForm" }}>Submit</button>
 
         </div>
     </form>

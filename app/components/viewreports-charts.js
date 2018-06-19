@@ -37,9 +37,8 @@ export default Component.extend({
         let weeks = this.get('weeks');
         if (weeks > 0) {
             this.set('isweek', true);
-        }
-        else {
-          this.set('isweek', false);
+        } else {
+            this.set('isweek', false);
         }
         let lastWeek = moment().clone().startOf('isoWeek').subtract(1, 'days').isoWeek();
         let daterange = [];
@@ -138,10 +137,6 @@ export default Component.extend({
 
         }
         this.set('linechartdata', sendlinedata);
-
-
-
-
         let tempdata = [
             ['Name', 'Prior Week', 'Selected Period']
         ];
@@ -173,7 +168,7 @@ export default Component.extend({
         //console.log(tempmembers);
         let temparray = [];
         for (var i = 0; i < tempdata.length; i++) {
-           //Admin, Core
+            //Admin, Core
             for (var name in tempmembers) { //Swathy, Jaem, Admin, Core
                 if (tempmembers[name]._id == tempdata[i][0]) {
                     tempdata[i][0] = tempmembers[name].firstName;
@@ -182,24 +177,23 @@ export default Component.extend({
                 }
             }
         }
-        tempmembers.sort(function(a, b){
-    var nameA=a.firstName.toLowerCase();
-    var nameB=b.firstName.toLowerCase();
-    if (nameA < nameB) //sort string ascending
-        return -1
-    if (nameA > nameB)
-        return 1
-    return 0 //default return value (no sorting)
-});
+        tempmembers.sort(function(a, b) {
+            var nameA = a.firstName.toLowerCase();
+            var nameB = b.firstName.toLowerCase();
+            if (nameA < nameB) //sort string ascending
+                return -1
+            if (nameA > nameB)
+                return 1
+            return 0 //default return value (no sorting)
+        });
         this.set('notContributed', tempmembers);
 
 
-        if(this.get('weeks') > 0){
-           tempdata.map(function(val){
-    return val.splice(1, 1);
-});
+        if (this.get('weeks') > 0) {
+            tempdata.map(function(val) {
+                return val.splice(1, 1);
+            });
         }
-
 
         this.set('data', tempdata);
         var temppie = [
@@ -230,11 +224,9 @@ export default Component.extend({
         }
     },
 
-
-    didUpdateAttrs(){
-      //console.log('called');
-      this.init();
-      this.didInsertElement();
+    didUpdateAttrs() {
+        this.init();
+        this.didInsertElement();
     },
     //Add code to integrate google charts in this life cycle hook
     didInsertElement() {
@@ -246,8 +238,6 @@ export default Component.extend({
 
         var piedata = this.get('piedata');
         var sendlinedata = this.get('linechartdata');
-        //console.log(this.get('data'));
-        //google.charts.setOnLoadCallback(drawBarChart);
         google.charts.setOnLoadCallback(function() {
             drawBarChart(senddata);
         });
@@ -255,7 +245,6 @@ export default Component.extend({
         google.charts.setOnLoadCallback(function() {
             drawPieChart(piedata);
         });
-        //console.log('weeks', this.get('weeks'));
         if (this.get('weeks') > 0) {
 
             google.charts.setOnLoadCallback(function() {
@@ -289,7 +278,6 @@ export default Component.extend({
             };
             for (i = 0; i < dataTable.getNumberOfRows(); i++) {
                 columnsTable.addRow([i, dataTable.getValue(i, 0)]);
-                //console.log(dataTable.getValue(i,0));
                 initState.selectedValues.push(dataTable.getValue(i, 0));
             }
 
@@ -301,7 +289,10 @@ export default Component.extend({
                     title: 'Member Contribution for the Selected Period',
                     width: '100%',
                     height: 400,
-                    chartArea: {  width: "50%", height: "70%" },
+                    chartArea: {
+                        width: "50%",
+                        height: "70%"
+                    },
                     vAxis: {
                         title: 'Total Hours'
                     },
@@ -353,12 +344,9 @@ export default Component.extend({
                     }])[0];
                     view.rows.push(columnsTable.getValue(row, 0));
                 }
-                //console.log(view.rows);
-                // sort the indices into their original order
                 view.rows.sort(function(a, b) {
                     return (a - b);
                 });
-                //console.log(view);
                 chart.setView(view);
                 chart.draw();
             }
@@ -390,7 +378,6 @@ export default Component.extend({
         function drawLineChart(sendlinedata) {
             var dataTable = new google.visualization.DataTable();
             var numRows = sendlinedata.length;
-            //console.log(sendlinedata);
             var numCols = sendlinedata[0].length;
             dataTable.addColumn('string', sendlinedata[0][0]);
             for (var i = 1; i < numCols; i++)

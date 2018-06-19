@@ -22,10 +22,6 @@ export default Component.extend({
       //Group the time entries project wise
       let projectdata = timeentrydata.groupBy('projectId');
       let prevprojectdata = previousweekdata.groupBy('projectId');
-
-console.log('projectdata',projectdata);
-console.log('prev',prevprojectdata);
-
 //Data for bar chart
             let tempdata = [
                 ['Name', 'Prior Week', 'Selected Period']
@@ -51,7 +47,7 @@ console.log('prev',prevprojectdata);
 
                     }
                 }
-              
+
                 var project = projects.find(function(element){
                   return element.projectId == key;
                 });
@@ -59,13 +55,9 @@ console.log('prev',prevprojectdata);
                 tempdata.push(temp);
 
             });
-console.log('tempdata',tempdata);
 this.set('bardata',tempdata);
       //Weeekly total hours contributed by each member
-
-
       //Pie chart
-console.log('temp',tempdata);
       var pie = [['Project','Prior Week Hours','Current Week Hours']];
       for(var i=1; i<tempdata.length; i++){
           pie.push(tempdata[i]);
@@ -90,12 +82,8 @@ this.set('piedata',pie);
       google.charts.setOnLoadCallback(function() {
           drawBarChart(bardata);
       });
-      console.log(piedata);
-
-
 
       function drawBarChart(bardata) {
-          //console.log(senddata);
           var dataTable = new google.visualization.DataTable();
           var numRows = bardata.length;
           var numCols = bardata[0].length;
@@ -121,7 +109,6 @@ this.set('piedata',pie);
           };
           for (i = 0; i < dataTable.getNumberOfRows(); i++) {
               columnsTable.addRow([i, dataTable.getValue(i, 0)]);
-              //console.log(dataTable.getValue(i,0));
               initState.selectedValues.push(dataTable.getValue(i, 0));
           }
 
@@ -133,8 +120,6 @@ this.set('piedata',pie);
                   title: 'Member Contribution for the Selected Period',
                   width: '100%',
                   height: 400,
-
-
                   vAxis: {
                       title: 'Total Hours'
                   },
@@ -157,8 +142,6 @@ this.set('piedata',pie);
               dataTable: columnsTable,
               options: {
                   filterColumnLabel: 'colLabel',
-
-
                   ui: {
                       label: 'Restore(If Deleted)',
                       allowTyping: false,
@@ -183,12 +166,10 @@ this.set('piedata',pie);
                   }])[0];
                   view.rows.push(columnsTable.getValue(row, 0));
               }
-              //console.log(view.rows);
               // sort the indices into their original order
               view.rows.sort(function(a, b) {
                   return (a - b);
               });
-              //console.log(view);
               chart.setView(view);
               chart.draw();
           }
@@ -204,7 +185,6 @@ function drawPieChart(piedata) {
     var data = google.visualization.arrayToDataTable(piedata);
     console.log(data);
     var options = {
-
         chartArea: {
           width: '100%',
           height: '100%',
