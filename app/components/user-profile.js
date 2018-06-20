@@ -3,6 +3,7 @@ import { inject } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import $ from 'jquery';
+import moment from 'moment';
 
 export default Component.extend({
 
@@ -29,6 +30,7 @@ export default Component.extend({
         toolbar: "",
         browser_spellcheck: true
     },
+    today : moment().format('YYYY-MM-DD'),
 
     allowable_infringements: computed("model.infringments.[]", function(){
         let infringments = this.get("model.infringments");

@@ -15,6 +15,7 @@
             <div class="form-group col-md-4">
                 <div class="form-row mb-1 col-12">
                     <div class="form-row">
+                        <div class="row">
                         {{#if model.profilePic}}
                             <img input id="image" type="image" alt="Profile Picture" src= {{model.profilePic}} name=profilePic class="img-responsive logo profilepic"
                             />
@@ -22,18 +23,22 @@
                             <img input id="image" type="image" alt="Profile Picture" src="/assets/images/defaultprofilepic.jpg" name=profilePic class="img-responsive logo profilepic"
                             />
                         {{/if}}
-                    </div>
-                    <div class="form-row mt-1 col-12">
-                        {{#if canUserEditPersonalFields}}
+                        </div>
+                        <div class="row text-center">
+                         {{#if canUserEditPersonalFields}}
                             <label for="newProfilePic" class="fa fa-edit" data-toggle="tooltip" data-placement="bottom" title="Click to update profile picture (PNG, JPG)"></label>
                             <input id="newProfilePic" class="newProfilePic" multiple="true" onchange= {{action "updateProfilePic"}} accept="image/png,image/jpeg"
                                 name= {{newProfilePic}} type="file" />
                         {{/if}}
+                        </div>
+                    </div>
+                    <div class="form-row col-12 clearfix">
+                       
                         <div class="row col-6 m-1">
                         <a class="btn btn-info btn-sm text-center ml-2" href="/#/timelog/{{model._id}}">View Timelog</a>
                         </div>
                         {{#if (or isLoggedinUserAdministrator canUserEditPersonalFields)}}
-                        <div class = "row col-12">
+                        <div class = "row col-12 m-1">
                             {{#each model.infringments as |infringment index|}}
 
                             <span class="">
@@ -93,7 +98,7 @@
 
 <div class="form-group m-1">
         <label for="infringmentdate" class = "sr-only"> Date of Infringment</label>
-        <input name = "infringmentdate" id = "infringmentdate" value = {{newinfringment.date}} class = "form-control" type="date" placeholder = "Enter data of infringment" required onchange = {{action (mut newinfringment.date) value = "target.value"}}>
+        <input name = "infringmentdate" id = "infringmentdate" value = {{today}} class = "form-control" type="date" placeholder = "Enter data of infringment" required onchange = {{action (mut newinfringment.date) value = "target.value"}}>
 </div>
 
 <div class="form-group m-1">
