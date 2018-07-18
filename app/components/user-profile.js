@@ -20,7 +20,7 @@ export default Component.extend({
     newProfilePic: "",
     showwarning: "",
     newinfringment : {
-        date: "",
+        date: moment().format('YYYY-MM-DD'),
         description : ""
     },
     
@@ -152,13 +152,12 @@ export default Component.extend({
         createInfringment()
         {
             let infringment = this.get("newinfringment");
-
             if (infringment.date && infringment.description)
             {
                 this.get("model.infringments").addObject(infringment);
                 this.set("showwarning", true);
                 this.set("newinfringment", {
-                    date: "",
+                    date:moment().format('YYYY-MM-DD'),
                     description : ""
                 });
                 $("#newinfringment").find(".close")[0].click();
