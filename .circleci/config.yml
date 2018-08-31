@@ -5,3 +5,4 @@ jobs:
    - image: circleci/node:latest
   steps:
   - checkout
+  - run: "npm run deploy"
