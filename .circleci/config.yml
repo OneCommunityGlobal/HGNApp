@@ -2,7 +2,7 @@ version: 2
 jobs:
  build:
   docker:
-   -image : circle/node:9.5.0
+   - image: circle/node:9.5.0
   checkout
   deploy:
-    -run : npm run deploy
+    - run: npm run deploy
