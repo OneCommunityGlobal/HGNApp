@@ -4,4 +4,5 @@ jobs:
   docker:
    -image : circle/node:9.5.0
   checkout
-  
+  deploy:
+    -run : npm run deploy
