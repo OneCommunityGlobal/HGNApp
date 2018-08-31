@@ -2,6 +2,6 @@ version: 2
 jobs:
  build:
   docker:
-   - image: circle/node:latest
+   - image: circleci/node:latest
   steps:
   - checkout
