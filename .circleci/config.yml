@@ -3,6 +3,7 @@ jobs:
  build:
   docker:
    - image: circle/node:9.5.0
-  checkout
+  steps:
+  - checkout
   deploy:
     - run: npm run deploy
