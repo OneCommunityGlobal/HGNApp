@@ -8,3 +8,13 @@ jobs:
   - run:
      name: Update npm
      command : 'sudo npm install'
+  -run:
+    name : Install ember globally
+    command : 'sudo npm install -g ember-cli surge'
+  -run:
+    name : Run ember build
+    command : 'sudo npm run build'
+  -run:
+    name : Deploy app
+    command : 'sudo surge dist --domain https://hgnapplication.surge.sh'
+  
