@@ -10,7 +10,7 @@ jobs:
      command: 'sudo npm install'
   - run:
      name: Install ember globally
-     command: 'sudo npm install -g ember-cli surge'
+     command: 'sudo npm install -g ember-cli'
   - run:
      name: Run ember build
      command: 'sudo npm run build'
