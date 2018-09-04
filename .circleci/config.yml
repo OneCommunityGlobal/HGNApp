@@ -10,11 +10,11 @@ jobs:
      command: 'sudo npm install'
   - run:
      name: Install ember globally
-     command: 'sudo npm install -g ember-cli surge'
+     command: 'sudo npm install -g ember-cli'
   - run:
      name: Run ember build
      command: 'sudo npm run build'
   - run:
      name: Deploy app
-     command: 'sudo surge dist --domain https://hgnapplication.surge.sh'
+     command: 'sudo ./node_modules/.bin/surge dist --domain https://hgnapplication.surge.sh'
   
