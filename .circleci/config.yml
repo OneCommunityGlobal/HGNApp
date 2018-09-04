@@ -16,5 +16,5 @@ jobs:
      command: 'sudo npm run build'
   - run:
      name: Deploy app
-     command: 'sudo ./node_modules/.bin/surge dist --domain https://hgnapplication.surge.sh'
+     command: './node_modules/.bin/surge dist --domain https://hgnapplication.surge.sh'
   
