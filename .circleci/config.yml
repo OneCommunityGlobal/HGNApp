@@ -6,11 +6,11 @@ jobs:
   steps:
   - checkout
   - run:
-      name: Install ember globally
-     command: 'sudo npm install -g ember-cli surge'
-  - run:
      name: Update npm
      command: 'sudo npm install'
+  - run:
+     name: Install ember globally
+     command: 'sudo npm install -g ember-cli surge'
   - run:
      name: Run ember build
      command: 'sudo npm run build'
