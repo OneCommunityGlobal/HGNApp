@@ -27,6 +27,7 @@
             <tbody>
                 {{#each timelogsview.records as |timelog index|}}
                     <tr class="col-12 w-100 mb-3 row tr-tangible-{{timelog.isTangible}}" scope="row">
+                        <td>
                         <form id="frmEditTimeEntry_{{index}}" class="w-100 form-inline" readonly= {{if (or isUserAdministrator (and isEditable (is-timeentry-within-week timelog.dateOfWork))) null "true"}}>
                             <div class=" col-5 w-100 ">
                                 <div class="row form-group">
@@ -74,6 +75,7 @@
                                 {{tinymce-editor options=options value=timelog.notes onValueChanged=(action (mut timelog.notes))  }}
                             </div>
                         </form>
+                        </td>
                     </tr>
                 {{/each}}
             </tbody>
