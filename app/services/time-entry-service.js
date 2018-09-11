@@ -1,35 +1,44 @@
-
-import { inject } from '@ember/service';
-import Service from '@ember/service';
+import { inject } from "@ember/service";
+import Service from "@ember/service";
 
 export default Service.extend({
-  dataService: inject('datastore-service'),
+  dataService: inject("datastore-service"),
 
   getTimeEntriesForPeriod(userid, fromdate, todate) {
-
     let relativePath = "/TimeEntry/user/" + `${userid}/${fromdate}/${todate}`;
     let data = null;
     let method = "get";
-    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    let request = this.get("dataService").createEmberrequestObject(
+      relativePath,
+      data,
+      method
+    );
     return request;
-
   },
 
   getTimeEntriesForProject(projectid, fromdate, todate) {
     //console.log('called');
-    let relativePath = "/TimeEntry/projects/" + `${projectid}/${fromdate}/${todate}`;
+    let relativePath =
+      "/TimeEntry/projects/" + `${projectid}/${fromdate}/${todate}`;
     let data = null;
     let method = "get";
-    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    let request = this.get("dataService").createEmberrequestObject(
+      relativePath,
+      data,
+      method
+    );
     return request;
   },
-
 
   postTimeEntry(timeEntry) {
     let relativePath = "/TimeEntry";
     let data = timeEntry;
     let method = "post";
-    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    let request = this.get("dataService").createEmberrequestObject(
+      relativePath,
+      data,
+      method
+    );
     return request;
   },
 
@@ -37,7 +46,11 @@ export default Service.extend({
     let relativePath = "/TimeEntry/" + timeEntryId;
     let data = timeEntry;
     let method = "put";
-    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    let request = this.get("dataService").createEmberrequestObject(
+      relativePath,
+      data,
+      method
+    );
     return request;
   },
 
@@ -45,7 +58,11 @@ export default Service.extend({
     let relativePath = "/TimeEntry/" + timeEntryId;
     let data = null;
     let method = "delete";
-    let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);
+    let request = this.get("dataService").createEmberrequestObject(
+      relativePath,
+      data,
+      method
+    );
     return request;
   }
 });

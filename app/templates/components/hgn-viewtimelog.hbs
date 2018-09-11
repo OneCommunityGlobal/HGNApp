@@ -2,10 +2,10 @@
     <small>Viewing time Entries for {{perioddates}}</small>
     <div class="m-2">
         <label class=" col-form-label mr-1 ">Filter Entries by Project:</label>
-        <select class="" name="userprojects " readonly onchange= {{action (mut projectfiltervalue) value = "target.value" }}>
+        <select class="" name="userprojects " readonly onchange={{action (mut projectfiltervalue) value = "target.value" }}>
             <option class="form-control " value="" selected>All Projects (Default)</option>
             {{#each projectfilterlist as |project|}}
-                <option class="form-control" value= {{project.projectId}}>{{project.projectName}} </option>
+            <option class="form-control" value={{project.projectId}}>{{project.projectName}} </option>
             {{/each}}
         </select>
     </div>
@@ -22,65 +22,74 @@
     </div>
 </div>
 {{#if timelogs}}
-    <div class="table-responsive  h-100">
-        <table class="table table-sm tbltimelog pre-scrollable" id="tbltimelog">
-            <tbody>
-                {{#each timelogsview.records as |timelog index|}}
-                    <tr class="col-12 w-100 mb-3 row tr-tangible-{{timelog.isTangible}}" scope="row">
-                        <td>
-                        <form id="frmEditTimeEntry_{{index}}" class="w-100 form-inline" readonly= {{if (or isUserAdministrator (and isEditable (is-timeentry-within-week timelog.dateOfWork))) null "true"}}>
-                            <div class=" col-5 w-100 ">
-                                <div class="row form-group">
-                                    <label class="col-form-label mr-1 ">Date:</label>
-                                    <input class="from-control" value= {{format-datetime timelog.dateOfWork}} type="date" readonly>
-                                </div>
-                                <div class="row form-group ">
-                                    <label class="col-form-label mr-1 ">Tangible</label>
-                                    <input type="checkbox" class="form-control " checked= {{if (eq timelog.isTangible true) "true"}} disabled= {{if (or isUserAdministrator (and isEditable (is-timeentry-within-week timelog.dateOfWork))) null "true"}}
-                                        onchange= {{action (mut timelog.isTangible) value = "target.checked"}}>
-                                </div>
-                                <div class="row form-group ">
-                                    <div class="input-group ">
-                                        <label class="col-form-label mr-1" data-toggle="tooltip" title=" This is in format HH:MM" data-placement="right">Time (HH:MM):</label>
-                                        <input class="col-3 from-control
-                            " value= {{timelog.hours}} readonly= {{if (or isUserAdministrator (and isEditable (is-timeentry-within-week timelog.dateOfWork))) null "true"}}
-                                            onchange= {{action (mut timelog.hours) value = "target.value"}} min=0 max=23 type="number ">
-                                        <input class="col-3 from-control
-                            " value= {{timelog.minutes}} readonly= {{if (or isUserAdministrator (and isEditable (is-timeentry-within-week timelog.dateOfWork))) null "true"}}
-                                            onchange= {{action (mut timelog.minutes) value = "target.value"}} min=0 max=59 type="number ">
-                                    </div>
-                                </div>
-                                <div class="row form-group mt-1 ">
-                                    <div class="input-group ">
-                                        <label class=" col-form-label mr-1 ">Project:</label>
-                                        <select class=" " name="projects " readonly= {{if (or isUserAdministrator (and isEditable (is-timeentry-within-week timelog.dateOfWork))) null "true"}}
-                                            onchange= {{action (mut timelog.projectId) value = "target.value" }}>
-                                            {{#each projects as |project|}}
-                                                <option class="form-control " value= {{project.projectId}} selected= {{if (eq project.projectId timelog.projectId) true }}>{{project.projectName}}</option>
-                                            {{/each}}
-                                            {{#if (not (record-in-array projects timelog.projectId "projectId") )}}
-                                                <option class="form-control " value= {{timelog.projectId}} selected disabled>{{timelog.projectName}}</option>
-                                            {{/if}}
-                                        </select>
-                                    </div>
-                                </div>
-                                {{#if (or isUserAdministrator (and isEditable (is-timeentry-within-week timelog.dateOfWork)) )}}
-                                    <div class="row w-100 ">
-                                        <a href="# " class="actions " {{action "saveEditsToTimelog" timelog}}>Save Changes</a>
-                                        <a href="# " class="actions " {{action "deleteTimelog" timelog}}> Delete</a>
-                                    </div>
-                                {{/if}}
+<div class="table-responsive  h-100">
+    <table class="table table-sm tbltimelog pre-scrollable" id="tbltimelog">
+        <tbody>
+            {{#each timelogsview.records as |timelog index|}}
+            <tr class="col-12 w-100 mb-3 row tr-tangible-{{timelog.isTangible}}" scope="row">
+                <td>
+                    <form id="frmEditTimeEntry_{{index}}" class="w-100 form-inline" readonly={{if (or isUserAdministrator (and isEditable (is-timeentry-within-week timelog.dateOfWork))) null "true"}}>
+                        <div class=" col-5 w-100 ">
+                            <div class="row form-group">
+                                <label class="col-form-label mr-1 ">Date:</label>
+                                <input class = "form-control" value={{format-datetime timelog.dateOfWork}} type="date" disabled={{not isUserAdministrator}}
+                                    onchange={{action (mut timelog.dateOfWork) value = 'target.valueAsDate'   }}>
                             </div>
-                            <div class="col-7 ">
-                                {{tinymce-editor options=options value=timelog.notes onValueChanged=(action (mut timelog.notes))  }}
+                            <div class="row form-group ">
+                                <label class="col-form-label mr-1 ">Tangible</label>
+                                <input type="checkbox" class="form-control" checked={{if (eq timelog.isTangible true) "true"}}
+                                    disabled={{if (or isUserAdministrator (and isEditable (is-timeentry-within-week timelog.dateOfWork))) null "true"}}
+                                    onchange={{action (mut timelog.isTangible) value = "target.checked"}}>
                             </div>
-                        </form>
-                        </td>
-                    </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </div>
+                            <div class="row form-group ">
+                                <div class="input-group ">
+                                    <label class="col-form-label mr-1" data-toggle="tooltip" title=" This is in format HH:MM"
+                                        data-placement="right">Time (HH:MM):</label>
+                                    <input class="col-3 from-control
+                            " value={{timelog.hours}}
+                                        readonly={{if (or isUserAdministrator (and isEditable (is-timeentry-within-week timelog.dateOfWork))) null "true"}}
+                                        onchange={{action (mut timelog.hours) value = "target.value"}} min=0 max=23
+                                        type="number ">
+                                    <input class="col-3 from-control
+                            " value={{timelog.minutes}}
+                                        readonly={{if (or isUserAdministrator (and isEditable (is-timeentry-within-week timelog.dateOfWork))) null "true"}}
+                                        onchange={{action (mut timelog.minutes) value = "target.value"}} min=0 max=59
+                                        type="number ">
+                                </div>
+                            </div>
+                            <div class="row form-group mt-1 ">
+                                <div class="input-group ">
+                                    <label class=" col-form-label mr-1 ">Project:</label>
+                                    <select class=" " name="projects " readonly={{if (or isUserAdministrator (and isEditable (is-timeentry-within-week timelog.dateOfWork))) null "true"}}
+                                        onchange={{action (mut timelog.projectId) value = "target.value" }}>
+                                        {{#each projects as |project|}}
+                                        <option class="form-control " value={{project.projectId}} selected={{if (eq project.projectId timelog.projectId) true }}>{{project.projectName}}</option>
+                                        {{/each}}
+                                        {{#if (not (record-in-array projects timelog.projectId "projectId") )}}
+                                        <option class="form-control " value={{timelog.projectId}} selected disabled>{{timelog.projectName}}</option>
+                                        {{/if}}
+                                    </select>
+                                </div>
+                            </div>
+                            {{#if (or isUserAdministrator (and isEditable (is-timeentry-within-week
+                            timelog.dateOfWork)) )}}
+                            <div class="row w-100 ">
+                                <a href="# " class="actions " {{action "saveEditsToTimelog" timelog index}}>Save Changes</a>
+                                <a href="# " class="actions " {{action "deleteTimelog" timelog}}> Delete</a>
+                            </div>
+                            {{/if}}
+                        </div>
+                        <div class="col-7 ">
+                            {{tinymce-editor options=options value=timelog.notes onValueChanged=(action (mut
+                            timelog.notes)) }}
+                        </div>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
 {{else}}
-    <small> No time enteries for this period</small>
+<small> No time enteries for this period</small>
 {{/if}}

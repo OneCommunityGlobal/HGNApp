@@ -3,6 +3,7 @@ import moment from 'moment';
 
 export function formatDatetime(params) {
   let value = params[0];
+  
   return moment(value).local().format("YYYY-MM-DD");
 }
 
