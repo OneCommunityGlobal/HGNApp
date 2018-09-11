@@ -1,15 +1,15 @@
 import Component from '@ember/component';
-import { get } from '@ember/object';
 import layout from '../templates/components/select-row-checkbox';
 import { inject } from '@ember/service';
+
 
 export default Component.extend({
   layout,
   userProfileService: inject('user-profile-service'),
   actions: {
-    clickOnRow(index, record) {
+    clickOnRow(index, record,event) {
       let status ="";
-      get(this, 'clickOnRow')(index, record);
+
       if (record.isActive) {
         status = "Active";
       }
@@ -25,9 +25,13 @@ export default Component.extend({
         this.get('userProfileService').changeUserStatus(record._id, data)
           .then(() => {
             toastr.success("User status updated Successfully");
+          
           },
             error => { toastr.error("", error); }
           );
+      }
+      else{
+        event.preventDefault();
       }
     }
   }

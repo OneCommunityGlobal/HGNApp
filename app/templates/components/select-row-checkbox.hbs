@@ -1,1 +1,1 @@
-<input type=checkbox checked={{record.isActive}} onclick= {{action "clickOnRow" index record }} onchange={{action (mut record.isActive) value = "target.checked"}}/>
+<input type=checkbox checked={{record.isActive}} name="checkbox" onclick= {{action "clickOnRow" index record }} />
