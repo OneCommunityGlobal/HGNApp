@@ -10,7 +10,7 @@ export default Component.extend({
     timeEntryService: inject('time-entry-service'),
     projectService: inject("project-service"),
     notes: "",
-    dateofWork: "",
+    dateOfWork: "",
     taskhours: 0,
     taskminutes: 0,
     isTangible: true,
@@ -65,7 +65,7 @@ export default Component.extend({
 
     clearform() {
         $("#frmSubmitTimeEntry")[0].reset();
-        $("#dateofwork")[0].value = this.get("today");
+        $("#dateOfWork")[0].value = this.get("today");
         this.set('isFormSubmitted', "");
         this.set('taskhours', 0);
         this.set("isTangible", true);
@@ -96,10 +96,10 @@ export default Component.extend({
                 let minutes = (this.get('taskminutes')) ? this.get('taskminutes') : "00";
 
                 let timespent = hours + ":" + minutes;
-                let dateofWork = (this.get('dateofWork')) ? moment(this.get('dateofWork')).format() : moment().format();
+                let dateOfWork = (this.get('dateOfWork')) ? moment(this.get('dateOfWork')).format() : moment().format();
                 timeentry.personId = this.get('forUserId');
                 timeentry.projectId = this.get('forprojectId');
-                timeentry.dateofWork = dateofWork;
+                timeentry.dateOfWork = dateOfWork;
                 timeentry.timeSpent = timespent;
                 timeentry.isTangible = this.get('isTangible');
                 timeentry.notes = this.get('notes');

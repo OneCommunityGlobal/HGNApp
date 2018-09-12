@@ -3,8 +3,8 @@ import moment from 'moment';
 
 export function isTimeentryWithinWeek(params) {
 
-  let dateofwork = params[0];
-  let dow = moment(dateofwork).local();
+  let dateOfWork = params[0];
+  let dow = moment(dateOfWork).local();
   let now = moment();
   let duration = now.diff(dow, "days");
 

@@ -60,14 +60,14 @@ export default Component.extend({
             let finaltemphourdata = [];
             let totalHours = 0;
             let person = "";
-            let temp = value.groupBy('dateofWork');
+            let temp = value.groupBy('dateOfWork');
             for (var i in temp) {
                 let hours = (temp[i].reduce(function(acc, obj) {
                     let x = acc + obj.totalSeconds;
                     return x;
                 }, 0));
                 let tempobj = {};
-                tempobj['date'] = moment(temp[i][0].dateofWork).isoWeek();
+                tempobj['date'] = moment(temp[i][0].dateOfWork).isoWeek();
                 tempobj['hours'] = hours;
                 temphourdata.push(tempobj);
             };

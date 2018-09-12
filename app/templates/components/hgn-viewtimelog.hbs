@@ -32,8 +32,8 @@
                         <div class=" col-5 w-100 ">
                             <div class="row form-group">
                                 <label class="col-form-label mr-1 ">Date:</label>
-                                <input class = "form-control" value={{format-datetime timelog.dateOfWork}} type="date" disabled={{not isUserAdministrator}}
-                                    onchange={{action (mut timelog.dateOfWork) value = 'target.valueAsDate'   }}>
+                                <input id = "inputdateOfWork_{{index}}"class = "form-control" value={{format-datetime timelog.dateOfWork}} type="date" disabled={{not isUserAdministrator}}
+                                   onchange= {{action (mut dateOfWork) value = "target.valueAsDate.toString()"}}>
                             </div>
                             <div class="row form-group ">
                                 <label class="col-form-label mr-1 ">Tangible</label>

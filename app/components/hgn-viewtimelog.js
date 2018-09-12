@@ -7,6 +7,7 @@ import { later } from "@ember/runloop";
 
 export default Component.extend({
   tagName: "",
+  self: this,
   timeEntryService: inject("time-entry-service"),
   projectService: inject("project-service"),
   init() {
@@ -142,6 +143,16 @@ export default Component.extend({
   actions: {
     saveEditsToTimelog(timelog, index) {
       let toastr = this.get("toast");
+      let dowfield = $(`#inputdateOfWork_${index}`)[0];
+
+      let dow = dowfield.value.toString();
+
+      let dateOfWork = moment(dow)
+        .local()
+        .format();
+
+      Ember.set(timelog, "dateOfWork", dateOfWork);
+
       this.get("timeEntryService")
         .updateTimeEntry(timelog._id, timelog)
         .then(
