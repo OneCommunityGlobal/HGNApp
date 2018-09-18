@@ -149,7 +149,7 @@
                     <label class="control-label" for=role>
                         <span>*</span>
                         Role:</label>
-                    <select name="role" class="form-control" label="Role" isRequired=true value=model.role disabled={{isLoggedinUserAdministrator}}
+                    <select name="role" class="form-control" label="Role" isRequired=true value=model.role disabled={{if isLoggedinUserAdministrator null false}}
                         onchange= {{action (mut model.role) value = "target.value" }}>
                         <option disabled>Please select a role</option>
                         <option value="Administrator" selected= {{if (eq model.role "Administrator") true null}}>Administrator</option>

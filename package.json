@@ -11,7 +11,7 @@
     },
     "repository": "",
     "scripts": {
-        "build": "ember build --verbose",
+        "build": "ember build --environment=production",
         "lint:js": "eslint ./*.js app config lisurgeb server tests",
         "start": "ember serve",
         "test1": "ember test",
