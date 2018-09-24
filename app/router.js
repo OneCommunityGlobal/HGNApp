@@ -20,6 +20,7 @@ Router.map(function () {
   this.route('view-reports');
   this.route('forgotpassword');
   this.route('teams');
+  this.route('forcepassword');
 });
 
 export default Router;

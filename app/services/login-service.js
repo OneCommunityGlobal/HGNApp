@@ -22,8 +22,13 @@ export default Service.extend({
     })
       .then(
         result => {
+          if(result.new){
+            this.get('router').transitionTo('forcepassword');
+          }
+          if(result.token){
           localStorage.setItem(ENV.TOKEN_KEY, result.token);
           router.transitionTo('application');
+          }
         }, error => {
           alert("Invalid credentials");
           //console.log(error.responseText)
