@@ -6,7 +6,7 @@ export default Controller.extend({
 
   isHeaderVisible: computed('currentRouteName', function () {
 
-    this.set('hideHeaderRoutes', ['login','forgotpassword']);
+    this.set('hideHeaderRoutes', ['login','forgotpassword','forcepassword']);
     return this.get('hideHeaderRoutes').indexOf(this.get('currentRouteName')) === -1;
   }),
 
