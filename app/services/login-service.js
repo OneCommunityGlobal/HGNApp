@@ -6,11 +6,11 @@ import $ from 'jquery';
 import { inject } from '@ember/service';
 
 
-
 export default Service.extend({
 
   host: ENV.webServer,
   router: inject(),
+  
   login(data) {
 
     let router = this.get('router');
@@ -23,7 +23,7 @@ export default Service.extend({
       .then(
         result => {
           if(result.new){
-            this.get('router').transitionTo('forcepassword');
+          router.transitionTo(`/forcepassword/${result.userId}`);
           }
           if(result.token){
           localStorage.setItem(ENV.TOKEN_KEY, result.token);
@@ -77,13 +77,30 @@ export default Service.extend({
       data: data
     })
     .then(
-      res => {
+      () => {
         alert('you will get an email with new password shortly');
         router.transitionTo('login');
       }, error => {
         alert("something went wrong");
       }
     )
-  }
-});
+  },
 
+  forcepassword(data){
+    let router = this.get('router');
+    $.ajax({
+      url: this.host + "/forcepassword",
+      type: "PATCH",
+      data: data
+    })
+    .then(
+      () => {
+        alert('use the new password set to login to your account');
+        router.transitionTo('login');
+      }, error => {
+        alert("something went wrong");
+      }
+    )
+  }
+
+})

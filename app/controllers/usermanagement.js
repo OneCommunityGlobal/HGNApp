@@ -2,6 +2,8 @@ import { alias } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { inject } from '@ember/service';
 import Controller from '@ember/controller';
+import ENV from '../config/environment';
+
 export default Controller.extend({
     
     userProfileService: inject('user-profile-service'),
@@ -12,7 +14,7 @@ export default Controller.extend({
       firtName:"",
           lastName: "",
           email:"",
-          password:"Test@123",
+          password:ENV.defaultPwd,
           isActive:"",
           weeklyComittedHours:"",
           role:""
@@ -113,8 +115,5 @@ export default Controller.extend({
           }
         ],
 
-        // customIcons :[{
-        //   'sort-asc': 'fa fa-chevron-down',
-        //   'sort-desc': 'fa fa-chevron-down'
-        // }]
+      
 });
