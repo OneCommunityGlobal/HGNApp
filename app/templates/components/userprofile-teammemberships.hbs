@@ -19,11 +19,20 @@
     {{/if}}
 </div>
 {{#if isEditable}}
+
     <div class="modal fade" id="new{{title}}membership" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Manage {{title}} Memberships</h5>
+                    <h5 class="modal-title">Manage {{title}} Memberships
+                       {{#if showwarning}}
+                       <h6><div class="border bg-danger text-white form-row my-2 font-weight-light">
+                   * REMEMBER TO CLICK THE "SAVE CHANGES" BUTTON AT THE BOTTOM OF THE PAGE AFTER CLOSING THIS MODAL WINDOW. YOUR CHANGES WILL BE LOST IF YOU
+                    DON'T DO THIS.            
+            </div>
+            </h6>
+            {{/if}}
+            </h5>
                     <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -33,7 +42,7 @@
                         <div class="form-row mb-1 mr-3">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id= {{membership._id}} value= {{membership._id}} checked= {{if (record-in-array memberships membership._id "_id") "checked" null}}
-                                    onchange= {{action "editUserMembership" membership}}>
+                                    onchange= {{action "editUserMembership" membership}} onclick={{action (mut showwarning) true}}>
                                 <label class="form-check-label" for= {{membership._id}}>{{if (eq title "Team") membership.teamName membership.projectName}}</label>
                             </div>
                         </div>
