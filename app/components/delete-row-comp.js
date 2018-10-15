@@ -9,6 +9,7 @@ export default Component.extend({layout,
         if (onClick) {
           onClick(get(this, "record"));
           event.stopPropagation();
+          
         }
       }
 });
