@@ -38,4 +38,17 @@
     showPageSize=true customIcons=customIcons
     columnComponents=(hash deleteRow=(component "delete-row-comp" onClick=(action "deleteRecord"))) }}
 
+    {{!-- {{#if isShowingModal}}
+        {{#modal-dialog onClose="toggleModal" targetAttachment="center" translucentOverlay=true}}
+        hi hr hello
+        {{/modal-dialog}}
+    {{/if}} --}}
+
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeletemodal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        hello hi how are you
+        </div>
+  </div>
+
 </div>
