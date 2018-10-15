@@ -10,6 +10,8 @@ export default Controller.extend({
     users: alias('model'),
     currentFilter: null,
     isShowingModal:false,
+    showDeleteModal: true,
+    recordForDeletion : {},
    
     user:{
       firtName:"",
@@ -49,41 +51,35 @@ export default Controller.extend({
           this.set('currentFilter', value);
         }
       },
+   
 
       close: function () {
         $("#userProfileForm")[0].reset();
         this.get('target').send('refresh');
       },
-
+      setRecordForDeletion(record)
+      {
+        this.set("recordForDeletion", record);
+       $("#showDeleteModalbtn").click()
+        
+      },
      
-      deleteRecord(record) {
-        this.toggleModal();
-        alert('hi',JSON.stringify(record));
-        $('#confirmDeleteModal').modal('toggle');
-   
-      // $("[data-target='#confirmDeleteModal']").trigger({ type: "click" });
-               // this.transitionToRoute('deleteUser');
-        // let confirmMsg ="Are you sure you want to delete this user? This action cannot be undone. Switch them to 'Inactive' if you'd like to keep their associated data instead of completely deleting them."
- 
-        // if (confirm(confirmMsg)) {
-        //   let saveTimeData ="Do you want to save the associated time Entries?"
-        //   if(confirm(saveTimeData)){
-        //   let toastr = this.get('toast');
-        //   this.get('userProfileService').deleteUserProfile(record._id)
-        //     .then(() => {
-        //       this.get('usersIdModified').removeObject(record);
-        //       toastr.success("User Removed Succesfully");
-        //     },
-        //       error => { toastr.error("", error); }
-        //     )
-        //   }
-        //   else{
-            
-        //   }
-        // }
+      async deleteRecord(option) {
+        let record = this.get("recordForDeletion")
+        console.log(record, option)
+
+        if (option == "Delete")
+        {
+         await this.get('userProfileService').deleteUserProfile(record._id)             
+               this.get('usersIdModified').removeObject(record);                       
+               this.set("recordForDeletion", {});
+               $("#closeDeleteUserModal").click()
+               toastr.success("User Removed Succesfully");
+
       }
 
-    },
+    }
+  },
     
     columns:[
       {

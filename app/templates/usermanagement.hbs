@@ -1,7 +1,8 @@
 {{outlet}}
 <div class="container">
 
-    <button class="btn btn-info" type="button" data-toggle="modal" data-target="#newUserModal" data-dismiss="modal">Create New User</button>
+    <button class="btn btn-info" type="button" data-toggle="modal" data-target="#newUserModal" data-dismiss="modal">Create
+        New User</button>
 
     <div class="modal fade" id="newUserModal" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -10,7 +11,7 @@
 
                 <div class="modal-header">
                     <h4 class="modal-title">Create New User</h4>
-                    <button type="button" class="close" data-dismiss="modal"  {{action "close"}}>
+                    <button type="button" class="close" data-dismiss="modal" {{action "close"}}>
                         <span class="fa fa-remove"></span>
                     </button>
                 </div>
@@ -33,22 +34,44 @@
             <option value="false">Inactive</option>
         </select>
     </div>
-    
-    {{models-table data=filteredUsers columns=columns showColumnsDropdown=false useNumericPagination=true filteringIgnoreCase=true
+
+    {{models-table data=filteredUsers columns=columns showColumnsDropdown=false useNumericPagination=true
+    filteringIgnoreCase=true
     showPageSize=true customIcons=customIcons
-    columnComponents=(hash deleteRow=(component "delete-row-comp" onClick=(action "deleteRecord"))) }}
+    columnComponents=(hash deleteRow=(component "delete-row-comp" onClick=(action "setRecordForDeletion"))) }}
 
     {{!-- {{#if isShowingModal}}
-        {{#modal-dialog onClose="toggleModal" targetAttachment="center" translucentOverlay=true}}
-        hi hr hello
-        {{/modal-dialog}}
+    {{#modal-dialog onClose="toggleModal" targetAttachment="center" translucentOverlay=true}}
+    hi hr hello
+    {{/modal-dialog}}
     {{/if}} --}}
 
-  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeletemodal"
+    <button class="btn .d-none" id="showDeleteModalbtn" type="button" data-toggle="modal" data-target="#confirmDeleteModal"
+        data-dismiss="modal">Delete User</button>
+
+    <div class="modal" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeletemodal"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-        hello hi how are you
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Choose A Delete Action</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeDeleteUserModal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <button class="btn btn-danger row m-2" onclick={{action "deleteRecord" "Delete"}}>Delete their Data Forever</button>
+                </div>
+
+                <div class="">
+                    <button class="btn btn-warning row m-2" onclick={{action "deleteRecord" "Inactivate"}}>Just Make Them Inactive</button>
+                </div>
+                <div>
+                    <button class="btn btn-success row m-2" onclick={{action "deleteRecord" "Archive"}}>Archive user's data</button>
+                </div>
+            </div>
         </div>
-  </div>
+
+    </div>
 
 </div>
