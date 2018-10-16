@@ -52,8 +52,12 @@ jobs:
   
 workflows:
   version: 2
-  commit:
+  deploy_dev:
     jobs:
       - build_dev
+      
+  deploy_prod:
+    jobs:
+      
       - build_PROD
 
