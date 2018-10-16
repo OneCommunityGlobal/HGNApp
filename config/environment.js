@@ -14,6 +14,7 @@ module.exports = function (environment) {
       'connect-src': "'self' https://hgn-rest.azurewebsites.net/api"
     },
     defaultPwd:"123Welcome!",
+    BRANCH_NAME : process.env.CIRCLE_BRANCH,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -24,6 +25,7 @@ module.exports = function (environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+     
 
     }
   };
