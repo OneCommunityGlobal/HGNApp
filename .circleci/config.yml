@@ -50,3 +50,9 @@ jobs:
      name: Deploy app
      command: ./node_modules/.bin/surge dist --domain $SURGE_DOMAIN_PROD
   
+  workflows:
+  version: 2
+  commit:
+    jobs:
+      - build_dev
+      - build_PROD
