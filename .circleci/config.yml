@@ -3,9 +3,6 @@ jobs:
  build_dev:
   docker:
    - image: circleci/node:latest
-  branches:
-      ignore:
-        - master
   steps:
   - checkout
   - run:
@@ -28,9 +25,6 @@ jobs:
  build_PROD:
    docker:
    - image: circleci/node:latest
-   branches:
-      only:
-        - master
    steps:
     - checkout
     - run:
@@ -55,9 +49,14 @@ workflows:
   deploy_dev:
     jobs:
       - build_dev
+         filters:
+            branches:
+              ignore: master
       
   deploy_prod:
     jobs:
-      
       - build_PROD
+         filters:
+            branches:
+              ignore: master
 
