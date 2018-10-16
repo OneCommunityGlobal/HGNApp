@@ -2,8 +2,6 @@ import Component from "@ember/component";
 import moment from "moment";
 import { inject } from "@ember/service";
 import { computed } from "@ember/object";
-import { set } from "@ember/object";
-import { later } from "@ember/runloop";
 
 export default Component.extend({
   tagName: "",
@@ -104,37 +102,34 @@ export default Component.extend({
   }),
 
   getDataforTime() {
-    let period = this.get("period");
     let userid = this.get("forUserId");
     let fromdate;
     let todate;
 
     let start = this.get("fromDate")
-      ? moment(this.get("fromDate"))
-      : moment().startOf("isoWeek");
+      ? moment(this.get("fromDate")).format("YYYY-MM-DD")
+      : moment().startOf("isoWeek").format("YYYY-MM-DD");
     let end = this.get("toDate")
-      ? moment(this.get("toDate"))
-      : moment()
-          .startOf("isoWeek")
-          .endOf("isoWeek");
+      ? moment(this.get("toDate")).format("YYYY-MM-DD")
+      : moment().endOf("isoWeek").format("YYYY-MM-DD");
 
-    fromdate = start
-      .clone()
-      .startOf("day")
-      .format();
-    todate = end
-      .clone()
-      .endOf("day")
-      .format();
+    // fromdate = start
+    //   .clone()
+    //   .startOf("day")
+    //   .format("YYYY-MM-DD");
+    // todate = end
+    //   .clone()
+    //   .endOf("day")
+    //   .format("YYYY-MM-DD");
 
-    let startdate = start.clone().format("MM/DD/YYYY");
+    // let startdate = start.clone().format("YYYY-MM-DD");
 
-    let enddate = end.clone().format("MM/DD/YYYY");
+    // let enddate = end.clone().format("YYYY-MM-DD");
 
-    this.set("perioddates", ` ${startdate} to ${enddate}`);
+    this.set("perioddates", ` ${start} to ${end}`);
 
     this.get("timeEntryService")
-      .getTimeEntriesForPeriod(userid, fromdate, todate)
+      .getTimeEntriesForPeriod(userid, start, end)
       .then(results => {
         this.set("timelogs", results);
       });
@@ -147,9 +142,7 @@ export default Component.extend({
 
       let dow = dowfield.value.toString();
 
-      let dateOfWork = moment(dow)
-        .local()
-        .format();
+      let dateOfWork = moment(dow).format("YYYY-MM-DD");
 
       Ember.set(timelog, "dateOfWork", dateOfWork);
 

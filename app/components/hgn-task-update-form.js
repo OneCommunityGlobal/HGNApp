@@ -96,7 +96,7 @@ export default Component.extend({
                 let minutes = (this.get('taskminutes')) ? this.get('taskminutes') : "00";
 
                 let timespent = hours + ":" + minutes;
-                let dateOfWork = (this.get('dateOfWork')) ? moment(this.get('dateOfWork')).format() : moment().format();
+                let dateOfWork = (this.get('dateOfWork')) ? moment(this.get('dateOfWork')).format("YYYY-MM-DD") : moment().format("YYYY-MM-DD");
                 timeentry.personId = this.get('forUserId');
                 timeentry.projectId = this.get('forprojectId');
                 timeentry.dateOfWork = dateOfWork;
