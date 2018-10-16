@@ -1,10 +1,17 @@
 version: 2
 jobs:
- build:
+ build_dev:
   docker:
    - image: circleci/node:latest
+  branches:
+      ignore:
+        - master
   steps:
   - checkout
+  -run:
+     name: Set APIENDPOINT 
+     environment:
+      APIENDPOINT: $APIENDPOINT_DEV
   - run:
      name: Update npm
      command: 'sudo npm install'
@@ -16,5 +23,30 @@ jobs:
      command: 'sudo npm run build'
   - run:
      name: Deploy app
-     command: ./node_modules/.bin/surge dist --domain $SURGE_DOMAIN
+     command: ./node_modules/.bin/surge dist --domain $SURGE_DOMAIN_DEV
+
+  build_PROD:
+  docker:
+   - image: circleci/node:latest
+  branches:
+      only:
+        - master
+  steps:
+  - checkout
+  -run:
+     name: Set APIENDPOINT 
+     environment:
+      APIENDPOINT: $APIENDPOINT_PROD
+  - run:
+     name: Update npm
+     command: 'sudo npm install'
+  - run:
+     name: Install ember globally
+     command: 'sudo npm install -g ember-cli'
+  - run:
+     name: Run ember build
+     command: 'sudo npm run build'
+  - run:
+     name: Deploy app
+     command: ./node_modules/.bin/surge dist --domain $SURGE_DOMAIN_PROD
   
