@@ -20,5 +20,5 @@ jobs:
      command: 'sudo npm run build'
   - run:
      name: Deploy app
-     command: './node_modules/.bin/surge dist --domain $SURGE_DOMAIN
+     command: ./node_modules/.bin/surge dist --domain $SURGE_DOMAIN
   
