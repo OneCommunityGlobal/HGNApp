@@ -6,7 +6,7 @@ module.exports = function (environment) {
     environment: environment,
     rootURL: '/',
     locationType: 'hash',
-    webServer: " https://hgn-rest.azurewebsites.net/api",
+    //webServer: "https://hgn-rest.azurewebsites.net/api",
     //webServer: "http://localhost:4500/api",
     REQUEST_AUTHKEY: "Authorization",
     TOKEN_KEY: "token",
@@ -15,6 +15,7 @@ module.exports = function (environment) {
     },
     defaultPwd:"123Welcome!",
     BRANCH_NAME : process.env.CIRCLE_BRANCH,
+    webServer: process.env.APIENDPOINT,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

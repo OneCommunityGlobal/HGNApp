@@ -5,10 +5,6 @@ jobs:
    - image: circleci/node:latest
   steps:
   - checkout
-  - run: 
-          command: |
-            if [ $CIRCLE_BRANCH == "master" ]; then export $SURGE_DOMAIN = "https://hgnapplication.surge.sh"; else export $SURGE_DOMAIN = "https://hgnapplication_developement.surge.sh"; fi
-            echo $SURGE_DOMAIN
   - run:
      name: Update npm
      command: 'sudo npm install'
