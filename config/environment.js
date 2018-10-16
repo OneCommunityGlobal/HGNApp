@@ -13,7 +13,7 @@ module.exports = function (environment) {
     contentSecurityPolicy: {
       'connect-src': "'self' https://hgn-rest.azurewebsites.net/api"
     },
-    defaultPwd:"123Welcome!!",
+    defaultPwd:"123Welcome!",
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
