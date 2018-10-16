@@ -9,7 +9,7 @@ jobs:
      name: Set APIENDPOINT 
      environment:
       APIENDPOINT: $APIENDPOINT_DEV
-    command : echo $APIENDPOINT
+     command : echo $APIENDPOINT
   - run:
      name: Update npm
      command: 'sudo npm install'
