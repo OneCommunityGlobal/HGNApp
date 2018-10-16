@@ -9,10 +9,9 @@ jobs:
      name: Set APIENDPOINT 
      command : APIENDPOINT=$APIENDPOINT_DEV
   - run:
-    name: Check environment
-    command: |
-          echo $APIENDPOINT_DEV
-          echo $APIENDPOINT
+     name: Check environment
+     command: echo $APIENDPOINT_DEV
+          
      
   - run:
      name: Update npm
