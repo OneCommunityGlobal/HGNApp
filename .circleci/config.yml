@@ -7,7 +7,13 @@ jobs:
   - checkout
   - run:
      name: Set APIENDPOINT 
-     command : echo 'export APIENDPOINT="$APIEENDPOINT-DEV"' >> $BASH_ENV
+     command : APIENDPOINT=$APIENDPOINT_DEV
+  -run:
+    name: Check environment
+    command: |
+          echo $APIENDPOINT_DEV
+          echo $APIENDPOINT
+     
   - run:
      name: Update npm
      command: 'sudo npm install'
