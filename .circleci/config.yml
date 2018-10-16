@@ -7,7 +7,7 @@ jobs:
   - checkout
   - run: 
           command: |
-            export $SURGE_DOMAIN=if [$CIRCLE_BRANCH=="master"] then "https://hgnapplication.surge.sh" else "https://hgnapplication_develop.surge.sh" fi
+            if [ $CIRCLE_BRANCH == "master" ]; then export $SURGE_DOMAIN = "https://hgnapplication.surge.sh"; else export $SURGE_DOMAIN = "https://hgnapplication_developement.surge.sh"; fi
             echo $SURGE_DOMAIN
   - run:
      name: Update npm
