@@ -9,6 +9,7 @@ jobs:
      name: Set APIENDPOINT 
      environment:
       APIENDPOINT: $APIENDPOINT_DEV
+    command : echo $APIENDPOINT
   - run:
      name: Update npm
      command: 'sudo npm install'
@@ -28,9 +29,10 @@ jobs:
    steps:
     - checkout
     - run:
-       name: Set APIENDPOINT 
+       name: Set APIENDPOINT
        environment:
          APIENDPOINT: $APIENDPOINT_PROD
+       command : echo $APIENDPOINT
     - run:
        name: Update npm
        command: 'sudo npm install'
