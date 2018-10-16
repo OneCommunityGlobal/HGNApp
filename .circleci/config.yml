@@ -48,11 +48,11 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - build_dev
+      - build_dev:
          filters:
             branches:
               ignore: master
-      - build_prod
+      - build_prod:
          filters:
             branches:
               only: master
