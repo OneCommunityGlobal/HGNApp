@@ -7,7 +7,7 @@ jobs:
   - checkout
   - run:
      name: Set APIENDPOINT 
-     command : export APIENDPOINT=$APIENDPOINT_DEV
+     command : export APIENDPOINT="hjshjhjdhash"
   - run:
      name: Check environment
      command: echo value is $APIENDPOINT     
