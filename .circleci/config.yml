@@ -3,6 +3,10 @@ jobs:
  build_dev:
   docker:
    - image: circleci/node:latest
+   env_file:
+     - ./Docker/api/api.env
+    environment:
+     - APIENDPOINT=$APIENDPOINT_DEV
   steps:
   - checkout
   - run:
