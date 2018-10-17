@@ -44,7 +44,7 @@ workflows:
          filters:
             branches:
               ignore: master
-      - build_prod:
+      - build_PROD:
          filters:
             branches:
               only: master
