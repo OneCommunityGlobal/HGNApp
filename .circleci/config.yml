@@ -1,29 +1,28 @@
 version: 2
 jobs:
- set_environment_dev:
+ build_dev:
+  docker:
+   - image: circleci/node:latest
   steps:
-   - run:
-      name: Set APIENDPOINT 
-      command : |
-       echo 'export APIENDPOINT="$APIENDPOINT_DEV"' >> $BASH_ENV
-       echo 'export SURGE_DOMAIN="$SURGE_DOMAIN_DEV"' >> $BASH_ENV
+  - checkout
+  - run:
+     name: Update npm
+     command: 'sudo npm install'
+  - run:
+     name: Install ember globally
+     command: 'sudo npm install -g ember-cli'
+  - run:
+     name: Run ember build
+     command: 'sudo APIENDPOINT=$APIENDPOINT_DEV npm run build'
+  - run:
+     name: Deploy app
+     command: ./node_modules/.bin/surge dist --domain $SURGE_DOMAIN_DEV
 
- set_environment_prod:
-    steps:
-      - run:
-         name: Set APIENDPOINT 
-         command : |
-           echo 'export APIENDPOINT="$APIENDPOINT_PROD"' >> $BASH_ENV
-           echo 'export SURGE_DOMAIN="$SURGE_DOMAIN_PROD"' >> $BASH_ENV
-  
- deploy:
+ build_PROD:
    docker:
-     - image: circleci/node:latest
+   - image: circleci/node:latest
    steps:
     - checkout
-    - run:
-       name: Check environment
-       command: echo values are $APIENDPOINT , $SURGE_DOMAIN    
     - run:
        name: Update npm
        command: 'sudo npm install'
@@ -32,29 +31,22 @@ jobs:
        command: 'sudo npm install -g ember-cli'
     - run:
        name: Run ember build
-       command: 'sudo APIENDPOINT=$APIENDPOINT npm run build'
+       command: 'sudo APIENDPOINT=$APIENDPOINT_PROD npm run build'
     - run:
        name: Deploy app
-       command: ./node_modules/.bin/surge dist --domain $SURGE_DOMAIN
-
-
+       command: ./node_modules/.bin/surge dist --domain $SURGE_DOMAIN_PROD
   
 workflows:
   version: 2
   deploy:
     jobs:
-      - set_environment_dev:
+      - build_dev:
          filters:
             branches:
               ignore: master
-      - set_environment_prod:
+      - build_PROD:
          filters:
             branches:
               only: master
-      - deploy:
-         requires:
-           - set_environment_dev
-           - set_environment_prod
-
       
 
