@@ -6,6 +6,12 @@ jobs:
   steps:
   - checkout
   - run:
+     name: Set APIENDPOINT 
+     command : echo 'export APIENDPOINT="$APIENDPOINT_DEV"' >> $BASH_ENV
+  - run:
+     name: Check environment
+     command: echo value is $APIENDPOINT     
+  - run:
      name: Update npm
      command: 'sudo npm install'
   - run:
@@ -44,7 +50,7 @@ workflows:
          filters:
             branches:
               ignore: master
-      - build_prod:
+      - build_PROD:
          filters:
             branches:
               only: master
