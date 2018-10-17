@@ -14,7 +14,6 @@ module.exports = function (environment) {
       'connect-src': "'self' https://hgn-rest.azurewebsites.net/api"
     },
     defaultPwd:"123Welcome!",
-    BRANCH_NAME : process.env.CIRCLE_BRANCH,
     webServer: process.env.APIENDPOINT,
     EmberENV: {
       FEATURES: {

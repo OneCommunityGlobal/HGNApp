@@ -10,10 +10,6 @@ export default Component.extend({
     dashboardService: inject("dashboard-service"),
     dataService: inject("datastore-service"),
     loginService: inject("login-service"),
-    title: computed("", () => {
-        return (ENV.BRANCH_NAME !== "master") ? ENV.BRANCH_NAME : ""
-    }),
-
     init() {
         this._super(...arguments);
         return this.get('loginService').getLoggedinUser()
