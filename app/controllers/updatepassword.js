@@ -41,7 +41,7 @@ export default Controller.extend({
 
         if (!passwordregex.test(fnewPassword.value) || !passwordregex.test(fconfirmnewPassword.value)) {
 
-            let errormessage = "New password should be at least 8 charcaters long with uppercase, lowercase and number/special char"
+            let errormessage = "New password should be at least 8 characters long and must include at least one uppercase letter, one lowercase letter, and one number or special character"
             errormessages += errormessage;
             errormessagesarray.push(errormessage);
         }
