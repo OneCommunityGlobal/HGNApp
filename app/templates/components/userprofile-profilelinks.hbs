@@ -23,13 +23,23 @@
     <div class="modal fade" id="new{{name}}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header">              
+                 
+                    
                     <h5 class="modal-title">New {{label}}</h5>
+                    
                     <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body {{submitModal}}">
+
+   <h6>
+                        <div class="border bg-danger text-white form-row my-2 font-weight-light">
+                   * REMEMBER TO CLICK THE "SAVE CHANGES" BUTTON AT THE BOTTOM OF THE BACKGROUND PAGE AFTER CLICKING "DONE" AND CLOSING THIS WINDOW. YOUR CHANGES WILL BE LOST IF YOU DON'T DO THIS.            
+            </div>
+            </h6>
+
                     <form class="{{isFormSubmitted}}" id="formnew{{name}}">
                         <input id="newLink{{name}}Name" class="form-control col-md-6 mb-3" required minlength= {{minLinksNameLength}} maxlength= {{maxLinksNameLength}}
                             placeholder="Name" type="text" onchange= {{action (mut newLink.Name) value = "target.value" }} />

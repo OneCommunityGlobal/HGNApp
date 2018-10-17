@@ -24,8 +24,8 @@ export default Component.extend({
         }
         this.get('userProfileService').changeUserStatus(record._id, data)
           .then(() => {
-            toastr.success("User status updated Successfully");
-          
+            toastr.success("User status updated Successfully"); 
+            this.sendAction('refresh');
           },
             error => { toastr.error("", error); }
           );

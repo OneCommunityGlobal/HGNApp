@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import {get} from '@ember/object';
 import layout from '../templates/components/delete-row-comp';
 
+
 export default Component.extend({layout,
 
     click(){
@@ -9,6 +10,7 @@ export default Component.extend({layout,
         if (onClick) {
           onClick(get(this, "record"));
           event.stopPropagation();
+          
         }
       }
 });

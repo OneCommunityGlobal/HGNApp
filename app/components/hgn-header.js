@@ -2,6 +2,7 @@
 import { inject } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import ENV from "../config/environment"
 
 export default Component.extend({
 
@@ -9,7 +10,6 @@ export default Component.extend({
     dashboardService: inject("dashboard-service"),
     dataService: inject("datastore-service"),
     loginService: inject("login-service"),
-
     init() {
         this._super(...arguments);
         return this.get('loginService').getLoggedinUser()

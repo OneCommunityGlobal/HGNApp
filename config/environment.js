@@ -6,7 +6,7 @@ module.exports = function (environment) {
     environment: environment,
     rootURL: '/',
     locationType: 'hash',
-    //webServer: " https://hgn-rest.azurewebsites.net/api",
+    //webServer: "https://hgn-rest.azurewebsites.net/api",
     //webServer: "http://localhost:4500/api",
     REQUEST_AUTHKEY: "Authorization",
     TOKEN_KEY: "token",
@@ -19,12 +19,14 @@ module.exports = function (environment) {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
+        //test comments
       }
     },
 
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+     
 
     }
   };
@@ -35,6 +37,7 @@ module.exports = function (environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    
   }
 
   if (environment === 'test') {
@@ -51,6 +54,7 @@ module.exports = function (environment) {
   }
 
   if (environment === 'production') {
+   
 
   }
 
