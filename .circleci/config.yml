@@ -8,21 +8,19 @@ jobs:
        echo 'export APIENDPOINT="$APIENDPOINT_DEV"' >> $BASH_ENV
        echo 'export SURGE_DOMAIN="$SURGE_DOMAIN_DEV"' >> $BASH_ENV
 
-  set_environment_prod:
+ set_environment_prod:
     steps:
       - run:
          name: Set APIENDPOINT 
          command : |
            echo 'export APIENDPOINT="$APIENDPOINT_PROD"' >> $BASH_ENV
            echo 'export SURGE_DOMAIN="$SURGE_DOMAIN_PROD"' >> $BASH_ENV
-
- 
   
-  deploy:
+ deploy:
    docker:
      - image: circleci/node:latest
    steps:
-     - checkout
+    - checkout
     - run:
        name: Check environment
        command: echo values are $APIENDPOINT , $SURGE_DOMAIN    
