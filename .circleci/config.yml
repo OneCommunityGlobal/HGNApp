@@ -6,12 +6,6 @@ jobs:
   steps:
   - checkout
   - run:
-     name: Set APIENDPOINT 
-     command : import $APIENDPOINT=$APIENDPOINT_DEV
-  - run:
-     name: Check environment
-     command: echo value is $APIENDPOINT     
-  - run:
      name: Update npm
      command: 'sudo npm install'
   - run:
@@ -19,7 +13,7 @@ jobs:
      command: 'sudo npm install -g ember-cli'
   - run:
      name: Run ember build
-     command: 'sudo npm run build'
+     command: 'sudo APIENDPOINT=$APIENDPOINT_DEV npm run build'
   - run:
      name: Deploy app
      command: ./node_modules/.bin/surge dist --domain $SURGE_DOMAIN_DEV
@@ -30,11 +24,6 @@ jobs:
    steps:
     - checkout
     - run:
-       name: Set APIENDPOINT
-       environment:
-         APIENDPOINT: $APIENDPOINT_PROD
-       command : echo ${APIENDPOINT}
-    - run:
        name: Update npm
        command: 'sudo npm install'
     - run:
@@ -42,7 +31,7 @@ jobs:
        command: 'sudo npm install -g ember-cli'
     - run:
        name: Run ember build
-       command: 'sudo npm run build'
+       command: 'sudo APIENDPOINT=$APIENDPOINT_PROD npm run build'
     - run:
        name: Deploy app
        command: ./node_modules/.bin/surge dist --domain $SURGE_DOMAIN_PROD
