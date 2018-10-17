@@ -1,6 +1,5 @@
 version: 2
 jobs:
-
  set_environment_dev:
   steps:
    - run:
@@ -9,36 +8,36 @@ jobs:
        echo 'export APIENDPOINT="$APIENDPOINT_DEV"' >> $BASH_ENV
        echo 'export SURGE_DOMAIN="$SURGE_DOMAIN_DEV"' >> $BASH_ENV
 
-set_environment_prod:
-  steps:
-   - run:
-      name: Set APIENDPOINT 
-      command : |
-       echo 'export APIENDPOINT="$APIENDPOINT_PROD"' >> $BASH_ENV
-       echo 'export SURGE_DOMAIN="$SURGE_DOMAIN_PROD"' >> $BASH_ENV
+  set_environment_prod:
+    steps:
+      - run:
+         name: Set APIENDPOINT 
+         command : |
+           echo 'export APIENDPOINT="$APIENDPOINT_PROD"' >> $BASH_ENV
+           echo 'export SURGE_DOMAIN="$SURGE_DOMAIN_PROD"' >> $BASH_ENV
 
- checkout:
+ 
+  
+  deploy:
    docker:
      - image: circleci/node:latest
    steps:
      - checkout
-  
-  deploy:
-  - run:
-     name: Check environment
-     command: echo values are $APIENDPOINT , $SURGE_DOMAIN    
-  - run:
-     name: Update npm
-     command: 'sudo npm install'
-  - run:
-     name: Install ember globally
-     command: 'sudo npm install -g ember-cli'
-  - run:
-     name: Run ember build
-     command: 'sudo APIENDPOINT=$APIENDPOINT npm run build'
-  - run:
-     name: Deploy app
-     command: ./node_modules/.bin/surge dist --domain $SURGE_DOMAIN
+    - run:
+       name: Check environment
+       command: echo values are $APIENDPOINT , $SURGE_DOMAIN    
+    - run:
+       name: Update npm
+       command: 'sudo npm install'
+    - run:
+       name: Install ember globally
+       command: 'sudo npm install -g ember-cli'
+    - run:
+       name: Run ember build
+       command: 'sudo APIENDPOINT=$APIENDPOINT npm run build'
+    - run:
+       name: Deploy app
+       command: ./node_modules/.bin/surge dist --domain $SURGE_DOMAIN
 
 
   
