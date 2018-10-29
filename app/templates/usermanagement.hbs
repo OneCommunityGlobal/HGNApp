@@ -60,14 +60,14 @@
             </div>
             <div class="modal-body">
                 <div>
-                    <button class="btn btn-danger row m-2" onclick={{action "deleteRecord" "Delete"}}>Delete their Data Forever</button>
+                    <button class="btn btn-danger row m-2" onclick={{action "handleDeleteRequest" "delete"}}>Delete their Data Forever</button>
                 </div>
 
                 <div class="">
-                    <button class="btn btn-warning row m-2" onclick={{action "deleteRecord" "Inactivate"}}>Just Make Them Inactive</button>
+                    <button class="btn btn-warning row m-2" onclick={{action "handleDeleteRequest" "Inactivate"}}>Just Make Them Inactive</button>
                 </div>
                 <div>
-                    <button class="btn btn-success row m-2" onclick={{action "deleteRecord" "Archive"}}>Archive user's data</button>
+                    <button class="btn btn-success row m-2" onclick={{action "handleDeleteRequest" "archive"}}>Archive user's data and then Delete</button>
                 </div>
             </div>
         </div>

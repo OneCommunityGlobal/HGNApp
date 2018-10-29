@@ -86,9 +86,9 @@ export default Service.extend({
     return request;
   },
 
-  deleteUserProfile(userId){
+  deleteUserProfile(userId, options){
     let relativePath = "/userprofile/"+userId;
-    let data = null;
+    let data = options;
     let method = "delete";
 
     let request = this.get('dataService').createEmberrequestObject(relativePath, data, method);

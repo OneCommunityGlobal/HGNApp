@@ -64,17 +64,44 @@ export default Controller.extend({
         
       },
      
-      async deleteRecord(option) {
+      async handleDeleteRequest(option) {
         let record = this.get("recordForDeletion")
+        let toastr = this.get("toast");
         console.log(record, option)
 
-        if (option == "Delete")
+        if (option == "delete"|| option == "archive")
         {
-         await this.get('userProfileService').deleteUserProfile(record._id)             
-               this.get('usersIdModified').removeObject(record);                       
-               this.set("recordForDeletion", {});
-               $("#closeDeleteUserModal").click()
-               toastr.success("User Removed Succesfully");
+         try {
+           let data = {option: option }
+          await this.get('userProfileService').deleteUserProfile(record._id, data)             
+          this.get('usersIdModified').removeObject(record);                       
+          this.set("recordForDeletion", {});
+          $("#closeDeleteUserModal").click()
+          toastr.success("User Removed Succesfully");
+           
+         } catch (error) {
+           toastr.error(error)
+           
+         }
+
+      }
+      else if (option == "Inactivate")
+      {
+
+      try {
+        await this.get('userProfileService').changeUserStatus(record._id, false)
+        toastr.success("User has been successfully inactivated");
+        
+      } catch (error) {
+        toastr.error(error)
+        
+      }
+
+
+      }
+
+      else if (option === "Archive")
+      {
 
       }
 
