@@ -67,7 +67,7 @@ export default Controller.extend({
       async handleDeleteRequest(option) {
         let record = this.get("recordForDeletion")
         let toastr = this.get("toast");
-        console.log(record, option)
+        
 
         if (option == "delete"|| option == "archive")
         {
@@ -90,6 +90,7 @@ export default Controller.extend({
 
       try {
         await this.get('userProfileService').changeUserStatus(record._id, false)
+        $("#closeDeleteUserModal").click();
         toastr.success("User has been successfully inactivated");
         
       } catch (error) {
