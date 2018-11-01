@@ -11,12 +11,12 @@ export default Component.extend({
       let status ="";
 
       if (record.isActive) {
-        status = "Active";
+        status = "active";
       }
       else {
-        status = "InActive";
+        status = "inactive";
       }
-      if (confirm(`Are you sure you want to change the persons' ${status} status?`)) {
+      if (confirm(`Are you sure you want to change the person's ${status} status?`)) {
         let toastr = this.get('toast');
         
         let data={
