@@ -101,11 +101,6 @@ export default Controller.extend({
 
       }
 
-      else if (option === "Archive")
-      {
-
-      }
-
     }
   },
     
