@@ -58,16 +58,16 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body d-flex flex-column col-6 col-md-4">
+            <div class="modal-body align-self-center">
                 <div>
-                    <button class="btn btn-danger col align-self-center m-2" onclick={{action "handleDeleteRequest" "delete"}}>Delete their Data Forever</button>
+                    <button class="btn btn-danger col m-2" onclick={{action "handleDeleteRequest" "delete"}}>Delete their Data Forever</button>
                 </div>
 
                 <div class="">
-                    <button class="btn btn-warning col align-self-center m-2" onclick={{action "handleDeleteRequest" "Inactivate"}}>Just Make Them Inactive</button>
+                    <button class="btn btn-warning col m-2" onclick={{action "handleDeleteRequest" "Inactivate"}}>Just Make Them Inactive</button>
                 </div>
                 <div>
-                    <button class="btn btn-success col align-self-center m-2" onclick={{action "handleDeleteRequest" "archive"}}>Archive user's data and then Delete</button>
+                    <button class="btn btn-success col m-2" onclick={{action "handleDeleteRequest" "archive"}}>Archive user's data and then Delete</button>
                 </div>
             </div>
         </div>
