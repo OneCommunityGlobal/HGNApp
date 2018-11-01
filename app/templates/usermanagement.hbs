@@ -59,15 +59,19 @@
                 </button>
             </div>
             <div class="modal-body align-self-center">
+<div>Are you sure you want to delete this user? This action cannot be undone. Switch them to 'Inactive' if you'd like to keep them in the system or choose “Keep Data” if you’d like to still delete them but add their associated data to the “Data Archive” instead of completely deleting them and all their data. </div>
                 <div>
-                    <button class="btn btn-danger col m-2" onclick={{action "handleDeleteRequest" "delete"}}>Delete their Data Forever</button>
+                    <button class="btn btn-danger col m-2" onclick={{action "handleDeleteRequest" "delete"}}>Understood, C-ya!<br/>Delete their Data Forever
+</button>
                 </div>
 
                 <div class="">
-                    <button class="btn btn-warning col m-2" onclick={{action "handleDeleteRequest" "Inactivate"}}>Just Make Them Inactive</button>
+                    <button class="btn btn-warning col m-2" onclick={{action "handleDeleteRequest" "Inactivate"}}>Oops, My Bad!<br/>Just Make Them Inactive</button>
                 </div>
                 <div>
-                    <button class="btn btn-success col m-2" onclick={{action "handleDeleteRequest" "archive"}}>Archive user's data and then Delete</button>
+                    <button class="btn btn-success col m-2" onclick={{action "handleDeleteRequest" "archive"}}>Wait, Save the Data!<br/>
+Data Archiving is Cool
+</button>
                 </div>
             </div>
         </div>
