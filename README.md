@@ -58,5 +58,7 @@ Specify what it takes to deploy your app.
 ### Big Thanks
 
 Cross-browser Testing Platform and Open Source  Provided by [Sauce Labs][homepage]
+Monitoring and logging provided by [Sentry.io](https://sentry.io/welcome/)
+CI/CD tools provided by [CircleCI](https://circleci.com/)
 
 [homepage]: https://saucelabs.com
