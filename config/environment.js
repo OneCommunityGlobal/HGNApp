@@ -1,19 +1,17 @@
 /* jshint node: true */
 
-module.exports = function (environment) {
+module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'hgnapp',
+    modulePrefix: "hgnapp",
     environment: environment,
-    rootURL: '/',
-    locationType: 'hash',
-    //webServer: "https://hgn-rest.azurewebsites.net/api",
-    //webServer: "http://localhost:4500/api",
+    rootURL: "/",
+    locationType: "hash",
     REQUEST_AUTHKEY: "Authorization",
     TOKEN_KEY: "token",
     contentSecurityPolicy: {
-      'connect-src': "'self' https://hgn-rest.azurewebsites.net/api"
+      "connect-src": "'self' https://hgn-rest.azurewebsites.net/api"
     },
-    defaultPwd:"123Welcome!",
+    defaultPwd: "123Welcome!",
     webServer: process.env.APIENDPOINT,
     EmberENV: {
       FEATURES: {
@@ -26,36 +24,31 @@ module.exports = function (environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-     
-
     }
   };
 
-  if (environment === 'development') {
+  if (environment === "development") {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    
   }
 
-  if (environment === 'test') {
+  if (environment === "test") {
     // Testem prefers this...
-    ENV.rootURL = '/';
-    ENV.locationType = 'none';
+    ENV.rootURL = "/";
+    ENV.locationType = "none";
 
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
-    ENV.APP.rootElement = '#ember-testing';
+    ENV.APP.rootElement = "#ember-testing";
     ENV.APP.autoboot = false;
   }
 
-  if (environment === 'production') {
-   
-
+  if (environment === "production") {
   }
 
   return ENV;

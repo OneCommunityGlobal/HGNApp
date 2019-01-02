@@ -108,23 +108,14 @@ export default Component.extend({
 
     let start = this.get("fromDate")
       ? moment(this.get("fromDate")).format("YYYY-MM-DD")
-      : moment().startOf("isoWeek").format("YYYY-MM-DD");
+      : moment()
+          .startOf("week")
+          .format("YYYY-MM-DD");
     let end = this.get("toDate")
       ? moment(this.get("toDate")).format("YYYY-MM-DD")
-      : moment().endOf("isoWeek").format("YYYY-MM-DD");
-
-    // fromdate = start
-    //   .clone()
-    //   .startOf("day")
-    //   .format("YYYY-MM-DD");
-    // todate = end
-    //   .clone()
-    //   .endOf("day")
-    //   .format("YYYY-MM-DD");
-
-    // let startdate = start.clone().format("YYYY-MM-DD");
-
-    // let enddate = end.clone().format("YYYY-MM-DD");
+      : moment()
+          .endOf("week")
+          .format("YYYY-MM-DD");
 
     this.set("perioddates", ` ${start} to ${end}`);
 
