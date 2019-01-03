@@ -1,86 +1,74 @@
-import Controller from '@ember/controller';
-import { computed } from '@ember/object';
-import moment from 'moment';
+import Controller from "@ember/controller";
+import { computed } from "@ember/object";
+import moment from "moment";
 
 export default Controller.extend({
+  isFormSubmitted: "",
+  fromDate: Date.now(),
+  toDate: Date.now(),
 
-    isFormSubmitted: "",
-    fromDate: Date.now(),
-    toDate: Date.now(),
+  isEditable: computed("loggedinUser", "forUserId", function() {
+    let loggedinUser = this.get("userId");
+    let forUserId = this.get("model.forUserId");
+    let userrrole = this.get("userrole");
+    return loggedinUser === forUserId || userrrole === "Administrator";
+  }),
+  datesarray: computed("fromDate", "toDate", function() {
+    let fromdate = this.get("fromDate");
+    let todate = this.get("toDate");
+    let obj = {
+      fromDate: fromdate,
+      toDate: todate
+    };
+    return obj;
+  }),
 
-    isEditable: computed('loggedinUser', 'forUserId', function () {
+  fromDate: computed("", function() {
+    return moment()
+      .startOf("week")
+      .format("YYYY-MM-DD");
+  }),
 
-        let loggedinUser = this.get("userId");
-        let forUserId = this.get('model.forUserId');
-        let userrrole = this.get("userrole");
-        return (loggedinUser === forUserId || userrrole === "Administrator");
+  toDate: computed("", function() {
+    return moment()
+      .endOf("week")
+      .format("YYYY-MM-DD");
+  }),
 
-    }),
-    datesarray: computed('fromDate', 'toDate', function () {
+  validateForm() {
+    let form = $("#frmallTimeEntries").get(0);
+    let ffromdate = $("#fromdate").get(0);
+    let ftodate = $("#todate").get(0);
 
-        let fromdate = this.get('fromDate');
-        let todate = this.get('toDate');
-        let obj = {
-            "fromDate": fromdate,
-            "toDate": todate
-        };
-        return obj
-    }),
+    let fromdate = Date.parse(ffromdate.value);
+    let todate = Date.parse(ftodate.value);
 
-    fromDate: computed("", function () {
-
-        return moment().startOf('isoWeek').format("YYYY-MM-DD");
-    }),
-
-    toDate: computed("", function () {
-        return moment().endOf("isoWeek").format("YYYY-MM-DD");
-    }),
-
-    validateForm() {
-
-
-        let form = $("#frmallTimeEntries").get(0);
-        let ffromdate = $("#fromdate").get(0);
-        let ftodate = $("#todate").get(0);
-
-        let fromdate = Date.parse(ffromdate.value);
-        let todate = Date.parse(ftodate.value);
-
-        if (fromdate > todate) {
-            ffromdate.setCustomValidity("From Date should be before To Date");
-            ftodate.setCustomValidity("From Date should be before To Date");
-            alert("From Date should be before To Date");
-        }
-        else {
-            ffromdate.setCustomValidity("");
-            ftodate.setCustomValidity("");
-        }
-
-        return form.checkValidity();
-    },
-
-    actions: {
-
-
-
-        getDataForPeriod() {
-
-            this.set("isFormSubmitted", "submitted");
-
-            if (this.get('validateForm')()) {
-                let todatevalue = $("#todate").get(0).value;
-                let fromdatevalue = $("#fromdate").get(0).value;
-
-                this.set("toDate", todatevalue);
-                this.set("fromDate", fromdatevalue);
-                this.set("showData", true)
-            }
-            else {
-                alert("Please fix form errors");
-            }
-
-
-
-        }
+    if (fromdate > todate) {
+      ffromdate.setCustomValidity("From Date should be before To Date");
+      ftodate.setCustomValidity("From Date should be before To Date");
+      alert("From Date should be before To Date");
+    } else {
+      ffromdate.setCustomValidity("");
+      ftodate.setCustomValidity("");
     }
+
+    return form.checkValidity();
+  },
+
+  actions: {
+    getDataForPeriod() {
+      this.set("isFormSubmitted", "submitted");
+
+      if (this.get("validateForm")()) {
+        let todatevalue = $("#todate").get(0).value;
+        let fromdatevalue = $("#fromdate").get(0).value;
+
+        this.set("toDate", todatevalue);
+        this.set("fromDate", fromdatevalue);
+        this.set("showData", true);
+      } else {
+        alert("Please fix form errors");
+      }
+    }
+  }
 });
