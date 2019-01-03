@@ -49,7 +49,7 @@ workflows:
       - build_dev:
           filters:
             branches:
-              only: master
+              ignore: master
       - build_PROD:
           filters:
             branches:
