@@ -11,7 +11,7 @@
     },
     "repository": "",
     "scripts": {
-        "build": "ember build --environment=production",
+        "build": "ember build --environment=production --unsafe-perm=true --allow-root",
         "lint:js": "eslint ./*.js app config lisurgeb server tests",
         "start": "ember serve",
         "test1": "ember test",
