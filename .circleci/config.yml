@@ -37,7 +37,7 @@ jobs:
           command: "sudo npm install -g ember-cli"
       - run:
           name: Run ember build
-          command: "sudo APIENDPOINT=$APIENDPOINT_PROD npm run build"
+          command: "sudo APIENDPOINT=$APIENDPOINT_PROD TINYMCEKEY=$TINYMCEKEY npm run build"
       - run:
           name: Deploy app
           command: ./node_modules/.bin/surge dist --domain $SURGE_DOMAIN_PROD
