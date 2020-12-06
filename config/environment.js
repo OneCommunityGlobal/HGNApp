@@ -1,6 +1,6 @@
 /* jshint node: true */
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   var ENV = {
     modulePrefix: "hgnapp",
     environment: environment,
@@ -13,6 +13,9 @@ module.exports = function(environment) {
     },
     defaultPwd: "123Welcome!",
     webServer: process.env.APIENDPOINT,
+    tinyMCE: {
+      apiKey: process.env.TINYMCEKEY
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
